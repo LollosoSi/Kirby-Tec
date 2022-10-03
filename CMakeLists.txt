@@ -1,19 +1,28 @@
-set(project Kirby-Tec)
+set(project KirbyAdventure)
 
 project(${project})
 
-# CMake 3.4.0 come suggerito da CMake
+# CMake 3.4 come suggerito da CMake
 cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
 
 # Raccolta sorgenti
-file(GLOB sorgenti *.h *.cpp *.qrc)
+# Il file globbing Ë sconsigliato dalla documentazione. Serve una nuova soluzione
+# file(GLOB sorgenti *.h *.cpp *.qrc)
+# La soluzione Ë questa: Per ogni file
+# In Caso di set in subdirectory: # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp " PARENT_SCOPE)
+# In questo file:
+set(sorgenti "${sorgenti}main.cpp ")
+message(STATUS "${sorgenti}")
 
-# Imposto standard C++17 richiesto da Qt e flags per tagliare gli errori a cascata
+# Includi una directory (placeholder per quando servir‡)
+# add_subdirectory("src")
+
+# Imposto standard C++17 richiesto da Qt e flags per fermare la build al primo errore
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -pedantic -Wfatal-errors")
 
-# Attivo funzionalit√† specifiche di CMake per Qt
+# Attivo funzionalita' specifiche di CMake per Qt
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -25,9 +34,10 @@ set(SKIP_AUTOMOC ON)
 add_executable(${project} ${sorgenti})
 
 # Richiedo librerie Qt
-find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+# Richiesto dalla documentazione
 qt_standard_project_setup()
 
 # Collego librerie Qt con eseguibile
-target_link_libraries(${project} Qt6::Core Qt6::Widgets)
+target_link_libraries(${project} Qt6::Widgets)
