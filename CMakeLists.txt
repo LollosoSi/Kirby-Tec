@@ -20,7 +20,7 @@ message(STATUS "${sorgenti}")
 # Imposto standard C++17 richiesto da Qt e flags per fermare la build al primo errore
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -pedantic -Wfatal-errors")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -pedantic -Wfatal-errors")
 
 # Attivo funzionalita' specifiche di CMake per Qt
 set(CMAKE_AUTOMOC ON)
