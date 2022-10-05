@@ -1,6 +1,6 @@
 set(project KirbyAdventure)
 
-set(USING_ECLIPSE FALSE)
+set(USING_ECLIPSE FALSE CACHE BOOL "")
 
 project(${project})
 
