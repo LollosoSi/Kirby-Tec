@@ -13,11 +13,12 @@ cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
 # La soluzione è questa: Per ogni file
 # In Caso di set in subdirectory: # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp " PARENT_SCOPE)
 # In questo file:
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;")
 message(STATUS "${sorgenti}")
 
 # Includi una directory (placeholder per quando servirà)
 # add_subdirectory("src")
+add_subdirectory("objects")
 
 # Imposto standard C++17 richiesto da Qt e flags per fermare la build al primo errore
 set(CMAKE_CXX_STANDARD 17)
