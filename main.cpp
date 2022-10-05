@@ -4,6 +4,23 @@
 #include <QObject>
 #include "MainWindow.h"
 
+#include "objects/RenderableObject.h"
+#include "objects/TickableObject.h"
+
+class pippo : public RenderableObject, public TickableObject {
+
+public:
+    void tick(double delta) {
+    
+        std::cout << "Delta" << delta << std::endl;
+    
+    }
+
+    void render() {
+        std::cout << "Render" << std::endl;
+    }
+
+};
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +32,15 @@ int main(int argc, char *argv[])
 	// hello world
     QPushButton* button = new QPushButton("Hello world!", mw);
     button->show();
+
+    pippo* p = new pippo();
+    int i = 0;
+    while (i++ < 500) {
+        p->tick(i);
+        p->render();
+    }
+   
+
 
     QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 

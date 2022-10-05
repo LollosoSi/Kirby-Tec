@@ -4,6 +4,6 @@
 class TickableObject {
 
 public:
-	virtual void tick(double deltatime);
+	virtual void tick(double deltatime) = 0;
 
 };
