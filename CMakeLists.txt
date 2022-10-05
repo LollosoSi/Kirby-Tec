@@ -13,7 +13,7 @@ cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
 # La soluzione è questa: Per ogni file
 # In Caso di set in subdirectory: # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp " PARENT_SCOPE)
 # In questo file:
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.h;")
 message(STATUS "${sorgenti}")
 
 # Includi una directory (placeholder per quando servirà)
