@@ -2,4 +2,6 @@
 
 MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 
+	show();
+
 }
