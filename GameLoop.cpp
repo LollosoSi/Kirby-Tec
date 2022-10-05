@@ -14,9 +14,34 @@ GameLoop::~GameLoop()
 // TODO: Implement loop
 void GameLoop::loop() {
 
+	QTime current = QTime::currentTime();
+
+	int fps = 0, ticks = 0;
+	int target_ticks = 20, target_fps = 60;
+	int min_delta_millis_fps = 1000 / target_fps, min_delta_millis_tick = 1000/target_ticks;
+	QTime last_millis_render = current, last_millis_tick = current;
+	
+	int delta_tick, delta_fps;
 	while (running) {
+		current = QTime::currentTime();
 
+		if ((delta_tick=last_millis_tick.msecsTo(current)) > min_delta_millis_tick)
+		{
+			last_millis_tick = current;
+			ticks++;
 
+			std::cout << "Tick" << std::endl;
+		}
+
+		if ((delta_fps = last_millis_render.msecsTo(current)) > min_delta_millis_fps)
+		{
+			last_millis_render = current;
+			fps++;
+
+		}
+		
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(2));
 
 	}
 
@@ -26,8 +51,8 @@ void GameLoop::start()
 {
 	running = true;
 
-	std::thread loopthread(&GameLoop::loop, this);
-
+	loopthread = std::thread(&GameLoop::loop, this);
+	
 }
 
 
@@ -36,4 +61,5 @@ void GameLoop::start()
 void GameLoop::stop()
 {
 	running = false;
+	loopthread.join();
 }

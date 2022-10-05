@@ -1,14 +1,19 @@
 #pragma once
 
+// Debug
+#include <iostream>
+
 // Base objects
 #include "objects/TickableObject.h"
 #include "objects/RenderableObject.h"
 
 // Handle objects
 #include <Vector>
+#include <QTime>
 
 // Threading
 #include <thread>
+#include <chrono>
 
 
 /** Classe GameLoop
@@ -40,6 +45,7 @@ private:
 	//
 
 	void loop();
+	std::thread loopthread;
 
 	// Elementi da iterare
 	std::vector<TickableObject> tickableObjects;
