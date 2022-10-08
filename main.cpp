@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
     MainWindow *mw = new MainWindow();
 
 	// hello world
-    QPushButton* button = new QPushButton("Hello world!", mw);
-    button->show();
+    //QPushButton* button = new QPushButton("Hello world!", mw);
+    //button->show();
 
     pippo* p = new pippo();
     int i = 0;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
    
 
 
-    QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
+    //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
 
  
