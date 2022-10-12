@@ -1,11 +1,19 @@
 #include "GameLoop.h"
 
-GameLoop::GameLoop(){}
+
+
+GameLoop::GameLoop(){
+	//pippo* pippi = 
+	//addToRenderable(pippi);
+	
+	
+
+}
 
 GameLoop::~GameLoop()
 {
-		tickableObjects.clear();
-		renderableObjects.clear();
+		tickableObjectsQueue.clear();
+		renderableObjectsQueue.clear();
 }
 
 // TODO: Implement loop
@@ -37,6 +45,9 @@ void GameLoop::loop() {
 
 			render();
 		}
+
+		if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
+			mergeQueues();
 		
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -45,20 +56,25 @@ void GameLoop::loop() {
 
 }
 
+void GameLoop::mergeQueues() {
+
+	for (auto* item : this->tickableObjectsQueue)
+		this->tickableObjects.push_back(item);
+	tickableObjectsQueue.clear();
+
+	for (auto* item : this->renderableObjectsQueue)
+		this->renderableObjects.push_back(item);
+	renderableObjectsQueue.clear();
+}
+
 void GameLoop::render() {
-	scene->clear();
-
-	for (auto& item : this->renderableObjects) {
-		item.render(*scene);
-	}
-
 
 }
 
 void GameLoop::tick(int deltatime) {
 
-	for (auto& item : this->tickableObjects) {
-		item.tick(deltatime);
+	for (auto* item : this->tickableObjects) {
+		item->tick(deltatime);
 	}
 
 }
@@ -75,4 +91,14 @@ void GameLoop::stop()
 {
 	running = false;
 	loopthread.join();
+}
+
+void GameLoop::addToTickable(TickableObject* tco)
+{
+	this->tickableObjectsQueue.push_back(tco);
+}
+
+void GameLoop::addToRenderable(RenderableObject* rdo)
+{
+	this->renderableObjectsQueue.push_back(rdo);
 }

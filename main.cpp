@@ -15,16 +15,28 @@
 class pippo : public RenderableObject, public TickableObject {
 
 public:
-    void tick(double delta) {
-    
-        std::cout << "Delta" << delta << std::endl;
-    
-    }
+	pippo() {}
 
-    void render() {
-        std::cout << "Render" << std::endl;
-    }
-    
+
+	virtual void tick(double delta) {
+
+		x = xo + A * cos(time += delta);
+		y = yo + A * sin(time += delta);
+
+	}
+
+	virtual void render(QGraphicsScene& scene) {
+		QPen pen;
+		pen.setColor(Qt::blue);
+		scene.addRect(x, y, 30, 30, pen);
+		
+	}
+
+private:
+	int x = 0, y = 0, xo = 20, yo = 20;
+	int A = 5;
+	long time = 0;
+
 };
 
 int main(int argc, char *argv[])
@@ -37,7 +49,7 @@ int main(int argc, char *argv[])
     MainWindow *mw = new MainWindow();
 
     GameLoop::getInstance().setScene(mw->getScene());
-    GameLoop::getInstance().start();
+    
 
 	// hello world
     //QPushButton* button = new QPushButton("Hello world!", mw);
@@ -48,8 +60,12 @@ int main(int argc, char *argv[])
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
+	pippo* pippi = new pippo();
 
+    GameLoop::getInstance().addToTickable(pippi);
+	GameLoop::getInstance().addToRenderable(pippi);
  
+	GameLoop::getInstance().start();
 
     // eseguo applicazione Qt
     return a.exec();

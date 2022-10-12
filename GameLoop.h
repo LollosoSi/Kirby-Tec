@@ -43,6 +43,12 @@ public:
 	
 	void setScene(QGraphicsScene* sc) { this->scene = sc; }
 
+	void addToTickable(TickableObject* tco);
+	void addToRenderable(RenderableObject* rdo);
+
+signals:
+	void pleaseRender();
+
 protected:
 	QGraphicsScene* scene = nullptr;
 
@@ -55,15 +61,18 @@ private:
 
 	// Internal calls for watchdog & methods
 	void loop();
+	void mergeQueues();
 	void render();
 	void tick(int deltatime);
 
 	std::thread loopthread;
 
 	// Elementi da iterare
-	std::vector<TickableObject> tickableObjects;
-	std::vector<RenderableObject> renderableObjects;
-	//
+	std::vector<TickableObject*> tickableObjects;
+	std::vector<RenderableObject*> renderableObjects;
+	// Elementi in fila
+	std::vector<TickableObject*> tickableObjectsQueue;
+	std::vector<RenderableObject*> renderableObjectsQueue;
 	
 
 };

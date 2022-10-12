@@ -9,7 +9,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     
     view = new QGraphicsView(scene);
     view->setGeometry(sceneRect);
-    view->setCacheMode(QGraphicsView::CacheBackground);
+    view->setCacheMode(QGraphicsView::CacheNone);
 
     scene->setSceneRect(sceneRect);
    
@@ -33,5 +33,15 @@ void MainWindow::resizeEvent(QResizeEvent* event)
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
    
+
+}
+
+MainWindow::renderObjects(std::vector<RenderableObject>* renderableObjects) {
+
+    scene->clear();
+
+    for (auto* item : this->renderableObjects) {
+        item->render(*scene);
+    }
 
 }
