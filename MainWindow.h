@@ -4,13 +4,13 @@
 #include <QPainter>
 
 
-class MainWindow : public QWidget {
+class MainWindow : public QGraphicsView {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = 0);
+    MainWindow(QGraphicsView* parent = 0);
 
     QGraphicsScene* scene;
-
+    QRect sceneRect;
 };
 
