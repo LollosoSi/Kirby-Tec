@@ -15,6 +15,9 @@
 #include <thread>
 #include <chrono>
 
+// Rendering
+#include <QGraphicsScene>
+
 
 /** Classe GameLoop
 * Responsabilita':
@@ -31,11 +34,17 @@ public:
 	~GameLoop();
 	//
 
+	
+
 	// Avvia / ferma loop
 	void start();
 	void stop();
-	bool running;
+	bool running = false;
 	
+	void setScene(QGraphicsScene* sc) { this->scene = sc; }
+
+protected:
+	QGraphicsScene* scene = nullptr;
 
 private:
 	// Relativi al singleton
@@ -44,7 +53,11 @@ private:
 	void operator=(GameLoop const&) = delete;
 	//
 
+	// Internal calls for watchdog & methods
 	void loop();
+	void render();
+	void tick(int deltatime);
+
 	std::thread loopthread;
 
 	// Elementi da iterare

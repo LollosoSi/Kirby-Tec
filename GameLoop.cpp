@@ -1,9 +1,6 @@
 #include "GameLoop.h"
 
-GameLoop::GameLoop()
-{
-
-}
+GameLoop::GameLoop(){}
 
 GameLoop::~GameLoop()
 {
@@ -30,7 +27,7 @@ void GameLoop::loop() {
 			last_millis_tick = current;
 			ticks++;
 
-			std::cout << "Tick" << std::endl;
+			tick(delta_tick);
 		}
 
 		if ((delta_fps = last_millis_render.msecsTo(current)) > min_delta_millis_fps)
@@ -38,11 +35,30 @@ void GameLoop::loop() {
 			last_millis_render = current;
 			fps++;
 
+			render();
 		}
 		
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(2));
 
+	}
+
+}
+
+void GameLoop::render() {
+	scene->clear();
+
+	for (auto& item : this->renderableObjects) {
+		item.render(*scene);
+	}
+
+
+}
+
+void GameLoop::tick(int deltatime) {
+
+	for (auto& item : this->tickableObjects) {
+		item.tick(deltatime);
 	}
 
 }
@@ -54,9 +70,6 @@ void GameLoop::start()
 	loopthread = std::thread(&GameLoop::loop, this);
 	
 }
-
-
-
 
 void GameLoop::stop()
 {

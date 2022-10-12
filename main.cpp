@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QObject>
 
+
 // Componenti core
 #include "MainWindow.h"
 #include "GameLoop.h"
@@ -28,26 +29,20 @@ public:
 
 int main(int argc, char *argv[])
 {
-    GameLoop::getInstance();
-    GameLoop::getInstance().start();
+   
 
     // istanzio applicazione Qt
     QApplication a(argc, argv);
 
-    
-
     MainWindow *mw = new MainWindow();
+
+    GameLoop::getInstance().setScene(mw->getScene());
+    GameLoop::getInstance().start();
 
 	// hello world
     //QPushButton* button = new QPushButton("Hello world!", mw);
     //button->show();
 
-    pippo* p = new pippo();
-    int i = 0;
-    while (i++ < 500) {
-        p->tick(i);
-        p->render();
-    }
    
 
 

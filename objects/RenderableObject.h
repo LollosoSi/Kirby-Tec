@@ -1,8 +1,9 @@
 #pragma once
 
+#include <QGraphicsScene>
+
 class RenderableObject {
 
 public:
-	virtual void render() = 0;
-
+	virtual void render(QGraphicsScene& scene) = 0;
 };

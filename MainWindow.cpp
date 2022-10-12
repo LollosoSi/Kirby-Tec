@@ -6,8 +6,8 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     sceneRect = QRect(0,0,this->width(), this->height());
 
     scene = new QGraphicsScene();
+    
     view = new QGraphicsView(scene);
-
     view->setGeometry(sceneRect);
     view->setCacheMode(QGraphicsView::CacheBackground);
 
@@ -17,41 +17,9 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
     show();
 
-
+    
    
-
-//    QHBoxLayout* vb = new QHBoxLayout();
-//    vb->addItem(vb);
- //   this->setLayout(vb);
-
-   
-
-    scene->clear();
-
-    QGraphicsPixmapItem* pixItem = new QGraphicsPixmapItem(QPixmap("sprites/994titlescreen.png"));
-    pixItem->setPos(0, 0);
-    scene->addItem(pixItem);
-    
-    QPen p(Qt::blue);
-    scene->addRect(0,0,50,50, p, Qt::red);
-    
-
-    QPainter painter(view);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.fillRect(sceneRect, Qt::yellow);
-    
-    //std::cout << QApplication::style()->pixelMetric(QStyle::PM_TitleBarHeight);
-    
-    painter.setPen(p);
-    painter.drawRect(10,10,100,100);
-
-    painter.fillRect(sceneRect, Qt::black);
-    painter.setViewport(0,0, sceneRect.width(), sceneRect.height());
-    
-
-   // scene->clear();
-   
-    setWindowTitle(tr("Chip Example"));
+    setWindowTitle(tr("Kirby's Adventure"));
 }
         
 
@@ -62,7 +30,8 @@ void MainWindow::resizeEvent(QResizeEvent* event)
     sceneRect.setWidth(this->width());
     sceneRect.setHeight(this->height());
 
+    scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
-    scene->setSceneRect(sceneRect);
+   
 
 }
