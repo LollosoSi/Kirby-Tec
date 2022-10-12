@@ -4,6 +4,9 @@
 #include <QGraphicsView>
 #include <QPainter>
 #include <QHBoxLayout>
+#include <QGraphicsPixmapItem>
+#include <iostream>
+#include <QApplication>
 
 
 class MainWindow : public QMainWindow {
