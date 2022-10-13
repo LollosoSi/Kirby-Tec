@@ -9,7 +9,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     
     view = new QGraphicsView(scene);
     view->setGeometry(sceneRect);
-    view->setCacheMode(QGraphicsView::CacheNone);
+    view->setCacheMode(QGraphicsView::CacheBackground);
 
     scene->setSceneRect(sceneRect);
    
@@ -37,11 +37,17 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 }
 
 void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects) {
-
     scene->clear();
-
+    auto background = new QGraphicsRectItem(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
+    background->setBrush(Qt::black);
+    scene->addItem(background);
     for (auto* item : *renderableObjects) {
         item->render(*scene);
     }
 
+    emit(renderingCompleted());
+}
+
+void MainWindow::closeEvent(QCloseEvent* event){
+    GameLoop::getInstance().stop();
 }

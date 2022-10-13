@@ -14,28 +14,35 @@
 
 class pippo : public RenderableObject, public TickableObject {
 
+private:
+	QPen pen;
+
 public:
-	pippo() {}
+	
+	pippo() {
+		int n = rand()%5;
+		pen.setColor(n==0 ? Qt::blue : n == 1 ? Qt::red : n == 2 ? Qt::green : n == 3 ? Qt::magenta : Qt::yellow);
+		h = (w = 5+rand()%20);
+	}
 
 
 	virtual void tick(double delta) {
-
-		x = xo + A * cos(time += delta);
-		y = yo + A * sin(time += delta);
+		time += delta;
+		x = xo + A * cos(2*M_PI*f*time);
+		y = yo + A * sin(2*M_PI*f*time);
 
 	}
 
 	virtual void render(QGraphicsScene& scene) {
-		QPen pen;
-		pen.setColor(Qt::blue);
-		scene.addRect(x, y, 30, 30, pen);
-		
+		scene.addRect(x, y, w, h, pen);
 	}
 
-private:
-	int x = 0, y = 0, xo = 20, yo = 20;
-	int A = 5;
-	long time = 0;
+
+	int x = 0, y = 0, xo = 200, yo = 200;
+	int A = 100;
+	double f = 1.0;
+	double time = 0;
+	int h = 10, w = 10;
 
 };
 
@@ -60,12 +67,20 @@ int main(int argc, char *argv[])
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	pippo* pippi = new pippo();
-
-    GameLoop::getInstance().addToTickable(pippi);
-	GameLoop::getInstance().addToRenderable(pippi);
+	for (int i = 0; i < 300; i++) {
+		pippo* pippi = new pippo();
+		pippi->xo = 200 + rand() % 50;
+		pippi->yo = 200+rand() % 50;
+		pippi->f = 2.0/i;
+		pippi->A = 205-i;
+		if (i < 100 || true)
+			GameLoop::getInstance().addToTickable(pippi);
+		else pippi->tick(0.1);
+		GameLoop::getInstance().addToRenderable(pippi);
+	}
  
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
+	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
 	GameLoop::getInstance().start();
 

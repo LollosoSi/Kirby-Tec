@@ -33,6 +33,8 @@ public:
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();
+	void recalculateTicks(int target_ticks);
+	void recalculateFps(int target_fps);
 	//
 
 	
@@ -50,6 +52,9 @@ public:
 signals:
 	void pleaseRender(std::vector<RenderableObject*>* objects);
 
+public slots:
+	void renderingCompleted();
+
 protected:
 	QGraphicsScene* scene = nullptr;
 
@@ -64,7 +69,12 @@ private:
 	void loop();
 	void mergeQueues();
 	void render();
-	void tick(int deltatime);
+	void tick(double deltatime);
+
+	int target_ticks = 20, target_fps = 120;
+	int min_delta_millis_fps = 1000 / target_fps, min_delta_millis_tick = 1000 / target_ticks;
+	QTime last_millis_render, last_millis_tick, last_log;
+	bool waitingForRender = false;
 
 	std::thread loopthread;
 
