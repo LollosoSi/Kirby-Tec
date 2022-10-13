@@ -1,15 +1,19 @@
 #include "MainWindow.h"
 
-
+using namespace std;
 
 MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
-    sceneRect = QRect(0,0,this->width(), this->height());
+    sceneRect = QRect(0,0,300,300);
 
-    scene = new QGraphicsScene();
+    scene = new GraphicsScene();
+    scene->setBackgroundBrush(Qt::black);
     
     view = new QGraphicsView(scene);
     view->setGeometry(sceneRect);
     view->setCacheMode(QGraphicsView::CacheBackground);
+    //view->setMouseTracking(true);
+
+    this->setMouseTracking(true);
 
     scene->setSceneRect(sceneRect);
    
@@ -18,13 +22,11 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     show();
 
     
-   
     setWindowTitle(tr("Kirby's Adventure"));
 }
         
 
-void MainWindow::resizeEvent(QResizeEvent* event)
-{
+void MainWindow::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
     // Resize drawspace here
     sceneRect.setWidth(this->width());
@@ -32,19 +34,13 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
-   
 
 }
 
 void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects) {
     scene->clear();
-    auto background = new QGraphicsRectItem(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
-    background->setBrush(Qt::black);
-    scene->addItem(background);
-    for (auto* item : *renderableObjects) {
-        item->render(*scene);
-    }
-
+    qDeleteAll(scene->items());
+    for (auto* item : *renderableObjects) item->render(*scene);
     emit(renderingCompleted());
 }
 

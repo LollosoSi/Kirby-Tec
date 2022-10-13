@@ -12,29 +12,42 @@
 #include "objects/RenderableObject.h"
 #include "objects/TickableObject.h"
 
+
+
 class pippo : public RenderableObject, public TickableObject {
 
-private:
+public:
 	QPen pen;
+	
 
 public:
 	
+	QPixmap qp;
+
 	pippo() {
 		int n = rand()%5;
 		pen.setColor(n==0 ? Qt::blue : n == 1 ? Qt::red : n == 2 ? Qt::green : n == 3 ? Qt::magenta : Qt::yellow);
 		h = (w = 5+rand()%20);
 	}
 
+	void setPix(QPixmap &p) {
+		qp = p;
+		
+	}
+
 
 	virtual void tick(double delta) {
 		time += delta;
-		x = xo + A * cos(2*M_PI*f*time);
-		y = yo + A * sin(2*M_PI*f*time);
-
+		x = xo + A * cos(2 * M_PI * f * time);
+		y = yo + A * sin(2 * M_PI * f * time);
 	}
-
+	
 	virtual void render(QGraphicsScene& scene) {
-		scene.addRect(x, y, w, h, pen);
+	
+		QGraphicsPixmapItem* pm = scene.addPixmap(qp);
+		pm->setPos(x, y);
+		
+		
 	}
 
 
@@ -46,17 +59,20 @@ public:
 
 };
 
-int main(int argc, char *argv[])
-{
+QPixmap* p = NULL;
+
+int main(int argc, char *argv[]) {
    
 
     // istanzio applicazione Qt
     QApplication a(argc, argv);
 
     MainWindow *mw = new MainWindow();
-
-    GameLoop::getInstance().setScene(mw->getScene());
     
+	p = new QPixmap();
+	if (!p->load("sprites/AI-HUD.png")) {
+		std::cout << "Errore nel caricamento di immagine \n";
+	}
 
 	// hello world
     //QPushButton* button = new QPushButton("Hello world!", mw);
@@ -67,12 +83,14 @@ int main(int argc, char *argv[])
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 300; i++) {
+	for (int i = 0; i < 2000; i++) {
 		pippo* pippi = new pippo();
-		pippi->xo = 200 + rand() % 50;
-		pippi->yo = 200+rand() % 50;
-		pippi->f = 2.0/i;
-		pippi->A = 205-i;
+		pippi->xo = 800 + rand() % 50;
+		pippi->yo = 500+rand() % 50;
+		pippi->f = 1.0/i;
+		pippi->A = 405-i;
+		pippi->setPix(*p);
+
 		if (i < 100 || true)
 			GameLoop::getInstance().addToTickable(pippi);
 		else pippi->tick(0.1);
@@ -83,6 +101,8 @@ int main(int argc, char *argv[])
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
 	GameLoop::getInstance().start();
+
+	//delete p;
 
     // eseguo applicazione Qt
     return a.exec();

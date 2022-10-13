@@ -43,8 +43,6 @@ public:
 	void start();
 	void stop();
 	bool running = false;
-	
-	void setScene(QGraphicsScene* sc) { this->scene = sc; }
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);

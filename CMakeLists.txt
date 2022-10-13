@@ -7,13 +7,16 @@ project(${project})
 # CMake 3.4 come suggerito da CMake
 cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
 
+file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sprites"
+        "${CMAKE_CURRENT_BINARY_DIR}/sprites" SYMBOLIC)
+
 # Raccolta sorgenti
 # Il file globbing è sconsigliato dalla documentazione. Serve una nuova soluzione
 # file(GLOB sorgenti *.h *.cpp *.qrc)
 # La soluzione è questa: Per ogni file
 # In Caso di set in subdirectory: # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp " PARENT_SCOPE)
 # In questo file:
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.h;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.h;${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.h;${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.cpp;")
 message(STATUS "${sorgenti}")
 
 # Includi una directory (placeholder per quando servirà)

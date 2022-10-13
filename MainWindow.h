@@ -10,9 +10,11 @@
 #include "objects/RenderableObject.h"
 #include <QCloseEvent>
 #include "GameLoop.h"
+#include "GraphicsScene.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
+
 
 private:    
     ~MainWindow() {};
@@ -26,10 +28,6 @@ public:
     QGraphicsView* view;
     QGraphicsScene* scene;
     QRect sceneRect;
-
-    // Rendering is handled inside GameLoop
-    QGraphicsScene* getScene() { return this->scene; };
-    bool isRendering = false;
 
     public slots:
         void pleaseRender(std::vector<RenderableObject*>* objects);
