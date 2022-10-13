@@ -68,7 +68,7 @@ void GameLoop::mergeQueues() {
 }
 
 void GameLoop::render() {
-
+	emit(pleaseRender(&renderableObjects));
 }
 
 void GameLoop::tick(int deltatime) {

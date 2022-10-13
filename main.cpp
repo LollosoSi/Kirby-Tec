@@ -65,6 +65,8 @@ int main(int argc, char *argv[])
     GameLoop::getInstance().addToTickable(pippi);
 	GameLoop::getInstance().addToRenderable(pippi);
  
+	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
+
 	GameLoop::getInstance().start();
 
     // eseguo applicazione Qt

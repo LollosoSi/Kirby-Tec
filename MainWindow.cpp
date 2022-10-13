@@ -36,11 +36,11 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 }
 
-MainWindow::renderObjects(std::vector<RenderableObject>* renderableObjects) {
+void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects) {
 
     scene->clear();
 
-    for (auto* item : this->renderableObjects) {
+    for (auto* item : *renderableObjects) {
         item->render(*scene);
     }
 

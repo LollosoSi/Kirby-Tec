@@ -25,8 +25,9 @@
 *
 * Questa classe deve essere un Singleton
 */
-class GameLoop
+class GameLoop : public QObject
 {
+	Q_OBJECT
 
 public:
 	// Relativi al singleton
@@ -47,7 +48,7 @@ public:
 	void addToRenderable(RenderableObject* rdo);
 
 signals:
-	void pleaseRender();
+	void pleaseRender(std::vector<RenderableObject*>* objects);
 
 protected:
 	QGraphicsScene* scene = nullptr;

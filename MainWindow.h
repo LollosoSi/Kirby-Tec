@@ -7,6 +7,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QStyle>
+#include "objects/RenderableObject.h"
 
 
 class MainWindow : public QMainWindow {
@@ -28,6 +29,7 @@ public:
     QGraphicsScene* getScene() { return this->scene; };
 
     public slots:
+        void pleaseRender(std::vector<RenderableObject*>* objects);
     
 
 };
