@@ -3,11 +3,10 @@
 #include <iostream>
 #include <QObject>
 
-
 // Componenti core
 #include "MainWindow.h"
 #include "GameLoop.h"
-
+#include "TextureManager.h"
 
 #include "objects/RenderableObject.h"
 #include "objects/TickableObject.h"
@@ -42,10 +41,12 @@ public:
 	}
 	
 	virtual void render(QGraphicsScene& scene) {
-	
-		QGraphicsPixmapItem* pm = scene.addPixmap(qp);
-		pm->setPos(x, y);
 		
+		QGraphicsPixmapItem* pm = scene.addPixmap(qp);
+		pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
+		pm->setFlag(QGraphicsItem::ItemIsMovable);
+		pm->setPos(x, y);
+
 	}
 
 
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
 		pippi->yo = 500+rand() % 50;
 		pippi->f = 1.0/i;
 		pippi->A = 405-i;
-		pippi->setPix(*p);
+		pippi->setPix(TextureManager::getInstance().getAnimatable(kirby_stand)->pixmaps[0]);
 
 		if (i < 100 || true)
 			GameLoop::getInstance().addToTickable(pippi);
