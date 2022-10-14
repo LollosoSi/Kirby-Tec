@@ -46,6 +46,7 @@ public:
 		pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
 		pm->setFlag(QGraphicsItem::ItemIsMovable);
 		pm->setPos(x, y);
+		pm->setScale(2);
 
 	}
 
