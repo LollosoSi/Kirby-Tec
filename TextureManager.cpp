@@ -31,11 +31,12 @@ QRect TextureManager::moveBy(QRect rect, int x, int y, int dx, int dy, int borde
 QPixmap TextureManager::loadTexture(std::string file, QColor mask_color)
 {
 	QPixmap pixmap(file.c_str());
-	pixmap.setMask(pixmap.createMaskFromColor(mask_color));
+	//pixmap.setMask(pixmap.createMaskFromColor(mask_color));
 	return pixmap;
 }
 
 // replace color (useful for palette changes)
+/*
 QPixmap TextureManager::replaceColor(QPixmap pix, QColor old_color, QColor new_color)
 {
 	QBitmap mask = pix.createMaskFromColor(old_color, Qt::MaskOutColor);
@@ -47,3 +48,4 @@ QPixmap TextureManager::replaceColor(QPixmap pix, QColor old_color, QColor new_c
 	p.end();
 	return pix;
 }
+*/
