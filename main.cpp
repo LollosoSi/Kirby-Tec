@@ -32,7 +32,6 @@ public:
 
 	void setPix(QPixmap &p) {
 		qp = p;
-		
 	}
 
 
@@ -46,7 +45,6 @@ public:
 	
 		QGraphicsPixmapItem* pm = scene.addPixmap(qp);
 		pm->setPos(x, y);
-		
 		
 	}
 
@@ -83,7 +81,7 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 2000; i++) {
+	for (int i = 0; i < 100; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800 + rand() % 50;
 		pippi->yo = 500+rand() % 50;
