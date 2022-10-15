@@ -14,6 +14,8 @@
 #include "Animator.h"
 #include "Camera.h"
 
+#include "Terrain.h"
+
 
 class pippo : public RenderableObject, public TickableObject {
 
@@ -82,6 +84,11 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
+	for (int i = 0; i < 70; i++) {
+		Terrain* t = new Terrain(i * 16 * 4, 500);
+		GameLoop::getInstance().addToRenderable(t);
+	}
+
 	for (int i = 0; i < 20; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800 + rand() % 50;
@@ -95,6 +102,8 @@ int main(int argc, char *argv[]) {
 		GameLoop::getInstance().addToRenderable(pippi);
 		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
+	
+	
  
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);

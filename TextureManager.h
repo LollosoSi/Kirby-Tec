@@ -13,9 +13,10 @@
 static enum {
 	KIRBY_STAND = 0,
 	KIRBY_WALK = 1,
-	KIRBY_ROLL = 2
+	KIRBY_ROLL = 2,
+	TERRAIN = 3
 };
-const int TEXTURE_COUNT = 3;
+const int TEXTURE_COUNT = 4;
 
 class TextureManager {
 
@@ -34,6 +35,7 @@ private:
 
 	const std::string file_kirby = "sprites/Kirby.png";
 	const std::string file_enemy = "sprites/Enemies.png";
+	const std::string file_terrain = "sprites/SpriteBlocks.png";
 	
 
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);

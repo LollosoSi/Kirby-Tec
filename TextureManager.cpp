@@ -8,12 +8,16 @@ static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 // Constructor. Load all textures in the Animatable array
 TextureManager::TextureManager() {
 	QColor kirby_file_mask = QColor(84, 110, 140);
+	QColor terrain_file_mask = QColor(60, 188, 252);
 
 	QRect kirby_stand = getStandardQRect(6, 24);
 	QRect kirby_walk = getStandardQRect(51, 24);
 	QRect kirby_roll = getStandardQRect(6, 49);
 
+	QRect terrain_1 = getStandardQRect(1,1);
+
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
+	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -32,6 +36,12 @@ TextureManager::TextureManager() {
 		new QPixmap[5]{kirbytex.copy(kirby_roll), kirbytex.copy(moveBy(kirby_roll, 1)), kirbytex.copy(moveBy(kirby_roll, 2)), kirbytex.copy(moveBy(kirby_roll, 3)), kirbytex.copy(moveBy(kirby_roll, 4)) },
 		new float[5] {0.06f, 0.06f, 0.06f, 0.06f, 0.06f},
 		5
+	};
+
+	textures[TERRAIN] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain_1)},
+		new float[1] {0},
+		1
 	};
 
 

@@ -31,9 +31,7 @@ public:
 	collision findCollision(RigidBody &rb) {
 		#define rbx rb.collider.x()
 		#define rby rb.collider.y()
-		if () {
 		
-		}
 
 		#undef rbx
 		#undef rby
