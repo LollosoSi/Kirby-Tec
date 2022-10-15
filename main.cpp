@@ -29,6 +29,7 @@ public:
 		time += delta;
 		x = xo + A * cos(2 * M_PI * f * time);
 		y = yo + A * sin(2 * M_PI * f * time);
+
 	}
 	
 	virtual void render(QGraphicsScene& scene) {
@@ -85,6 +86,7 @@ int main(int argc, char *argv[]) {
 			GameLoop::getInstance().addToTickable(pippi);
 		else pippi->tick(0.1);
 		GameLoop::getInstance().addToRenderable(pippi);
+		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 	}
  
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);

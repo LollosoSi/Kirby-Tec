@@ -10,10 +10,17 @@ TextureManager::TextureManager() {
 	QColor kirby_file_mask = QColor(84, 110, 140);
 
 	QRect kirby_stand_1 = getStandardQRect(6, 24);
+	QRect kirby_walk_1 = getStandardQRect(51, 24);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
 
 	// FORMAT: QPixmap array, float array, size
+	textures[KIRBY_WALK] = new Animatable{
+		new QPixmap[4]{kirbytex.copy(kirby_walk_1), kirbytex.copy(moveBy(kirby_walk_1, 1)),kirbytex.copy(moveBy(kirby_walk_1, 2)),kirbytex.copy(moveBy(kirby_walk_1, 3)) },
+		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
+		4
+	};
+
 	textures[KIRBY_STAND] = new Animatable{
 		new QPixmap[2]{kirbytex.copy(kirby_stand_1), kirbytex.copy(moveBy(kirby_stand_1, 1)) },
 		new float[2] {2.0f, 0.2f},

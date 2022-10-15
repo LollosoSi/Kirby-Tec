@@ -3,7 +3,8 @@
 using namespace std;
 
 MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
-    sceneRect = QRect(0,0,300,300);
+    sceneRect = QRect(0,0,1580,1000);
+    setGeometry(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
 
     scene = new GraphicsScene();
     scene->setBackgroundBrush(Qt::black);
