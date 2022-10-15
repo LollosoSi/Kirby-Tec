@@ -16,7 +16,7 @@ file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sprites"
 # La soluzione è questa: Per ogni file
 # In Caso di set in subdirectory: # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp " PARENT_SCOPE)
 # In questo file:
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.h;${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.h;${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.cpp;${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.h;${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.cpp;${CMAKE_CURRENT_SOURCE_DIR}/Animator.h;${CMAKE_CURRENT_SOURCE_DIR}/Animator.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameObject.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameObject.h;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.h;${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.h;${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.cpp;${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.h;${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.cpp;${CMAKE_CURRENT_SOURCE_DIR}/Animator.h;${CMAKE_CURRENT_SOURCE_DIR}/Animator.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameObject.cpp;${CMAKE_CURRENT_SOURCE_DIR}/GameObject.h;${CMAKE_CURRENT_SOURCE_DIR}/Serializable.h;${CMAKE_CURRENT_SOURCE_DIR}/Serializable.cpp;${CMAKE_CURRENT_SOURCE_DIR}/RigidBody.cpp;${CMAKE_CURRENT_SOURCE_DIR}/RigidBody.h;")
 message(STATUS "${sorgenti}")
 
 # Includi una directory (placeholder per quando servirà)
