@@ -11,30 +11,26 @@
 #include "objects/RenderableObject.h"
 #include "objects/TickableObject.h"
 
+#include "Animator.h"
+
 
 
 class pippo : public RenderableObject, public TickableObject {
 
 public:
 	QPen pen;
-	
-
-public:
-	
-	QPixmap qp;
+	Animator a;
 
 	pippo() {
 		int n = rand()%5;
 		pen.setColor(n==0 ? Qt::blue : n == 1 ? Qt::red : n == 2 ? Qt::green : n == 3 ? Qt::magenta : Qt::yellow);
 		h = (w = 5+rand()%20);
-	}
-
-	void setPix(QPixmap &p) {
-		qp = p;
+		a.setAnimatable(TextureManager::getInstance().getAnimatable(kirby_stand));
 	}
 
 
 	virtual void tick(double delta) {
+		a.tick(delta);
 		time += delta;
 		x = xo + A * cos(2 * M_PI * f * time);
 		y = yo + A * sin(2 * M_PI * f * time);
@@ -42,11 +38,11 @@ public:
 	
 	virtual void render(QGraphicsScene& scene) {
 		
-		QGraphicsPixmapItem* pm = scene.addPixmap(qp);
+		QGraphicsPixmapItem* pm = scene.addPixmap(a.getCurrentPixmap());
 		pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
 		pm->setFlag(QGraphicsItem::ItemIsMovable);
 		pm->setPos(x, y);
-		pm->setScale(2);
+		pm->setScale(4);
 
 	}
 
@@ -83,14 +79,13 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 200; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800 + rand() % 50;
 		pippi->yo = 500+rand() % 50;
 		pippi->f = 1.0/i;
 		pippi->A = 405-i;
-		pippi->setPix(TextureManager::getInstance().getAnimatable(kirby_stand)->pixmaps[0]);
-
+		
 		if (i < 100 || true)
 			GameLoop::getInstance().addToTickable(pippi);
 		else pippi->tick(0.1);
