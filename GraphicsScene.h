@@ -4,10 +4,13 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
 #include <QList>
-
+struct lastmov { int x = 0; int y = 0; };
 class GraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
+
+protected:
+    lastmov lm;
 
 public:
     explicit GraphicsScene(QObject* parent = 0);

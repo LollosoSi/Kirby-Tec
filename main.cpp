@@ -12,6 +12,7 @@
 #include "objects/TickableObject.h"
 
 #include "Animator.h"
+#include "Camera.h"
 
 
 class pippo : public RenderableObject, public TickableObject {
@@ -34,13 +35,16 @@ public:
 			a.playOneShot(TextureManager::getInstance().getAnimatable((rand() % 2) ? KIRBY_WALK : KIRBY_ROLL));
 
 	}
-	
+	QGraphicsPixmapItem* pm = 0;
 	virtual void render(QGraphicsScene& scene) {
 		
-		QGraphicsPixmapItem* pm = scene.addPixmap(a.getCurrentPixmap());
-		pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
-		pm->setFlag(QGraphicsItem::ItemIsMovable);
-		pm->setPos(x, y);
+		if (!pm)
+			pm = scene.addPixmap(a.getCurrentPixmap());
+		else
+			pm->setPixmap(a.getCurrentPixmap());
+		//pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
+		//pm->setFlag(QGraphicsItem::ItemIsMovable);
+		pm->setPos(Camera::convertScreenXPos(x), Camera::convertScreenYPos(y));
 		pm->setScale(4);
 
 	}
@@ -78,14 +82,14 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 200; i++) {
+	for (int i = 0; i < 20; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800 + rand() % 50;
 		pippi->yo = 500+rand() % 50;
 		pippi->f = 0.5/i;
 		pippi->A = 405-i;
 		
-		if (i < 100 || true)
+		if (i < 10 || true)
 			GameLoop::getInstance().addToTickable(pippi);
 		else pippi->tick(0.1);
 		GameLoop::getInstance().addToRenderable(pippi);

@@ -39,9 +39,12 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 }
 
 void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects) {
-    scene->clear();
-    qDeleteAll(scene->items());
+    if(scene->items().size() == 0)
+        scene->clear();
+    
+    //qDeleteAll(scene->items());
     for (auto* item : *renderableObjects) item->render(*scene);
+    scene->update();
     emit(renderingCompleted());
 }
 

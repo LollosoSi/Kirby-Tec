@@ -33,6 +33,8 @@ set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Serializable.h;")
 set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Serializable.cpp;")
 set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/RigidBody.cpp;")
 set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/RigidBody.h;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Camera.h;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Camera.cpp;")
 # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/;")
 
 
