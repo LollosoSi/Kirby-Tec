@@ -3,31 +3,39 @@
 
 using namespace std;
 
+static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
+
+// Constructor. Load all textures in the Animatable array
 TextureManager::TextureManager() {
 	QColor kirby_file_mask = QColor(84, 110, 140);
 
-	QRect kirby_stand_1(6, 24, 16, 16);
+	QRect kirby_stand_1 = getStandardQRect(6, 24);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
 
-	textures[kirby_stand] = new Animatable{
-		new QPixmap[2]{kirbytex.copy(kirby_stand_1), kirbytex.copy(moveBy(kirby_stand_1, 1)) }, 2
+	// FORMAT: QPixmap array, float array, size
+	textures[KIRBY_STAND] = new Animatable{
+		new QPixmap[2]{kirbytex.copy(kirby_stand_1), kirbytex.copy(moveBy(kirby_stand_1, 1)) },
+		new float[2] {2.0f, 0.2f},
+		2
 	};
 
 
 }
 
+// Destructor
 TextureManager::~TextureManager() {
-	for (Animatable* a : textures) delete[] a->pixmaps;
+	for (Animatable* a : textures) { delete[] a->pixmaps; delete[] a->duration; }
 	delete [] textures;
 }
 
+// Moves selection
 QRect TextureManager::moveBy(QRect rect, int x, int y, int dx, int dy, int border_x, int border_y) {
 	rect.moveTo(QPoint(rect.x() + x * dx + x * border_x, rect.y() + y * dy + y * border_y));
 	return rect;
 };
 
-// load texture with transparency using the given color as mask
+// Load texture with transparency using the given color as mask
 QPixmap TextureManager::loadTexture(std::string file, QColor mask_color)
 {
 	QPixmap pixmap(file.c_str());
@@ -35,8 +43,9 @@ QPixmap TextureManager::loadTexture(std::string file, QColor mask_color)
 	return pixmap;
 }
 
-// replace color (useful for palette changes)
-/*
+/**  Replaces color
+* @Deprecated
+*/
 QPixmap TextureManager::replaceColor(QPixmap pix, QColor old_color, QColor new_color)
 {
 	QBitmap mask = pix.createMaskFromColor(old_color, Qt::MaskOutColor);
@@ -48,4 +57,3 @@ QPixmap TextureManager::replaceColor(QPixmap pix, QColor old_color, QColor new_c
 	p.end();
 	return pix;
 }
-*/

@@ -7,15 +7,12 @@
 #include <string>
 #include <QPainter>
 
+#include "Animator.h"
 
-struct Animatable {
-	QPixmap* pixmaps = 0;
-	unsigned int size = 0;
-};
-
+/** Elements must be caps */
 static enum {
-	kirby_stand = 0,
-	kirby_walk = 1
+	KIRBY_STAND = 0,
+	KIRBY_WALK = 1
 };
 
 
@@ -39,7 +36,7 @@ private:
 	
 
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
-	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color); // replace color (useful for palette changes)
+	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
 	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 
 	

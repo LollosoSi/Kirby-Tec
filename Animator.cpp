@@ -2,9 +2,13 @@
 
 void Animator::tick(double delta) {
 
-	if((time+=delta) > mintime){
+	if((time+=delta) > current_anim->duration[cur]) {
 		time = 0;
-		cur = cur + 1 < current_anim->size ? cur + 1 : 0;
+		if (++cur > current_anim->size) {
+			cur = 0;
+			if (next_anim)
+				setAnimatable(next_anim);
+		}
 	}
 
 }

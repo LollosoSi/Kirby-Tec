@@ -14,18 +14,13 @@
 #include "Animator.h"
 
 
-
 class pippo : public RenderableObject, public TickableObject {
 
 public:
-	QPen pen;
 	Animator a;
 
 	pippo() {
-		int n = rand()%5;
-		pen.setColor(n==0 ? Qt::blue : n == 1 ? Qt::red : n == 2 ? Qt::green : n == 3 ? Qt::magenta : Qt::yellow);
-		h = (w = 5+rand()%20);
-		a.setAnimatable(TextureManager::getInstance().getAnimatable(kirby_stand));
+		a.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
 	}
 
 

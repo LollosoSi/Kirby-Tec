@@ -3,16 +3,22 @@
 #include <QPixmap>
 
 #include "objects/TickableObject.h"
-#include "TextureManager.h"
+
+struct Animatable {
+	QPixmap* pixmaps = 0;
+	float* duration = 0;
+	unsigned int size = 0;
+};
 
 class Animator : public TickableObject {
+	Animatable* next_anim = 0;
 	Animatable* current_anim = 0;
 	unsigned int cur = 0;
-	double time = 0;
-	double mintime = 2;
+	float time = 0;
 
 public:
 	void tick(double delta);
-	void setAnimatable(Animatable* a) { current_anim = a; cur = 0; }
+	void setAnimatable(Animatable* anim) { current_anim = anim; cur = 0; }
 	QPixmap getCurrentPixmap() { return current_anim->pixmaps[cur]; }
+	void playOneShot(Animatable* anim) { current_anim = next_anim; setAnimatable(anim); }
 };
