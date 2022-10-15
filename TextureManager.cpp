@@ -9,22 +9,29 @@ static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 TextureManager::TextureManager() {
 	QColor kirby_file_mask = QColor(84, 110, 140);
 
-	QRect kirby_stand_1 = getStandardQRect(6, 24);
-	QRect kirby_walk_1 = getStandardQRect(51, 24);
+	QRect kirby_stand = getStandardQRect(6, 24);
+	QRect kirby_walk = getStandardQRect(51, 24);
+	QRect kirby_roll = getStandardQRect(6, 49);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
-		new QPixmap[4]{kirbytex.copy(kirby_walk_1), kirbytex.copy(moveBy(kirby_walk_1, 1)),kirbytex.copy(moveBy(kirby_walk_1, 2)),kirbytex.copy(moveBy(kirby_walk_1, 3)) },
+		new QPixmap[4]{kirbytex.copy(kirby_walk), kirbytex.copy(moveBy(kirby_walk, 1)),kirbytex.copy(moveBy(kirby_walk, 2)),kirbytex.copy(moveBy(kirby_walk, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		4
 	};
 
 	textures[KIRBY_STAND] = new Animatable{
-		new QPixmap[2]{kirbytex.copy(kirby_stand_1), kirbytex.copy(moveBy(kirby_stand_1, 1)) },
+		new QPixmap[2]{kirbytex.copy(kirby_stand), kirbytex.copy(moveBy(kirby_stand, 1)) },
 		new float[2] {2.0f, 0.2f},
 		2
+	};
+
+	textures[KIRBY_ROLL] = new Animatable{
+		new QPixmap[5]{kirbytex.copy(kirby_roll), kirbytex.copy(moveBy(kirby_roll, 1)), kirbytex.copy(moveBy(kirby_roll, 2)), kirbytex.copy(moveBy(kirby_roll, 3)), kirbytex.copy(moveBy(kirby_roll, 4)) },
+		new float[5] {0.06f, 0.06f, 0.06f, 0.06f, 0.06f},
+		5
 	};
 
 
@@ -32,8 +39,8 @@ TextureManager::TextureManager() {
 
 // Destructor
 TextureManager::~TextureManager() {
-	for (Animatable* a : textures) { delete[] a->pixmaps; delete[] a->duration; }
-	delete [] textures;
+	for (Animatable* a : textures) { delete[] a->pixmaps; delete[] a->duration; delete a; }
+	//delete [] textures;
 }
 
 // Moves selection

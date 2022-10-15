@@ -12,9 +12,10 @@
 /** Elements must be caps */
 static enum {
 	KIRBY_STAND = 0,
-	KIRBY_WALK = 1
+	KIRBY_WALK = 1,
+	KIRBY_ROLL = 2
 };
-
+const int TEXTURE_COUNT = 3;
 
 class TextureManager {
 
@@ -40,8 +41,7 @@ private:
 	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 
 	
-
-	Animatable* textures[2];
+	Animatable* textures[TEXTURE_COUNT];
 	
 
 

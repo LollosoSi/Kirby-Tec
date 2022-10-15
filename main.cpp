@@ -30,6 +30,9 @@ public:
 		x = xo + A * cos(2 * M_PI * f * time);
 		y = yo + A * sin(2 * M_PI * f * time);
 
+		if ((rand() % 1000) < 10)
+			a.playOneShot(TextureManager::getInstance().getAnimatable((rand() % 2) ? KIRBY_WALK : KIRBY_ROLL));
+
 	}
 	
 	virtual void render(QGraphicsScene& scene) {
@@ -79,14 +82,14 @@ int main(int argc, char *argv[]) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800 + rand() % 50;
 		pippi->yo = 500+rand() % 50;
-		pippi->f = 1.0/i;
+		pippi->f = 0.5/i;
 		pippi->A = 405-i;
 		
 		if (i < 100 || true)
 			GameLoop::getInstance().addToTickable(pippi);
 		else pippi->tick(0.1);
 		GameLoop::getInstance().addToRenderable(pippi);
-		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
  
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
