@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 	for (int i = 0; i < 20; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800 + rand() % 50;
-		pippi->yo = 500+rand() % 50;
+		pippi->yo = 100+rand() % 50;
 		pippi->f = 0.5/i;
 		pippi->A = 405-i;
 		

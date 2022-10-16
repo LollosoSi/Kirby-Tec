@@ -17,7 +17,9 @@ public:
 	static numero convertY(numero input) { return 100-input; }
 
 	static numero convertScreenXPos(numero xin) { return xin - Camera::getInstance().getX(); }
-	static numero convertScreenYPos(numero yin) { return yin - Camera::getInstance().getY(); }
+	static numero convertScreenYPos(numero yin) { return Camera::convertY(yin) - Camera::getInstance().getY(); }
+	static numero convertYtoWorldPos(numero screenyin) { return Camera::convertY(screenyin) + Camera::getInstance().getY(); }
+	static numero convertXtoWorldPos(numero screenxin) { return screenxin + Camera::getInstance().getY(); }
 
 	void tick(double delta);
 
