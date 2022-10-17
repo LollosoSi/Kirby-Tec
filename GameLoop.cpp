@@ -1,5 +1,7 @@
 #include "GameLoop.h"
 
+#include "Camera.h"
+
 GameLoop::GameLoop() {}
 
 GameLoop::~GameLoop() {
@@ -95,6 +97,7 @@ void GameLoop::render() {
 
 void GameLoop::tick(double deltatime) {
 
+	Camera::getInstance().tick(deltatime);
 	for (auto* item : this->tickableObjects) {
 		item->tick(deltatime);
 	}

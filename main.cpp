@@ -35,6 +35,8 @@ public:
 
 		if ((rand() % 1000) < 10)
 			a.playOneShot(TextureManager::getInstance().getAnimatable((rand() % 2) ? KIRBY_WALK : KIRBY_ROLL));
+		
+
 
 	}
 	QGraphicsPixmapItem* pm = 0;
@@ -79,20 +81,22 @@ int main(int argc, char *argv[]) {
     //QPushButton* button = new QPushButton("Hello world!", mw);
     //button->show();
 
+	Camera::getInstance().goTo(-100, Camera::convertY(900));
+
    
 
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 70; i++) {
-		Terrain* t = new Terrain(i * 16 * 4, 500);
+	for (int i = 0; i < 700; i++) {
+		Terrain* t = new Terrain(i * 16 * 4, 0);
 		GameLoop::getInstance().addToRenderable(t);
 	}
 
 	for (int i = 0; i < 20; i++) {
 		pippo* pippi = new pippo();
-		pippi->xo = 800 + rand() % 50;
-		pippi->yo = 100+rand() % 50;
+		pippi->xo = 800/*+ rand() % 50*/;
+		pippi->yo = 0;
 		pippi->f = 0.5/i;
 		pippi->A = 405-i;
 		
@@ -112,6 +116,7 @@ int main(int argc, char *argv[]) {
 
 	//delete p;
 
+	
     // eseguo applicazione Qt
     return a.exec();
 }

@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "objects/TickableObject.h"
+#include <iostream>
 
 /** Questa classe è un Singleto
 * Traccia le coordinate di visualizzazione
@@ -14,6 +15,8 @@ public:
 	static Camera& getInstance() { static Camera instance; return instance; }
 	~Camera() {}
 	
+	void goTo(numero x, numero y) { this->gotoX = x; this->gotoY = y; triggerGoto = true; std::cout << "Going to " << gotoX << " " << gotoY << std::endl; }
+
 	static numero convertY(numero input) { return 100-input; }
 
 	static numero convertScreenXPos(numero xin) { return xin - Camera::getInstance().getX(); }
