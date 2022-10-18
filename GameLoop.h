@@ -6,6 +6,7 @@
 // Base objects
 #include "objects/TickableObject.h"
 #include "objects/RenderableObject.h"
+#include "Serializable.h"
 
 // Handle objects
 #include <Vector>
@@ -37,15 +38,15 @@ public:
 	void recalculateFps(int target_fps);
 	//
 
-	
-
 	// Avvia / ferma loop
 	void start();
 	void stop();
 	bool running = false;
+	void saveGame(std::ostream& out);
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);
+	void addToSerializable(Serializable* s);
 
 signals:
 	void pleaseRender(std::vector<RenderableObject*>* objects);
@@ -79,10 +80,11 @@ private:
 	// Elementi da iterare
 	std::vector<TickableObject*> tickableObjects;
 	std::vector<RenderableObject*> renderableObjects;
+	std::vector<Serializable*> serializableObjects;
 	// Elementi in fila
 	std::vector<TickableObject*> tickableObjectsQueue;
 	std::vector<RenderableObject*> renderableObjectsQueue;
-	
+	std::vector<Serializable*> serializableObjectsQueue;
 
 };
 

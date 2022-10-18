@@ -22,8 +22,8 @@ void GameLoop::recalculateFps(int target_fps) {
 // TODO: Implement loop
 void GameLoop::loop() {
 
-	recalculateTicks(40);
-	recalculateFps(0);
+	recalculateTicks(20);
+	recalculateFps(75);
 
 	QTime current = QTime::currentTime();
 
@@ -74,6 +74,14 @@ void GameLoop::loop() {
 
 }
 
+void GameLoop::saveGame(std::ostream &out) {
+	char separator = '#';
+	for (auto* item : this->serializableObjects) {
+		out << item->serialize() << separator;
+	}
+
+}
+
 void GameLoop::renderingCompleted() {
 	this->last_millis_render = QTime::currentTime();
 	this->waitingForRender = false;
@@ -88,6 +96,10 @@ void GameLoop::mergeQueues() {
 	for (auto* item : this->renderableObjectsQueue)
 		this->renderableObjects.push_back(item);
 	renderableObjectsQueue.clear();
+
+	for (auto* item : this->serializableObjectsQueue)
+		this->serializableObjects.push_back(item);
+	serializableObjectsQueue.clear();
 }
 
 void GameLoop::render() {
@@ -122,4 +134,8 @@ void GameLoop::addToTickable(TickableObject* tco) {
 
 void GameLoop::addToRenderable(RenderableObject* rdo) {
 	this->renderableObjectsQueue.push_back(rdo);
+}
+
+void GameLoop::addToSerializable(Serializable* s) {
+	this->serializableObjectsQueue.push_back(s);
 }
