@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include <QOpenGLWidget>
 
 using namespace std;
 
@@ -13,6 +14,12 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     view->setGeometry(sceneRect);
     view->setCacheMode(QGraphicsView::CacheBackground);
     //view->setMouseTracking(true);
+    
+    QOpenGLWidget* qgl = new QOpenGLWidget();
+    //QSurfaceFormat format;
+    //format.setSamples(0);
+    //qgl->setFormat(format);
+    view->setViewport(qgl);
 
     this->setMouseTracking(true);
 

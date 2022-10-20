@@ -69,9 +69,11 @@ add_executable(${project} ${sorgenti})
 
 # Richiedo librerie Qt
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
+
 
 # Richiesto dalla documentazione
 qt_standard_project_setup()
 
 # Collego librerie Qt con eseguibile
-target_link_libraries(${project} Qt6::Widgets)
+target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets)
