@@ -1,3 +1,5 @@
+#include "Definitions.h"
+
 #include <QApplication>
 #include <QPushButton>
 #include <iostream>
@@ -93,7 +95,7 @@ int main(int argc, char *argv[]) {
 		GameLoop::getInstance().addToRenderable(t);
 	}
 
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 100; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800/*+ rand() % 50*/;
 		pippi->yo = 0;

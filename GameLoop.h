@@ -38,7 +38,7 @@ public:
 	void recalculateFps(int target_fps);
 	//
 
-	const char obj_separator = 'ç';
+	const char obj_separator = '@';
 
 	// Avvia / ferma loop
 	void start();

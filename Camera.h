@@ -4,6 +4,8 @@
 #include "objects/TickableObject.h"
 #include <iostream>
 
+#include "Definitions.h"
+
 /** Questa classe è un Singleto
 * Traccia le coordinate di visualizzazione
 * Converte da coordinate gioco a schermo

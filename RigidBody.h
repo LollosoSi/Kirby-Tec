@@ -1,10 +1,13 @@
 #pragma once
 
+#include "Definitions.h"
+
 #include "GameObject.h"
 #include "Vector.h"
 #include "objects/TickableObject.h"
 
 #include <QRect>
+
 
 typedef uint8_t collision;
 enum {

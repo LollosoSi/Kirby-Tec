@@ -17,7 +17,7 @@ collision RigidBody::findCollision(RigidBody& rb) {
 #define tsizeY this->collider.height()
 
 
-
+	return 0;
 
 #undef sizeX
 #undef sizeY

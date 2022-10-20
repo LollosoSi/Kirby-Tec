@@ -1,6 +1,5 @@
 #pragma once
-
-typedef int numero;
+#include "Definitions.h"
 
 class GameObject {
 
