@@ -14,12 +14,18 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     view->setGeometry(sceneRect);
     view->setCacheMode(QGraphicsView::CacheBackground);
     //view->setMouseTracking(true);
+    QSurfaceFormat format;
+    format.setSamples(16);
+    format.setSwapInterval(0);
+    format.setRenderableType(QSurfaceFormat::OpenGL);
+    format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
     
     QOpenGLWidget* qgl = new QOpenGLWidget();
-    //QSurfaceFormat format;
-    //format.setSamples(0);
-    //qgl->setFormat(format);
+    qgl->setFormat(format);
+
     view->setViewport(qgl);
+
+    std::cout << "Swap interval " << format.swapInterval();
 
     this->setMouseTracking(true);
 
