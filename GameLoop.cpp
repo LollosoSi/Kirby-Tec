@@ -22,8 +22,8 @@ void GameLoop::recalculateFps(int target_fps) {
 // TODO: Implement loop
 void GameLoop::loop() {
 
-	recalculateTicks(20);
-	recalculateFps(75);
+	//recalculateTicks(20);
+	//recalculateFps(75);
 
 	QTime current = QTime::currentTime();
 
@@ -76,9 +76,8 @@ void GameLoop::loop() {
 
 void GameLoop::saveGame(std::ostream &out) {
 	char separator = '#';
-	for (auto* item : this->serializableObjects) {
-		out << item->serialize() << separator;
-	}
+	for (auto* item : this->serializableObjects) 
+		out << item->serialize(obj_separator) << separator;
 
 }
 
@@ -110,9 +109,9 @@ void GameLoop::render() {
 void GameLoop::tick(double deltatime) {
 
 	Camera::getInstance().tick(deltatime);
-	for (auto* item : this->tickableObjects) {
+	for (auto* item : this->tickableObjects) 
 		item->tick(deltatime);
-	}
+	
 
 }
 

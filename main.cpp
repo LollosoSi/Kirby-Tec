@@ -33,7 +33,7 @@ public:
 		x = xo + A * cos(2 * M_PI * f * time);
 		y = yo + A * sin(2 * M_PI * f * time);
 
-		if ((rand() % 1000) < 10)
+		if ((rand() % 1000) < 1)
 			a.playOneShot(TextureManager::getInstance().getAnimatable((rand() % 2) ? KIRBY_WALK : KIRBY_ROLL));
 		
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 700; i++) {
+	for (int i = 0; i < 70; i++) {
 		Terrain* t = new Terrain(i * 16 * 4, 0);
 		GameLoop::getInstance().addToRenderable(t);
 	}
@@ -113,6 +113,9 @@ int main(int argc, char *argv[]) {
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
 	GameLoop::getInstance().start();
+
+	GameLoop::getInstance().recalculateTicks(60);
+	GameLoop::getInstance().recalculateFps(60);
 
 	//delete p;
 

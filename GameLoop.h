@@ -38,6 +38,8 @@ public:
 	void recalculateFps(int target_fps);
 	//
 
+	const char obj_separator = 'ç';
+
 	// Avvia / ferma loop
 	void start();
 	void stop();

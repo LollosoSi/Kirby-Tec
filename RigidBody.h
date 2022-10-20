@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Vector.h"
+#include "objects/TickableObject.h"
 
 #include <QRect>
 
@@ -13,7 +15,7 @@ enum {
 	COLLISION_LEFT = 4
 };
 
-class RigidBody : public GameObject {
+class RigidBody : public GameObject , public TickableObject {
 
 	QRect collider;
 
@@ -27,15 +29,10 @@ public:
 		setSizeY(sizeY);
 	}
 
-	/** Find collision, position is relative to passed object */
-	collision findCollision(RigidBody &rb) {
-		#define rbx rb.collider.x()
-		#define rby rb.collider.y()
-		
+	void tick(double deltatime);
 
-		#undef rbx
-		#undef rby
-	}
+	/** Find collision, position is relative to passed object */
+	collision findCollision(RigidBody& rb);
 
 	virtual void setX(numero x) override {
 		GameObject::setX(x);
@@ -47,11 +44,12 @@ public:
 		collider.setY(y);
 	}
 
-
-
 	void setSizeX(numero sizeX) { collider.setWidth(sizeX); }
 	void setSizeY(numero sizeY) { collider.setHeight(sizeY); }
 	numero getSizeX() { return collider.width(); }
 	numero getSizeY() { return collider.height(); }
+
+protected:
+	std::vector<Vector> vectors;
 
 };
