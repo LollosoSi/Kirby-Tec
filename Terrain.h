@@ -21,9 +21,9 @@ public:
 	virtual void render(QGraphicsScene& scene) {
 		if (!pm)
 			pm = scene.addPixmap(TextureManager::getInstance().getAnimatable(TERRAIN)->pixmaps[0]);
-		pm->setPos(Camera::getInstance().convertScreenXPos(getX()),
-					Camera::getInstance().convertScreenYPos(getY()));
-		pm->setScale(4);
+		//pm->setPos(Camera::getInstance().convertScreenXPos(getX()), Camera::getInstance().convertScreenYPos(getY()));
+		pm->setPos(getX(), getY());
+		//pm->setScale(4);
 	}
 
 };

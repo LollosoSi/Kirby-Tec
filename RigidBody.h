@@ -9,7 +9,6 @@
 #include <QRect>
 
 
-typedef uint8_t collision;
 enum {
 	NO_COLLISION = 0,
 	COLLISION_UP = 1,
@@ -18,9 +17,22 @@ enum {
 	COLLISION_LEFT = 4
 };
 
+typedef struct Collision{
+	numero x = 0;
+	numero y = 0;
+	uint8_t direction = NO_COLLISION;
+};
+
+typedef struct Point {
+	numero x = 0, y = 0;
+};
+
+
+
 class RigidBody : public GameObject , public TickableObject {
 
 	QRect collider;
+	numero mass = 1;
 
 public:
 	RigidBody() : RigidBody(0,0) {}
@@ -35,7 +47,7 @@ public:
 	void tick(double deltatime);
 
 	/** Find collision, position is relative to passed object */
-	collision findCollision(RigidBody& rb);
+	Collision findCollision(numero future_x, numero future_y, RigidBody& rb);
 
 	virtual void setX(numero x) override {
 		GameObject::setX(x);
@@ -51,6 +63,13 @@ public:
 	void setSizeY(numero sizeY) { collider.setHeight(sizeY); }
 	numero getSizeX() { return collider.width(); }
 	numero getSizeY() { return collider.height(); }
+
+	bool operator==(const RigidBody &rb) {
+		return this->collider == rb.collider;
+	}
+	bool operator!=(const RigidBody& rb) {
+		return !((*this) == rb);
+	}
 
 protected:
 	std::vector<Vector> vectors;

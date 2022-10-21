@@ -6,6 +6,7 @@
 // Base objects
 #include "objects/TickableObject.h"
 #include "objects/RenderableObject.h"
+#include "RigidBody.h"
 #include "Serializable.h"
 
 // Handle objects
@@ -18,6 +19,9 @@
 
 // Rendering
 #include <QGraphicsScene>
+
+// Handle Keys
+#include <QKeyEvent>
 
 
 /** Classe GameLoop
@@ -49,6 +53,11 @@ public:
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);
 	void addToSerializable(Serializable* s);
+	void addToCollidable(RigidBody* s);
+
+	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
+
+	Collision findCollisions(RigidBody& rb, numero future_x, numero future_y);
 
 signals:
 	void pleaseRender(std::vector<RenderableObject*>* objects);
@@ -58,6 +67,7 @@ public slots:
 
 protected:
 	QGraphicsScene* scene = nullptr;
+
 
 private:
 	// Relativi al singleton
@@ -83,10 +93,13 @@ private:
 	std::vector<TickableObject*> tickableObjects;
 	std::vector<RenderableObject*> renderableObjects;
 	std::vector<Serializable*> serializableObjects;
+	std::vector<RigidBody*> collidableObjects;
+
 	// Elementi in fila
 	std::vector<TickableObject*> tickableObjectsQueue;
 	std::vector<RenderableObject*> renderableObjectsQueue;
 	std::vector<Serializable*> serializableObjectsQueue;
+	std::vector<RigidBody*> collidableObjectsQueue;
 
 };
 

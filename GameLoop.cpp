@@ -7,6 +7,8 @@ GameLoop::GameLoop() {}
 GameLoop::~GameLoop() {
 	tickableObjectsQueue.clear();
 	renderableObjectsQueue.clear();
+	serializableObjects.clear();
+	collidableObjects.clear();
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -99,6 +101,10 @@ void GameLoop::mergeQueues() {
 	for (auto* item : this->serializableObjectsQueue)
 		this->serializableObjects.push_back(item);
 	serializableObjectsQueue.clear();
+
+	for (auto* item : this->collidableObjectsQueue)
+		this->collidableObjects.push_back(item);
+	collidableObjectsQueue.clear();
 }
 
 void GameLoop::render() {
@@ -137,4 +143,33 @@ void GameLoop::addToRenderable(RenderableObject* rdo) {
 
 void GameLoop::addToSerializable(Serializable* s) {
 	this->serializableObjectsQueue.push_back(s);
+}
+
+void GameLoop::addToCollidable(RigidBody* s) {
+	this->collidableObjectsQueue.push_back(s);
+}
+
+void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
+	if (e->isAutoRepeat())
+		return;
+
+	// game controls
+	if (e->key() == Qt::Key_S)
+		;
+	else if (e->key() == Qt::Key_R)
+		;
+
+	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
+}
+
+Collision GameLoop::findCollisions(RigidBody& rb, numero future_x, numero future_y)
+{
+	Collision cc;
+	for (auto* c : collidableObjects)
+		if (cc.direction == NO_COLLISION)
+			if(*c != rb)
+				cc = rb.findCollision(future_x, future_y, *c);
+			
+
+	return cc;
 }

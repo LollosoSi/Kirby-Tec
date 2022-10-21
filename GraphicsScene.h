@@ -1,9 +1,13 @@
 #pragma once
+#include <QKeyEvent>
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
 #include <QList>
+
+#include "GameLoop.h"
+
 struct lastmov { int x = 0; int y = 0; };
 class GraphicsScene : public QGraphicsScene
 {
@@ -18,6 +22,11 @@ public:
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+
+    virtual void keyPressEvent(QKeyEvent* e) override;
+    virtual void keyReleaseEvent(QKeyEvent* e) override;
+    //virtual void wheelEvent(QWheelEvent* e) override;
+
 signals:
 
 public slots:

@@ -39,6 +39,8 @@ set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Terrain.h;")
 set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Vector.cpp;")
 set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Vector.h;")
 set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Definitions.h;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Kirby.cpp;")
+set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Kirby.h;")
 # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/;")
 
 

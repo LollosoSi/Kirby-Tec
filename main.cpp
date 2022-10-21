@@ -17,6 +17,7 @@
 #include "Camera.h"
 
 #include "Terrain.h"
+#include "Kirby.h"
 
 
 class pippo : public RenderableObject, public TickableObject {
@@ -91,11 +92,12 @@ int main(int argc, char *argv[]) {
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
 	for (int i = 0; i < 70; i++) {
-		Terrain* t = new Terrain(i * 16 * 4, 0);
+		Terrain* t = new Terrain(i * 16 * 4, 100);
 		GameLoop::getInstance().addToRenderable(t);
+		GameLoop::getInstance().addToCollidable(t);
 	}
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 1; i++) {
 		pippo* pippi = new pippo();
 		pippi->xo = 800/*+ rand() % 50*/;
 		pippi->yo = 0;
@@ -108,11 +110,19 @@ int main(int argc, char *argv[]) {
 		GameLoop::getInstance().addToRenderable(pippi);
 		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
-	
-	
  
+	Kirby k(100,60);
+	GameLoop::getInstance().addToRenderable(&k);
+	//GameLoop::getInstance().addToSerializable(&k);
+	GameLoop::getInstance().addToCollidable(&k);
+	GameLoop::getInstance().addToTickable(&k);
+
+
+
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
+
+	//QObject::connect(mw->view, &QGraphicsView::ke, &GameLoop::getInstance(), &GameLoop::keyPressEvent);
 
 	GameLoop::getInstance().start();
 

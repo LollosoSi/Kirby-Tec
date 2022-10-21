@@ -5,11 +5,11 @@ class GameObject {
 
 public:
 	GameObject() : GameObject(0, 0){ }
-	GameObject(numero x, numero y) { setX(x); setY(y); }
-	virtual numero getX() { return x; }
-	virtual numero getY() { return y; }
-	virtual void setX(numero x) { this->x = x; }
-	virtual void setY(numero y) { this->y = y; }
+	GameObject(const numero x, const numero y) { setX(x); setY(y); }
+	virtual const numero getX() { return x; }
+	virtual const numero getY() { return y; }
+	virtual void setX(const numero x) { this->x = x; }
+	virtual void setY(const numero y) { this->y = y; }
 
 protected:
 	numero x;

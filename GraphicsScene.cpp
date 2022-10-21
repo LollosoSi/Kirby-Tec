@@ -44,3 +44,13 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     qDebug() << Q_FUNC_INFO << me->scenePos();
     QGraphicsScene::mouseReleaseEvent(me);
 }
+
+void GraphicsScene::keyPressEvent(QKeyEvent* e)
+{
+    GameLoop::getInstance().keyPressEvent(e);
+}
+
+void GraphicsScene::keyReleaseEvent(QKeyEvent* e)
+{
+    GameLoop::getInstance().keyPressEvent(e, false);
+}

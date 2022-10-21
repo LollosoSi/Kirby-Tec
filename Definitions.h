@@ -1,3 +1,3 @@
 #pragma once
 
-typedef int numero;
+typedef double numero;
