@@ -154,10 +154,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		return;
 
 	// game controls
-	if (e->key() == Qt::Key_S)
+	/*if (e->key() == Qt::Key_S)
 		;
 	else if (e->key() == Qt::Key_R)
-		;
+		;*/
 
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }

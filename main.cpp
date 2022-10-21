@@ -52,7 +52,7 @@ public:
 		//pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
 		//pm->setFlag(QGraphicsItem::ItemIsMovable);
 		pm->setPos(Camera::convertScreenXPos(x), Camera::convertScreenYPos(y));
-		pm->setScale(4);
+		pm->setScale(scale);
 
 	}
 
@@ -68,7 +68,6 @@ public:
 QPixmap* p = NULL;
 
 int main(int argc, char *argv[]) {
-   
 
     // istanzio applicazione Qt
     QApplication a(argc, argv);
@@ -84,15 +83,15 @@ int main(int argc, char *argv[]) {
     //QPushButton* button = new QPushButton("Hello world!", mw);
     //button->show();
 
-	Camera::getInstance().goTo(-100, Camera::convertY(900));
+	//Camera::getInstance().goTo(-100, Camera::convertY(900));
 
    
 
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 70; i++) {
-		Terrain* t = new Terrain(i * 16 * 4, 100);
+	for (int i = 0; i < 1; i++) {
+		Terrain* t = new Terrain(i * 16 * scale, 0);
 		GameLoop::getInstance().addToRenderable(t);
 		GameLoop::getInstance().addToCollidable(t);
 	}
@@ -111,12 +110,14 @@ int main(int argc, char *argv[]) {
 		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
  
-	Kirby k(100,60);
+	Kirby k = Kirby(0, 900);
 	GameLoop::getInstance().addToRenderable(&k);
 	//GameLoop::getInstance().addToSerializable(&k);
 	GameLoop::getInstance().addToCollidable(&k);
 	GameLoop::getInstance().addToTickable(&k);
-
+	std::cout << "Kirby pos: " << k.getX() << " : " << k.getY() << "\n";
+	std::cout << "Kirby size: " << k.getSizeX() << " : " << k.getSizeY() << "\n";
+	//std::cout << "Kirby collider: " << Camera::convertScreenXPos(k.getCollider().x) << " : " << Camera::convertScreenYPos(k.getCollider().y) << "\n";
 
 
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
@@ -132,6 +133,7 @@ int main(int argc, char *argv[]) {
 	//delete p;
 
 	
+
     // eseguo applicazione Qt
     return a.exec();
 }

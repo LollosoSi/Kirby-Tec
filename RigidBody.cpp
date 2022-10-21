@@ -1,6 +1,6 @@
 #include "RigidBody.h"
+
 #include "GameLoop.h"
-#include <math.h>
 
 void RigidBody::tick(double deltatime){
 #define tx getX()
@@ -67,12 +67,12 @@ numero pitagoricDistance(numero x, numero y){
 Collision RigidBody::findCollision(numero future_x, numero future_y, RigidBody& rb) {
 #define rbx rb.collider.x()
 #define rby rb.collider.y()
-#define sizeX rb.collider.width()
-#define sizeY rb.collider.height()
+#define sizeX rb.getSizeX()
+#define sizeY rb.getSizeY()
 #define trbx this->collider.x()
 #define trby this->collider.y()
-#define tsizeX this->collider.width()
-#define tsizeY this->collider.height()
+#define tsizeX this->getSizeX()
+#define tsizeY this->getSizeY()
 
 	Collision col;
 

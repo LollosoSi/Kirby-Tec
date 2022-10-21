@@ -10,7 +10,7 @@
 #include "Animator.h"
 
 /** Elements must be caps */
-static enum {
+enum {
 	KIRBY_STAND = 0,
 	KIRBY_WALK = 1,
 	KIRBY_ROLL = 2,

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Definitions.h"
-
 #include "GameObject.h"
 #include "Vector.h"
 #include "objects/TickableObject.h"
+#include <math.h>
+
+#include <iostream>
 
 #include <QRect>
 
@@ -17,61 +18,76 @@ enum {
 	COLLISION_LEFT = 4
 };
 
-typedef struct Collision{
+struct Collision{
 	numero x = 0;
 	numero y = 0;
 	uint8_t direction = NO_COLLISION;
 };
 
-typedef struct Point {
+struct Point {
 	numero x = 0, y = 0;
+};
+
+class customRect {
+public:
+	numero x = 0, y = 0;
+	numero width = 0, height = 0;
+
+	const numero getWidth() const { return width; }
+	const numero getHeight() const { return height; }
+	
+	bool operator== (const customRect &r) {
+		return (!(x - r.x) && !(y - r.y) && (getWidth() == r.getWidth()) && (getHeight() == r.getHeight()));
+	}
 };
 
 
 
 class RigidBody : public GameObject , public TickableObject {
 
-	QRect collider;
-	numero mass = 1;
-
 public:
-	RigidBody() : RigidBody(0,0) {}
-	RigidBody(numero x, numero y) : RigidBody(x, y, 0, 0) {}
-	RigidBody(numero x, numero y, numero sizeX, numero sizeY) : GameObject(x, y) {
-		setX(getX());
-		setY(getY());
-		setSizeX(sizeX);
-		setSizeY(sizeY);
+	RigidBody(const numero x, const numero y, const numero sizeX, const numero sizeY) : GameObject(x,y) {
+		std::cout << "Setting pos " << x << ":" << y << "\n";
+		setSizeX(sizeX * scale);
+		setSizeY(sizeY * scale);
+		setX(x);
+		setY(y);
 	}
+	RigidBody(const numero x, const numero y) : RigidBody(x, y, 16, 16) {}
+	RigidBody() : RigidBody(0, 0) {}
 
 	void tick(double deltatime);
 
 	/** Find collision, position is relative to passed object */
 	Collision findCollision(numero future_x, numero future_y, RigidBody& rb);
 
-	virtual void setX(numero x) override {
+	virtual void setX(const numero x) override {
 		GameObject::setX(x);
-		collider.setX(x);
+		collider.setRect(x, getY(), getSizeX(), getSizeY());
 	}
 
-	virtual void setY(numero y) override {
+	virtual void setY(const numero y) override {
 		GameObject::setY(y);
-		collider.setY(y);
+		collider.setRect(getX(), y, getSizeX(), getSizeY());
 	}
 
-	void setSizeX(numero sizeX) { collider.setWidth(sizeX); }
-	void setSizeY(numero sizeY) { collider.setHeight(sizeY); }
-	numero getSizeX() { return collider.width(); }
-	numero getSizeY() { return collider.height(); }
+	void setSizeX(const numero sizeX) { collider.setRect(getX(), getY(), sizeX, getSizeY()); }
+	void setSizeY(const numero sizeY) { collider.setRect(getX(), getY(), getSizeX(), sizeY); }
+	const numero getSizeX() { return collider.size().width(); }
+	const numero getSizeY() { return collider.size().height(); }
 
 	bool operator==(const RigidBody &rb) {
-		return this->collider == rb.collider;
+		return collider == rb.collider;
 	}
 	bool operator!=(const RigidBody& rb) {
 		return !((*this) == rb);
 	}
 
-protected:
+	virtual QRect getCollider() { return collider; }
+
+public:
 	std::vector<Vector> vectors;
+	QRect collider;
+	numero mass = 1;
 
 };

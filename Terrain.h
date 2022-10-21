@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Definitions.h"
+
 #include "GameObject.h"
 #include "RigidBody.h"
 #include "objects/RenderableObject.h"
@@ -11,6 +13,7 @@
 class Terrain : public RigidBody, public RenderableObject {
 
 	QGraphicsPixmapItem* pm = 0;
+	QGraphicsItem* hitbox = 0;
 
 public:
 	Terrain() : Terrain(0, 0) {}
@@ -18,12 +21,21 @@ public:
 
 	Terrain(numero x, numero y) : RigidBody(x, y) {}
 
+	
+
 	virtual void render(QGraphicsScene& scene) {
-		if (!pm)
+		if (!pm) {
 			pm = scene.addPixmap(TextureManager::getInstance().getAnimatable(TERRAIN)->pixmaps[0]);
-		//pm->setPos(Camera::getInstance().convertScreenXPos(getX()), Camera::getInstance().convertScreenYPos(getY()));
-		pm->setPos(getX(), getY());
-		//pm->setScale(4);
+			pm->setScale(scale);
+			QPen qp;
+			qp.setColor(Qt::red);
+			hitbox = scene.addRect(QRect(collider.x(), collider.y(), getSizeX(), getSizeY()), qp);
+		}
+		pm->setPos(Camera::getInstance().convertScreenXPos(getX()), Camera::getInstance().convertScreenYPos(getY()));
+		hitbox->setPos(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()));
+
+		//pm->setPos(getX(), getY());
+		
 	}
 
 };
