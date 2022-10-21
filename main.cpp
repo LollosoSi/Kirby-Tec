@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
 	GameLoop::getInstance().start();
 
 	GameLoop::getInstance().recalculateTicks(60);
-	GameLoop::getInstance().recalculateFps(500);
+	GameLoop::getInstance().recalculateFps(144);
 
 	//delete p;
 
