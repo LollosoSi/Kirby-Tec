@@ -76,6 +76,12 @@ public:
 	const numero getSizeX() { return collider.size().width(); }
 	const numero getSizeY() { return collider.size().height(); }
 
+	void setOffsetX(const numero ox) { this->offsetX = ox; }
+	void setOffsetY(const numero oy) { this->offsetY = oy; }
+	numero getOffsetX() { return this->offsetX; }
+	numero getOffsetY() { return this->offsetY; }
+
+
 	bool operator==(const RigidBody &rb) {
 		return collider == rb.collider;
 	}
@@ -84,6 +90,8 @@ public:
 	}
 
 	virtual QRect getCollider() { return collider; }
+
+	numero offsetX = 0, offsetY = 0;
 
 public:
 	std::vector<Vector> vectors;

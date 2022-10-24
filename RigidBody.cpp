@@ -6,7 +6,7 @@ void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
 
-	numero futurex = tx + (100*deltatime), futurey = ty - (100*deltatime);
+	numero futurex = tx, futurey = ty - (100*deltatime);
 
 	Collision cs = GameLoop::getInstance().findCollisions(*this, futurex, futurey);
 	if (cs.direction != NO_COLLISION) {

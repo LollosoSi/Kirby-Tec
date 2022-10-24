@@ -90,8 +90,8 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
-	for (int i = 0; i < 1; i++) {
-		Terrain* t = new Terrain(i * 16 * scale, 0);
+	for (int i = 0; i < 5; i++) {
+		Terrain* t = new Terrain(i * 16 * scale, 16*i*scale);
 		GameLoop::getInstance().addToRenderable(t);
 		GameLoop::getInstance().addToCollidable(t);
 	}
@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
  
-	Kirby k = Kirby(0, 900);
+	Kirby k = Kirby(16*scale*3, 900);
 	GameLoop::getInstance().addToRenderable(&k);
 	//GameLoop::getInstance().addToSerializable(&k);
 	GameLoop::getInstance().addToCollidable(&k);
