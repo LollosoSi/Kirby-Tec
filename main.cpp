@@ -90,8 +90,10 @@ int main(int argc, char *argv[]) {
 
     //QObject::connect(button, SIGNAL(clicked()), &a, SLOT(quit()));
 
+
 	for (int i = 0; i < 1; i++) {
 		Terrain* t = new Terrain(i * 16 * scale, 500);
+		
 		GameLoop::getInstance().addToRenderable(t);
 		GameLoop::getInstance().addToCollidable(t);
 	}

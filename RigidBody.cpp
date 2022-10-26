@@ -10,6 +10,7 @@ void RigidBody::tick(double deltatime){
 
 	numero futurex = tx + (vx*deltatime), futurey = ty - (vy*deltatime);
 
+
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this, futurex, futurey);
 	
 	PB::Vec2Df cp, cn;

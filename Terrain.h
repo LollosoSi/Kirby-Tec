@@ -19,7 +19,7 @@ public:
 	Terrain() : Terrain(0, 0) {}
 	~Terrain() {}
 
-	Terrain(numero x, numero y) : RigidBody(x, y) {}
+	Terrain(numero x, numero y) : RigidBody(x, y, 16, 10) {}
 
 	
 
