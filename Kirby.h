@@ -28,6 +28,7 @@ public:
 
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsItem* hitbox = 0;
+	QGraphicsItem* pivot = 0;
 
 	//virtual QRectF getCollider() { return pm->boundingRect(); }
 	
@@ -37,8 +38,11 @@ public:
 			pm->setScale(scale);
 			QPen qp;
 			qp.setColor(Qt::blue);
-			hitbox = scene.addRect(QRect(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()), getSizeX(), getSizeY()), qp);
+			QRect posrect = QRect(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()), getSizeX(), getSizeY());
+			QRect possignalrect = QRect(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()), 2*scale,2*scale);
 
+			hitbox = scene.addRect(posrect, qp);
+			pivot = scene.addEllipse(possignalrect, qp);
 		}else
 			pm->setPixmap(animator.getCurrentPixmap());
 		//pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
@@ -46,6 +50,7 @@ public:
 		pm->setPos(Camera::convertScreenXPos(getX()), Camera::convertScreenYPos(getY()-getSizeY()));
 		//pm->setPos(getX(), getY());
 		hitbox->setPos(Camera::convertScreenXPos(getCollider().x()), Camera::convertScreenYPos(getCollider().y()));
+		pivot->setPos(Camera::convertScreenXPos(getCollider().x()), Camera::convertScreenYPos(getCollider().y()));
 
 		std::cout << "Kirby size: " << getSizeX() << " : " << getSizeY() << "\n";
 

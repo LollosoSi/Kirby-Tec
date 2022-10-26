@@ -21,7 +21,7 @@ public:
 
 	Terrain(numero x, numero y) : RigidBody(x, y, 16, 10) {}
 
-	
+	QGraphicsItem* pivot;
 
 	virtual void render(QGraphicsScene& scene) {
 		if (!pm) {
@@ -30,9 +30,13 @@ public:
 			QPen qp;
 			qp.setColor(Qt::red);
 			hitbox = scene.addRect(QRect(collider.x(), collider.y(), getSizeX(), getSizeY()), qp);
+
+			QRect possignalrect = QRect(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()), 2 * scale, 2 * scale);
+			pivot = scene.addEllipse(possignalrect, qp);
 		}
 		pm->setPos(Camera::getInstance().convertScreenXPos(getX()), Camera::getInstance().convertScreenYPos(getY()));
 		hitbox->setPos(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()));
+		pivot->setPos(Camera::convertScreenXPos(collider.x()), Camera::convertScreenYPos(collider.y()));
 
 		//pm->setPos(getX(), getY());
 		
