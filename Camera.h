@@ -19,12 +19,15 @@ public:
 	
 	void goTo(numero x, numero y) { this->gotoX = x; this->gotoY = y; triggerGoto = true; std::cout << "Going to " << gotoX << " " << gotoY << std::endl; }
 
-	static numero convertY(numero input) { return 700-input; }
+	static numero convertY(numero input) { return input; }
 
+	
 	static numero convertScreenXPos(numero xin) { return xin - Camera::getInstance().getX(); }
 	static numero convertScreenYPos(numero yin) { return Camera::convertY(yin) - Camera::getInstance().getY(); }
 	static numero convertYtoWorldPos(numero screenyin) { return Camera::convertY(screenyin) + Camera::getInstance().getY(); }
 	static numero convertXtoWorldPos(numero screenxin) { return screenxin + Camera::getInstance().getY(); }
+	
+
 
 	void tick(double delta);
 

@@ -1,12 +1,11 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Vector.h"
 #include "objects/TickableObject.h"
 #include <math.h>
 
 #include <iostream>
-
+#include "Vec2D.h"
 #include <QRect>
 
 
@@ -83,10 +82,15 @@ public:
 		return !((*this) == rb);
 	}
 
+	double vx = 0, vy = -100;
+
 	virtual QRect getCollider() { return collider; }
+	virtual PB::RectF getColliderRectF() { return PB::RectF{ PB::Vec2Df{getX(), getY()}, PB::Vec2Df{getSizeX(), getSizeY()}}; }
+	virtual PB::Vec2Df getVelocity() { return PB::Vec2Df{vx, vy}; }
+
 
 public:
-	std::vector<Vector> vectors;
+	//std::vector<Vector> vectors;
 	QRect collider;
 	numero mass = 1;
 

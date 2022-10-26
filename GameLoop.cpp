@@ -1,6 +1,7 @@
 #include "GameLoop.h"
-
+#include "Vec2D.h"
 #include "Camera.h"
+#include "CollisionDetection.h"
 
 GameLoop::GameLoop() {}
 
@@ -162,14 +163,21 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }
 
-Collision GameLoop::findCollisions(RigidBody& rb, numero future_x, numero future_y)
-{
-	Collision cc;
-	for (auto* c : collidableObjects)
-		if (cc.direction == NO_COLLISION)
-			if(*c != rb)
-				cc = rb.findCollision(future_x, future_y, *c);
-			
+std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* rb, numero future_x, numero future_y) {
 
-	return cc;
+	PB::Vec2Df cp, cn;
+	double ct = 0, min_t = INFINITY;
+	std::vector<std::pair<RigidBody*, double>> sortedByContactTime;
+	for (RigidBody* obj : collidableObjects)
+		if(obj != rb)
+		if (DynamicRectVsRect(rb->getColliderRectF(), rb->getVelocity(), obj->getColliderRectF(), cp, cn, ct))
+			sortedByContactTime.push_back({ obj, ct });
+	std::sort(sortedByContactTime.begin(), sortedByContactTime.end(),
+		[this](const std::pair<RigidBody*, double>& a, const std::pair<RigidBody*, double>& b)
+		{
+			// if contact time is the same, give priority to nearest object
+			return a.second != b.second ? a.second < b.second : 0;
+		});
+
+	return sortedByContactTime;
 }

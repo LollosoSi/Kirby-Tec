@@ -1,27 +1,37 @@
 #include "RigidBody.h"
 
 #include "GameLoop.h"
+#include "CollisionDetection.h"
+
 
 void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
 
-	numero futurex = tx + (100*deltatime), futurey = ty - (100*deltatime);
+	numero futurex = tx + (vx*deltatime), futurey = ty - (vy*deltatime);
 
-	Collision cs = GameLoop::getInstance().findCollisions(*this, futurex, futurey);
-	if (cs.direction != NO_COLLISION) {
-		futurex = tx;
-		futurey = ty;
+	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this, futurex, futurey);
+	
+	PB::Vec2Df cp, cn;
+	double ct = 0, min_t = INFINITY;
+	// solve the collisions in correct order 
+	for (auto& obj: cs)
+		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct))
+		{
 
-		std::cout << "Collision at: " << cs.x << " : " << cs.y << "\n";
+			return;
+		}
 
-	} else {
-		setX(futurex);
-		setY(futurey);
-	}
+	setX(futurex);
+	setY(futurey);
 
 #undef tx
 #undef ty
+}
+
+
+void solve_collisions() {
+
 }
 
 /** Find if line mx + q intersects p1 and p2

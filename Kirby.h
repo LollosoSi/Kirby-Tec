@@ -43,7 +43,7 @@ public:
 			pm->setPixmap(animator.getCurrentPixmap());
 		//pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
 		//pm->setFlag(QGraphicsItem::ItemIsMovable);
-		pm->setPos(Camera::convertScreenXPos(getX()), Camera::convertScreenYPos(getY()));
+		pm->setPos(Camera::convertScreenXPos(getX()), Camera::convertScreenYPos(getY()-getSizeY()));
 		//pm->setPos(getX(), getY());
 		hitbox->setPos(Camera::convertScreenXPos(getCollider().x()), Camera::convertScreenYPos(getCollider().y()));
 
