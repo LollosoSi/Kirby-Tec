@@ -82,19 +82,11 @@ public:
 	numero getOffsetX() { return this->offsetX; }
 	numero getOffsetY() { return this->offsetY; }
 
-
-	bool operator==(const RigidBody &rb) {
-		return collider == rb.collider;
-	}
-	bool operator!=(const RigidBody& rb) {
-		return !((*this) == rb);
-	}
-
 	double vx = 0, vy = -100;
 
 	virtual QRect getCollider() { return collider; }
 	virtual PB::RectF getColliderRectF() { return PB::RectF{ PB::Vec2Df{getX(), getY()}, PB::Vec2Df{getSizeX(), getSizeY()}}; }
-	virtual PB::Vec2Df getVelocity() { return PB::Vec2Df{vx, Camera::convertY(vy)}; }
+	virtual PB::Vec2Df getVelocity() { return PB::Vec2Df{vx, (vy)}; }
 
 
 	numero offsetX = 0, offsetY = 0;

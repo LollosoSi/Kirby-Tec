@@ -24,6 +24,8 @@ public:
 		animator.tick(deltatime);
 		RigidBody::tick(deltatime);
 		//setY(getY()+(250*deltatime));
+
+		Camera::getInstance().goTo(getX()-200, -200+Camera::convertY(getY()));
 	}
 
 	QGraphicsPixmapItem* pm = 0;
