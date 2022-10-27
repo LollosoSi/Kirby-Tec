@@ -19,7 +19,7 @@ public:
 	
 	void goTo(numero x, numero y) { this->gotoX = x; this->gotoY = y; triggerGoto = true; std::cout << "Going to " << gotoX << " " << gotoY << std::endl; }
 
-	static numero convertY(numero input) { return input; }
+	static numero convertY(numero input) { return -input; }
 
 	
 	static numero convertScreenXPos(numero xin) { return xin - Camera::getInstance().getX(); }

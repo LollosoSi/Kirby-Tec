@@ -8,10 +8,10 @@ void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
 
-	numero futurex = tx + (vx*deltatime), futurey = ty - (vy*deltatime);
+	numero futurex = tx + (vx*deltatime), futurey = ty + (vy*deltatime);
 
 
-	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this, futurex, futurey);
+	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 	
 	PB::Vec2Df cp, cn;
 	double ct = 0, min_t = INFINITY;
@@ -19,7 +19,7 @@ void RigidBody::tick(double deltatime){
 	for (auto& obj: cs)
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct))
 		{
-
+			setX( tx+(100*deltatime) );
 			return;
 		}
 

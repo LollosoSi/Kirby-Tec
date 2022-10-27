@@ -57,7 +57,7 @@ public:
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
-	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb, numero future_x, numero future_y);
+	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
 
 signals:
 	void pleaseRender(std::vector<RenderableObject*>* objects);

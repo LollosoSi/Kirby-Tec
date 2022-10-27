@@ -8,6 +8,8 @@
 #include "Vec2D.h"
 #include <QRect>
 
+#include "Camera.h"
+
 
 enum {
 	NO_COLLISION = 0,
@@ -92,7 +94,7 @@ public:
 
 	virtual QRect getCollider() { return collider; }
 	virtual PB::RectF getColliderRectF() { return PB::RectF{ PB::Vec2Df{getX(), getY()}, PB::Vec2Df{getSizeX(), getSizeY()}}; }
-	virtual PB::Vec2Df getVelocity() { return PB::Vec2Df{vx, vy}; }
+	virtual PB::Vec2Df getVelocity() { return PB::Vec2Df{vx, Camera::convertY(vy)}; }
 
 
 	numero offsetX = 0, offsetY = 0;
