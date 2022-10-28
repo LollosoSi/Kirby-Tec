@@ -87,7 +87,7 @@ public:
 			}; 
 	}
 
-	virtual PB::Vec2Df getVelocity() const { return PB::Vec2Df{vx, (vy)}; }
+	virtual PB::Vec2Df getVelocity() const { return PB::Vec2Df{vx, vy}; }
 
 
 public:
