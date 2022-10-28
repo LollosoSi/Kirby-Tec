@@ -7,50 +7,76 @@ project(${project})
 # CMake 3.4 come suggerito da CMake
 cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
 
+#if(POLICY CMP0076)
+#    cmake_policy(SET CMP0076 NEW)
+#endif()
+
+# Richiedo librerie Qt
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
+
+# Richiesto dalla documentazione
+qt_standard_project_setup()
+
+
+
+# Collega la cartella con le sprite al progetto altrimenti non si possono vedere le sprite
 file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sprites"
         "${CMAKE_CURRENT_BINARY_DIR}/sprites" SYMBOLIC)
+
+# Collega la cartella con i suoni al progetto
+file(CREATE_LINK "${PROJECT_SOURCE_DIR}/Kirby's Adventure (NES) Sounds"
+        "${CMAKE_CURRENT_BINARY_DIR}/Kirby's Adventure (NES) Sounds" SYMBOLIC)
+
+# Aggiungo eseguibile
+add_executable(${project} ${sorgenti})
+
+# Collego librerie Qt con eseguibile
+target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets)
 
 # Raccolta sorgenti
 # Il file globbing è sconsigliato dalla documentazione. Serve una nuova soluzione
 # file(GLOB sorgenti *.h *.cpp *.qrc)
-# La soluzione è questa: Per ogni file
-# In Caso di set in subdirectory: # set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp " PARENT_SCOPE)
-# In questo file:
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/main.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/GameLoop.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/GraphicsScene.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Animator.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Animator.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/GameObject.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/GameObject.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Serializable.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Serializable.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/RigidBody.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/RigidBody.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Camera.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Camera.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Terrain.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Definitions.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Kirby.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Kirby.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/CollisionDetection.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/CollisionDetection.cpp;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Vec2D.h;")
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/Direction.h;")
-# set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/;")
+# La soluzione è questa: 
+target_sources(${project}
+	PRIVATE
+		main.cpp
+)
+target_sources(${project}
+	PRIVATE
+		MainWindow.cpp
+		MainWindow.h
+		GameLoop.cpp
+		GameLoop.h
+		GraphicsScene.h
+		GraphicsScene.cpp
+		TextureManager.h
+		TextureManager.cpp
+		Camera.h
+		Camera.cpp
+		Definitions.h
+		RenderableObject.h
+		TickableObject.h
+		GameObject.cpp
+		GameObject.h
+		Terrain.h
+		Serializable.h
+		Serializable.cpp
+		RigidBody.cpp
+		RigidBody.h
+		Animator.h
+		Animator.cpp
+		CollisionDetection.h
+		CollisionDetection.cpp
+		Vec2D.h
+		Direction.h
+		Kirby.h
+		Kirby.cpp
+)
 
 
-message(STATUS "${sorgenti}")
-
-# Includi una directory (placeholder per quando servirà)
-# add_subdirectory("src")
-add_subdirectory("objects")
+# Aggiungi una subdirectory
+#add_subdirectory(classes)
 
 # Imposto standard C++17 richiesto da Qt e flags per fermare la build al primo errore
 set(CMAKE_CXX_STANDARD 17)
@@ -68,16 +94,4 @@ set(CMAKE_AUTOUIC ON)
 # Suggerito dal compilatore
 set(SKIP_AUTOMOC ON)
 
-# Aggiungo eseguibile
-add_executable(${project} ${sorgenti})
 
-# Richiedo librerie Qt
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
-find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
-
-
-# Richiesto dalla documentazione
-qt_standard_project_setup()
-
-# Collego librerie Qt con eseguibile
-target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets)

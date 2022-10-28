@@ -1,1 +1,0 @@
-set(sorgenti "${sorgenti}${CMAKE_CURRENT_SOURCE_DIR}/RenderableObject.h;${CMAKE_CURRENT_SOURCE_DIR}/Camera.h;${CMAKE_CURRENT_SOURCE_DIR}/TickableObject.h;${CMAKE_CURRENT_SOURCE_DIR}/Camera.cpp;")

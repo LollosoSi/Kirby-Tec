@@ -1,7 +1,7 @@
 #pragma once
 
-#include "objects/RenderableObject.h"
-#include "objects/TickableObject.h"
+#include "RenderableObject.h"
+#include "TickableObject.h"
 #include "TextureManager.h"
 #include "RigidBody.h"
 

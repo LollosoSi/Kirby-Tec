@@ -2,7 +2,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "objects/TickableObject.h"
+#include "TickableObject.h"
 #include <iostream>
 
 

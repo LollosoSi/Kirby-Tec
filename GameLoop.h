@@ -4,8 +4,8 @@
 #include <iostream>
 
 // Base objects
-#include "objects/TickableObject.h"
-#include "objects/RenderableObject.h"
+#include "TickableObject.h"
+#include "RenderableObject.h"
 #include "RigidBody.h"
 #include "Serializable.h"
 

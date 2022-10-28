@@ -10,8 +10,8 @@
 #include "GameLoop.h"
 #include "TextureManager.h"
 
-#include "objects/RenderableObject.h"
-#include "objects/TickableObject.h"
+#include "RenderableObject.h"
+#include "TickableObject.h"
 
 #include "Animator.h"
 #include "Camera.h"

@@ -2,7 +2,7 @@
 
 #include <QPixmap>
 
-#include "objects/TickableObject.h"
+#include "TickableObject.h"
 
 struct Animatable {
 	QPixmap* pixmaps = 0;

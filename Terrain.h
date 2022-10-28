@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 #include "RigidBody.h"
-#include "objects/RenderableObject.h"
+#include "RenderableObject.h"
 #include "GraphicsScene.h"
 #include <QGraphicsPixmapItem>
 #include "TextureManager.h"

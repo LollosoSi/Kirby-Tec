@@ -7,7 +7,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QStyle>
-#include "objects/RenderableObject.h"
+#include "RenderableObject.h"
 #include <QCloseEvent>
 #include "GameLoop.h"
 #include "GraphicsScene.h"
