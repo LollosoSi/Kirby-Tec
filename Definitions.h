@@ -1,4 +1,3 @@
 #pragma once
 
-typedef double numero;
-static numero scale = 10;
+static double scale = 7;

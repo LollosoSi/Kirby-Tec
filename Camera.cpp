@@ -4,7 +4,7 @@
 
 void Camera::tick(double delta) {
 	if (triggerGoto) {
-		numero xdist = gotoX-getX(), ydist = gotoY-getY();
+		double xdist = gotoXY.x() - getX(), ydist = gotoXY.y() - getY();
 		bool xinrange = abs(xdist) < 4, yinrange = abs(ydist) < 4;
 		if (xinrange && yinrange)
 			triggerGoto = false;

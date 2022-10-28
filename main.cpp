@@ -42,16 +42,19 @@ public:
 
 
 	}
+
+	virtual QPixmap getTexture() { return a.getCurrentPixmap(); }
+
 	QGraphicsPixmapItem* pm = 0;
 	virtual void render(QGraphicsScene& scene) {
 		
 		if (!pm)
-			pm = scene.addPixmap(a.getCurrentPixmap());
+			pm = scene.addPixmap(getTexture());
 		else
 			pm->setPixmap(a.getCurrentPixmap());
 		//pm->setShapeMode(QGraphicsPixmapItem::MaskShape);
 		//pm->setFlag(QGraphicsItem::ItemIsMovable);
-		pm->setPos(Camera::convertScreenXPos(x), Camera::convertScreenYPos(y));
+		pm->setPos(Camera::worldToScreen(QPoint(x,y)));
 		pm->setScale(scale);
 
 	}
@@ -92,7 +95,7 @@ int main(int argc, char *argv[]) {
 
 
 	for (int i = 0; i < 10; i++) {
-		Terrain* t = new Terrain(i * 16 * scale, 0-(scale*i*16));
+		Terrain* t = new Terrain(QPoint(i * 16 * scale, 0+(scale*i*16)));
 		
 		GameLoop::getInstance().addToRenderable(t);
 		GameLoop::getInstance().addToCollidable(t);
@@ -112,7 +115,8 @@ int main(int argc, char *argv[]) {
 		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
  
-	Kirby k = Kirby(100, 500);
+	Kirby k = Kirby(QPoint(100.0, -100.0));
+
 	GameLoop::getInstance().addToRenderable(&k);
 	//GameLoop::getInstance().addToSerializable(&k);
 	GameLoop::getInstance().addToCollidable(&k);
@@ -133,8 +137,6 @@ int main(int argc, char *argv[]) {
 	GameLoop::getInstance().recalculateFps(144);
 
 	//delete p;
-
-	
 
     // eseguo applicazione Qt
     return a.exec();
