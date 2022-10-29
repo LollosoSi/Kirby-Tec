@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
 
 
 	for (int i = 0; i < 10; i++) {
-		Terrain* t = new Terrain(QPoint(i * 16 * scale, 0+(scale*i*16)));
+		Terrain* t = new Terrain(QPoint(i * 16 * scale, 0));
 		
 		GameLoop::getInstance().addToRenderable(t);
 		GameLoop::getInstance().addToCollidable(t);
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
 		pippi->a.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 	}
  
-	Kirby k = Kirby(QPoint(100.0, -100.0));
+	Kirby k = Kirby(QPoint(0.0, -600.0));
 
 	GameLoop::getInstance().addToRenderable(&k);
 	//GameLoop::getInstance().addToSerializable(&k);

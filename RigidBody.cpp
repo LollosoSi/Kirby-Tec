@@ -6,6 +6,7 @@
 
 void RigidBody::render(QGraphicsScene& scene) {
 
+	PB::RectF rf = getColliderRectF();
 	
 	 QPen qp;
 	 qp.setColor(Qt::red);
@@ -21,10 +22,11 @@ void RigidBody::render(QGraphicsScene& scene) {
 
 	pm->setPos(Camera::worldToScreen(QPoint(getX(), getY()) ) );
 
+	//scene.add
 
-	QPoint p = Camera::worldToScreen(QPoint(getCollider().x(), getCollider().y()));
+	QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
 	scene.removeItem(hitbox);
-	hitbox = scene.addRect(QRect(p.x(), p.y(), getSizeX(), getSizeY()), qp);
+	hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
 
 }
 
@@ -38,13 +40,13 @@ void RigidBody::tick(double deltatime){
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 	
 	PB::Vec2Df cp, cn;
-	double ct = 0, min_t = INFINITY;
+	double ct = 0, min_t = 0.05;
 	// solve the collisions in correct order 
 	for (auto& obj: cs)
-		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct))
+		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
 		{
-			
-			//setX(tx + (100 * deltatime));
+			//std::cout << "Contact point at: " << cp.x << ":" << cp.y << " Contact time: " << ct << std::endl;
+			setX(tx + (1000 * deltatime));
 			return;
 			
 		}
