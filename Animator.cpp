@@ -7,7 +7,11 @@ void Animator::tick(double delta) {
 		if (++cur == current_anim->size) {
 			cur = 0;
 			if (next_anim != 0)
-				setAnimatable(next_anim);
+				if (repeat < ++repetitions) {
+					setAnimatable(next_anim);
+					next_anim = 0;
+				}
+				
 		}
 	}
 

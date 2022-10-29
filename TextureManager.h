@@ -14,9 +14,10 @@ enum {
 	KIRBY_STAND = 0,
 	KIRBY_WALK = 1,
 	KIRBY_ROLL = 2,
-	TERRAIN = 3
+	KIRBY_JUMP = 3,
+	TERRAIN = 4
 };
-const int TEXTURE_COUNT = 4;
+const int TEXTURE_COUNT = 5;
 
 class TextureManager {
 

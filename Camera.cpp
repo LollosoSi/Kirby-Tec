@@ -8,7 +8,7 @@ void Camera::tick(double delta) {
 		bool xinrange = abs(xdist) < 4, yinrange = abs(ydist) < 4;
 		if (xinrange && yinrange)
 			triggerGoto = false;
-		if (!xinrange) setX(getX() + (xdist/6));
-		if (!yinrange) setY(getY() + (ydist/6));
+		if (!xinrange) setX(getX() + (xdist/30));
+		if (!yinrange) setY(getY() + (ydist/30));
 	}
 }

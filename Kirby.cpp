@@ -10,10 +10,12 @@ void Kirby::processAcceleration() {
 
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT]) {
+			mirror = false;
 			temp.x += 10 * scale * 16;
 		}
 
 		if (buttons[LEFT]) {
+			mirror = true;
 			temp.x -= 10 * scale * 16;
 		}
 	}
@@ -29,6 +31,8 @@ void Kirby::processAcceleration() {
 
 	if (buttons[SPACE] && isGrounded()) {
 		temp.y -= 600 * scale * 16;
+		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
 
 	this->accel = temp;
@@ -37,17 +41,14 @@ void Kirby::processAcceleration() {
 
 void Kirby::processAnimation() {
 
-	if (isGrounded()) {
-		if (abs(velocity.x) < 1 * scale * 16)
-			this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
-		else 
-			this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
-	}
-	
-	if (velocity.x != 0) {
-		mirror = velocity.x > 0 ? false : velocity.x < 0 ? true : mirror;
-	}
-	
-
+	if (!animator.isPlayingOneShot())
+		if (isGrounded()) {
+			if (abs(velocity.x) < 1 * scale * 16)
+				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
+			else
+				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+		} else {
+			this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+		}
 
 }

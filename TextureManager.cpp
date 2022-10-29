@@ -13,6 +13,7 @@ TextureManager::TextureManager() {
 	QRect kirby_stand = getStandardQRect(6, 24);
 	QRect kirby_walk = getStandardQRect(51, 24);
 	QRect kirby_roll = getStandardQRect(6, 49);
+	QRect kirby_jump = getStandardQRect(6, 49);
 
 	QRect terrain_1 = getStandardQRect(1,1);
 
@@ -36,6 +37,13 @@ TextureManager::TextureManager() {
 		new QPixmap[5]{kirbytex.copy(kirby_roll), kirbytex.copy(moveBy(kirby_roll, 1)), kirbytex.copy(moveBy(kirby_roll, 2)), kirbytex.copy(moveBy(kirby_roll, 3)), kirbytex.copy(moveBy(kirby_roll, 4)) },
 		new float[5] {0.06f, 0.06f, 0.06f, 0.06f, 0.06f},
 		5
+	};
+
+
+	textures[KIRBY_JUMP] = new Animatable{
+		new QPixmap[1]{kirbytex.copy(kirby_jump) },
+		new float[1] {0.2f},
+		1
 	};
 
 	textures[TERRAIN] = new Animatable{
