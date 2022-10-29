@@ -9,6 +9,9 @@
 #include "RigidBody.h"
 #include "Serializable.h"
 
+#include "Kirby.h"
+#include "Terrain.h"
+
 // Handle objects
 #include <Vector>
 #include <QTime>
@@ -50,6 +53,9 @@ public:
 	bool running = false;
 	void saveGame(std::ostream& out);
 
+	void addKirby(Kirby& kb);
+	void addTerrain(Terrain& t);
+
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);
 	void addToSerializable(Serializable* s);
@@ -75,6 +81,8 @@ private:
 	GameLoop(GameLoop const&) = delete;
 	void operator=(GameLoop const&) = delete;
 	//
+
+	Kirby* KirbyInstance = 0;
 
 	// Internal calls for watchdog & methods
 	void loop();

@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Definitions.h"
 #include "GameObject.h"
-#include <QPoint>
 #include "TickableObject.h"
-#include <iostream>
+
+#include <QPoint>
+#include <QRect>
 
 #define getcamera Camera::getInstance()
 
@@ -18,13 +20,28 @@ public:
 	static Camera& getInstance() { static Camera instance; return instance; }
 	~Camera() {}
 	
-	void goTo(QPoint coord) { gotoXY = coord; triggerGoto = true; std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl; }
+	void goTo(QPoint coord) {
+		gotoXY = coord; triggerGoto = true; 
+		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
+	}
 
 	
 	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - getcamera.getX(), coord.y() - getcamera.getY()); }
 	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + getcamera.getX(), coord.y() + getcamera.getY()); }
 
+	static bool isVisible(QRect bound) { 
+		return 
+			(
+				(getcamera.getX() - (16 * scale) ) <= bound.x() && 
+
+				( (getcamera.getX() + (16 * scale) ) + getcamera.screenwidth ) >= (bound.x() + bound.width()) 
+			) && 
+				( (getcamera.getY() - (16 * scale) ) <= bound.y() &&
+				( ( getcamera.getY() + (16 * scale) ) + getcamera.screenheight) >= (bound.y() + bound.height()) ); }
+	
 	void tick(double delta);
+
+	int screenwidth = 1980, screenheight = 720;
 
 protected:
 	QPoint gotoXY;

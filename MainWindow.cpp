@@ -8,7 +8,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     setGeometry(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
 
     scene = new GraphicsScene();
-    scene->setBackgroundBrush(Qt::black);
+    scene->setBackgroundBrush(QColor(135,206,235));
     
     view = new QGraphicsView(scene);
     view->setGeometry(sceneRect);
@@ -45,6 +45,9 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     // Resize drawspace here
     sceneRect.setWidth(this->width());
     sceneRect.setHeight(this->height());
+
+    getcamera.screenwidth = this->width();
+    getcamera.screenheight = this->height();
 
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);

@@ -6,6 +6,11 @@
 
 void RigidBody::render(QGraphicsScene& scene) {
 
+	bool visible = Camera::isVisible(getCollider());
+	if (!pm && !visible)
+		return;
+
+
 	PB::RectF rf = getColliderRectF();
 	
 	 QPen qp;
@@ -16,17 +21,24 @@ void RigidBody::render(QGraphicsScene& scene) {
 		pm->setScale(scale);
 
 		hitbox = scene.addRect(getCollider(), qp);
-	} else {
+	} else if (!visible) {
+		scene.removeItem(pm);
+		pm = 0;
+
+		scene.removeItem(hitbox);
+		hitbox = 0;
+
+	} 
+	if(pm) {
 		pm->setPixmap(getTexture());
+		pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
+
+		QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
+		scene.removeItem(hitbox);
+		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
 	}
-
-	pm->setPos(Camera::worldToScreen(QPoint(getX(), getY()) ) );
-
-	//scene.add
-
-	QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
-	scene.removeItem(hitbox);
-	hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
+	
+	
 
 }
 
@@ -34,22 +46,30 @@ void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
 
-	double futurex = tx + (vx*deltatime), futurey = ty + (vy*deltatime);
+	velocity.x += accel.x * deltatime;
+	velocity.y += accel.y * deltatime;
 
+	//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
+
+
+	
 
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
-	
+
 	PB::Vec2Df cp, cn;
-	double ct = 0, min_t = 0.05;
+	double ct = 0, min_t = 1 * deltatime;
 	// solve the collisions in correct order 
 	for (auto& obj: cs)
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
 		{
 			//std::cout << "Contact point at: " << cp.x << ":" << cp.y << " Contact time: " << ct << std::endl;
-			setX(tx + (1000 * deltatime));
-			return;
+			if (cn.x != 0) velocity.x = 0;
+			if (cn.y != 0) velocity.y = 0;
+		
 			
 		}
+
+	double futurex = tx + (velocity.x * deltatime), futurey = ty + (velocity.y * deltatime);
 
 	setX(futurex);
 	setY(futurey);

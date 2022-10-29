@@ -8,6 +8,7 @@
 #include <QGraphicsPixmapItem>
 #include "Camera.h"
 
+
 class Kirby : public RigidBody {
 
 	Animator animator;
@@ -19,23 +20,31 @@ public:
 
 	Kirby() : Kirby(QPoint(0.0, 0.0)) {}
 
+	#define buttonsize 5
+	enum {
+		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4
+	};
+	bool buttons[buttonsize]{false};
+
+	bool mirror = false;
+
+	void processAcceleration();
+	void processAnimation();
 
 	void tick(double deltatime) {
+
+		processAcceleration();
+		processAnimation();
 		animator.tick(deltatime);
 		RigidBody::tick(deltatime);
-		//setY(getY()+(250*deltatime));
 
-		//Camera::getInstance().goTo(QPoint(getX() - 200, getY() - 200));
+		Camera::getInstance().goTo(QPoint(getX() - (getcamera.screenwidth/4.0), getY() - (getcamera.screenheight/2.0) ));
 	}
 
-
-
-	//virtual QRectF getCollider() { return pm->boundingRect(); }
-
-	void render(QGraphicsScene& scene) {
-		RigidBody::render(scene);
-	}
 	
-	QPixmap getTexture() override { return animator.getCurrentPixmap(); }
+
+	//void render(QGraphicsScene& scene) { RigidBody::render(scene); }
+	
+	QPixmap getTexture() override { return animator.getCurrentPixmap(mirror); }
 
 };

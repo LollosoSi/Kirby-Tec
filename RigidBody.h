@@ -4,6 +4,7 @@
 #include "TickableObject.h"
 #include "RenderableObject.h"
 #include "Camera.h"
+#include "Serializable.h"
 
 #include "Vec2D.h"
 
@@ -32,7 +33,7 @@ struct Collision{
 };
 
 
-class RigidBody : public GameObject , public TickableObject, public RenderableObject {
+class RigidBody : public GameObject , public TickableObject, public RenderableObject, public Serializable {
 
 public:
 	QPoint offset;
@@ -41,7 +42,7 @@ public:
 
 	RigidBody(const QPoint& coords, const QPoint offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
 		this->offset = offset;
-		std::cout << "Setting pos " << coords.x() << ":" << coords.y() << "\n";
+		//std::cout << "Setting pos " << coords.x() << ":" << coords.y() << "\n";
 		setSizeX(sizeX * scale);
 		setSizeY(sizeY * scale);
 		setX(x);
@@ -75,7 +76,8 @@ public:
 	void setOffset(const QPoint of) { offset = of; }
 	QPoint getOffset() const { return offset; }
 
-	double vx = 0, vy = 100;
+	PB::Vec2Df velocity{0.0, 0.0};
+	PB::Vec2Df accel{0.0, 0.0};
 
 	virtual QRect getCollider() const { return collider; }
 
@@ -87,12 +89,17 @@ public:
 			}; 
 	}
 
-	virtual PB::Vec2Df getVelocity() const { return PB::Vec2Df{vx, vy}; }
+	virtual PB::Vec2Df getVelocity() const { return velocity; }
 
 
 public:
 	//std::vector<Vector> vectors;
 	QRect collider;
 	double mass = 1;
+
+	bool isGrounded() { return velocity.y == 0; }
+
+	virtual std::string serialize(const char& divider) { return ""; }
+	virtual void deserialize(const std::string& data) {}
 
 };

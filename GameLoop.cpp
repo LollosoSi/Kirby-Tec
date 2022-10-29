@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "CollisionDetection.h"
 
+
 GameLoop::GameLoop() {}
 
 GameLoop::~GameLoop() {
@@ -134,6 +135,23 @@ void GameLoop::stop() {
 	loopthread.join();
 }
 
+void GameLoop::addKirby(Kirby& kb) {
+
+	KirbyInstance = &kb;
+	addToTickable(&kb);
+	addToRenderable(&kb);
+	addToCollidable(&kb);
+	addToSerializable(&kb);
+
+}
+
+void GameLoop::addTerrain(Terrain& t) {
+	addToRenderable(&t);
+	addToCollidable(&t);
+	addToSerializable(&t);
+}
+
+
 void GameLoop::addToTickable(TickableObject* tco) {
 	this->tickableObjectsQueue.push_back(tco);
 }
@@ -151,14 +169,28 @@ void GameLoop::addToCollidable(RigidBody* s) {
 }
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
+	
+
+	// game controls
+	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
+		KirbyInstance->buttons[Kirby::DOWN] = isPressed;
+	if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
+		KirbyInstance->buttons[Kirby::RIGHT] = isPressed;
+	if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
+		KirbyInstance->buttons[Kirby::LEFT] = isPressed;
+	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
+		KirbyInstance->buttons[Kirby::UP] = isPressed;
+
+	if (e->key() == Qt::Key_R)
+	{
+		KirbyInstance->setX(0); KirbyInstance->setY(-500);
+	}
+
 	if (e->isAutoRepeat())
 		return;
 
-	// game controls
-	/*if (e->key() == Qt::Key_S)
-		;
-	else if (e->key() == Qt::Key_R)
-		;*/
+	if (e->key() == Qt::Key_Space)
+		KirbyInstance->buttons[Kirby::SPACE] = isPressed;
 
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }

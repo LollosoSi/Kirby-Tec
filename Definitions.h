@@ -1,3 +1,3 @@
 #pragma once
 
-static double scale = 7;
+static double scale = 2;

@@ -24,7 +24,7 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
     int deltaX = (lm.x - mouseEvent->scenePos().x()) , deltaY = (lm.y - mouseEvent->scenePos().y());
 
-    qDebug() << "DeltaX: " << deltaX << " DeltaY: " << deltaY;
+    //qDebug() << "DeltaX: " << deltaX << " DeltaY: " << deltaY;
 
     Camera::getInstance().setX(Camera::getInstance().getX() + deltaX);
     Camera::getInstance().setY(Camera::getInstance().getY() + deltaY);
