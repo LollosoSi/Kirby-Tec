@@ -120,6 +120,12 @@ void GameLoop::tick(double deltatime) {
 	for (auto* item : this->tickableObjects) 
 		item->tick(deltatime);
 	
+	for (auto* item : this->particleObjects)
+		if (item->shouldDelete()) {
+			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
+			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
+			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
+		}
 
 }
 
@@ -167,6 +173,15 @@ void GameLoop::addToSerializable(Serializable* s) {
 void GameLoop::addToCollidable(RigidBody* s) {
 	this->collidableObjectsQueue.push_back(s);
 }
+
+void GameLoop::addParticle(Particle* p) {
+
+	addToRenderable(p);
+	addToTickable(p);
+	
+	particleObjects.push_back(p);
+}
+
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	

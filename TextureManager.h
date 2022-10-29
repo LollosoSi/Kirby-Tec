@@ -15,13 +15,13 @@ enum {
 	KIRBY_WALK = 1,
 	KIRBY_ROLL = 2,
 	KIRBY_JUMP = 3,
-	TERRAIN = 4
+	KIRBY_STRAFE = 4,
+	TERRAIN = 5,
+	PARTICLE_1 = 6
 };
-const int TEXTURE_COUNT = 5;
+const int TEXTURE_COUNT = 7;
 
 class TextureManager {
-
-	
 
 public:
 	static TextureManager& getInstance() { static TextureManager instance; return instance; }

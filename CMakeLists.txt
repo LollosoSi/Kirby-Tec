@@ -72,6 +72,7 @@ target_sources(${project}
 		Direction.h
 		Kirby.h
 		Kirby.cpp
+		Particle.h
 )
 
 

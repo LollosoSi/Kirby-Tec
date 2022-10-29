@@ -1,5 +1,8 @@
 #include "Kirby.h"
 
+#include "GameLoop.h"
+#include "Particle.h"
+
 void Kirby::processAcceleration() {
 
 	PB::Vec2Df temp{ 0.0, 9.8 * scale * 16 };
@@ -22,7 +25,8 @@ void Kirby::processAcceleration() {
 	else if (isGrounded()) {
 		
 		temp.x = (-velocity.x * 3);
-
+		GameLoop::getInstance().addParticle(new Particle( QPoint(getX(), getY()) , 1000, TextureManager::getInstance().getAnimatable(PARTICLE_1) ));
+		
 	}
 
 	if (buttons[DOWN]) {
@@ -30,7 +34,7 @@ void Kirby::processAcceleration() {
 	}
 
 	if (buttons[SPACE] && isGrounded()) {
-		temp.y -= 600 * scale * 16;
+		temp.y -= 1200 * scale * 16;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
@@ -47,6 +51,11 @@ void Kirby::processAnimation() {
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
 			else
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 5*scale*16)) {
+				this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
+			}
+
 		} else {
 			this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		}

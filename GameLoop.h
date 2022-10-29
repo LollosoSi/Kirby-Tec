@@ -8,6 +8,7 @@
 #include "RenderableObject.h"
 #include "RigidBody.h"
 #include "Serializable.h"
+#include "Particle.h"
 
 #include "Kirby.h"
 #include "Terrain.h"
@@ -61,6 +62,8 @@ public:
 	void addToSerializable(Serializable* s);
 	void addToCollidable(RigidBody* s);
 
+	void addParticle(Particle *p);
+
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
@@ -102,6 +105,7 @@ private:
 	std::vector<RenderableObject*> renderableObjects;
 	std::vector<Serializable*> serializableObjects;
 	std::vector<RigidBody*> collidableObjects;
+	std::vector<Particle*> particleObjects;
 
 	// Elementi in fila
 	std::vector<TickableObject*> tickableObjectsQueue;
