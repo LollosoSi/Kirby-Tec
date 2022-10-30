@@ -125,6 +125,7 @@ void GameLoop::tick(double deltatime) {
 			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
 			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
 			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
+			delete item;
 		}
 
 }

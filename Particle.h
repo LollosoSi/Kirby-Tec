@@ -13,21 +13,23 @@ class Particle : public GameObject, public TickableObject, public RenderableObje
 
 	Animator statepicker;
 
-	int lifetime = 100;
-	PB::Vec2Df movement{0, 2 * scale * 16 };
+	double lifetime = 100;
+	
 
 	QGraphicsPixmapItem* pm = 0;
 
 public:
-	Particle(QPoint start, int lifetime, Animatable *textureset) : GameObject(start.x(), start.y()) { this->lifetime = lifetime; statepicker.setAnimatable(textureset); }
+	Particle(QPoint start, double lifetime, Animatable *textureset) : GameObject(start.x(), start.y()) { this->lifetime = lifetime; statepicker.setAnimatable(textureset); }
 
+	PB::Vec2Df movement{ 2, -0.01 * scale * 16 };
 
 	virtual void render(QGraphicsScene& scene) {
 
 		if (shouldDelete(true)) {
 		
-			if (!pm) {
+			if (pm) {
 				scene.removeItem(pm);
+				pm = 0;
 			}
 
 			return;
@@ -39,18 +41,20 @@ public:
 			pm->setScale(0.5);
 		}
 
-		if (pm) {
+			pm->setPixmap(statepicker.getCurrentPixmap());
 			pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
-		}
+		
 
 	}
 
 	bool shouldDelete(bool ignorepm = false) { return (lifetime <= 0) && (ignorepm || !pm); }
 
 	virtual void tick(double delta) {
-		lifetime -= delta;
-		setX(getX() + (movement.x * delta * scale * 16));
-		setY(getY() + (movement.x * delta * scale * 16));
+		lifetime -= delta * 1000;
+
+		statepicker.tick(delta);
+		setX(getX() + (movement.x * cos(rand()/100) * delta * scale * 16));
+		setY(getY() + (movement.y * delta * scale * 16));
 
 	}
 

@@ -23,9 +23,7 @@ void Kirby::processAcceleration() {
 		}
 	}
 	else if (isGrounded()) {
-		
 		temp.x = (-velocity.x * 3);
-		GameLoop::getInstance().addParticle(new Particle( QPoint(getX(), getY()) , 1000, TextureManager::getInstance().getAnimatable(PARTICLE_1) ));
 		
 	}
 
@@ -34,7 +32,8 @@ void Kirby::processAcceleration() {
 	}
 
 	if (buttons[SPACE] && isGrounded()) {
-		temp.y -= 1200 * scale * 16;
+		buttons[SPACE] = false;
+		temp.y -= 600 * scale * 16;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
@@ -52,8 +51,13 @@ void Kirby::processAnimation() {
 			else
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 5*scale*16)) {
-				this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 4*scale*16)) {
+				if (!(rand() % 4)) {
+					Particle *p;
+					GameLoop::getInstance().addParticle(new Particle(QPoint(getX() + ((getSizeX() / 2) * ((rand() % 3) + 1)), getY() + getSizeY()), 1000, TextureManager::getInstance().getAnimatable(PARTICLE_1)));
+					p->movement.y *= (velocity.mag()/(5*scale*16));
+				}
+				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
 			}
 
 		} else {
