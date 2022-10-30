@@ -38,7 +38,7 @@ public:
 
 		if (!pm) {
 			pm = scene.addPixmap(statepicker.getCurrentPixmap());
-			pm->setScale(0.5);
+			pm->setScale(0.5 * scale);
 		}
 
 			pm->setPixmap(statepicker.getCurrentPixmap());
