@@ -11,14 +11,20 @@ cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
 #    cmake_policy(SET CMP0076 NEW)
 #endif()
 
+# Hey CMake. Cerca Vulkan.
+find_package(Vulkan)
+
+# Avviso se non trovo Vulkan SDK
+if(NOT ${VULKAN_FOUND})
+	message("Devi installare ed impostare la variabile di sistema VULKAN_SDK")
+endif()
+
 # Richiedo librerie Qt
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 
 # Richiesto dalla documentazione
 qt_standard_project_setup()
-
-
 
 # Collega la cartella con le sprite al progetto altrimenti non si possono vedere le sprite
 file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sprites"
