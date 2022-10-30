@@ -39,29 +39,34 @@ void GameLoop::loop() {
 
 	int delta_tick, delta_fps, delta_log = 0;
 	while (running) {
-		current = QTime::currentTime();
+		
+			current = QTime::currentTime();
+			if (!paused) {
+				if ((delta_tick = last_millis_tick.msecsTo(current)) >= min_delta_millis_tick) {
+					deltas++;
+					deltasum += delta_tick;
 
-		if ((delta_tick = last_millis_tick.msecsTo(current)) >= min_delta_millis_tick)
-		{
-			deltas++;
-			deltasum += delta_tick;
+					last_millis_tick = current;
+					ticks++;
 
-			last_millis_tick = current;
-			ticks++;
+					tick(delta_tick / 1000.0);
+				}
+			} else
+					last_millis_tick = current;
 
-			tick(delta_tick / 1000.0);
-		}
-		if (!waitingForRender)
-			if ((delta_fps = last_millis_render.msecsTo(current)) >= min_delta_millis_fps)
-			{
-				last_millis_render = current;
-				fps++;
+			if (!waitingForRender)
+				if ((delta_fps = last_millis_render.msecsTo(current)) >= min_delta_millis_fps)
+				{
+					last_millis_render = current;
+					fps++;
 
-				render();
-			}
+					render();
+				}
 
-		if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
-			mergeQueues();
+			if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
+				mergeQueues();
+
+		
 
 		if ((delta_log = last_log.msecsTo(current)) >= 1000) {
 			last_log = current;
@@ -132,14 +137,21 @@ void GameLoop::tick(double deltatime) {
 
 void GameLoop::start() {
 	running = true;
+	paused = false;
 
-	loopthread = std::thread(&GameLoop::loop, this);
+	if(!loopthread.joinable())
+		loopthread = std::thread(&GameLoop::loop, this);
 
+}
+
+void GameLoop::pause() {
+	paused = true;
 }
 
 void GameLoop::stop() {
 	running = false;
-	loopthread.join();
+	paused = false;
+	waitForThread();
 }
 
 void GameLoop::addKirby(Kirby& kb) {
@@ -186,8 +198,11 @@ void GameLoop::addParticle(Particle* p) {
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
+	// Pause
+	if (e->key() == Qt::Key_P && isPressed)
+		if (paused) start(); else pause();
 
-	// game controls
+	// Controls
 	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
 		KirbyInstance->buttons[Kirby::DOWN] = isPressed;
 	if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)

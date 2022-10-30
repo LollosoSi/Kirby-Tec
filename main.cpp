@@ -14,6 +14,8 @@
 #include "Terrain.h"
 #include "Kirby.h"
 
+#include "Terrain_sloped_1.h"
+
 int main(int argc, char* argv[]) {
 
 	// istanzio applicazione Qt
@@ -25,13 +27,13 @@ int main(int argc, char* argv[]) {
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
 	std::thread tt = std::thread([]() {
-		for (int i = 0; i < 1000; i++) {
-			Terrain* t = new Terrain(QPoint(i * 16 * scale, (scale * 16) * (i > 300 ? cos(2 * M_PI * i / 10) : 1)));
+		for (int i = 0; i < 1; i++) {
+			TerrainSloped* t = new TerrainSloped(QPoint(i * 16 * scale, (scale * 16) * (i > 300 ? cos(2 * M_PI * i / 10) : 1)), objects::SLOPED_TERRAIN_25);
 			GameLoop::getInstance().addTerrain(*t);
 		}
 	});
 
-	Kirby* k = new Kirby(QPoint(0.0, -600.0));
+	Kirby* k = new Kirby(QPoint(0.0, -100.0));
 	GameLoop::getInstance().addKirby(*k);
 
 	GameLoop::getInstance().start();

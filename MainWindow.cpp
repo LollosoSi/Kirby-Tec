@@ -18,6 +18,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     format.setSamples(16);
     format.setSwapInterval(0);
     format.setRenderableType(QSurfaceFormat::OpenGL);
+
     format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
     
     QOpenGLWidget* qgl = new QOpenGLWidget();
@@ -66,4 +67,7 @@ void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects)
 
 void MainWindow::closeEvent(QCloseEvent* event){
     GameLoop::getInstance().stop();
+
+    
+        event->accept();
 }

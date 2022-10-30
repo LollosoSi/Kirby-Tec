@@ -3,6 +3,9 @@
 #include "GameLoop.h"
 #include "CollisionDetection.h"
 
+#include "Terrain_sloped_1.h"
+
+
 
 void RigidBody::render(QGraphicsScene& scene) {
 
@@ -30,14 +33,16 @@ void RigidBody::render(QGraphicsScene& scene) {
 
 	} 
 	
-	pm->setPixmap(getTexture());
-	pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
-	pm->setRotation(renderAngles[currentDegree]);
+	if (pm) {
+		pm->setPixmap(getTexture());
+		pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
+		//pm->setRotation(renderAngles[currentDegree]);
 
-	QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
-	scene.removeItem(hitbox);
-	hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
-	
+		QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
+		scene.removeItem(hitbox);
+		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
+
+	}
 	
 	
 
@@ -52,9 +57,6 @@ void RigidBody::tick(double deltatime){
 
 	//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
 
-
-	
-
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 
 	PB::Vec2Df cp, cn;
@@ -63,9 +65,33 @@ void RigidBody::tick(double deltatime){
 	for (auto& obj: cs)
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
 		{
+
+			if (obj.first->getObjectId() == objects::SLOPED_TERRAIN_25) {
+
+				
+				QPoint center = getCollider().center();
+				PB::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
+				double m1 = -1/line2.x, q1 = center.y() - (center.x() * m1);
+
+				QPoint intersection = findIntersection(m1, q1, line2.x, line2.y);
+
+				if (abs(pitagoricDistance(center, intersection)) <= 1) {
+					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
+					//if (cn.x != 0) velocity.x = 0;
+					if (cn.y != 0) velocity.y = 0;
+
+				}
+					currentDegree = SLOPED_25;
+					return;
+			} else {
+				currentDegree = NO_SLOPE;
+				if (cn.x != 0) velocity.x = 0;
+				if (cn.y != 0) velocity.y = 0;
+			}
+			
+
 			//std::cout << "Contact point at: " << cp.x << ":" << cp.y << " Contact time: " << ct << std::endl;
-			if (cn.x != 0) velocity.x = 0;
-			if (cn.y != 0) velocity.y = 0;
+			
 		
 			
 		}
@@ -115,9 +141,6 @@ void solve_collisions() {
 }*/
 
 
-float pitagoricDistance(double x, double y){
-	return sqrt(pow(x,2)+pow(y,2));
-}
 
 //const double M_PI = 3.14159265358979323846;
 

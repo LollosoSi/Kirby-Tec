@@ -9,6 +9,7 @@ static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 TextureManager::TextureManager() {
 	QColor kirby_file_mask = QColor(84, 110, 140);
 	QColor terrain_file_mask = QColor(60, 188, 252);
+	QColor terrain_part2_file_mask = QColor(60, 188, 252);
 
 	QRect kirby_stand = getStandardQRect(6, 24);
 	QRect kirby_walk = getStandardQRect(51, 24);
@@ -17,13 +18,20 @@ TextureManager::TextureManager() {
 
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
+	QRect kirby_sloped_25 = QRect(151, 24, 16, 16);
+	QRect kirby_sloped_45 = QRect(171, 24, 16, 23);
+	QRect kirby_sloped_25_left = QRect(131, 24, 16, 16);
+	QRect kirby_sloped_45_left = QRect(111, 232, 16, 23);
 
 	QRect particle_1 = getStandardQRect(6, 140);
 
 	QRect terrain_1 = getStandardQRect(1,1);
 
+	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
+
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
 	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
+	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -46,6 +54,36 @@ TextureManager::TextureManager() {
 
 	textures[KIRBY_STRAFE] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_strafe)},
+		new float[1] {0.06f},
+		1
+	};
+
+	textures[TERRAIN_SLOPED_25] = new Animatable{
+		new QPixmap[1]{terrainpart2tex.copy(terrain_sloped_25)},
+		new float[1] {0.06f},
+		1
+	};
+
+	textures[KIRBY_SLOPED_25] = new Animatable{
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_25)},
+		new float[1] {0.06f},
+		1
+	};
+
+	textures[KIRBY_SLOPED_45] = new Animatable{
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_45)},
+		new float[1] {0.06f},
+		1
+	};
+
+	textures[KIRBY_SLOPED_25_LEFT] = new Animatable{
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_25_left)},
+		new float[1] {0.06f},
+		1
+	};
+
+	textures[KIRBY_SLOPED_45_LEFT] = new Animatable{
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_45_left)},
 		new float[1] {0.06f},
 		1
 	};

@@ -16,7 +16,10 @@ class Terrain : public RigidBody {
 	QGraphicsItem* hitbox = 0;
 
 public:
-	Terrain(QPoint pos) : RigidBody(pos, QPoint(0, 2), 16, 14) {}
+	Terrain(QPoint pos, QPoint offset, int sizex, int sizey) : RigidBody(pos, offset, sizex, sizey) {
+		setObjectId(objects::TERRAIN);
+	}
+	Terrain(QPoint pos) : Terrain(pos, QPoint(0, 0), 16, 16) {}
 	Terrain() : Terrain(QPoint(0, 0)) {}
 	~Terrain() {}
 

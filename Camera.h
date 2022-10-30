@@ -32,12 +32,12 @@ public:
 	static bool isVisible(QRect bound) { 
 		return 
 			(
-				(getcamera.getX() - (16 * scale) ) <= bound.x() && 
+				(getcamera.getX() - (16 * scale) ) <= (bound.x() + bound.width()) &&
 
-				( (getcamera.getX() + (16 * scale) ) + getcamera.screenwidth ) >= (bound.x() + bound.width()) 
+				( (getcamera.getX() + (16 * scale) ) + getcamera.screenwidth ) >= (bound.x()) 
 			) && 
-				( (getcamera.getY() - (16 * scale) ) <= bound.y() &&
-				( ( getcamera.getY() + (16 * scale) ) + getcamera.screenheight) >= (bound.y() + bound.height()) ); }
+				( (getcamera.getY() - (16 * scale) ) <= (bound.y() + bound.height()) &&
+				( ( getcamera.getY() + (16 * scale) ) + getcamera.screenheight) >= (bound.y()) ); }
 	
 	void tick(double delta);
 

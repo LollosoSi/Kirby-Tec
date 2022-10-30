@@ -50,8 +50,8 @@ public:
 
 	// Avvia / ferma loop
 	void start();
+	void pause();
 	void stop();
-	bool running = false;
 	void saveGame(std::ostream& out);
 
 	void addKirby(Kirby& kb);
@@ -66,6 +66,8 @@ public:
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
+	bool waitForThread() { loopthread.join(); return true; }
+
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
 
 signals:
@@ -76,7 +78,7 @@ public slots:
 
 protected:
 	QGraphicsScene* scene = nullptr;
-
+	bool running = false, paused = false;
 
 private:
 	// Relativi al singleton
@@ -93,7 +95,7 @@ private:
 	void render();
 	void tick(double deltatime);
 
-	int target_ticks = 20, target_fps = 120;
+	int target_ticks = 20, target_fps = 144;
 	int min_delta_millis_fps = 1000 / target_fps, min_delta_millis_tick = 1000 / target_ticks;
 	QTime last_millis_render, last_millis_tick, last_log;
 	bool waitingForRender = false;

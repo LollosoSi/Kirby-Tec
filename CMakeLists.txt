@@ -17,11 +17,14 @@ find_package(Vulkan)
 # Avviso se non trovo Vulkan SDK
 if(NOT ${VULKAN_FOUND})
 	message("Devi installare ed impostare la variabile di sistema VULKAN_SDK")
+else()
+	include_directories(${VULKAN_INCLUDE_DIR})
 endif()
 
 # Richiedo librerie Qt
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
+
 
 # Richiesto dalla documentazione
 qt_standard_project_setup()
@@ -37,8 +40,9 @@ file(CREATE_LINK "${PROJECT_SOURCE_DIR}/Kirby's Adventure (NES) Sounds"
 # Aggiungo eseguibile
 add_executable(${project} ${sorgenti})
 
-# Collego librerie Qt con eseguibile
-target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets)
+
+# Collego librerie Qt e Vulkan con eseguibile
+target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets ${VULKAN_LIBRARY})
 
 # Raccolta sorgenti
 # Il file globbing è sconsigliato dalla documentazione. Serve una nuova soluzione
@@ -79,6 +83,7 @@ target_sources(${project}
 		Kirby.h
 		Kirby.cpp
 		Particle.h
+		Terrain_sloped_1.h
 )
 
 
