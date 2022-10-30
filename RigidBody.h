@@ -32,13 +32,23 @@ struct Collision{
 	uint8_t direction = NO_COLLISION;
 };
 
+static const double renderAngles[5]{ 0, 45.0 * M_PI / 180.0, 25.0 * M_PI / 180.0 , -45.0 * M_PI / 180.0 , -25.0 * M_PI / 180.0 };
+enum RenderDegree {
+	NO_SLOPE = 0,
+	SLOPED_45 = 1,
+	SLOPED_25 = 2,
+	SLOPED_225 = 3,
+	SLOPED_205 = 4
+};
 
-class RigidBody : public GameObject , public TickableObject, public RenderableObject, public Serializable {
+class RigidBody : public GameObject, public TickableObject, public RenderableObject, public Serializable {
 
 public:
 	QPoint offset;
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
+
+	RenderDegree currentDegree = SLOPED_45;
 
 	RigidBody(const QPoint& coords, const QPoint offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
 		this->offset = offset;

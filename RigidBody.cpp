@@ -29,14 +29,15 @@ void RigidBody::render(QGraphicsScene& scene) {
 		hitbox = 0;
 
 	} 
-	if(pm) {
-		pm->setPixmap(getTexture());
-		pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
+	
+	pm->setPixmap(getTexture());
+	pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
+	pm->setRotation(renderAngles[currentDegree]);
 
-		QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
-		scene.removeItem(hitbox);
-		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
-	}
+	QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
+	scene.removeItem(hitbox);
+	hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
+	
 	
 	
 

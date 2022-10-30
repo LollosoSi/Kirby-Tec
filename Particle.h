@@ -13,13 +13,15 @@ class Particle : public GameObject, public TickableObject, public RenderableObje
 
 	Animator statepicker;
 
-	double lifetime = 100;
+	double lifetime, pixscale;
 	
 
 	QGraphicsPixmapItem* pm = 0;
 
 public:
-	Particle(QPoint start, double lifetime, Animatable *textureset) : GameObject(start.x(), start.y()) { this->lifetime = lifetime; statepicker.setAnimatable(textureset); }
+	Particle(QPoint start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : GameObject(start.x(), start.y()) {
+		this->pixscale = pixscale; this->lifetime = lifetime; statepicker.setAnimatable(textureset);
+	}
 
 	PB::Vec2Df movement{ 2, -0.01 * scale * 16 };
 
