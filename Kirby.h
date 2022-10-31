@@ -13,6 +13,9 @@ class Kirby : public RigidBody {
 
 	Animator animator;
 
+protected:
+	int maxwalkspeed = 20*scalefactor;
+
 public:
 	Kirby(const QPoint pos) : RigidBody(pos, QPoint(2.0, 1.0), 12, 14) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));

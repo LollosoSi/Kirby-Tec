@@ -5,6 +5,8 @@
 #include <QPoint>
 
 static double scale = 5;
+static double standardsize = 16; //Pixels
+static double scalefactor = scale * standardsize;
 
 static double toRadians(const double deg) { return deg*M_PI/180.0; }
 static double toDegrees(const double rad) { return (rad / M_PI ) * 180.0; }

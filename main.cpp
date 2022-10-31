@@ -27,8 +27,8 @@ int main(int argc, char* argv[]) {
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
 	std::thread tt = std::thread([]() {
-		for (int i = 0; i < 1; i++) {
-			TerrainSloped* t = new TerrainSloped(QPoint(i * 16 * scale, (scale * 16) * (i > 300 ? cos(2 * M_PI * i / 10) : 1)), objects::SLOPED_TERRAIN_25);
+		for (int i = 0; i < 10000; i++) {
+			Terrain* t = new Terrain(QPoint(i * scalefactor, (scalefactor) * (i > 300 ? cos(2 * M_PI * i / 10) : 1)));
 			GameLoop::getInstance().addTerrain(*t);
 		}
 	});

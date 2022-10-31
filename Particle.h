@@ -13,17 +13,17 @@ class Particle : public GameObject, public TickableObject, public RenderableObje
 
 	Animator statepicker;
 
-	double lifetime, pixscale;
+	double startlifetime, lifetime, pixscale;
 	
 
 	QGraphicsPixmapItem* pm = 0;
 
 public:
 	Particle(QPoint start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : GameObject(start.x(), start.y()) {
-		this->pixscale = pixscale; this->lifetime = lifetime; statepicker.setAnimatable(textureset);
+		this->pixscale = pixscale; this->lifetime = lifetime; startlifetime = lifetime; statepicker.setAnimatable(textureset);
 	}
 
-	PB::Vec2Df movement{ 2, -0.01 * scale * 16 };
+	PB::Vec2Df movement{ 2, -0.01 * scalefactor };
 
 	virtual void render(QGraphicsScene& scene) {
 
@@ -40,7 +40,7 @@ public:
 
 		if (!pm) {
 			pm = scene.addPixmap(statepicker.getCurrentPixmap());
-			pm->setScale(0.5 * scale);
+			pm->setScale(pixscale * scale);
 		}
 
 			pm->setPixmap(statepicker.getCurrentPixmap());
@@ -53,10 +53,11 @@ public:
 
 	virtual void tick(double delta) {
 		lifetime -= delta * 1000;
+		float timeindipendent = (startlifetime - lifetime) / startlifetime;
 
 		statepicker.tick(delta);
-		setX(getX() + (movement.x * cos(rand()/100) * delta * scale * 16));
-		setY(getY() + (movement.y * delta * scale * 16));
+		setX(getX() + (movement.x * pow(M_E, timeindipendent) * delta * scalefactor));
+		setY(getY() + (movement.y * delta * scalefactor));
 
 	}
 
