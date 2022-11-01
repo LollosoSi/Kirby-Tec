@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "GameLoop.h"
 #include <QOpenGLWidget>
 
 using namespace std;
@@ -66,8 +67,10 @@ void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects)
 }
 
 void MainWindow::closeEvent(QCloseEvent* event){
-    GameLoop::getInstance().stop();
-
+    GameLoop::stop();
+    GameLoop::waitForThread();
     
-        event->accept();
+    this->hide();
+
+    QCoreApplication::quit();
 }

@@ -2,6 +2,7 @@
 
 // Debug
 #include <iostream>
+#include <vector>
 
 // Base objects
 #include "TickableObject.h"
@@ -27,6 +28,11 @@
 // Handle Keys
 #include <QKeyEvent>
 
+class LevelManager {
+
+
+
+};
 
 /** Classe GameLoop
 * Responsabilita':
@@ -34,6 +40,8 @@
 *
 * Questa classe deve essere un Singleton
 */
+static bool running = false, paused = false;
+static std::thread loopthread;
 class GameLoop : public QObject
 {
 	Q_OBJECT
@@ -51,8 +59,9 @@ public:
 	// Avvia / ferma loop
 	void start();
 	void pause();
-	void stop();
-	void saveGame(std::ostream& out);
+	static void stop();
+	void saveGame(std::string fileName);
+	void loadGame(std::string fileName);
 
 	void addKirby(Kirby& kb);
 	void addTerrain(Terrain& t);
@@ -66,7 +75,7 @@ public:
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
-	bool waitForThread() { loopthread.join(); return true; }
+	static void waitForThread() { if (loopthread.joinable()) loopthread.join(); loopthread.~thread(); }
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
 
@@ -78,7 +87,8 @@ public slots:
 
 protected:
 	QGraphicsScene* scene = nullptr;
-	bool running = false, paused = false;
+	std::atomic_bool thread_working = true;
+	
 
 private:
 	// Relativi al singleton
@@ -100,7 +110,7 @@ private:
 	QTime last_millis_render, last_millis_tick, last_log;
 	bool waitingForRender = false;
 
-	std::thread loopthread;
+	
 
 	// Elementi da iterare
 	std::vector<TickableObject*> tickableObjects;

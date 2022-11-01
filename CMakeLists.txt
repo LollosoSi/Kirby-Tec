@@ -83,7 +83,7 @@ target_sources(${project}
 		Kirby.h
 		Kirby.cpp
 		Particle.h
-		Terrain_sloped_1.h
+		ObjectsHolder.h
 )
 
 

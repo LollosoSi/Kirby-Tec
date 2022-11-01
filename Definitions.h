@@ -18,7 +18,11 @@ static QPoint findIntersection(const double m1, const double q1, const double m2
 
 }
 
-
 static double pitagoricDistance(QPoint p1, QPoint p2) {
 	return sqrt(pow(p1.x() - p2.x(), 2) + pow(p1.y() - p2.y(), 2));
+}
+
+template<typename Base, typename T>
+inline bool instanceof(const T* ptr) {
+	return dynamic_cast<const Base*>(ptr) != nullptr;
 }

@@ -19,9 +19,17 @@ protected:
 public:
 	Kirby(const QPoint pos) : RigidBody(pos, QPoint(2.0, 1.0), 12, 14) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+		setObjectId(objects::KIRBY);
 	}
 
 	Kirby() : Kirby(QPoint(0.0, 0.0)) {}
+
+	Kirby(const Kirby& go) {
+		this->setX(go.getX());
+		this->setY(go.getY());
+		this->setObjectId(go.getObjectId());
+	}
+	Cloneable* clone() const { return new Kirby(*this); }
 
 	#define buttonsize 5
 	enum {
@@ -44,10 +52,10 @@ public:
 		Camera::getInstance().goTo(QPoint(getX() - (getcamera.screenwidth/4.0), getY() - (getcamera.screenheight/2.0) ));
 	}
 
-	
-
 	//void render(QGraphicsScene& scene) { RigidBody::render(scene); }
 	
 	QPixmap getTexture() override { return animator.getCurrentPixmap(mirror); }
+
+	
 
 };

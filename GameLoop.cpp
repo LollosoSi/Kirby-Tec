@@ -23,11 +23,8 @@ void GameLoop::recalculateFps(int target_fps) {
 	min_delta_millis_fps = target_fps != 0 ? 1000 / target_fps : 0;
 }
 
-// TODO: Implement loop
 void GameLoop::loop() {
-
-	//recalculateTicks(20);
-	//recalculateFps(75);
+	thread_working = true;
 
 	QTime current = QTime::currentTime();
 
@@ -80,13 +77,29 @@ void GameLoop::loop() {
 		std::this_thread::sleep_for(std::chrono::nanoseconds(2));
 
 	}
-
+	thread_working = false;
 }
 
-void GameLoop::saveGame(std::ostream &out) {
-	char separator = '#';
-	for (auto* item : this->serializableObjects) 
-		out << item->serialize(obj_separator) << separator;
+void GameLoop::saveGame(std::string fileName) {
+	Serializer::serializeToFile(serializableObjects, fileName);
+}
+
+void GameLoop::loadGame(std::string fileName) {
+	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName);
+
+	for (Serializable* item : tempserializableObjects) {
+		
+		if (instanceof<Kirby>(item)) {
+		
+			Kirby *k = dynamic_cast<Kirby*>(item);
+			addKirby(*k);
+
+		} else if (instanceof<Terrain>(item)) {
+			Terrain* k = dynamic_cast<Terrain*>(item);
+			addTerrain(*k);
+		}
+	
+	}	
 
 }
 
@@ -151,7 +164,9 @@ void GameLoop::pause() {
 void GameLoop::stop() {
 	running = false;
 	paused = false;
-	waitForThread();
+
+	GameLoop::getInstance().saveGame("testout");
+	
 }
 
 void GameLoop::addKirby(Kirby& kb) {
@@ -196,11 +211,16 @@ void GameLoop::addParticle(Particle* p) {
 }
 
 
+
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed)
 		if (paused) start(); else pause();
+
+	// Save
+	if (e->key() == Qt::Key_K)
+		GameLoop::getInstance().saveGame("filesave");
 
 	// Controls
 	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)

@@ -23,6 +23,21 @@ public:
 		this->pixscale = pixscale; this->lifetime = lifetime; startlifetime = lifetime; statepicker.setAnimatable(textureset);
 	}
 
+	~Particle() {
+		
+	}
+
+	Particle(const Particle& go) {
+		this->setX(go.getX());
+		this->setY(go.getY());
+		this->setObjectId(go.getObjectId());
+		this->pixscale = go.pixscale;
+		this->lifetime = go.lifetime;
+		this->startlifetime = go.startlifetime;
+		this->statepicker = statepicker;
+	}
+	Cloneable* clone() const { return new Particle(*this); }
+
 	PB::Vec2Df movement{ 2, -0.01 * scalefactor };
 
 	virtual void render(QGraphicsScene& scene) {

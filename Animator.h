@@ -2,7 +2,10 @@
 
 #include <QPixmap>
 
+#include "GameObject.h"
 #include "TickableObject.h"
+
+
 
 struct Animatable {
 	QPixmap* pixmaps = 0;
@@ -10,7 +13,9 @@ struct Animatable {
 	unsigned int size = 0;
 };
 
-class Animator : public TickableObject {
+class Animator : public TickableObject, public Cloneable {
+
+protected:
 	Animatable* next_anim = 0;
 	float savedtimescale = 1;
 
@@ -27,4 +32,21 @@ public:
 	QPixmap getCurrentPixmap(bool mirror = 0) { return mirror ? current_anim->pixmaps[cur].transformed(QTransform().scale(-1, 1)) : current_anim->pixmaps[cur]; }
 	void playOneShot(Animatable* anim, int repeat = 0, float timescale = 1) { if (!next_anim) { next_anim = current_anim;  savedtimescale = timescale; } setAnimatable(anim, repeat, timescale); }
 	bool isPlayingOneShot() { return next_anim != 0; }
+	
+	Animator() {}
+	Animator(const Animator& go) {
+		*this = go;
+	}
+	Animator& operator= (const Animator& go) {
+		this->repeat = go.repeat;
+		this->timescale = go.timescale;
+		this->next_anim = go.next_anim;
+		this->current_anim = go.current_anim;
+		this->cur = go.cur;
+		this->time = go.time;
+		this->repetitions = go.repetitions;
+		this->savedtimescale = go.savedtimescale;
+		return *this;
+	}
+	Cloneable* clone() const { return new Animator(*this); }
 };

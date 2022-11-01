@@ -42,7 +42,7 @@ enum RenderDegree {
 	SLOPED_205 = 4
 };
 
-class RigidBody : public GameObject, public TickableObject, public RenderableObject, public Serializable {
+class RigidBody : public GameObject, public TickableObject, public RenderableObject {
 
 public:
 	QPoint offset;
@@ -110,7 +110,27 @@ public:
 
 	bool isGrounded() { return velocity.y == 0; }
 
-	virtual std::string serialize(const char& divider) { return ""; }
-	virtual void deserialize(const std::string& data) {}
+	
+	Serializable* deserialize(std::vector<std::string>::iterator start) override {
+
+		
+		
+		setX(std::atof((*start).c_str()));
+		setY(std::atof((*start).c_str()));
+		
+
+		// These values are hardcoded, no real need to save
+		/*
+
+		setSizeX(std::atof((*start).c_str()));
+		setSizeY(std::atof((*start).c_str()));
+
+		setOffset(QPoint(std::atof((*start).c_str()), std::atof((*start).c_str())));
+
+		*/
+
+
+		return this;
+	};
 
 };

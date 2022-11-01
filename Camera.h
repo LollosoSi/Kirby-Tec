@@ -26,6 +26,9 @@ public:
 	}
 
 	
+	
+
+	
 	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - getcamera.getX(), coord.y() - getcamera.getY()); }
 	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + getcamera.getX(), coord.y() + getcamera.getY()); }
 
@@ -55,5 +58,9 @@ private:
 	void operator=(Camera const&) = delete;
 	//
 
+	Cloneable* clone() const {
+		throw "Camera is not a cloneable object";
+		return 0;
+	}
 
 };
