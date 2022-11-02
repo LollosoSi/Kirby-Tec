@@ -1,5 +1,7 @@
 #include "GraphicsScene.h"
 
+#include "Definitions.h"
+
 #include <QDebug>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsPathItem>
@@ -32,12 +34,23 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     lm.y = mouseEvent->scenePos().y();
 }
 
+#include "Terrain.h"
+
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
     QGraphicsScene::mousePressEvent(mouseEvent);
 
     lm.x = mouseEvent->scenePos().x();
     lm.y = mouseEvent->scenePos().y();
+
+    QPoint snapped = Camera::screenToWorld(QPoint(lm.x, lm.y));
+    snapped.setX((int)(snapped.x() - (snapped.x() % (int)scalefactor)));
+    snapped.setY((int)(snapped.y() - (snapped.y() % (int)scalefactor)) - scalefactor);
+
+
+    Terrain* t = new Terrain(snapped);
+    GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+
 }
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
