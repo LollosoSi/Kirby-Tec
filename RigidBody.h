@@ -115,8 +115,8 @@ public:
 
 		
 		
-		setX(std::atof((*start).c_str()));
-		setY(std::atof((*start).c_str()));
+		setX(std::atof((*(start++)).c_str()));
+		setY(std::atof((*(start++)).c_str()));
 		
 
 		// These values are hardcoded, no real need to save

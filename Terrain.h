@@ -45,7 +45,7 @@ public:
 
 	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(TERRAIN_SLOPED_25)->pixmaps[0]; }
 
-	QGraphicsLineItem* qli;
+	QGraphicsLineItem* qli = 0;
 	void render(QGraphicsScene& scene) {
 
 		bool visible = Camera::isVisible(getCollider());

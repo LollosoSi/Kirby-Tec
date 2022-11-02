@@ -4,12 +4,18 @@
 #include "Kirby.h"
 #include "Terrain.h"
 
-GameObject* getInstanceOf(objects::ObjectID obj) {
+static GameObject* getInstanceOf(objects::ObjectID obj) {
 	
 	switch (obj) {
 	
 		default:
 			return new GameObject();
+
+		case objects::KIRBY:
+			return new Kirby();
+
+		case objects::TERRAIN:
+			return new Terrain();
 	}
 
 }

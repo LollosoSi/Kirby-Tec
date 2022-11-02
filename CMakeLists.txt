@@ -73,7 +73,6 @@ target_sources(${project}
 		GameObject.h
 		Terrain.h
 		Serializable.h
-		Serializable.cpp
 		RigidBody.cpp
 		RigidBody.h
 		Animator.h

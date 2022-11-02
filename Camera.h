@@ -25,10 +25,6 @@ public:
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 
-	
-	
-
-	
 	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - getcamera.getX(), coord.y() - getcamera.getY()); }
 	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + getcamera.getX(), coord.y() + getcamera.getY()); }
 

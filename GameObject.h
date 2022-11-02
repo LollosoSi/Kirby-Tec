@@ -2,7 +2,6 @@
 #include "Definitions.h"
 #include "Serializable.h"
 #include <sstream>
-
 #include <QKeyEvent>
 
 namespace objects {
@@ -58,16 +57,14 @@ public:
 
 	Serializable* deserialize(std::vector<std::string>::iterator start) {
 	
-		setX(std::atof((* start).c_str()));
-		setY(std::atof((*start).c_str()));	
+		setX(std::atof((*(start++)).c_str()));
+		setY(std::atof((*(start++)).c_str()));	
 	
 		return this;
 	};
 
 	
 	virtual void keyPressEvent(QKeyEvent* e, bool isPressed) {};
-
-	
 
 protected:
 	double x;
