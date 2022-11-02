@@ -11,8 +11,7 @@
 #include "Serializable.h"
 #include "Particle.h"
 
-#include "Kirby.h"
-#include "Terrain.h"
+#include "ObjectsHolder.h"
 
 // Handle objects
 #include <Vector>
@@ -27,6 +26,7 @@
 
 // Handle Keys
 #include <QKeyEvent>
+
 
 class LevelManager {
 
@@ -63,8 +63,8 @@ public:
 	void saveGame(std::string fileName);
 	void loadGame(std::string fileName);
 
-	void addKirby(Kirby& kb);
-	void addTerrain(Terrain& t);
+	void addKirby(GameObject* kb);
+	void addTerrain(GameObject* t);
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);
@@ -97,7 +97,7 @@ private:
 	void operator=(GameLoop const&) = delete;
 	//
 
-	Kirby* KirbyInstance = 0;
+	GameObject* KirbyInstance = 0;
 
 	// Internal calls for watchdog & methods
 	void loop();

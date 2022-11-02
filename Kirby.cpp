@@ -85,3 +85,21 @@ void Kirby::processAnimation() {
 		}
 
 }
+
+
+void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
+
+	// Controls
+	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
+		buttons[Kirby::DOWN] = isPressed;
+	if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
+		buttons[Kirby::RIGHT] = isPressed;
+	if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
+		buttons[Kirby::LEFT] = isPressed;
+	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
+		buttons[Kirby::UP] = isPressed;
+
+	if (e->key() == Qt::Key_Space)
+		buttons[Kirby::SPACE] = isPressed;
+
+}

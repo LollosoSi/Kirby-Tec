@@ -88,15 +88,19 @@ void GameLoop::loadGame(std::string fileName) {
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName);
 
 	for (Serializable* item : tempserializableObjects) {
+		GameObject* obj = dynamic_cast<GameObject*>(item);
+		switch (obj->getObjectId()) {
+		case objects::GAMEOBJECT:
+			break;
 		
-		if (instanceof<Kirby>(item)) {
-		
-			Kirby *k = dynamic_cast<Kirby*>(item);
-			addKirby(*k);
+		case objects::KIRBY:
+			addKirby(obj);
+			break;
 
-		} else if (instanceof<Terrain>(item)) {
-			Terrain* k = dynamic_cast<Terrain*>(item);
-			addTerrain(*k);
+		case objects::TERRAIN:
+			addTerrain(obj);
+			break;
+
 		}
 	
 	}	
@@ -169,20 +173,20 @@ void GameLoop::stop() {
 	
 }
 
-void GameLoop::addKirby(Kirby& kb) {
+void GameLoop::addKirby(GameObject* kb) {
 
-	KirbyInstance = &kb;
-	addToTickable(&kb);
-	addToRenderable(&kb);
-	addToCollidable(&kb);
-	addToSerializable(&kb);
+	KirbyInstance = kb;
+	addToTickable(dynamic_cast<TickableObject*>(kb));
+	addToRenderable(dynamic_cast<RenderableObject*>(kb));
+	addToCollidable(dynamic_cast<RigidBody*>(kb));
+	addToSerializable(dynamic_cast<Serializable*>(kb));
 
 }
 
-void GameLoop::addTerrain(Terrain& t) {
-	addToRenderable(&t);
-	addToCollidable(&t);
-	addToSerializable(&t);
+void GameLoop::addTerrain(GameObject* t) {
+	addToRenderable(dynamic_cast<RenderableObject*>(t));
+	addToCollidable(dynamic_cast<RigidBody*>(t));
+	addToSerializable(dynamic_cast<Serializable*>(t));
 }
 
 
@@ -222,15 +226,6 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_K)
 		GameLoop::getInstance().saveGame("filesave");
 
-	// Controls
-	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
-		KirbyInstance->buttons[Kirby::DOWN] = isPressed;
-	if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
-		KirbyInstance->buttons[Kirby::RIGHT] = isPressed;
-	if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
-		KirbyInstance->buttons[Kirby::LEFT] = isPressed;
-	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
-		KirbyInstance->buttons[Kirby::UP] = isPressed;
 
 	if (e->key() == Qt::Key_R)
 	{
@@ -240,8 +235,9 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->isAutoRepeat())
 		return;
 
-	if (e->key() == Qt::Key_Space)
-		KirbyInstance->buttons[Kirby::SPACE] = isPressed;
+	
+
+	KirbyInstance->keyPressEvent(e,isPressed);
 
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }

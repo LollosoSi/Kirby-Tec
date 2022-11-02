@@ -56,6 +56,6 @@ public:
 	
 	QPixmap getTexture() override { return animator.getCurrentPixmap(mirror); }
 
-	
+	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
 
 };
