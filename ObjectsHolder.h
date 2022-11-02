@@ -1,3 +1,5 @@
+#pragma once
+
 #include "GameObject.h"
 #include "Kirby.h"
 #include "Terrain.h"

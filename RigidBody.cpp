@@ -3,8 +3,6 @@
 #include "GameLoop.h"
 #include "CollisionDetection.h"
 
-#include "Terrain_sloped_1.h"
-
 
 
 void RigidBody::render(QGraphicsScene& scene) {

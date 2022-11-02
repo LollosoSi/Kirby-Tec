@@ -14,8 +14,6 @@
 #include "Terrain.h"
 #include "Kirby.h"
 
-#include "Terrain_sloped_1.h"
-
 int main(int argc, char* argv[]) {
 
 	// istanzio applicazione Qt
