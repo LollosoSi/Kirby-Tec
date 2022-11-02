@@ -38,20 +38,26 @@ void GameLoop::loop() {
 	while (running) {
 		
 			current = QTime::currentTime();
-			if (!paused) {
-				if ((delta_tick = last_millis_tick.msecsTo(current)) >= min_delta_millis_tick) {
-					deltas++;
-					deltasum += delta_tick;
+			if (!waitingForRender) {
+				if (!paused) {
+					if ((delta_tick = last_millis_tick.msecsTo(current)) >= min_delta_millis_tick) {
+						deltas++;
+						deltasum += delta_tick;
 
-					last_millis_tick = current;
-					ticks++;
+						last_millis_tick = current;
+						ticks++;
 
-					tick(delta_tick / 1000.0);
+						tick(delta_tick / 1000.0);
+
+						if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
+							mergeQueues();
+
+					}
 				}
-			} else
+				else
 					last_millis_tick = current;
 
-			if (!waitingForRender)
+
 				if ((delta_fps = last_millis_render.msecsTo(current)) >= min_delta_millis_fps)
 				{
 					last_millis_render = current;
@@ -59,13 +65,9 @@ void GameLoop::loop() {
 
 					render();
 				}
+			}
 
-			if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
-				mergeQueues();
-
-		
-
-		if ((delta_log = last_log.msecsTo(current)) >= 1000) {
+		if (deltas > 0 && (delta_log = last_log.msecsTo(current)) >= 1000) {
 			last_log = current;
 			std::cout << "DeltaAvg: " << (deltasum / deltas) << "\t";
 			std::cout << "Ticks: " << ticks << "\t";
@@ -84,7 +86,7 @@ void GameLoop::saveGame(std::string fileName) {
 	Serializer::serializeToFile(serializableObjects, fileName);
 }
 
-void GameLoop::loadGame(std::string fileName) {
+bool GameLoop::loadGame(std::string fileName) {
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName);
 
 	for (Serializable* item : tempserializableObjects) {
@@ -104,6 +106,8 @@ void GameLoop::loadGame(std::string fileName) {
 		}
 	
 	}	
+
+	return tempserializableObjects.size() != 0;
 
 }
 

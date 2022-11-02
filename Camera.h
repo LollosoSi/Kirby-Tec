@@ -1,15 +1,13 @@
 #pragma once
 
-#include "Definitions.h"
-#include "GameObject.h"
-#include "TickableObject.h"
-
 #include <QPoint>
 #include <QRect>
 
-#define getcamera Camera::getInstance()
+#include "Definitions.h"
+#include "TickableObject.h"
+#include "GameObject.h"
 
-/** Questa classe è un Singleto
+/** Questa classe e' un Singleton
 * Traccia le coordinate di visualizzazione
 * Converte da coordinate gioco a schermo
 */
@@ -19,25 +17,26 @@ public:
 	// Relativi al singleton
 	static Camera& getInstance() { static Camera instance; return instance; }
 	~Camera() {}
-	
+
 	void goTo(QPoint coord) {
-		gotoXY = coord; triggerGoto = true; 
+		gotoXY = coord; triggerGoto = true;
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 
-	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - getcamera.getX(), coord.y() - getcamera.getY()); }
-	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + getcamera.getX(), coord.y() + getcamera.getY()); }
+	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - Camera::getInstance().getX(), coord.y() - Camera::getInstance().getY()); }
+	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + Camera::getInstance().getX(), coord.y() + Camera::getInstance().getY()); }
 
-	static bool isVisible(QRect bound) { 
-		return 
+	static bool isVisible(QRect bound) {
+		return
 			(
-				(getcamera.getX() - (scalefactor) ) <= (bound.x() + bound.width()) &&
+				(Camera::getInstance().getX() - (scalefactor)) <= (bound.x() + bound.width()) &&
 
-				( (getcamera.getX() + (scalefactor) ) + getcamera.screenwidth ) >= (bound.x()) 
-			) && 
-				( (getcamera.getY() - (scalefactor) ) <= (bound.y() + bound.height()) &&
-				( ( getcamera.getY() + (scalefactor) ) + getcamera.screenheight) >= (bound.y()) ); }
-	
+				((Camera::getInstance().getX() + (scalefactor)) + Camera::getInstance().screenwidth) >= (bound.x())
+				) &&
+			((Camera::getInstance().getY() - (scalefactor)) <= (bound.y() + bound.height()) &&
+				((Camera::getInstance().getY() + (scalefactor)) + Camera::getInstance().screenheight) >= (bound.y()));
+	}
+
 	void tick(double delta);
 
 	int screenwidth = 1980, screenheight = 720;

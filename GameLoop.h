@@ -41,12 +41,14 @@ class LevelManager {
 * Questa classe deve essere un Singleton
 */
 static bool running = false, paused = false;
-static std::thread loopthread;
+
 class GameLoop : public QObject
 {
 	Q_OBJECT
 
 public:
+	std::thread loopthread;
+
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();
@@ -61,7 +63,7 @@ public:
 	void pause();
 	static void stop();
 	void saveGame(std::string fileName);
-	void loadGame(std::string fileName);
+	bool loadGame(std::string fileName);
 
 	void addKirby(GameObject* kb);
 	void addTerrain(GameObject* t);
@@ -74,8 +76,6 @@ public:
 	void addParticle(Particle *p);
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
-
-	static void waitForThread() { if (loopthread.joinable()) loopthread.join(); loopthread.~thread(); }
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
 

@@ -64,7 +64,7 @@ public:
 				jumpImpulse.remainingtime = 0;
 		}
 
-		Camera::getInstance().goTo(QPoint(getX() - (getcamera.screenwidth/4.0), getY() - (getcamera.screenheight/2.0) ));
+		Camera::getInstance().goTo(QPoint(getX() - (Camera::getInstance().screenwidth/4.0), getY() - (Camera::getInstance().screenheight/2.0) ));
 	}
 
 	//void render(QGraphicsScene& scene) { RigidBody::render(scene); }

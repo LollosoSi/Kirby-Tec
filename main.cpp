@@ -24,25 +24,28 @@ int main(int argc, char* argv[]) {
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
-	GameLoop::getInstance().loadGame("testout");
-
 	
-	/*
-	std::thread tt = std::thread([]() {
-		for (int i = 0; i < 3; i++) {
-			Terrain* t = new Terrain(QPoint(i * scalefactor, (scalefactor) * (i > 300 ? cos(2 * M_PI * i / 10) : 1)));
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
-		}
-	});
+	
+	if (!GameLoop::getInstance().loadGame("testout")) {
 
-	Kirby* k = new Kirby(QPoint(0.0, -100.0));
-	GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
-	*/
+		std::thread tt = std::thread([]() {
+			for (int j = 0; j < 4; j++)
+				for (int i = 0; i < 300; i++) {
+					Terrain* t = new Terrain(QPoint(i * scalefactor, scalefactor * j));
+					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+				}
+			});
+
+		Kirby* k = new Kirby(QPoint(0.0, -100.0));
+		GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+		tt.join();
+	}
+	
 	
 
 	GameLoop::getInstance().start();
-	GameLoop::getInstance().recalculateTicks(144);
-	GameLoop::getInstance().recalculateFps(144);
+	GameLoop::getInstance().recalculateTicks(60);
+	GameLoop::getInstance().recalculateFps(75);
 
     // eseguo applicazione Qt
     return a.exec();

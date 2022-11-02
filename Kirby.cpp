@@ -14,12 +14,12 @@ void Kirby::processAcceleration() {
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
 			mirror = false;
-			temp.x += 12 * scalefactor;
+			temp.x += (12 * scalefactor) * (1 - abs(velocity.x / maxwalkspeed));
 		}
 
-		if (buttons[LEFT]  && (velocity.x > -maxwalkspeed) ) {
+		if (buttons[LEFT] && (velocity.x > -maxwalkspeed) ) {
 			mirror = true;
-			temp.x -= 12 * scalefactor;
+			temp.x -= (12 * scalefactor) * (1 - abs(velocity.x / maxwalkspeed));
 		}
 	}
 	else if (isGrounded()) {
@@ -39,7 +39,7 @@ void Kirby::processAcceleration() {
 		temp = rot;
 	}
 
-	if (buttons[SPACE] && isGrounded()) {
+	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 50;

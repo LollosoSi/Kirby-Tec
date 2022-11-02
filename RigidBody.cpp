@@ -82,10 +82,12 @@ void RigidBody::tick(double deltatime){
 					currentDegree = SLOPED_25;
 					return;
 			} else {
+				lastHitNormals = cn;
 				currentDegree = NO_SLOPE;
-				if (cn.x != 0) velocity.x = 0;
-				if (cn.y != 0) velocity.y = 0;
+				if (cn.x != 0) velocity.x = -velocity.x/30;
+				else if (cn.y != 0) velocity.y = 0;
 			}
+			
 			
 
 			//std::cout << "Contact point at: " << cp.x << ":" << cp.y << " Contact time: " << ct << std::endl;

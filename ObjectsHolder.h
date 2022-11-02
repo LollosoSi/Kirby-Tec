@@ -31,7 +31,7 @@ public:
 		if (!target.good()) {
 			// Whoops, something is off! I don't really care, find a better path and try again.
 			target.close();
-			throw "Cannot read file!";
+			//throw "Cannot read file!";
 			return false;
 		}
 
@@ -55,7 +55,7 @@ public:
 		if (!target.good()) {
 			// Whoops, something is off! I don't really care, find a better path and try again.
 			target.close();
-			throw "Cannot read file!";
+			//throw "Cannot read file!";
 			return objects;
 		}
 

@@ -48,8 +48,8 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     sceneRect.setWidth(this->width());
     sceneRect.setHeight(this->height());
 
-    getcamera.screenwidth = this->width();
-    getcamera.screenheight = this->height();
+    Camera::getInstance().screenwidth = this->width();
+    Camera::getInstance().screenheight = this->height();
 
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
@@ -68,9 +68,9 @@ void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects)
 
 void MainWindow::closeEvent(QCloseEvent* event){
     GameLoop::stop();
-    GameLoop::waitForThread();
     
     this->hide();
 
-    QCoreApplication::quit();
+    GameLoop::getInstance().loopthread.join();
+
 }

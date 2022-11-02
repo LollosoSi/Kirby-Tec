@@ -50,15 +50,15 @@ public:
 
 	std::string serialize(const char& divider) const {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
-		out << ((unsigned int)getObjectId()) << divider << getX() << divider << getY();
+		out << ((unsigned int)getObjectId()) << divider << getX()/scalefactor << divider << getY()/scalefactor;
 
 		return out.str();
 	}
 
 	Serializable* deserialize(std::vector<std::string>::iterator start) {
 	
-		setX(std::atof((*(start++)).c_str()));
-		setY(std::atof((*(start++)).c_str()));	
+		setX(std::atof((*(start++)).c_str()) * scalefactor);
+		setY(std::atof((*(start++)).c_str()) * scalefactor);	
 	
 		return this;
 	};

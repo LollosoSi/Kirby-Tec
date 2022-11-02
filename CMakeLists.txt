@@ -64,8 +64,8 @@ target_sources(${project}
 		GraphicsScene.cpp
 		TextureManager.h
 		TextureManager.cpp
-		Camera.h
-		Camera.cpp
+Camera.h
+Camera.cpp
 		Definitions.h
 		RenderableObject.h
 		TickableObject.h

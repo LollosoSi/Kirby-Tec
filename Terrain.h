@@ -41,7 +41,7 @@ public:
 	// Returns m in x and q in y
 	QPoint getVert1() { return QPoint(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
 	QPoint getVert2() { return QPoint(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
-	PB::Vec2Df getHitLine() { QPoint v1 = getVert1(), v2 = getVert2(); double m = (v2.y() - v1.y()) / (double)(v2.x() - v1.x()); return PB::Vec2Df{ m,v1.y() - (v1.x() * m) }; }
+	PB::Vec2Df getHitLine() { QPoint v1 = getVert1(), v2 = getVert2(); double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x())); return PB::Vec2Df{ m,v1.y() - (double)(v1.x() * m) }; }
 
 	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(TERRAIN_SLOPED_25)->pixmaps[0]; }
 

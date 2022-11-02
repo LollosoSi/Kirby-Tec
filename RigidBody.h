@@ -89,6 +89,7 @@ public:
 
 	PB::Vec2Df velocity{0.0, 0.0};
 	PB::Vec2Df accel{0.0, 0.0};
+	PB::Vec2Df lastHitNormals{ 0.0, 0.0 };
 
 	virtual QRect getCollider() const { return collider; }
 
@@ -111,26 +112,6 @@ public:
 	bool isGrounded() { return velocity.y == 0; }
 
 	
-	Serializable* deserialize(std::vector<std::string>::iterator start) override {
-
-		
-		
-		setX(std::atof((*(start++)).c_str()));
-		setY(std::atof((*(start++)).c_str()));
-		
-
-		// These values are hardcoded, no real need to save
-		/*
-
-		setSizeX(std::atof((*start).c_str()));
-		setSizeY(std::atof((*start).c_str()));
-
-		setOffset(QPoint(std::atof((*start).c_str()), std::atof((*start).c_str())));
-
-		*/
-
-
-		return this;
-	};
+	
 
 };
