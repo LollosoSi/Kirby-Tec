@@ -9,6 +9,13 @@
 #include "Camera.h"
 
 
+struct Impulse {
+
+	PB::Vec2Df value{0,0};
+	double remainingtime = 0;
+
+};
+
 class Kirby : public RigidBody {
 
 	Animator animator;
@@ -42,12 +49,20 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
+	Impulse jumpImpulse{ PB::Vec2Df{0,-scalefactor*150},0 };
+
 	void tick(double deltatime) {
 
 		processAcceleration();
 		processAnimation();
 		animator.tick(deltatime);
 		RigidBody::tick(deltatime);
+
+		if (jumpImpulse.remainingtime != 0) {
+			jumpImpulse.remainingtime -= deltatime*1000.0;
+			if (jumpImpulse.remainingtime < 0)
+				jumpImpulse.remainingtime = 0;
+		}
 
 		Camera::getInstance().goTo(QPoint(getX() - (getcamera.screenwidth/4.0), getY() - (getcamera.screenheight/2.0) ));
 	}

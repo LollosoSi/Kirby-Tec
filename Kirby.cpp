@@ -40,8 +40,9 @@ void Kirby::processAcceleration() {
 	}
 
 	if (buttons[SPACE] && isGrounded()) {
-		buttons[SPACE] = false;
-		temp.y -= 600 * scalefactor;
+		//buttons[SPACE] = false;
+		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
+		jumpImpulse.remainingtime += 50;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
@@ -49,6 +50,9 @@ void Kirby::processAcceleration() {
 	//if (!isGrounded()) {
 	//	temp.y += 9.8 * scalefactor;
 	//}
+
+	if (jumpImpulse.remainingtime > 0)
+		temp += jumpImpulse.value;
 
 	this->accel = temp;
 

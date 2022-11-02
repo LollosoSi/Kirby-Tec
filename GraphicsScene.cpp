@@ -45,7 +45,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
     QPoint snapped = Camera::screenToWorld(QPoint(lm.x, lm.y));
     snapped.setX((int)(snapped.x() - (snapped.x() % (int)scalefactor)));
-    snapped.setY((int)(snapped.y() - (snapped.y() % (int)scalefactor)) - scalefactor);
+    snapped.setY((int)(snapped.y() - (snapped.y() % (int)scalefactor)));
 
 
     Terrain* t = new Terrain(snapped);
