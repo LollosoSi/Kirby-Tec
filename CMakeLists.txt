@@ -39,6 +39,8 @@ file(CREATE_LINK "${PROJECT_SOURCE_DIR}/Kirby's Adventure (NES) Sounds"
 
 # Aggiungo eseguibile
 add_executable(${project} ${sorgenti})
+# Seleziona startup project per visual studio
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${project})
 
 
 # Collego librerie Qt e Vulkan con eseguibile
