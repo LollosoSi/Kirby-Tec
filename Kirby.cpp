@@ -19,8 +19,9 @@ void Kirby::processAcceleration() {
 		}
 	} else if (isGrounded()) {
 
-		temp.x = (-velocity.x * 2);
-
+		//temp.x = (-velocity.x * 4);
+		velocity.x = 0;
+		
 		
 	}
 
@@ -28,14 +29,16 @@ void Kirby::processAcceleration() {
 
 	}
 
+	/*
 	if ((currentDegree != NO_SLOPE) && false) {
 		PB::Vec2Df rot = temp;
 		double rad = toRadians(renderAngles[currentDegree]);
 		rot.x = (temp.x * cos(rad)) - (temp.y * sin(rad));
 		rot.y = (temp.x * sin(rad)) + (temp.y * cos(rad));
 		temp = rot;
-	} 
-	if(currentDegree == NO_SLOPE) {
+	}
+	*/
+	if(true) {
 	
 		temp.y += 9.8 * scalefactor;
 	
@@ -44,35 +47,41 @@ void Kirby::processAcceleration() {
 	if ((buttons[UP] || buttons[SPACE]) && isGrounded() && (lastHitNormals.y < 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
-		jumpImpulse.remainingtime += 50;
+		jumpImpulse.remainingtime += !angle ? 50 : 5;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
 
-	if (jumpImpulse.remainingtime > 0)
+	if (jumpImpulse.remainingtime > 0) {
 		temp += jumpImpulse.value;
+		angle = 0;
+		//currentDegree = NO_SLOPE;
+	}
 
 	this->accel = temp;
 
+}
+
+bool circa(double val, double targ, double perc = 0.2){
+	return (val > targ - (targ * perc)) && (val < targ + (targ * perc));
 }
 
 void Kirby::processAnimation() {
 
 	if (!animator.isPlayingOneShot())
 		if (isGrounded()) {
-			if (abs(velocity.x) < 1 * scalefactor)
+			if (abs(velocity.x) < 1 * scalefactor) {
+				double degang = toDegrees(angle);
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(
-					currentDegree == NO_SLOPE ? KIRBY_STAND : mirror ?
-					(currentDegree == SLOPED_25) ? KIRBY_SLOPED_25 : 
-					currentDegree == SLOPED_45 ? KIRBY_SLOPED_45 :
-					(currentDegree == SLOPED_205) ? KIRBY_SLOPED_25_LEFT : KIRBY_SLOPED_45_LEFT :
+					!angle ? KIRBY_STAND : 
+					circa(degang, 25) ? (mirror ? KIRBY_SLOPED_25_LEFT : KIRBY_SLOPED_25) :
+					circa(degang, 45) ? mirror ? KIRBY_SLOPED_45_LEFT : KIRBY_SLOPED_45 :
+					circa(degang, -25) ? mirror ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT : mirror ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT
 
-					(currentDegree == SLOPED_25) ? KIRBY_SLOPED_25_LEFT :
-					currentDegree == SLOPED_45 ? KIRBY_SLOPED_45_LEFT :
-					(currentDegree == SLOPED_205) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_45
-				
+
 				));
-				
+
+			}
 			else
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK), 0, 1.3-abs(velocity.x / maxwalkspeed));
 

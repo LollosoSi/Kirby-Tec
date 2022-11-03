@@ -33,14 +33,14 @@ struct Collision{
 };
 
 // In Degrees
-static const double renderAngles[5]{ 0, -45, -28, 45, 28};
-enum RenderDegree {
-	NO_SLOPE = 0,
-	SLOPED_45 = 1,
-	SLOPED_25 = 2,
-	SLOPED_225 = 3,
-	SLOPED_205 = 4
-};
+//static const double renderAngles[5]{ 0, -45, -28, 45, 28};
+//enum RenderDegree {
+//	NO_SLOPE = 0,
+//	SLOPED_45 = 1,
+//	SLOPED_25 = 2,
+//	SLOPED_225 = 3,
+//	SLOPED_205 = 4
+//};
 
 class RigidBody : public GameObject, public TickableObject, public RenderableObject {
 
@@ -49,7 +49,8 @@ public:
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
 
-	RenderDegree currentDegree = NO_SLOPE;
+	//RenderDegree currentDegree = NO_SLOPE;
+	double angle = 0;
 
 	RigidBody(const QPoint& coords, const QPoint offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
 		this->offset = offset;
@@ -109,7 +110,7 @@ public:
 	QRect collider;
 	double mass = 1;
 
-	bool isGrounded() { return ((velocity.y == 0) || (currentDegree!=NO_SLOPE)); }
+	bool isGrounded() { return ((velocity.y == 0) || (angle != 0)); }
 
 	
 	

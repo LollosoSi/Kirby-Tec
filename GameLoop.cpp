@@ -270,7 +270,7 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 		[this](const std::pair<RigidBody*, double>& a, const std::pair<RigidBody*, double>& b)
 		{
 			// if contact time is the same, give priority to nearest object
-			return a.second != b.second ? a.second < b.second : 0;
+			return a.second != b.second ? a.second < b.second : pitagoricDistance(a.first->getCollider().center(), b.first->getCollider().center()) < 0;
 		});
 
 	return sortedByContactTime;

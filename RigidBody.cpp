@@ -68,38 +68,52 @@ void RigidBody::tick(double deltatime){
 			objects::ObjectID obid = obj.first->getObjectId();
 			if (((obid == objects::SLOPED_TERRAIN_25)|| (obid == objects::SLOPED_TERRAIN_45)|| (obid == objects::SLOPED_TERRAIN_205)|| (obid == objects::SLOPED_TERRAIN_225))) {
 				
+				hit = true;
+
 				QPoint center = getCollider().center();
 				PB::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
 				double m1 = -1/line2.x, q1 = center.y() - (center.x() * m1);
+				// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
+
+
 
 				QPoint intersection = findIntersection(m1, q1, line2.x, line2.y);
-				hit = 1;
+				
 
 				double dist = pitagoricDistance(center, intersection);
-				if ((dist < 0.35*scalefactor && dist > 0)) {
+				if (dist < scalefactor*0.5) {
 
-					currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :
-						(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :
-						(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
-						
+					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
+
+					// Our angle is actually calculated for the intersection! Corresponds to line2.x
+					angle = line2.x;
 
 					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
 					
+					
 					// Remove perpendicular component
-					
-					
-					
-					break;
-				}
-				
-					
+					PB::Vec2Df rot = velocity;
+					double rad = -angle;
+					rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
+					rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
+					if (rot.y > 0)
+						rot.y = 0;
 
+					PB::Vec2Df rot2 = rot;
+					double rad2 = angle;
+					rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
+					rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
+					velocity = rot2;
+
+				}
+				break;
 					
 			}
 			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.02) {
 				hit = 1;
 				lastHitNormals = cn;
-				currentDegree = NO_SLOPE;
+				//currentDegree = NO_SLOPE;
+				angle = 0;
 				if (cn.x != 0) velocity.x = -velocity.x / 10;
 				if (cn.y != 0) velocity.y = 0;
 			}
@@ -113,18 +127,26 @@ void RigidBody::tick(double deltatime){
 			
 		}
 
-	if (!hit)
-		currentDegree = NO_SLOPE;
 
-	if (currentDegree != NO_SLOPE) {
-		PB::Vec2Df rot = velocity;
-		double rad = toRadians(renderAngles[currentDegree]);
-		rot.x = (velocity.x * cos(rad)) + (velocity.y * sin(rad));
-		rot.y = (velocity.x * sin(rad)) - (velocity.y * cos(rad));
-		velocity = rot;
+	if (!hit) {
+		angle = 0;
 	}
 
-	
+	if (angle != 0) {
+		PB::Vec2Df rot = velocity;
+		double rad = -angle;
+		rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
+		rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
+		if (rot.y > 0)
+			rot.y = 0;
+
+		PB::Vec2Df rot2 = velocity;
+		double rad2 = angle;
+		rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
+		rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
+		velocity = rot2;
+	}
+
 
 	double futurex = tx + (velocity.x * deltatime), futurey = ty + (velocity.y * deltatime);
 

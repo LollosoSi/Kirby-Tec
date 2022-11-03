@@ -63,6 +63,8 @@ public:
 	bool shouldMirror(){
 
 		switch (getObjectId()) {
+		default:
+			return false;
 		case objects::SLOPED_TERRAIN_25:
 			return false;
 		case objects::SLOPED_TERRAIN_205:
