@@ -18,9 +18,9 @@ TextureManager::TextureManager() {
 
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
-	QRect kirby_sloped_25 = QRect(151, 24, 16, 16);
-	QRect kirby_sloped_45 = QRect(171, 24, 16, 23);
-	QRect kirby_sloped_25_left = QRect(131, 24, 16, 16);
+	QRect kirby_sloped_25 = QRect(151, 232, 16, 16);
+	QRect kirby_sloped_45 = QRect(171, 232, 16, 23);
+	QRect kirby_sloped_25_left = QRect(131, 232, 16, 16);
 	QRect kirby_sloped_45_left = QRect(111, 232, 16, 23);
 
 	QRect particle_1 = getStandardQRect(6, 140);

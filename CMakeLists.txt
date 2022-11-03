@@ -1,6 +1,7 @@
 set(project KirbyAdventure)
 
 set(USING_ECLIPSE FALSE CACHE BOOL "")
+set(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD 1)
 
 project(${project})
 

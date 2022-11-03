@@ -5,11 +5,7 @@
 
 void Kirby::processAcceleration() {
 
-	PB::Vec2Df temp{ 0.0, 9.8 * scalefactor };
-
-	if (buttons[UP]) {
-
-	}
+	PB::Vec2Df temp{ 0.0, 0.0 };
 
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
@@ -21,35 +17,36 @@ void Kirby::processAcceleration() {
 			mirror = true;
 			temp.x -= (12 * scalefactor) * (1 - abs(velocity.x / maxwalkspeed));
 		}
-	}
-	else if (isGrounded()) {
+	} else if (isGrounded()) {
+
 		temp.x = (-velocity.x * 2);
 
+		
 	}
 
 	if (buttons[DOWN]) {
 
 	}
 
-	if (currentDegree != 0) {
+	if (currentDegree != NO_SLOPE) {
 		PB::Vec2Df rot = temp;
 		double rad = toRadians(renderAngles[currentDegree]);
 		rot.x = (temp.x * cos(rad)) - (temp.y * sin(rad));
 		rot.y = (temp.x * sin(rad)) + (temp.y * cos(rad));
 		temp = rot;
+	} else {
+	
+		temp.y += 9.8 * scalefactor;
+	
 	}
 
-	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0)) {
+	if ((buttons[UP] || buttons[SPACE]) && isGrounded() && (lastHitNormals.y < 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 50;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
-
-	//if (!isGrounded()) {
-	//	temp.y += 9.8 * scalefactor;
-	//}
 
 	if (jumpImpulse.remainingtime > 0)
 		temp += jumpImpulse.value;
@@ -64,10 +61,14 @@ void Kirby::processAnimation() {
 		if (isGrounded()) {
 			if (abs(velocity.x) < 1 * scalefactor)
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(
-					currentDegree == NO_SLOPE ? KIRBY_STAND : 
-					currentDegree == SLOPED_25 ? KIRBY_SLOPED_25 : 
+					currentDegree == NO_SLOPE ? KIRBY_STAND : mirror ?
+					(currentDegree == SLOPED_25) ? KIRBY_SLOPED_25 : 
 					currentDegree == SLOPED_45 ? KIRBY_SLOPED_45 :
-					currentDegree == SLOPED_205 ? KIRBY_SLOPED_25_LEFT : KIRBY_SLOPED_45_LEFT
+					(currentDegree == SLOPED_205) ? KIRBY_SLOPED_25_LEFT : KIRBY_SLOPED_45_LEFT :
+
+					(currentDegree == SLOPED_25) ? KIRBY_SLOPED_25_LEFT :
+					currentDegree == SLOPED_45 ? KIRBY_SLOPED_45_LEFT :
+					(currentDegree == SLOPED_205) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_45
 				
 				));
 				

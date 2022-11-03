@@ -83,7 +83,7 @@ bool PB::DynamicRectVsRect(
 
 	// perform ray vs rect intersection
 	if (RayVsRect(source.pos + source.size / 2, source_vel, expanded_target, contact_point, contact_normal, contact_time))
-		return (contact_time >= 0 && contact_time <= 1.0);
+		return (contact_time >= -1 && contact_time <= 1.0);
 	else
 		return false;
 }

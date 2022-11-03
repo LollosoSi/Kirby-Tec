@@ -1,6 +1,7 @@
 #include "RigidBody.h"
 
 #include "GameLoop.h"
+#include "Definitions.h"
 #include "CollisionDetection.h"
 
 
@@ -58,14 +59,14 @@ void RigidBody::tick(double deltatime){
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 
 	PB::Vec2Df cp, cn;
-	double ct = 0, min_t = 1 * deltatime;
+	double ct = 0, min_t = 0.1*scalefactor*deltatime;
+	bool hit = 0;
 	// solve the collisions in correct order 
 	for (auto& obj: cs)
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
 		{
-
-			if (obj.first->getObjectId() == objects::SLOPED_TERRAIN_25) {
-
+			objects::ObjectID obid = obj.first->getObjectId();
+			if (((obid == objects::SLOPED_TERRAIN_25)|| (obid == objects::SLOPED_TERRAIN_45)|| (obid == objects::SLOPED_TERRAIN_205)|| (obid == objects::SLOPED_TERRAIN_225))) {
 				
 				QPoint center = getCollider().center();
 				PB::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
@@ -73,20 +74,42 @@ void RigidBody::tick(double deltatime){
 
 				QPoint intersection = findIntersection(m1, q1, line2.x, line2.y);
 
-				if (abs(pitagoricDistance(center, intersection)) <= 1) {
-					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
-					//if (cn.x != 0) velocity.x = 0;
-					if (cn.y != 0) velocity.y = 0;
+				double dist = pitagoricDistance(center, intersection);
+				if ((dist < 0.8*scalefactor && dist > 0.4*scalefactor) && ((cn.y == -1)|| (cn.x != 0))) {
 
+					currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :
+						(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :
+						(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
+
+					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
+					
+					// Remove perpendicular component
+					
+						
+						
+							PB::Vec2Df rot = velocity;
+							double rad = toRadians(renderAngles[currentDegree]);
+							rot.x = (velocity.x * cos(rad));
+							rot.y = (velocity.x * sin(rad) -scalefactor*deltatime);
+							velocity = rot;
+						
+
+					
+							hit = 1;
+							break;
 				}
-					currentDegree = SLOPED_25;
-					return;
-			} else {
+					
+
+					
+			}
+			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.02) {
+				hit = 1;
 				lastHitNormals = cn;
 				currentDegree = NO_SLOPE;
-				if (cn.x != 0) velocity.x = -velocity.x/30;
-				else if (cn.y != 0) velocity.y = 0;
+				if (cn.x != 0) velocity.x = -velocity.x / 10;
+				if (cn.y != 0) velocity.y = 0;
 			}
+			
 			
 			
 
@@ -95,6 +118,9 @@ void RigidBody::tick(double deltatime){
 		
 			
 		}
+
+	if(!hit)
+		currentDegree = NO_SLOPE;
 
 	double futurex = tx + (velocity.x * deltatime), futurey = ty + (velocity.y * deltatime);
 

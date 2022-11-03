@@ -35,7 +35,7 @@ class TerrainSloped : public Terrain {
 
 public:
 	TerrainSloped(QPoint pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25) : Terrain(pos, QPoint(0, 0), 62, 32) { setObjectId(id); }
-	TerrainSloped() : TerrainSloped(QPoint(0, 0)) {}
+	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN_25) : TerrainSloped(QPoint(0, 0), id) {}
 	~TerrainSloped() {}
 
 	// Returns m in x and q in y
@@ -43,7 +43,32 @@ public:
 	QPoint getVert2() { return QPoint(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
 	PB::Vec2Df getHitLine() { QPoint v1 = getVert1(), v2 = getVert2(); double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x())); return PB::Vec2Df{ m,v1.y() - (double)(v1.x() * m) }; }
 
-	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(TERRAIN_SLOPED_25)->pixmaps[0]; }
+	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
+
+	int textureId() {
+		switch (getObjectId()) {
+		default:
+			return TexManager::TERRAIN_SLOPED_25;
+		case objects::SLOPED_TERRAIN_25:
+			return TexManager::TERRAIN_SLOPED_25;
+		case objects::SLOPED_TERRAIN_205:
+			return TexManager::TERRAIN_SLOPED_25;
+		}
+	
+	}
+	bool shouldMirror(){
+
+		switch (getObjectId()) {
+		case objects::SLOPED_TERRAIN_25:
+			return false;
+		case objects::SLOPED_TERRAIN_205:
+			return true;
+		case objects::SLOPED_TERRAIN_45:
+			return false;
+		case objects::SLOPED_TERRAIN_225:
+			return true;
+		}
+	}
 
 	QGraphicsLineItem* qli = 0;
 	void render(QGraphicsScene& scene) {

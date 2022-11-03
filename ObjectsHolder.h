@@ -16,6 +16,16 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 
 		case objects::TERRAIN:
 			return new Terrain();
+
+		case objects::SLOPED_TERRAIN_45:
+			return new TerrainSloped(objects::SLOPED_TERRAIN_45);
+		case objects::SLOPED_TERRAIN_25:
+			return new TerrainSloped(objects::SLOPED_TERRAIN_25);
+		case objects::SLOPED_TERRAIN_205:
+			return new TerrainSloped(objects::SLOPED_TERRAIN_205);
+		case objects::SLOPED_TERRAIN_225:
+			return new TerrainSloped(objects::SLOPED_TERRAIN_225);
+
 	}
 
 }
