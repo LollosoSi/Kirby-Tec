@@ -53,6 +53,10 @@ public:
 			return TexManager::TERRAIN_SLOPED_25;
 		case objects::SLOPED_TERRAIN_205:
 			return TexManager::TERRAIN_SLOPED_25;
+		case objects::SLOPED_TERRAIN_45:
+			return TexManager::TERRAIN_SLOPED_45;
+		case objects::SLOPED_TERRAIN_225:
+			return TexManager::TERRAIN_SLOPED_45;
 		}
 	
 	}

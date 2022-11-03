@@ -28,13 +28,14 @@ void Kirby::processAcceleration() {
 
 	}
 
-	if (currentDegree != NO_SLOPE) {
+	if ((currentDegree != NO_SLOPE) && false) {
 		PB::Vec2Df rot = temp;
 		double rad = toRadians(renderAngles[currentDegree]);
 		rot.x = (temp.x * cos(rad)) - (temp.y * sin(rad));
 		rot.y = (temp.x * sin(rad)) + (temp.y * cos(rad));
 		temp = rot;
-	} else {
+	} 
+	if(currentDegree == NO_SLOPE) {
 	
 		temp.y += 9.8 * scalefactor;
 	

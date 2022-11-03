@@ -73,31 +73,25 @@ void RigidBody::tick(double deltatime){
 				double m1 = -1/line2.x, q1 = center.y() - (center.x() * m1);
 
 				QPoint intersection = findIntersection(m1, q1, line2.x, line2.y);
+				hit = 1;
 
 				double dist = pitagoricDistance(center, intersection);
-				if ((dist < 0.8*scalefactor && dist > 0.4*scalefactor) && ((cn.y == -1)|| (cn.x != 0))) {
+				if ((dist < 0.35*scalefactor && dist > 0)) {
 
 					currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :
 						(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :
 						(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
+						
 
 					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
 					
 					// Remove perpendicular component
 					
-						
-						
-							PB::Vec2Df rot = velocity;
-							double rad = toRadians(renderAngles[currentDegree]);
-							rot.x = (velocity.x * cos(rad));
-							rot.y = (velocity.x * sin(rad) -scalefactor*deltatime);
-							velocity = rot;
-						
-
 					
-							hit = 1;
-							break;
+					
+					break;
 				}
+				
 					
 
 					
@@ -119,8 +113,18 @@ void RigidBody::tick(double deltatime){
 			
 		}
 
-	if(!hit)
+	if (!hit)
 		currentDegree = NO_SLOPE;
+
+	if (currentDegree != NO_SLOPE) {
+		PB::Vec2Df rot = velocity;
+		double rad = toRadians(renderAngles[currentDegree]);
+		rot.x = (velocity.x * cos(rad)) + (velocity.y * sin(rad));
+		rot.y = (velocity.x * sin(rad)) - (velocity.y * cos(rad));
+		velocity = rot;
+	}
+
+	
 
 	double futurex = tx + (velocity.x * deltatime), futurey = ty + (velocity.y * deltatime);
 

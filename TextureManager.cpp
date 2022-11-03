@@ -63,6 +63,11 @@ TextureManager::TextureManager() {
 		new float[1] {0.06f},
 		1
 	};
+	textures[TERRAIN_SLOPED_45] = new Animatable{
+		new QPixmap[1]{terrainpart2tex.copy(terrain_sloped_25)},
+		new float[1] {0.06f},
+		1
+	};
 
 	textures[KIRBY_SLOPED_25] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_sloped_25)},

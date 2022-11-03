@@ -33,13 +33,13 @@ struct Collision{
 };
 
 // In Degrees
-static const double renderAngles[5]{ 0, 45, 25, -45, -25};
+static const double renderAngles[5]{ 0, -45, -28, 45, 28};
 enum RenderDegree {
 	NO_SLOPE = 0,
-	SLOPED_45 = 3,
-	SLOPED_25 = 4,
-	SLOPED_225 = 1,
-	SLOPED_205 = 2
+	SLOPED_45 = 1,
+	SLOPED_25 = 2,
+	SLOPED_225 = 3,
+	SLOPED_205 = 4
 };
 
 class RigidBody : public GameObject, public TickableObject, public RenderableObject {

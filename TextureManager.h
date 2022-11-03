@@ -25,9 +25,9 @@ namespace TexManager {
 		KIRBY_SLOPED_25_LEFT = 9,
 		KIRBY_SLOPED_45_LEFT = 10,
 		TERRAIN_SLOPED_25 = 11,
-		//TERRAIN_SLOPED_45 = 12
+		TERRAIN_SLOPED_45 = 12
 	};
-	const int TEXTURE_COUNT = 12;
+	const int TEXTURE_COUNT = 13;
 
 };
 
