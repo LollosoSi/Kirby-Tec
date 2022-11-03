@@ -34,8 +34,8 @@ file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sprites"
         "${CMAKE_CURRENT_BINARY_DIR}/sprites" SYMBOLIC)
 
 # Collega la cartella con i suoni al progetto
-file(CREATE_LINK "${PROJECT_SOURCE_DIR}/Kirby's Adventure (NES) Sounds"
-        "${CMAKE_CURRENT_BINARY_DIR}/Kirby's Adventure (NES) Sounds" SYMBOLIC)
+file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sounds"
+        "${CMAKE_CURRENT_BINARY_DIR}/sounds" SYMBOLIC)
 
 # Aggiungo eseguibile
 add_executable(${project} ${sorgenti})
@@ -108,3 +108,14 @@ set(CMAKE_AUTOUIC ON)
 set(SKIP_AUTOMOC ON)
 
 
+install(TARGETS ${project} RUNTIME DESTINATION bin)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/sounds/" DESTINATION bin/sounds)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/sprites/" DESTINATION bin/sprites)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/design/" DESTINATION bin/design)
+
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_VERSION_MAJOR "1.0")
+set(CPACK_PACKAGE_VERSION_MINOR "1.0.5")
+set(CPACK_SOURCE_GENERATOR "TGZ")
+include(CPack)
