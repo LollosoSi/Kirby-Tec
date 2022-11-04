@@ -10,20 +10,39 @@
 #include "TextureManager.h"
 #include "Camera.h"
 
+using namespace TexManager;
+
 class Terrain : public RigidBody {
+
+	TexID tid;
 
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsItem* hitbox = 0;
 
 public:
-	Terrain(QPoint pos, QPoint offset, int sizex, int sizey) : RigidBody(pos, offset, sizex, sizey) {
-		setObjectId(objects::TERRAIN);
+	Terrain(QPoint pos, QPoint offset, int sizex, int sizey, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : RigidBody(pos, offset, sizex, sizey) {
+		setObjectId(id);
+		this->tid = tid;
 	}
-	Terrain(QPoint pos) : Terrain(pos, QPoint(0, 0), 16, 16) {}
-	Terrain() : Terrain(QPoint(0, 0)) {}
+	Terrain(QPoint pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(pos, QPoint(0, 0), 16, 16, id, tid) {}
+	Terrain(objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(QPoint(0, 0), id, tid) {}
 	~Terrain() {}
 
-	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(TERRAIN)->pixmaps[0]; }
+	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
+
+	std::string serialize(const char& divider) const override {
+		std::stringstream out("", std::ios_base::app | std::ios_base::out);
+		out << RigidBody::serialize(divider) << divider << tid;
+
+		return out.str();
+	}
+
+	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
+		RigidBody::deserialize(start);
+		tid = (TexID)(std::atoi((*(start++)).c_str()));
+
+		return this;
+	};
 
 };
 

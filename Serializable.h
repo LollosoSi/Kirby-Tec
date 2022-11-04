@@ -12,6 +12,6 @@ class Serializable {
 
 public:
 	virtual std::string serialize(const char &divider) const = 0;
-	virtual Serializable* deserialize(std::vector<std::string>::iterator start) = 0;
+	virtual Serializable* deserialize(std::vector<std::string>::iterator& start) = 0;
 
 };

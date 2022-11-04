@@ -55,8 +55,7 @@ public:
 		return out.str();
 	}
 
-	Serializable* deserialize(std::vector<std::string>::iterator start) {
-	
+	Serializable* deserialize(std::vector<std::string>::iterator& start) {
 		setX(std::atof((*(start++)).c_str()) * scalefactor);
 		setY(std::atof((*(start++)).c_str()) * scalefactor);	
 	

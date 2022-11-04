@@ -112,6 +112,21 @@ public:
 
 	bool isGrounded() { return ((velocity.y == 0) || (angle != 0)); }
 
+
+	std::string serialize(const char& divider) const override {
+		std::stringstream out("", std::ios_base::app | std::ios_base::out);
+		out << GameObject::serialize(divider) << divider << getSizeX() / scalefactor << divider << getSizeY() / scalefactor;
+
+		return out.str();
+	}
+
+	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
+		GameObject::deserialize(start);
+		setSizeX(std::atof((*(start++)).c_str()) * scalefactor);
+		setSizeY(std::atof((*(start++)).c_str()) * scalefactor);
+
+		return this;
+	};
 	
 	
 
