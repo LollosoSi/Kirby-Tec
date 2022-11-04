@@ -25,7 +25,7 @@ namespace TexManager {
 		KIRBY_SLOPED_25_LEFT = 9,
 		KIRBY_SLOPED_45_LEFT = 10,
 		TERRAIN_SLOPED_25 = 11,
-		TERRAIN_SLOPED_45 = 12
+		TERRAIN_SLOPED_45 = 12,
 		
 		// stage 1
         MARGINTERRAINL = 13,
