@@ -10,6 +10,7 @@ TextureManager::TextureManager() {
 	QColor kirby_file_mask = QColor(84, 110, 140);
 	QColor terrain_file_mask = QColor(60, 188, 252);
 	QColor terrain_part2_file_mask = QColor(60, 188, 252);
+	QColor nocolor = Qt::transparent;
 
 	// Kirby Movements
 	QRect kirby_stand = getStandardQRect(6, 24);
@@ -26,6 +27,9 @@ TextureManager::TextureManager() {
 	QRect kirby_sloped_45_left = QRect(111, 232, 16, 23);
 
 	QRect particle_1 = getStandardQRect(6, 140);
+
+	// title screen
+	QRect title_screen = QRect(0, 0, 1023, 895);
 
 	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
@@ -49,6 +53,8 @@ TextureManager::TextureManager() {
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
 	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
 	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
+	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
+	
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -166,6 +172,13 @@ TextureManager::TextureManager() {
 	};
 	textures[PLATFORMRIGHT] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain3S_2)},
+		new float[1] {0},
+		1
+	};
+
+	// title screen
+	textures[TITLESCREEN] = new Animatable{
+		new QPixmap[1]{titlescreentex.copy(title_screen)},
 		new float[1] {0},
 		1
 	};

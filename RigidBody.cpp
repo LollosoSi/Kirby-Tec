@@ -20,7 +20,7 @@ void RigidBody::render(QGraphicsScene& scene) {
 
 	if (!pm) {
 		pm = scene.addPixmap(getTexture());
-		pm->setScale(scale);
+		
 
 		hitbox = scene.addRect(getCollider(), qp);
 	} else if (!visible) {
@@ -36,6 +36,7 @@ void RigidBody::render(QGraphicsScene& scene) {
 		pm->setPixmap(getTexture());
 		pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
 		//pm->setRotation(renderAngles[currentDegree]);
+		pm->setScale(scale);
 
 		QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
 		scene.removeItem(hitbox);

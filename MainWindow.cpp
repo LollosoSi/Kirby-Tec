@@ -5,7 +5,7 @@
 using namespace std;
 
 MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
-    sceneRect = QRect(0,0,1580,1000);
+    sceneRect = QRect(0,0,aspectratio*480,480);
     setGeometry(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
 
     scene = new GraphicsScene();
@@ -43,16 +43,36 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
         
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
+    double expectedwidth = (double)(this->height() * aspectratio);
+    
+
+    if (expectedwidth != this->width()) {
+        event->accept();
+        this->resize(QSize(expectedwidth, this->height()));
+
+    }
+    else {
+
+
+    }
+
     QMainWindow::resizeEvent(event);
     // Resize drawspace here
-    sceneRect.setWidth(this->width());
+    sceneRect.setWidth(expectedwidth);
     sceneRect.setHeight(this->height());
 
-    Camera::getInstance().screenwidth = this->width();
+    
+
+    Camera::getInstance().screenwidth = expectedwidth;
     Camera::getInstance().screenheight = this->height();
 
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
+
+    
+
+    scale = (this->height()) / (double)(895);
+    scalefactor = scale * standardsize;
 
 }
 

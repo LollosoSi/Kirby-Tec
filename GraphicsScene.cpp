@@ -43,19 +43,25 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     lm.x = mouseEvent->scenePos().x();
     lm.y = mouseEvent->scenePos().y();
 
-    QPoint snapped = Camera::screenToWorld(QPoint(lm.x, lm.y));
-    snapped.setX((int)(snapped.x() - (snapped.x() % (int)scalefactor)));
-    snapped.setY((int)(snapped.y() - (snapped.y() % (int)scalefactor)));
-
-
-    Terrain* t = new Terrain(snapped);
-    GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+  
 
 }
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     qDebug() << Q_FUNC_INFO << me->scenePos();
     QGraphicsScene::mouseReleaseEvent(me);
+
+    if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
+
+        QPoint snapped = Camera::screenToWorld(QPoint(lm.x, lm.y));
+        snapped.setX((int)(snapped.x() - (snapped.x() % (int)scalefactor)));
+        snapped.setY((int)(snapped.y() - (snapped.y() % (int)scalefactor)));
+
+
+        Terrain* t = new Terrain(snapped);
+        GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+
+    } 
 }
 
 void GraphicsScene::keyPressEvent(QKeyEvent* e)

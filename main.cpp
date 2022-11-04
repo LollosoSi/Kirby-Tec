@@ -14,6 +14,7 @@
 #include "Terrain.h"
 #include "Kirby.h"
 
+
 int main(int argc, char* argv[]) {
 
 	// istanzio applicazione Qt
@@ -26,7 +27,11 @@ int main(int argc, char* argv[]) {
 
 	
 	
-	if (!GameLoop::getInstance().loadGame("testout")) {
+	if (!GameLoop::getInstance().loadGame("title")) {
+		
+	}
+	
+/*	if (!GameLoop::getInstance().loadGame("testout")) {
 
 		std::thread tt = std::thread([]() {
 			for (int j = 0; j < 4; j++)
@@ -34,13 +39,15 @@ int main(int argc, char* argv[]) {
 					Terrain* t = new Terrain(QPoint(i * scalefactor, scalefactor * j));
 					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 				}
-			});
+			}); 
+
+
 
 		Kirby* k = new Kirby(QPoint(0.0, -100.0));
 		GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
-		tt.join();
+		tt.join(); 
 	}
-	
+	*/
 	
 
 	GameLoop::getInstance().start();
