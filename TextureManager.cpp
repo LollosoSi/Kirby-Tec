@@ -113,12 +113,55 @@ TextureManager::TextureManager() {
 		new float[1] {0.2f},
 		1
 	};
-
+// stage 1
 	textures[TERRAIN] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain_1)},
 		new float[1] {0},
 		1
 	};
+	textures[MARGINTERRAINL] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain_2)},
+		new float[1] {0},
+		1
+	};
+	textures[MARGINTERRAINR] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain_3)},
+		new float[1] {0},
+		1
+	};
+	textures[SECONDTERRAINL] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain_4)},
+		new float[1] {0},
+		1
+	};
+// stage 2
+	textures[TERRAIN2] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain2S_1)},
+		new float[1] {0},
+		1
+	};
+	textures[TERRAINBLOCK] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain2S_2)},
+		new float[1] {0},
+		1
+	};
+// stage 3
+	textures[PLATFORMLEFT] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain3S_1)},
+		new float[1] {0},
+		1
+	};
+	textures[PLATFORMCENTER] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain3S_2)},
+		new float[1] {0},
+		1
+	};
+	textures[PLATFORMRIGHT] = new Animatable{
+		new QPixmap[1]{terraintex.copy(terrain3S_2)},
+		new float[1] {0},
+		1
+	};
+
 
 	textures[PARTICLE_1] = new Animatable{
 		new QPixmap[4]{kirbytex.copy(particle_1), kirbytex.copy(moveBy(particle_1, 1)),kirbytex.copy(moveBy(particle_1, 2)),kirbytex.copy(moveBy(particle_1, 3)) },
