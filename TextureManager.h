@@ -26,8 +26,23 @@ namespace TexManager {
 		KIRBY_SLOPED_45_LEFT = 10,
 		TERRAIN_SLOPED_25 = 11,
 		TERRAIN_SLOPED_45 = 12
+		
+		// stage 1
+        MARGINTERRAINL = 13,
+        MARGINTERRAINR = 14,
+        SECONDTERRAINL = 15,
+        SECONDTERRAINR = 16,
+// stage 2
+        TERRAIN2 = 17,
+        TERRAINBLOCK = 18,
+
+// Stage 3
+        PLATFORMLEFT = 19,
+        PLATFORMCENTER=20,
+        PLATFORMRIGHT=21
+		
 	};
-	const int TEXTURE_COUNT = 13;
+	const int TEXTURE_COUNT = 22;
 
 };
 

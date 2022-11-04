@@ -25,7 +25,22 @@ TextureManager::TextureManager() {
 
 	QRect particle_1 = getStandardQRect(6, 140);
 
+	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
+	QRect terrain_2 = getStandardQRect(19,1);
+	QRect terrain_3 = getStandardQRect(36,1);
+	QRect terrain_4 = getStandardQRect(18,18);
+	QRect terrain_5 = getStandardQRect(35,18);
+	
+//stage 2
+	QRect terrain2S_1 = getStandardQRect(120,1);
+	QRect terrain2S_2 = getStandardQRect(52,1);
+	
+//stage 3
+	QRect terrain3S_1 = getStandardQRect(69,1);
+	QRect terrain3S_2 = getStandardQRect(86,1);
+	QRect terrain3S_3 = getStandardQRect(103,1);
+	
 
 	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
 
