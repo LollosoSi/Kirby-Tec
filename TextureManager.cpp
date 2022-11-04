@@ -136,6 +136,12 @@ TextureManager::TextureManager() {
 		new float[1] {0},
 		1
 	};
+	textures[SECONDTERRAINR] = new Animatable{
+	new QPixmap[1]{terraintex.copy(terrain_5)},
+	new float[1] {0},
+	1
+	};
+
 // stage 2
 	textures[TERRAIN2] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain2S_1)},
