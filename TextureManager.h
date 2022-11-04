@@ -12,7 +12,7 @@
 namespace TexManager {
 
 	/** Elements must be caps */
-	enum {
+	enum TexID {
 		KIRBY_STAND = 0,
 		KIRBY_WALK = 1,
 		KIRBY_ROLL = 2,
@@ -32,11 +32,11 @@ namespace TexManager {
         MARGINTERRAINR = 14,
         SECONDTERRAINL = 15,
         SECONDTERRAINR = 16,
-// stage 2
+		// stage 2
         TERRAIN2 = 17,
         TERRAINBLOCK = 18,
 
-// Stage 3
+		// Stage 3
         PLATFORMLEFT = 19,
         PLATFORMCENTER=20,
         PLATFORMRIGHT=21
