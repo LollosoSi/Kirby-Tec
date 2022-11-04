@@ -11,6 +11,7 @@ TextureManager::TextureManager() {
 	QColor terrain_file_mask = QColor(60, 188, 252);
 	QColor terrain_part2_file_mask = QColor(60, 188, 252);
 
+	// Kirby Movements
 	QRect kirby_stand = getStandardQRect(6, 24);
 	QRect kirby_walk = getStandardQRect(51, 24);
 	QRect kirby_roll = getStandardQRect(6, 49);
@@ -18,6 +19,7 @@ TextureManager::TextureManager() {
 
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
+	// Kirby Position
 	QRect kirby_sloped_25 = QRect(151, 232, 16, 16);
 	QRect kirby_sloped_45 = QRect(171, 232, 16, 23);
 	QRect kirby_sloped_25_left = QRect(131, 232, 16, 16);
@@ -41,7 +43,7 @@ TextureManager::TextureManager() {
 	QRect terrain3S_2 = getStandardQRect(86,1);
 	QRect terrain3S_3 = getStandardQRect(103,1);
 	
-
+	// Slopped Section
 	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
