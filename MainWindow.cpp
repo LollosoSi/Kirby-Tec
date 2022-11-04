@@ -44,15 +44,11 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
     double expectedwidth = (double)(this->height() * aspectratio);
-    
+    double expectedheight = (double)(this->width() / aspectratio);
 
     if (expectedwidth != this->width()) {
         event->accept();
         this->resize(QSize(expectedwidth, this->height()));
-
-    }
-    else {
-
 
     }
 

@@ -21,7 +21,7 @@ class Kirby : public RigidBody {
 	Animator animator;
 
 protected:
-	int maxwalkspeed = 20*scalefactor;
+	int maxwalkspeed = 20;
 
 public:
 	Kirby(const QPoint pos) : RigidBody(pos, QPoint(2.0, 1.0), 12, 14) {
@@ -49,7 +49,7 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ PB::Vec2Df{0,-scalefactor*150},0 };
+	Impulse jumpImpulse{ PB::Vec2Df{0,-150},0 };
 
 	void tick(double deltatime) {
 

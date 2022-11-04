@@ -23,18 +23,18 @@ public:
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 
-	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - Camera::getInstance().getX(), coord.y() - Camera::getInstance().getY()); }
-	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + Camera::getInstance().getX(), coord.y() + Camera::getInstance().getY()); }
+	static QPoint worldToScreen(QPoint coord) { return QPoint(coord.x() - Camera::getInstance().getX(), coord.y() - Camera::getInstance().getY())*scalefactor; }
+	static QPoint screenToWorld(QPoint coord) { return QPoint(coord.x() + Camera::getInstance().getX(), coord.y() + Camera::getInstance().getY())/scalefactor; }
 
 	static bool isVisible(QRect bound) {
 		return
 			(
-				(Camera::getInstance().getX() - (scalefactor)) <= (bound.x() + bound.width()) &&
+				(Camera::getInstance().getX() - (1)) <= (bound.x() + bound.width()) &&
 
-				((Camera::getInstance().getX() + (scalefactor)) + Camera::getInstance().screenwidth) >= (bound.x())
+				((Camera::getInstance().getX() + (1)) + Camera::getInstance().screenwidth) >= (bound.x())
 				) &&
-			((Camera::getInstance().getY() - (scalefactor)) <= (bound.y() + bound.height()) &&
-				((Camera::getInstance().getY() + (scalefactor)) + Camera::getInstance().screenheight) >= (bound.y()));
+			((Camera::getInstance().getY() - (1)) <= (bound.y() + bound.height()) &&
+				((Camera::getInstance().getY() + (1)) + Camera::getInstance().screenheight) >= (bound.y()));
 	}
 
 	void tick(double delta);

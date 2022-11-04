@@ -40,7 +40,7 @@ void RigidBody::render(QGraphicsScene& scene) {
 
 		QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
 		scene.removeItem(hitbox);
-		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x, rf.size.y), qp);
+		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x*scale, rf.size.y*scale), qp);
 
 	}
 	
@@ -60,7 +60,7 @@ void RigidBody::tick(double deltatime){
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 
 	PB::Vec2Df cp, cn;
-	double ct = 0, min_t = 0.1*scalefactor*deltatime;
+	double ct = 0, min_t = 0.1*deltatime;
 	bool hit = 0;
 	// solve the collisions in correct order 
 	for (auto& obj: cs)
@@ -82,7 +82,7 @@ void RigidBody::tick(double deltatime){
 				
 
 				double dist = pitagoricDistance(center, intersection);
-				if (dist < scalefactor*0.5) {
+				if (dist < 0.5) {
 
 					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
 

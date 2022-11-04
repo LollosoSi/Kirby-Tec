@@ -54,8 +54,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
 
         QPoint snapped = Camera::screenToWorld(QPoint(lm.x, lm.y));
-        snapped.setX((int)(snapped.x() - (snapped.x() % (int)scalefactor)));
-        snapped.setY((int)(snapped.y() - (snapped.y() % (int)scalefactor)));
+        snapped.setX((int)(floor(snapped.x())));
+        snapped.setY((int)(floor(snapped.y())));
 
 
         Terrain* t = new Terrain(snapped);

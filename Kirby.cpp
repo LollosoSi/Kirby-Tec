@@ -10,12 +10,12 @@ void Kirby::processAcceleration() {
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
 			mirror = false;
-			temp.x += (12 * scalefactor) * (1 - abs(velocity.x / maxwalkspeed));
+			temp.x += (12) * (1 - abs(velocity.x / maxwalkspeed));
 		}
 
 		if (buttons[LEFT] && (velocity.x > -maxwalkspeed) ) {
 			mirror = true;
-			temp.x -= (12 * scalefactor) * (1 - abs(velocity.x / maxwalkspeed));
+			temp.x -= (12) * (1 - abs(velocity.x / maxwalkspeed));
 		}
 	} else if (isGrounded()) {
 
@@ -40,7 +40,7 @@ void Kirby::processAcceleration() {
 	*/
 	if(true) {
 	
-		temp.y += 9.8 * scalefactor;
+		temp.y += 9.8;
 	
 	}
 
@@ -70,7 +70,7 @@ void Kirby::processAnimation() {
 
 	if (!animator.isPlayingOneShot())
 		if (isGrounded()) {
-			if (abs(velocity.x) < 1 * scalefactor) {
+			if (abs(velocity.x) < 1) {
 				double degang = toDegrees(angle);
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(
 					!angle ? KIRBY_STAND : 
@@ -85,11 +85,11 @@ void Kirby::processAnimation() {
 			else
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK), 0, 1.3-abs(velocity.x / maxwalkspeed));
 
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 4*scalefactor)) {
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 4)) {
 				if (!(rand() % 2)) {
 					Particle *p = new Particle(QPoint(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 1000, 0.3);
 					GameLoop::getInstance().addParticle(p);
-					p->movement.y *= (velocity.mag()/(5*scalefactor));
+					p->movement.y *= (velocity.mag()/(5));
 					p->movement.x = 0;
 				}
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);

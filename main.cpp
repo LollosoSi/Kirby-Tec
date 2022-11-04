@@ -28,15 +28,16 @@ int main(int argc, char* argv[]) {
 	
 	
 	if (!GameLoop::getInstance().loadGame("title")) {
-		
+		Terrain* t = new Terrain(objects::TERRAIN, TexManager::TITLESCREEN);
+		GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 	}
 	
-/*	if (!GameLoop::getInstance().loadGame("testout")) {
+	if (!GameLoop::getInstance().loadGame("testout")) {
 
 		std::thread tt = std::thread([]() {
-			for (int j = 0; j < 4; j++)
-				for (int i = 0; i < 300; i++) {
-					Terrain* t = new Terrain(QPoint(i * scalefactor, scalefactor * j));
+			for (int j = 0; j < 2; j++)
+				for (int i = 0; i < 10; i++) {
+					Terrain* t = new Terrain(QPoint(i, j));
 					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 				}
 			}); 
@@ -47,7 +48,7 @@ int main(int argc, char* argv[]) {
 		GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 		tt.join(); 
 	}
-	*/
+	
 	
 
 	GameLoop::getInstance().start();

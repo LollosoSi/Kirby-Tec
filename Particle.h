@@ -38,7 +38,7 @@ public:
 	}
 	Cloneable* clone() const { return new Particle(*this); }
 
-	PB::Vec2Df movement{ 2, -0.01 * scalefactor };
+	PB::Vec2Df movement{ 2, -0.01};
 
 	virtual void render(QGraphicsScene& scene) {
 
@@ -71,8 +71,8 @@ public:
 		float timeindipendent = (startlifetime - lifetime) / startlifetime;
 
 		statepicker.tick(delta);
-		setX(getX() + (movement.x * pow(M_E, timeindipendent) * delta * scalefactor));
-		setY(getY() + (movement.y * delta * scalefactor));
+		setX(getX() + (movement.x * pow(M_E, timeindipendent) * delta));
+		setY(getY() + (movement.y * delta));
 
 	}
 

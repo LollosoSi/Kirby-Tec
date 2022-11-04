@@ -55,8 +55,8 @@ public:
 	RigidBody(const QPoint& coords, const QPoint offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
 		this->offset = offset;
 		//std::cout << "Setting pos " << coords.x() << ":" << coords.y() << "\n";
-		setSizeX(sizeX * scale);
-		setSizeY(sizeY * scale);
+		setSizeX(sizeX);
+		setSizeY(sizeY);
 		setX(x);
 		setY(y);
 	}
@@ -115,15 +115,15 @@ public:
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
-		out << GameObject::serialize(divider) << divider << getSizeX() / scalefactor << divider << getSizeY() / scalefactor;
+		out << GameObject::serialize(divider) << divider << getSizeX() << divider << getSizeY();
 
 		return out.str();
 	}
 
 	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
 		GameObject::deserialize(start);
-		setSizeX(std::atof((*(start++)).c_str()) * scalefactor);
-		setSizeY(std::atof((*(start++)).c_str()) * scalefactor);
+		setSizeX(std::atof((*(start++)).c_str()));
+		setSizeY(std::atof((*(start++)).c_str()));
 
 		return this;
 	};
