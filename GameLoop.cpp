@@ -251,8 +251,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		return;
 
 	
-
-	KirbyInstance->keyPressEvent(e,isPressed);
+	if(!KirbyInstance)
+		KirbyInstance->keyPressEvent(e,isPressed);
 
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }
