@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 		GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 	}
 	
-	if (!GameLoop::getInstance().loadGame("testout")) {
+	if (!GameLoop::getInstance().loadGame("testout") && false) {
 
 		std::thread tt = std::thread([]() {
 			for (int j = 0; j < 2; j++)
