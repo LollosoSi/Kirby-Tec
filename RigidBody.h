@@ -49,6 +49,7 @@ public:
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
 
+
 	//RenderDegree currentDegree = NO_SLOPE;
 	double angle = 0;
 
@@ -62,11 +63,20 @@ public:
 	}
 	RigidBody(const QPoint& coord, const QPoint& offset) : RigidBody(coord, offset, 16, 16) {}
 	RigidBody() : RigidBody(QPoint(0.0, 0.0), QPoint(0.0, 0.0)) {}
-
 	virtual void tick(double deltatime);
 	virtual void render(QGraphicsScene& scene);
 	//virtual QPixmap getTexture() = 0;
+	~RigidBody() {
+	
+		if(pm)
+		pm->setVisible(false);
+		pm = 0;
 
+		if(hitbox)
+		hitbox->setVisible(false);
+		hitbox = 0;
+
+	}
 	/** Find collision, position is relative to passed object */
 	//Collision findCollision(double future_x, double future_y, RigidBody& rb);
 

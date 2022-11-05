@@ -181,7 +181,7 @@ void GameLoop::stop() {
 	running = false;
 	paused = false;
 
-	GameLoop::getInstance().saveGame("testout");
+	//GameLoop::getInstance().saveGame("testout");
 	
 }
 
@@ -243,7 +243,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	{
 		KirbyInstance->setX(0); KirbyInstance->setY(-500);
 	}
-	if (e->key() == Qt::Key_S) {
+	if (e->key() == Qt::Key_S && !isPressed) {
+		clear();
 		if (!GameLoop::getInstance().loadGame("testout")) {
 
 			std::thread tt = std::thread([]() {
@@ -251,22 +252,23 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 					for (int i = 0; i < 10; i++) {
 						Terrain* t = new Terrain(QPoint(i, j));
 						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
-					}
+					
+}
 				});
-
 
 
 			Kirby* k = new Kirby(QPoint(0.0, -100.0));
 			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 			tt.join();
 		}
+		//start();
 	}
 
 	if (e->isAutoRepeat())
 		return;
 
 	
-	if(!KirbyInstance)
+	if(KirbyInstance)
 		KirbyInstance->keyPressEvent(e,isPressed);
 
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
@@ -291,16 +293,33 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 	return sortedByContactTime;
 }
 void GameLoop::clear() {
-	std::vector<GameObject*> objects;
-	for (auto* item : this->particleObjects)
-		if (item->shouldDelete()) {
-			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
-			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
-			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
-			delete item;
+	//stop();
+	/* TODO: Avoid memory leaks
+	for (auto* item : this->renderableObjects)
+		{
+		delete item;
+	}
+	for (auto* item : this->tickableObjects)
+		{
+		delete item;
 		}
-	tickableObjectsQueue.clear();
-	renderableObjectsQueue.clear();
+	for (auto* item : this->particleObjects)
+		 {
+		delete item;
+		}
+	for (auto* item : this->serializableObjects)
+		{
+		delete item;
+		}
+	for (auto* item : this->collidableObjects)
+		 {
+		delete item;
+		}*/
+
+
+	tickableObjects.clear();
+	renderableObjects.clear();
 	serializableObjects.clear();
 	collidableObjects.clear();
+	particleObjects.clear();
 }
