@@ -67,13 +67,13 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 
     
 
-    scale = (this->height()) / (double)(895);
+    scale = (this->height()) / (double)(895) * 6;
     scalefactor = scale * standardsize;
 
 }
 
-void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects) {
-    if(scene->items().size() == 0)
+void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects, bool clearscene) {
+    if(scene->items().size() == 0 || clearscene)
         scene->clear();
     
     //qDeleteAll(scene->items());

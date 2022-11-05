@@ -30,7 +30,7 @@ public:
     QRect sceneRect;
 
     public slots:
-        void pleaseRender(std::vector<RenderableObject*>* objects);
+        void pleaseRender(std::vector<RenderableObject*>* objects, bool clearscene);
 signals:
     void renderingCompleted();
 

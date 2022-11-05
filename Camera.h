@@ -19,12 +19,13 @@ public:
 	~Camera() {}
 
 	void goTo(QPoint coord) {
+
 		gotoXY = coord; triggerGoto = true;
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 
-	static QPoint worldToScreen(QPoint coord) { return QPoint((coord.x() * scale) - Camera::getInstance().getX(), (coord.y() * scale) - Camera::getInstance().getY()); }
-	static QPoint screenToWorld(QPoint coord) { return QPoint((coord.x() / scale) + Camera::getInstance().getX(), (coord.y() / scale) + Camera::getInstance().getY()); }
+	static QPoint worldToScreen(QPoint coord) { return QPoint((coord.x() * scalefactor) - Camera::getInstance().getX(), (coord.y() * scalefactor) - Camera::getInstance().getY()); }
+	static QPoint screenToWorld(QPoint coord) { return QPoint((coord.x() / scalefactor) + Camera::getInstance().getX(), (coord.y() / scalefactor) + Camera::getInstance().getY()); }
 
 	static bool isVisible(QRect bound) {
 		return

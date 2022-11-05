@@ -27,10 +27,10 @@ int main(int argc, char* argv[]) {
 
 	
 	
-	if (!GameLoop::getInstance().loadGame("title")) {
-		Terrain* t = new Terrain(objects::TERRAIN, TexManager::TITLESCREEN);
-		GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
-	}
+	//if (!GameLoop::getInstance().loadGame("title")) {
+	//	Terrain* t = new Terrain(objects::TERRAIN, TexManager::TITLESCREEN);
+	//	GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+	//}
 	
 	
 	

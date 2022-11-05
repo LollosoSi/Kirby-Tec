@@ -81,7 +81,7 @@ public:
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
 
 signals:
-	void pleaseRender(std::vector<RenderableObject*>* objects);
+	void pleaseRender(std::vector<RenderableObject*>* objects, bool clearscene = false);
 
 public slots:
 	void renderingCompleted();
@@ -90,6 +90,7 @@ protected:
 	QGraphicsScene* scene = nullptr;
 	std::atomic_bool thread_working = true;
 	
+	bool shouldclearscene = false;
 
 private:
 	// Relativi al singleton

@@ -145,7 +145,8 @@ void GameLoop::mergeQueues() {
 
 void GameLoop::render() {
 	waitingForRender = true;
-	emit(pleaseRender(&renderableObjects));
+	emit(pleaseRender(&renderableObjects), shouldclearscene);
+	if (shouldclearscene)shouldclearscene = 0;
 }
 
 void GameLoop::tick(double deltatime) {
@@ -257,7 +258,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 				});
 
 
-			Kirby* k = new Kirby(QPoint(0.0, -100.0));
+			Kirby* k = new Kirby(QPoint(0.0, -10.0));
 			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 			tt.join();
 		}
@@ -293,6 +294,7 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 	return sortedByContactTime;
 }
 void GameLoop::clear() {
+	
 	//stop();
 	/* TODO: Avoid memory leaks
 	for (auto* item : this->renderableObjects)
@@ -316,10 +318,19 @@ void GameLoop::clear() {
 		delete item;
 		}*/
 
+	pause();
+	while (waitingForRender) {}
+
+
+	
 
 	tickableObjects.clear();
 	renderableObjects.clear();
 	serializableObjects.clear();
 	collidableObjects.clear();
 	particleObjects.clear();
+
+	shouldclearscene = 1;
+
+	start();
 }
