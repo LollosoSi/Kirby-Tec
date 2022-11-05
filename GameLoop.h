@@ -61,6 +61,7 @@ public:
 	// Avvia / ferma loop
 	void start();
 	void pause();
+	void clear();
 	static void stop();
 	void saveGame(std::string fileName);
 	bool loadGame(std::string fileName);

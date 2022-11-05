@@ -32,22 +32,7 @@ int main(int argc, char* argv[]) {
 		GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 	}
 	
-	if (!GameLoop::getInstance().loadGame("testout") && false) {
-
-		std::thread tt = std::thread([]() {
-			for (int j = 0; j < 2; j++)
-				for (int i = 0; i < 10; i++) {
-					Terrain* t = new Terrain(QPoint(i, j));
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
-				}
-			}); 
-
-
-
-		Kirby* k = new Kirby(QPoint(0.0, -100.0));
-		GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
-		tt.join(); 
-	}
+	
 	
 	
 

@@ -7,10 +7,7 @@
 GameLoop::GameLoop() {}
 
 GameLoop::~GameLoop() {
-	tickableObjectsQueue.clear();
-	renderableObjectsQueue.clear();
-	serializableObjects.clear();
-	collidableObjects.clear();
+	clear();
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -246,6 +243,24 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	{
 		KirbyInstance->setX(0); KirbyInstance->setY(-500);
 	}
+	if (e->key() == Qt::Key_S) {
+		if (!GameLoop::getInstance().loadGame("testout")) {
+
+			std::thread tt = std::thread([]() {
+				for (int j = 0; j < 2; j++)
+					for (int i = 0; i < 10; i++) {
+						Terrain* t = new Terrain(QPoint(i, j));
+						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+					}
+				});
+
+
+
+			Kirby* k = new Kirby(QPoint(0.0, -100.0));
+			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+			tt.join();
+		}
+	}
 
 	if (e->isAutoRepeat())
 		return;
@@ -274,4 +289,18 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 		});
 
 	return sortedByContactTime;
+}
+void GameLoop::clear() {
+	std::vector<GameObject*> objects;
+	for (auto* item : this->particleObjects)
+		if (item->shouldDelete()) {
+			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
+			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
+			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
+			delete item;
+		}
+	tickableObjectsQueue.clear();
+	renderableObjectsQueue.clear();
+	serializableObjects.clear();
+	collidableObjects.clear();
 }
