@@ -43,33 +43,43 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
         
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
+
+    GameLoop::getInstance().pause();
+
     double expectedwidth = (double)(this->height() * aspectratio);
     double expectedheight = (double)(this->width() / aspectratio);
 
-    if (expectedwidth != this->width()) {
+    if (expectedwidth != this->width() && false) {
         event->accept();
         this->resize(QSize(expectedwidth, this->height()));
 
     }
 
+    if (expectedwidth > this->width()) {
+        expectedwidth = this->width();
+    }
+    else {
+        expectedheight = this->height();
+    }
+
+
+
     QMainWindow::resizeEvent(event);
     // Resize drawspace here
     sceneRect.setWidth(expectedwidth);
-    sceneRect.setHeight(this->height());
-
-    
+    sceneRect.setHeight(expectedheight);
 
     Camera::getInstance().screenwidth = expectedwidth;
-    Camera::getInstance().screenheight = this->height();
+    Camera::getInstance().screenheight = expectedheight;
 
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
 
-    
-
-    scale = (this->height()) / (double)(895) * 6;
+    scale = ((expectedheight) / (double)(895)) * 5;
     scalefactor = scale * standardsize;
 
+
+    GameLoop::getInstance().pause(false);
 }
 
 void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects, bool clearscene) {

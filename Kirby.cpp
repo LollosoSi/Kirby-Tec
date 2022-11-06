@@ -87,7 +87,7 @@ void Kirby::processAnimation() {
 
 			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 4)) {
 				if (!(rand() % 2)) {
-					Particle *p = new Particle(QPoint(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 1000, 0.3);
+					Particle *p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 1000, 0.3);
 					GameLoop::getInstance().addParticle(p);
 					p->movement.y *= (velocity.mag()/(5));
 					p->movement.x = 0;

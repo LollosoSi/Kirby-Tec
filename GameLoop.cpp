@@ -174,8 +174,9 @@ void GameLoop::start() {
 
 }
 
-void GameLoop::pause() {
-	paused = true;
+
+void GameLoop::pause(bool pause) {
+	paused = pause;
 }
 
 void GameLoop::stop() {
@@ -242,7 +243,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	if (e->key() == Qt::Key_R)
 	{
-		KirbyInstance->setX(0); KirbyInstance->setY(-500);
+		KirbyInstance->setX(5); KirbyInstance->setY(-10);
 	}
 	if (e->key() == Qt::Key_S && !isPressed) {
 		clear();
@@ -251,14 +252,14 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			std::thread tt = std::thread([]() {
 				for (int j = 0; j < 2; j++)
 					for (int i = 0; i < 10; i++) {
-						Terrain* t = new Terrain(QPoint(i, j));
+						Terrain* t = new Terrain(QPointF(i, j));
 						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 					
 }
 				});
 
 
-			Kirby* k = new Kirby(QPoint(0.0, -10.0));
+			Kirby* k = new Kirby(QPointF(0.0, -10.0));
 			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 			tt.join();
 		}

@@ -34,11 +34,11 @@ void RigidBody::render(QGraphicsScene& scene) {
 	
 	if (pm) {
 		pm->setPixmap(getTexture());
-		pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
+		pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
 		//pm->setRotation(renderAngles[currentDegree]);
 		pm->setScale(scale);
 
-		QPoint p = Camera::worldToScreen(QPoint(rf.pos.x, rf.pos.y));
+		QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
 		scene.removeItem(hitbox);
 		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x*scale, rf.size.y*scale), qp);
 
@@ -60,7 +60,7 @@ void RigidBody::tick(double deltatime){
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 
 	PB::Vec2Df cp, cn;
-	double ct = 0, min_t = 0.1*deltatime;
+	double ct = 0, min_t = 1;
 	bool hit = 0;
 	// solve the collisions in correct order 
 	for (auto& obj: cs)
@@ -71,14 +71,14 @@ void RigidBody::tick(double deltatime){
 				
 				hit = true;
 
-				QPoint center = getCollider().center();
+				QPointF center = getCollider().center();
 				PB::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
 				double m1 = -1/line2.x, q1 = center.y() - (center.x() * m1);
 				// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
 
 
 
-				QPoint intersection = findIntersection(m1, q1, line2.x, line2.y);
+				QPointF intersection = findIntersection(m1, q1, line2.x, line2.y);
 				
 
 				double dist = pitagoricDistance(center, intersection);
@@ -110,7 +110,7 @@ void RigidBody::tick(double deltatime){
 				break;
 					
 			}
-			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.02) {
+			else if(obid == objects::TERRAIN && ct >= 0 && ct < 1) {
 				hit = 1;
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;

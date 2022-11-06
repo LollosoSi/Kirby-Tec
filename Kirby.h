@@ -24,12 +24,12 @@ protected:
 	int maxwalkspeed = 20;
 
 public:
-	Kirby(const QPoint pos) : RigidBody(pos, QPoint(2.0, 1.0), 12, 14) {
+	Kirby(const QPointF pos) : RigidBody(pos, QPointF(2.0, 1.0), 12, 14) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 		setObjectId(objects::KIRBY);
 	}
 
-	Kirby() : Kirby(QPoint(0.0, 0.0)) {}
+	Kirby() : Kirby(QPointF(0.0, 0.0)) {}
 
 	Kirby(const Kirby& go) {
 		this->setX(go.getX());
@@ -64,7 +64,7 @@ public:
 				jumpImpulse.remainingtime = 0;
 		}
 
-		Camera::getInstance().goTo(Camera::worldToScreen(QPoint(getX(), getY())));
+		Camera::getInstance().goTo(Camera::worldToScreen(QPointF(getX() - (5), getY()-(5))));
 	}
 
 	//void render(QGraphicsScene& scene) { RigidBody::render(scene); }

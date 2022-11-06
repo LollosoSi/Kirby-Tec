@@ -1,11 +1,16 @@
 #pragma once
 
-#include <QPoint>
+#include <QPointF>
+#include <QPointF>
 #include <QRect>
 
 #include "Definitions.h"
 #include "TickableObject.h"
 #include "GameObject.h"
+
+/** Notice! This object must move in screen coordinates and must have anchor in world coordinates
+*
+*/
 
 /** Questa classe e' un Singleton
 * Traccia le coordinate di visualizzazione
@@ -18,24 +23,29 @@ public:
 	static Camera& getInstance() { static Camera instance; return instance; }
 	~Camera() {}
 
-	void goTo(QPoint coord) {
+	void goTo(QPointF coord) {
 
 		gotoXY = coord; triggerGoto = true;
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 
-	static QPoint worldToScreen(QPoint coord) { return QPoint((coord.x() * scalefactor) - Camera::getInstance().getX(), (coord.y() * scalefactor) - Camera::getInstance().getY()); }
-	static QPoint screenToWorld(QPoint coord) { return QPoint((coord.x() / scalefactor) + Camera::getInstance().getX(), (coord.y() / scalefactor) + Camera::getInstance().getY()); }
+	static QPointF worldToScreen(QPointF coord) { 
+		return QPointF(
+			(((double)coord.x() * (double)scalefactor) - (double)Camera::getInstance().getX()),
+			(((double)coord.y() * (double)scalefactor) - (double)Camera::getInstance().getY())
+		);
+	}
+	static QPointF screenToWorld(QPointF coord) { return QPointF(((coord.x()) + Camera::getInstance().getX())/ (double)scalefactor, ((coord.y()) + Camera::getInstance().getY())/ (double)scalefactor); }
 
-	static bool isVisible(QRect bound) {
+	static bool isVisible(QRectF bound) {
 		return
 			(
-				(Camera::getInstance().getX() - (1)) <= (bound.x() + bound.width()) &&
+				(Camera::getInstance().getX() - ((double)scalefactor)) <= ((bound.x()* (double)scalefactor) + (bound.width()* (double)scale)) &&
 
-				((Camera::getInstance().getX() + (1)) + Camera::getInstance().screenwidth) >= (bound.x())
+				((Camera::getInstance().getX() + ((double)scalefactor)) + Camera::getInstance().screenwidth) >= (bound.x() * (double)scalefactor)
 				) &&
-			((Camera::getInstance().getY() - (1)) <= (bound.y() + bound.height()) &&
-				((Camera::getInstance().getY() + (1)) + Camera::getInstance().screenheight) >= (bound.y()));
+			((Camera::getInstance().getY() - ((double)scalefactor)) <= ((bound.y() * (double)scalefactor) + (bound.height()* (double)scale)) &&
+				((Camera::getInstance().getY() + ((double)scalefactor)) + Camera::getInstance().screenheight) >= (bound.y() * (double)scalefactor));
 	}
 
 	void tick(double delta);
@@ -43,7 +53,7 @@ public:
 	int screenwidth = 1980, screenheight = 720;
 
 protected:
-	QPoint gotoXY;
+	QPointF gotoXY;
 	bool triggerGoto = false;
 
 private:

@@ -19,7 +19,7 @@ class Particle : public GameObject, public TickableObject, public RenderableObje
 	QGraphicsPixmapItem* pm = 0;
 
 public:
-	Particle(QPoint start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : GameObject(start.x(), start.y()) {
+	Particle(QPointF start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : GameObject(start.x(), start.y()) {
 		this->pixscale = pixscale; this->lifetime = lifetime; startlifetime = lifetime; statepicker.setAnimatable(textureset);
 	}
 
@@ -59,7 +59,7 @@ public:
 		}
 
 			pm->setPixmap(statepicker.getCurrentPixmap());
-			pm->setPos(Camera::worldToScreen(QPoint(getX(), getY())));
+			pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
 		
 
 	}

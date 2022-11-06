@@ -45,7 +45,7 @@ struct Collision{
 class RigidBody : public GameObject, public TickableObject, public RenderableObject {
 
 public:
-	QPoint offset;
+	QPointF offset;
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
 
@@ -53,7 +53,7 @@ public:
 	//RenderDegree currentDegree = NO_SLOPE;
 	double angle = 0;
 
-	RigidBody(const QPoint& coords, const QPoint offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
+	RigidBody(const QPointF& coords, const QPointF offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
 		this->offset = offset;
 		//std::cout << "Setting pos " << coords.x() << ":" << coords.y() << "\n";
 		setSizeX(sizeX);
@@ -61,8 +61,8 @@ public:
 		setX(x);
 		setY(y);
 	}
-	RigidBody(const QPoint& coord, const QPoint& offset) : RigidBody(coord, offset, 16, 16) {}
-	RigidBody() : RigidBody(QPoint(0.0, 0.0), QPoint(0.0, 0.0)) {}
+	RigidBody(const QPointF& coord, const QPointF& offset) : RigidBody(coord, offset, 16, 16) {}
+	RigidBody() : RigidBody(QPointF(0.0, 0.0), QPointF(0.0, 0.0)) {}
 	virtual void tick(double deltatime);
 	virtual void render(QGraphicsScene& scene);
 	//virtual QPixmap getTexture() = 0;
@@ -82,12 +82,12 @@ public:
 
 	virtual void setX(const double x) override {
 		GameObject::setX(x);
-		collider.setRect((offset.x() * scale) + x, getCollider().y(), getSizeX(), getSizeY());
+		collider.setRect((offset.x() / (double)scalefactor) + x, getCollider().y(), getSizeX(), getSizeY());
 	}
 
 	virtual void setY(const double y) override {
 		GameObject::setY(y);
-		collider.setRect(getCollider().x(), (offset.y()*scale) + y, getSizeX(), getSizeY());
+		collider.setRect(getCollider().x(), (offset.y()/(double)scalefactor) + y, getSizeX(), getSizeY());
 	}
 
 	void setSizeX(const double sizeX) { collider.setRect(getX(), getY(), sizeX, getSizeY()); }
@@ -95,14 +95,14 @@ public:
 	const double getSizeX() const { return collider.size().width(); }
 	const double getSizeY() const { return collider.size().height(); }
 
-	void setOffset(const QPoint of) { offset = of; }
-	QPoint getOffset() const { return offset; }
+	void setOffset(const QPointF of) { offset = of; }
+	QPointF getOffset() const { return offset; }
 
 	PB::Vec2Df velocity{0.0, 0.0};
 	PB::Vec2Df accel{0.0, 0.0};
 	PB::Vec2Df lastHitNormals{ 0.0, 0.0 };
 
-	virtual QRect getCollider() const { return collider; }
+	virtual QRectF getCollider() const { return collider; }
 
 	virtual PB::RectF getColliderRectF() const {
 		return 
@@ -117,7 +117,7 @@ public:
 
 public:
 	//std::vector<Vector> vectors;
-	QRect collider;
+	QRectF collider;
 	double mass = 1;
 
 	bool isGrounded() { return ((velocity.y == 0) || (angle != 0)); }
@@ -125,13 +125,14 @@ public:
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
-		out << GameObject::serialize(divider) << divider << getSizeX() << divider << getSizeY();
+		out << GameObject::serialize(divider) << getOffset().x() << divider << getOffset().y() << divider << getSizeX() << divider << getSizeY();
 
 		return out.str();
 	}
 
 	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
 		GameObject::deserialize(start);
+		setOffset(QPointF(std::atof((*(start++)).c_str()), std::atof((*(start++)).c_str())));
 		setSizeX(std::atof((*(start++)).c_str()));
 		setSizeY(std::atof((*(start++)).c_str()));
 

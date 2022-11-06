@@ -60,7 +60,7 @@ public:
 
 	// Avvia / ferma loop
 	void start();
-	void pause();
+	void pause(bool pause = true);
 	void clear();
 	static void stop();
 	void saveGame(std::string fileName);

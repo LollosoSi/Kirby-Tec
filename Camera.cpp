@@ -10,7 +10,7 @@ void Camera::tick(double delta) {
 			triggerGoto = false;
 		if (!xinrange) setX(getX() + (delta * pow(xdist, 2) / 80.0 * (getX() > gotoXY.x() ? -1 : 1)));
 		if (!yinrange) setY(getY() + (delta * pow(ydist, 2) / 200.0 * (getY() > gotoXY.y() ? -1 : 1)));
-		if (xdist > 20 || ydist > 20) {
+		if (xdist > 20*scale || ydist > 20*scale) {
 			// Camera was shot out!
 			setX(gotoXY.x());
 			setY(gotoXY.y());

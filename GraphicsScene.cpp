@@ -53,7 +53,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
 
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
 
-        QPoint snapped = Camera::screenToWorld(QPoint(lm.x, lm.y));
+        QPointF snapped = Camera::screenToWorld(QPointF(lm.x, lm.y));
         snapped.setX((int)(floor(snapped.x())));
         snapped.setY((int)(floor(snapped.y())));
 
