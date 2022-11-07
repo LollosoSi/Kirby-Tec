@@ -21,15 +21,23 @@ class Kirby : public RigidBody {
 	Animator animator;
 
 protected:
-	int maxwalkspeed = 20;
+	int maxwalkspeed = 14;
 
 public:
-	Kirby(const QPointF pos) : RigidBody(pos, QPointF(2.0, 1.0), 12, 14) {
+	Kirby(const QPointF pos) : RigidBody(pos, QPointF(0,0), 1,1) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 		setObjectId(objects::KIRBY);
 	}
 
 	Kirby() : Kirby(QPointF(0.0, 0.0)) {}
+
+
+	virtual void setX(const double x) override {
+		RigidBody::setX(x);
+	}
+	virtual void setY(const double y) override {
+		RigidBody::setY(y);
+	}
 
 	Kirby(const Kirby& go) {
 		this->setX(go.getX());
@@ -49,7 +57,7 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ PB::Vec2Df{0,-150},0 };
+	Impulse jumpImpulse{ PB::Vec2Df{0,-250},0 };
 
 	void tick(double deltatime) {
 
@@ -63,11 +71,21 @@ public:
 			if (jumpImpulse.remainingtime < 0)
 				jumpImpulse.remainingtime = 0;
 		}
-
-		Camera::getInstance().goTo(Camera::worldToScreen(QPointF(getX() - (5), getY()-(5))));
 	}
 
-	//void render(QGraphicsScene& scene) { RigidBody::render(scene); }
+	int l = 0;
+	void render(QGraphicsScene& scene) override {
+		RigidBody::render(scene); 
+
+		
+	
+	QPointF pos = (QPointF(getX() - 4, getY() - 4));
+	//std::cout << " # " << getY() << " : " << pos.y() << (!((l++) % 10) ? "\n" : "\t");
+	//Camera::getInstance().setX(pos.x());
+	//Camera::getInstance().setY(pos.y());
+	Camera::getInstance().goTo(pos);
+
+	}
 	
 	QPixmap getTexture() override { return animator.getCurrentPixmap(mirror); }
 

@@ -243,35 +243,50 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	if (e->key() == Qt::Key_R)
 	{
-		KirbyInstance->setX(5); KirbyInstance->setY(-10);
-	}
-	if (e->key() == Qt::Key_S && !isPressed) {
-		clear();
-		if (!GameLoop::getInstance().loadGame("testout")) {
-
-			std::thread tt = std::thread([]() {
-				for (int j = 0; j < 2; j++)
-					for (int i = 0; i < 10; i++) {
-						Terrain* t = new Terrain(QPointF(i, j));
-						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
-					
-}
-				});
-
-
-			Kirby* k = new Kirby(QPointF(0.0, -10.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
-			tt.join();
-		}
-		//start();
+		KirbyInstance->setX(4); KirbyInstance->setY(-10);
 	}
 
 	if (e->isAutoRepeat())
 		return;
 
+	if (e->key() == Qt::Key_V && !isPressed) {
+		clear();
+		if (!GameLoop::getInstance().loadGame("testout")) {
+
+			std::thread tt = std::thread([]() {
+				for (int j = 0; j < 2; j++)
+					for (int i = 0; i < 100; i++) {
+						Terrain* t = new Terrain(QPointF(i, j));
+						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+					}
+				});
+
+
+			Kirby* k = new Kirby(QPointF(0.0, -5.0));
+			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+			//KirbyInstance = 0;
+			tt.join();
+		}
+		//start();
+	}
+
+	
+
 	
 	if(KirbyInstance)
 		KirbyInstance->keyPressEvent(e,isPressed);
+	else {
+		// Controls
+		if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
+			Camera::getInstance().setY(Camera::getInstance().getY()+10);
+		if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
+			Camera::getInstance().setX(Camera::getInstance().getX() + 10);
+		if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
+			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
+		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
+			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
+
+	}
 
 	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }

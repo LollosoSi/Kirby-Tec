@@ -10,17 +10,18 @@ void Kirby::processAcceleration() {
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
 			mirror = false;
-			temp.x += (12) * (1 - abs(velocity.x / maxwalkspeed));
+			temp.x += (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed));
 		}
 
 		if (buttons[LEFT] && (velocity.x > -maxwalkspeed) ) {
 			mirror = true;
-			temp.x -= (12) * (1 - abs(velocity.x / maxwalkspeed));
+			temp.x -= (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed));
 		}
 	} else if (isGrounded()) {
-
-		//temp.x = (-velocity.x * 4);
-		velocity.x = 0;
+		if(abs(velocity.x) > 0.3)
+			temp.x = ((velocity.x > 0 ? -1 : 1) * 9.8 * 3);
+		else if(abs(velocity.x) > 0)
+			velocity.x = 0;
 		
 		
 	}
@@ -47,7 +48,7 @@ void Kirby::processAcceleration() {
 	if ((buttons[UP] || buttons[SPACE]) && isGrounded() && (lastHitNormals.y < 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
-		jumpImpulse.remainingtime += !angle ? 50 : 5;
+		jumpImpulse.remainingtime += !angle ? 25 : 15;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
@@ -85,11 +86,11 @@ void Kirby::processAnimation() {
 			else
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK), 0, 1.3-abs(velocity.x / maxwalkspeed));
 
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 4)) {
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && (velocity.mag() > 1)) {
 				if (!(rand() % 2)) {
 					Particle *p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 1000, 0.3);
 					GameLoop::getInstance().addParticle(p);
-					p->movement.y *= (velocity.mag()/(5));
+					p->movement.y *= (velocity.mag() * 5);
 					p->movement.x = 0;
 				}
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);

@@ -31,26 +31,36 @@ public:
 
 	static QPointF worldToScreen(QPointF coord) { 
 		return QPointF(
-			(((double)coord.x() * (double)scalefactor) - (double)Camera::getInstance().getX()),
-			(((double)coord.y() * (double)scalefactor) - (double)Camera::getInstance().getY())
+			( ( ((double)coord.x() - Camera::getInstance().getX()) * (double)scalefactor)),
+			( ( ((double)coord.y() - Camera::getInstance().getY()) * (double)scalefactor))
 		);
 	}
-	static QPointF screenToWorld(QPointF coord) { return QPointF(((coord.x()) + Camera::getInstance().getX())/ (double)scalefactor, ((coord.y()) + Camera::getInstance().getY())/ (double)scalefactor); }
+	static QPointF screenToWorld(QPointF coord) { return QPointF((coord.x() / (double)scalefactor) + Camera::getInstance().getX(), (coord.y() / (double)scalefactor ) + Camera::getInstance().getY()); }
 
 	static bool isVisible(QRectF bound) {
 		return
 			(
-				(Camera::getInstance().getX() - ((double)scalefactor)) <= ((bound.x()* (double)scalefactor) + (bound.width()* (double)scale)) &&
+				(Camera::getInstance().getX() - 1) <= (bound.x() + bound.width()) &&
 
-				((Camera::getInstance().getX() + ((double)scalefactor)) + Camera::getInstance().screenwidth) >= (bound.x() * (double)scalefactor)
+				( 
+					(Camera::getInstance().getX() + 1) + (Camera::getInstance().screenwidth / (double)scalefactor) >= (bound.x() * 1)
 				) &&
-			((Camera::getInstance().getY() - ((double)scalefactor)) <= ((bound.y() * (double)scalefactor) + (bound.height()* (double)scale)) &&
-				((Camera::getInstance().getY() + ((double)scalefactor)) + Camera::getInstance().screenheight) >= (bound.y() * (double)scalefactor));
+			((Camera::getInstance().getY() - 1) <= (bound.y() + bound.height())) &&
+				((Camera::getInstance().getY() + 1) + (Camera::getInstance().screenheight / (double)scalefactor)) >= (bound.y() * 1)
+					
+				);
 	}
 
 	void tick(double delta);
 
 	int screenwidth = 1980, screenheight = 720;
+
+	virtual void setX(const double x) override {
+		GameObject::setX(x);
+	}
+	virtual void setY(const double y) override {
+		GameObject::setY(y);
+	}
 
 protected:
 	QPointF gotoXY;

@@ -24,7 +24,7 @@ public:
 		setObjectId(id);
 		this->tid = tid;
 	}
-	Terrain(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(pos, QPointF(0, 0), 16, 16, id, tid) {}
+	Terrain(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(pos, QPointF(0, 0), 1, 1, id, tid) {}
 	Terrain(objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(QPointF(0, 0), id, tid) {}
 	~Terrain() {}
 

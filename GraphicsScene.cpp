@@ -28,8 +28,11 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
     //qDebug() << "DeltaX: " << deltaX << " DeltaY: " << deltaY;
 
-    Camera::getInstance().setX(Camera::getInstance().getX() + deltaX);
-    Camera::getInstance().setY(Camera::getInstance().getY() + deltaY);
+    QPointF snapped = Camera::screenToWorld(QPointF(Camera::getInstance().getX() + deltaX, Camera::getInstance().getY() + deltaY));
+    
+
+    Camera::getInstance().setX(snapped.x());
+    Camera::getInstance().setY(snapped.y());
     lm.x = mouseEvent->scenePos().x();
     lm.y = mouseEvent->scenePos().y();
 }

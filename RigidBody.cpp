@@ -40,7 +40,7 @@ void RigidBody::render(QGraphicsScene& scene) {
 
 		QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
 		scene.removeItem(hitbox);
-		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x*scale, rf.size.y*scale), qp);
+		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 
 	}
 	
@@ -54,6 +54,9 @@ void RigidBody::tick(double deltatime){
 
 	velocity.x += accel.x * deltatime;
 	velocity.y += accel.y * deltatime;
+
+	double overridex = 0, overridey = 0;
+
 
 	//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
 
@@ -110,13 +113,23 @@ void RigidBody::tick(double deltatime){
 				break;
 					
 			}
-			else if(obid == objects::TERRAIN && ct >= 0 && ct < 1) {
+			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.05) {
 				hit = 1;
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;
 				angle = 0;
-				if (cn.x != 0) velocity.x = -velocity.x / 10;
-				if (cn.y != 0) velocity.y = 0;
+			
+				
+
+				if (cn.x != 0) {
+					overridex = (getX() + (getVelocity().x * ct));
+					velocity.x = -velocity.x / 2;
+				}
+				if (cn.y != 0) {
+					overridey = (getY() + (getVelocity().y * ct));
+					velocity.y = 0;
+				}
+				
 			}
 			
 			
@@ -149,7 +162,7 @@ void RigidBody::tick(double deltatime){
 	}
 
 
-	double futurex = tx + (velocity.x * deltatime), futurey = ty + (velocity.y * deltatime);
+	double futurex = !overridex ? tx + (velocity.x * deltatime) : overridex, futurey = !overridey ? ty + (velocity.y * deltatime) : overridey;
 
 	setX(futurex);
 	setY(futurey);
