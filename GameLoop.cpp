@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "CollisionDetection.h"
 #include "Sounds.h"
+#include "TextureManager.h"
 
 
 
@@ -170,7 +171,7 @@ void GameLoop::tick(double deltatime) {
 void GameLoop::start() {
 	running = true;
 	paused = false;
-	KA::Sounds::instance()->play("Kirby_Adventure_theme");
+	// KA::Sounds::instance()->play("Kirby_Adventure_theme");
 	
 	
 	if(!loopthread.joinable())
@@ -243,13 +244,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 		if (paused) {
 			
-			start(); 
-			
-			
+			start(); 	
 		} else { 
 			
 			pause(); 
-		
 		}
 	}
 	// Save
@@ -273,12 +271,13 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		if (!GameLoop::getInstance().loadGame("testout")) {
 
 			std::thread tt = std::thread([]() {
-				for (int j = 0; j < 2; j++)
-					for (int i = 0; i < 100; i++) {
+				for (int j = 0; j < 1; j++)
+					for (int i = 0; i < 9; i++) {
 						Terrain* t = new Terrain(QPointF(i, j));
 						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+						}
+
 						
-					}
 				});
 
 
@@ -286,9 +285,9 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 			//KirbyInstance = 0;
 			tt.join();
-			KA::Sounds::instance()->stopMusic("Kirby_Adventure_theme");
+			
 			KA::Sounds::instance()->play("Vegetable Valley_Theme");
-		}
+		} 
 		//start();
 	}
 

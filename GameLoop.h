@@ -46,11 +46,15 @@ class GameLoop : public QObject
 {
 	Q_OBJECT
 
+private:
+	
+
 public:
 	std::thread loopthread;
 
 	std::string		_music;
-
+	
+	
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();

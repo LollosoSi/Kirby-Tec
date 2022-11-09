@@ -20,6 +20,20 @@ TextureManager::TextureManager() {
 
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
+	// Kirby Actions
+	QRect kirby_inhale = getStandardQRect(6, 83); // 2 images (4 totale)
+	QRect kirby_inhale2 = QRect(46, 75, 16 , 24 ); // bigger
+	QRect kirby_inhale3 = QRect(66, 75, 24, 24); // bigger 2
+	QRect kirby_exhale = QRect(160,75,24,24); //1
+	QRect kirby_exhale2 = QRect(188, 75, 16, 24); 
+	QRect kirby_exhale3 = getStandardQRect(208, 83); //2
+
+	QRect kirby_spit_cloud = getStandardQRect(248,83);
+
+	QRect kirby_big_flying = QRect(99,75,24,24) ; // 2 images
+	QRect kirby_big_stand = QRect(63,107,24,24);
+	QRect kirby_big_walking = QRect(96,107,24,24); // 3 images
+
 	// Kirby Position
 	QRect kirby_sloped_25 = QRect(151, 232, 16, 16);
 	QRect kirby_sloped_45 = QRect(171, 232, 16, 23);

@@ -112,6 +112,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		buttons[Kirby::RIGHT] = isPressed;
 	if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
 		buttons[Kirby::LEFT] = isPressed;
+
+	// enter doors
 	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
 		buttons[Kirby::UP] = isPressed;
 
@@ -120,6 +122,14 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		if (isGrounded()) {
 			KA::Sounds::instance()->play("jump");
 		}
+	}
+	//Kirby becomes big and fly
+	if (e->key() == Qt::Key_Q) {
+		buttons[Kirby::BIG] = isPressed;
+	}
+	//Kirby inhale enemies
+	if (e->key() == Qt::Key_E) {
+		buttons[Kirby::INHALE] = isPressed;
 	}
 
 }
