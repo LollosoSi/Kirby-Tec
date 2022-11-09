@@ -25,6 +25,7 @@ endif()
 # Richiedo librerie Qt
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Multimedia)
 
 
 # Richiesto dalla documentazione
@@ -45,7 +46,7 @@ set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT $
 
 
 # Collego librerie Qt e Vulkan con eseguibile
-target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets ${VULKAN_LIBRARY})
+target_link_libraries(${project} Qt6::Widgets Qt6::OpenGLWidgets Qt6::Multimedia ${VULKAN_LIBRARY})
 
 # Raccolta sorgenti
 # Il file globbing è sconsigliato dalla documentazione. Serve una nuova soluzione
@@ -65,8 +66,8 @@ target_sources(${project}
 		GraphicsScene.cpp
 		TextureManager.h
 		TextureManager.cpp
-Camera.h
-Camera.cpp
+		Camera.h
+		Camera.cpp
 		Definitions.h
 		RenderableObject.h
 		TickableObject.h
@@ -86,6 +87,8 @@ Camera.cpp
 		Kirby.cpp
 		Particle.h
 		ObjectsHolder.h
+		Sounds.cpp
+		Sounds.h
 )
 
 

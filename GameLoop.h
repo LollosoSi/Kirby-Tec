@@ -49,6 +49,8 @@ class GameLoop : public QObject
 public:
 	std::thread loopthread;
 
+	std::string		_music;
+
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();
@@ -79,6 +81,7 @@ public:
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
+
 
 signals:
 	void pleaseRender(std::vector<RenderableObject*>* objects, bool clearscene = false);

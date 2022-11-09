@@ -2,6 +2,8 @@
 #include "Vec2D.h"
 #include "Camera.h"
 #include "CollisionDetection.h"
+#include "Sounds.h"
+
 
 
 GameLoop::GameLoop() {}
@@ -168,15 +170,19 @@ void GameLoop::tick(double deltatime) {
 void GameLoop::start() {
 	running = true;
 	paused = false;
-
+	KA::Sounds::instance()->play("Kirby_Adventure_theme");
+	
+	
 	if(!loopthread.joinable())
 		loopthread = std::thread(&GameLoop::loop, this);
 
+	
 }
 
 
 void GameLoop::pause(bool pause) {
 	paused = pause;
+	
 }
 
 void GameLoop::stop() {
@@ -233,9 +239,19 @@ void GameLoop::addParticle(Particle* p) {
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
 	// Pause
-	if (e->key() == Qt::Key_P && isPressed)
-		if (paused) start(); else pause();
-
+	if (e->key() == Qt::Key_P && isPressed) {
+		
+		if (paused) {
+			
+			start(); 
+			
+			
+		} else { 
+			
+			pause(); 
+		
+		}
+	}
 	// Save
 	if (e->key() == Qt::Key_K)
 		GameLoop::getInstance().saveGame("filesave");
@@ -250,7 +266,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		return;
 
 	if (e->key() == Qt::Key_V && !isPressed) {
+		
+		
 		clear();
+		
 		if (!GameLoop::getInstance().loadGame("testout")) {
 
 			std::thread tt = std::thread([]() {
@@ -258,6 +277,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 					for (int i = 0; i < 100; i++) {
 						Terrain* t = new Terrain(QPointF(i, j));
 						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+						
 					}
 				});
 
@@ -266,6 +286,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 			//KirbyInstance = 0;
 			tt.join();
+			KA::Sounds::instance()->stopMusic("Kirby_Adventure_theme");
+			KA::Sounds::instance()->play("Vegetable Valley_Theme");
 		}
 		//start();
 	}
@@ -333,7 +355,9 @@ void GameLoop::clear() {
 		 {
 		delete item;
 		}*/
-
+	
+	
+	
 	pause();
 	while (waitingForRender) {}
 

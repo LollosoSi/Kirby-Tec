@@ -1,5 +1,5 @@
 #include "Kirby.h"
-
+#include "Sounds.h"
 #include "GameLoop.h"
 #include "Particle.h"
 
@@ -104,7 +104,7 @@ void Kirby::processAnimation() {
 
 
 void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
-
+	
 	// Controls
 	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
 		buttons[Kirby::DOWN] = isPressed;
@@ -115,7 +115,11 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
 		buttons[Kirby::UP] = isPressed;
 
-	if (e->key() == Qt::Key_Space)
+	if (e->key() == Qt::Key_Space) {
 		buttons[Kirby::SPACE] = isPressed;
+		if (isGrounded()) {
+			KA::Sounds::instance()->play("jump");
+		}
+	}
 
 }
