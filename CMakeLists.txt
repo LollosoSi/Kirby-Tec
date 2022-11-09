@@ -89,6 +89,18 @@ target_sources(${project}
 		ObjectsHolder.h
 		Sounds.cpp
 		Sounds.h
+		Hud.cpp
+		Hud.h
+		Enemy.cpp
+		Enemy.h
+		brontoburt.h
+		brontoburt.cpp
+		hothead.h
+		hothead.cpp
+		waddledee.h
+		waddledee.cpp
+		waddledoo.h
+		waddledoo.cpp
 )
 
 
