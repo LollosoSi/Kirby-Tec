@@ -46,9 +46,9 @@ public:
 	}
 	Cloneable* clone() const { return new Kirby(*this); }
 
-	#define buttonsize 7
+	#define buttonsize 9
 	enum {
-		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, BIG = 5, INHALE = 6
+		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, INHALE_EXHALE = 5, INHALE_ENEMIES = 6, USE_SPECIALPWR = 7, DROP_SPECIALPWR = 8
 	};
 	bool buttons[buttonsize]{false};
 

@@ -45,13 +45,15 @@ void Kirby::processAcceleration() {
 	
 	}
 
-	if ((buttons[UP] || buttons[SPACE]) && isGrounded() && (lastHitNormals.y < 0)) {
+	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += !angle ? 25 : 15;
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
+	
+
 
 	if (jumpImpulse.remainingtime > 0) {
 		temp += jumpImpulse.value;
@@ -98,13 +100,26 @@ void Kirby::processAnimation() {
 
 		} else {
 			this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+			
 		}
-
 }
 
 
 void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
+
+	/* D right
+	   S left
+	   W enter doors
+
+	   Q inhale / Q exhale
+	   E inhale enemies --> E (again) Kirby takes enemy power (If enemy has no power kirby spits it out as bullet)
+	   Q (state)+space fly
+
+	   X use special Power
+	   Z drop special power
+
+	*/
 	// Controls
 	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
 		buttons[Kirby::DOWN] = isPressed;
@@ -123,13 +138,17 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			KA::Sounds::instance()->play("jump");
 		}
 	}
-	//Kirby becomes big and fly
 	if (e->key() == Qt::Key_Q) {
-		buttons[Kirby::BIG] = isPressed;
+		buttons[Kirby::INHALE_EXHALE] = isPressed;
 	}
-	//Kirby inhale enemies
 	if (e->key() == Qt::Key_E) {
-		buttons[Kirby::INHALE] = isPressed;
+		buttons[Kirby::INHALE_ENEMIES] = isPressed;
+	}
+	if (e->key() == Qt::Key_X) {
+		buttons[Kirby::USE_SPECIALPWR] = isPressed;
+	}
+	if (e->key() == Qt::Key_Z) {
+		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
 	}
 
 }
