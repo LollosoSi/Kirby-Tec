@@ -38,7 +38,7 @@ public:
 	}
 	Cloneable* clone() const { return new Particle(*this); }
 
-	PB::Vec2Df movement{ 2, -0.01};
+	KA::Vec2Df movement{ 2, -0.01};
 
 	virtual void render(QGraphicsScene& scene) {
 

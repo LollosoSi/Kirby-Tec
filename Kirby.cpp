@@ -5,7 +5,7 @@
 
 void Kirby::processAcceleration() {
 
-	PB::Vec2Df temp{ 0.0, 0.0 };
+	KA::Vec2Df temp{ 0.0, 0.0 };
 
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {

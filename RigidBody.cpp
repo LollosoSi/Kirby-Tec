@@ -13,7 +13,7 @@ void RigidBody::render(QGraphicsScene& scene) {
 		return;
 
 
-	PB::RectF rf = getColliderRectF();
+	KA::RectF rf = getColliderRectF();
 	
 	 QPen qp;
 	 qp.setColor(Qt::red);
@@ -62,7 +62,7 @@ void RigidBody::tick(double deltatime){
 
 	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
 
-	PB::Vec2Df cp, cn;
+	KA::Vec2Df cp, cn;
 	double ct = 0, min_t = 1;
 	bool hit = 0;
 	// solve the collisions in correct order 
@@ -75,7 +75,7 @@ void RigidBody::tick(double deltatime){
 				hit = true;
 
 				QPointF center = getCollider().center();
-				PB::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
+				KA::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
 				double m1 = -1/line2.x, q1 = center.y() - (center.x() * m1);
 				// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
 
@@ -96,14 +96,14 @@ void RigidBody::tick(double deltatime){
 					
 					
 					// Remove perpendicular component
-					PB::Vec2Df rot = velocity;
+					KA::Vec2Df rot = velocity;
 					double rad = -angle;
 					rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
 					rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
 					if (rot.y > 0)
 						rot.y = 0;
 
-					PB::Vec2Df rot2 = rot;
+					KA::Vec2Df rot2 = rot;
 					double rad2 = angle;
 					rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
 					rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
@@ -147,14 +147,14 @@ void RigidBody::tick(double deltatime){
 	}
 
 	if (angle != 0) {
-		PB::Vec2Df rot = velocity;
+		KA::Vec2Df rot = velocity;
 		double rad = -angle;
 		rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
 		rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
 		if (rot.y > 0)
 			rot.y = 0;
 
-		PB::Vec2Df rot2 = velocity;
+		KA::Vec2Df rot2 = velocity;
 		double rad2 = angle;
 		rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
 		rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));

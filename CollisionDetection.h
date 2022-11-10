@@ -2,7 +2,7 @@
 
 #include "Vec2D.h"
 
-namespace PB
+namespace KA
 {
 	extern bool RayVsRect(
 		const Vec2Df& ray_origin,

@@ -314,7 +314,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* rb) {
 
-	PB::Vec2Df cp, cn;
+	KA::Vec2Df cp, cn;
 	double ct = 0, min_t = INFINITY;
 	std::vector<std::pair<RigidBody*, double>> sortedByContactTime;
 	for (RigidBody* obj : collidableObjects)

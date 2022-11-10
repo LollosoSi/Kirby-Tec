@@ -1,9 +1,9 @@
 #include "CollisionDetection.h"
 #include "Direction.h"
 
-using namespace PB;
+using namespace KA;
 
-bool PB::RayVsRect(
+bool KA::RayVsRect(
 	const Vec2Df& ray_origin,
 	const Vec2Df& ray_dir,
 	const RectF& target,
@@ -68,7 +68,7 @@ bool PB::RayVsRect(
 	return true;
 }
 
-bool PB::DynamicRectVsRect(
+bool KA::DynamicRectVsRect(
 	const RectF& source,
 	const Vec2Df& source_vel,
 	const RectF& target,

@@ -4,7 +4,7 @@
 #include <string>
 #include "Vec2D.h"
 
-namespace PB
+namespace KA
 {
 	// direction type and related utility functions
 	enum class Direction { RIGHT, LEFT, UP, DOWN, NONE };

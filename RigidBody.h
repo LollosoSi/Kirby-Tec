@@ -98,21 +98,21 @@ public:
 	void setOffset(const QPointF of) { offset = of; }
 	QPointF getOffset() const { return offset; }
 
-	PB::Vec2Df velocity{0.0, 0.0};
-	PB::Vec2Df accel{0.0, 0.0};
-	PB::Vec2Df lastHitNormals{ 0.0, 0.0 };
+	KA::Vec2Df velocity{0.0, 0.0};
+	KA::Vec2Df accel{0.0, 0.0};
+	KA::Vec2Df lastHitNormals{ 0.0, 0.0 };
 
 	virtual QRectF getCollider() const { return collider; }
 
-	virtual PB::RectF getColliderRectF() const {
+	virtual KA::RectF getColliderRectF() const {
 		return 
-			PB::RectF{ 
-				PB::Vec2Df{(double)getCollider().x(), (double)getCollider().y()},
-				PB::Vec2Df{(double)getSizeX(), (double)getSizeY()}
+			KA::RectF{ 
+				KA::Vec2Df{(double)getCollider().x(), (double)getCollider().y()},
+				KA::Vec2Df{(double)getSizeX(), (double)getSizeY()}
 			}; 
 	}
 
-	virtual PB::Vec2Df getVelocity() const { return velocity; }
+	virtual KA::Vec2Df getVelocity() const { return velocity; }
 
 
 public:

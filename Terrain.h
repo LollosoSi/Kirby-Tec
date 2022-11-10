@@ -60,7 +60,7 @@ public:
 	// Returns m in x and q in y
 	QPointF getVert1() { return QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
 	QPointF getVert2() { return QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
-	PB::Vec2Df getHitLine() { QPointF v1 = getVert1(), v2 = getVert2(); double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x())); return PB::Vec2Df{ m,v1.y() - (double)(v1.x() * m) }; }
+	KA::Vec2Df getHitLine() { QPointF v1 = getVert1(), v2 = getVert2(); double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x())); return KA::Vec2Df{ m,v1.y() - (double)(v1.x() * m) }; }
 
 	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
 
@@ -103,7 +103,7 @@ public:
 			return;
 
 
-		PB::RectF rf = getColliderRectF();
+		KA::RectF rf = getColliderRectF();
 
 		QPen qp;
 		qp.setColor(Qt::red);

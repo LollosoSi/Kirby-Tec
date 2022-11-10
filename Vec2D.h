@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 
-namespace PB
+namespace KA
 {
 	template <class T>
 	struct Vec2D

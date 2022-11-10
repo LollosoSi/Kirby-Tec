@@ -11,7 +11,7 @@
 
 struct Impulse {
 
-	PB::Vec2Df value{0,0};
+	KA::Vec2Df value{0,0};
 	double remainingtime = 0;
 
 };
@@ -57,7 +57,7 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ PB::Vec2Df{0,-250},0 };
+	Impulse jumpImpulse{ KA::Vec2Df{0,-250},0 };
 
 	void tick(double deltatime) {
 
