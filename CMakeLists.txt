@@ -93,14 +93,14 @@ target_sources(${project}
 		Hud.h
 		Enemy.cpp
 		Enemy.h
-		brontoburt.h
-		brontoburt.cpp
-		hothead.h
-		hothead.cpp
-		waddledee.h
-		waddledee.cpp
-		waddledoo.h
-		waddledoo.cpp
+		Brontoburt.h
+		Brontoburt.cpp
+		Hothead.h
+		Hothead.cpp
+		Waddledee.h
+		Waddledee.cpp
+		Waddledoo.h
+		Waddledoo.cpp
 )
 
 
