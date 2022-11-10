@@ -18,8 +18,10 @@ namespace TexManager {
 		KIRBY_ROLL = 2,
 		KIRBY_JUMP = 3,
 		KIRBY_STRAFE = 4,
+
 		TERRAIN = 5,
 		PARTICLE_1 = 6,
+
 		KIRBY_SLOPED_25 = 7,
 		KIRBY_SLOPED_45 = 8,
 		KIRBY_SLOPED_25_LEFT = 9,
@@ -42,9 +44,17 @@ namespace TexManager {
 		PLATFORMRIGHT = 21,
 
 		// title screen
-		TITLESCREEN = 22
+		TITLESCREEN = 22,
+
+		// KIRBY ACTION
+		KIRBY_INHALE = 23,
+		KIRBY_EXHALE = 24,
+		KIRBY_SPIT_CLOUD = 25,
+		KIRBY_BIG_FLYING = 26,
+		KIRBY_BIG_STAND = 27,
+		KIRBY_BIG_WALKING = 28
 	};
-	const int TEXTURE_COUNT = 23;
+	const int TEXTURE_COUNT = 29;
 
 };
 

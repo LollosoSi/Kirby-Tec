@@ -72,13 +72,19 @@ TextureManager::TextureManager() {
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
-		new QPixmap[4]{kirbytex.copy(kirby_walk), kirbytex.copy(moveBy(kirby_walk, 1)),kirbytex.copy(moveBy(kirby_walk, 2)),kirbytex.copy(moveBy(kirby_walk, 3)) },
+		new QPixmap[4]{
+			kirbytex.copy(kirby_walk), 
+			kirbytex.copy(moveBy(kirby_walk, 1)),
+			kirbytex.copy(moveBy(kirby_walk, 2)),
+			kirbytex.copy(moveBy(kirby_walk, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		4
 	};
 
 	textures[KIRBY_STAND] = new Animatable{
-		new QPixmap[2]{kirbytex.copy(kirby_stand), kirbytex.copy(moveBy(kirby_stand, 1)) },
+		new QPixmap[2]{
+			kirbytex.copy(kirby_stand), 
+			kirbytex.copy(moveBy(kirby_stand, 1)) },
 		new float[2] {2.0f, 0.2f},
 		2
 	};
@@ -135,6 +141,63 @@ TextureManager::TextureManager() {
 		new float[1] {0.2f},
 		1
 	};
+//kirby actions
+	textures[KIRBY_INHALE] = new Animatable{
+		new QPixmap[4]{
+			kirbytex.copy(kirby_inhale),
+			kirbytex.copy(moveBy(kirby_inhale, 1)),
+			kirbytex.copy(moveBy(kirby_inhale2, 2)),
+			kirbytex.copy(moveBy(kirby_inhale3, 3)),
+		},
+		new float[4] {0.2f , 0.2f , 0.2f , 0.2f},
+		1
+	};
+
+	textures[KIRBY_EXHALE] = new Animatable{
+		new QPixmap[4]{
+		kirbytex.copy(kirby_inhale),
+		kirbytex.copy(moveBy(kirby_inhale2, 1)),
+		kirbytex.copy(moveBy(kirby_exhale3, 2)),
+		kirbytex.copy(moveBy(kirby_exhale3, 3)),
+		},
+		new float[4] {0.2f , 0.2f , 0.2f , 0.2f},
+		1
+	};
+
+	textures[KIRBY_SPIT_CLOUD] = new Animatable{
+		new QPixmap[1]{
+			kirbytex.copy(kirby_spit_cloud) },
+		new float[1] {0.2f},
+		1
+	};
+
+	textures[KIRBY_BIG_FLYING] = new Animatable{
+		new QPixmap[2]{
+			kirbytex.copy(kirby_big_flying),
+			kirbytex.copy(moveBy(kirby_big_flying, 1)),
+	},
+		new float[2] {0.2f, 0.2f},
+		1
+	};
+
+	textures[KIRBY_BIG_STAND] = new Animatable{
+		new QPixmap[1]{kirbytex.copy(kirby_big_stand) },
+		new float[1] {0.2f},
+		1
+	};
+
+	textures[KIRBY_BIG_WALKING] = new Animatable{
+		new QPixmap[4]{
+			kirbytex.copy(kirby_big_walking),
+			kirbytex.copy(moveBy(kirby_big_flying, 1)),
+			kirbytex.copy(moveBy(kirby_big_flying, 2)),
+			kirbytex.copy(moveBy(kirby_big_flying, 3)),
+			
+	},
+		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
+		1
+	}; 
+
 // stage 1
 	textures[TERRAIN] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain_1)},
