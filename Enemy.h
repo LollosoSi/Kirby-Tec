@@ -20,6 +20,4 @@ class KA::Enemy
 		// advance only when visible to Kirby
 		
 
-		// smash caused by Mario star, fireball, shell, or block bump/smash
-		// kick and stomp caused by Mario
 };
