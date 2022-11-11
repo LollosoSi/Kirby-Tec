@@ -89,8 +89,17 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 				Terrain* t11 = new Terrain(QPointF(49, j), objects::TERRAIN, TexID::SECONDTERRAINR);
 				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t11));
 			}
+			
+				Terrain* t12 = new Terrain(QPointF(50, -3), objects::TERRAIN, TexID::MARGINTERRAINR);
+				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t12));
 
-
+				Terrain* t13 = new Terrain(QPointF(50, -2), objects::TERRAIN, TexID::SECONDTERRAINR);
+				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t13));
+			
+				for (int i = 0; i < 11; i++) {
+					Terrain* t14 = new Terrain(QPointF(i+51 , -1), objects::TERRAIN, TexID::TERRAIN);
+					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t14));
+				}
 			});
 
 
