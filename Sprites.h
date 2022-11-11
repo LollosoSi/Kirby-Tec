@@ -82,7 +82,7 @@ private:
 	const std::string file_terrain = "sprites/SpriteBlocks.png";
 	const std::string file_terrain_part2 = "sprites/KirbyTileLevels.png";
 	const std::string file_titlescreen = "sprites/titlescreen.png";
-	const std::string file_background = "sprites/MapwithHUD.png";
+	const std::string file_background = "sprites/MapNew.png";
 
 	//levelbackgroundmap
 	

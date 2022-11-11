@@ -46,7 +46,7 @@ TextureManager::TextureManager() {
 	QRect title_screen = QRect(0, 0, 1023, 895);
 
 	//background
-	QRect background = QRect(0, 0, 3047, 231);
+	QRect background = QRect(0, 0, 3040, 232);
 
 	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
