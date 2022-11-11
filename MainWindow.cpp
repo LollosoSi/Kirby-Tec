@@ -2,6 +2,7 @@
 #include "GameLoop.h"
 #include <QOpenGLWidget>
 
+
 using namespace std;
 
 MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
@@ -9,6 +10,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
     setGeometry(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
 
     scene = new GraphicsScene();
+    //scene->addPixmap(QPixmap("C:/Users/Edo/Desktop/Kirby-Tec/design/Map.png"));
     scene->setBackgroundBrush(QColor(135,206,235));
     
     view = new QGraphicsView(scene);

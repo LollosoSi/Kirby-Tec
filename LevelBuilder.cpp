@@ -27,6 +27,7 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 
 		// background
 		
+	
 
 		// terrains
 		std::thread tt = std::thread([]() {
