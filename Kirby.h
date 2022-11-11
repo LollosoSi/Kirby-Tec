@@ -2,7 +2,7 @@
 
 #include "RenderableObject.h"
 #include "TickableObject.h"
-#include "TextureManager.h"
+#include "Sprites.h"
 #include "RigidBody.h"
 
 #include <QGraphicsPixmapItem>

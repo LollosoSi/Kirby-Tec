@@ -7,7 +7,7 @@
 #include "RenderableObject.h"
 #include "GraphicsScene.h"
 #include <QGraphicsPixmapItem>
-#include "TextureManager.h"
+#include "Sprites.h"
 #include "Camera.h"
 
 using namespace TexManager;

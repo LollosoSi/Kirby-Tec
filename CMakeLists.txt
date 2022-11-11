@@ -64,8 +64,8 @@ target_sources(${project}
 		GameLoop.h
 		GraphicsScene.h
 		GraphicsScene.cpp
-		TextureManager.h
-		TextureManager.cpp
+		Sprites.h
+		Sprites.cpp
 		Camera.h
 		Camera.cpp
 		Definitions.h
@@ -101,6 +101,8 @@ target_sources(${project}
 		Waddledee.cpp
 		Waddledoo.h
 		Waddledoo.cpp
+		Levelbuilder.cpp
+		Levelbuilder.h
 )
 
 

@@ -3,7 +3,7 @@
 #include "Camera.h"
 #include "CollisionDetection.h"
 #include "Sounds.h"
-#include "TextureManager.h"
+#include "Sprites.h"
 
 
 
