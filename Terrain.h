@@ -69,7 +69,9 @@ class TerrainSloped : public Terrain {
 	QGraphicsItem* hitbox = 0;
 
 public:
-	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25) : Terrain(pos, QPointF(0, 0), 62, 32) { setObjectId(id); }
+	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25) : Terrain(pos, QPointF(0, 0), 62, 32) { 
+		setObjectId(id); 
+	}
 	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN_25) : TerrainSloped(QPointF(0, 0), id) {}
 	~TerrainSloped() {}
 
