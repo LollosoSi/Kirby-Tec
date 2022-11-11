@@ -100,6 +100,14 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 					Terrain* t14 = new Terrain(QPointF(i+51 , -1), objects::TERRAIN, TexID::TERRAIN);
 					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t14));
 				}
+			
+				for (int i = 0; i < 17; i++) {
+					Terrain* t15 = new Terrain(QPointF(i + 62, 0), objects::TERRAIN, TexID::TERRAIN2);
+					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t15));
+				}
+					
+			
+
 			});
 
 
