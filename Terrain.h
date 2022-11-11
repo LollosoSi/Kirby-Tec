@@ -46,6 +46,9 @@ public:
 
 };
 
+inline Terrain MarginTerrainL(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::MARGINTERRAINL);
+
+
 
 class TerrainSloped : public Terrain {
 
