@@ -48,6 +48,8 @@ TextureManager::TextureManager() {
 	//background
 	QRect background = QRect(0, 0, 3040, 232);
 
+	//upcollider
+	QRect upcollider = QRect(0, 0, 3040, 232);
 	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
 	QRect terrain_2 = getStandardQRect(18,1);
@@ -72,7 +74,7 @@ TextureManager::TextureManager() {
 	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
 	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
 	QPixmap backgroundtex = loadTexture(file_background, nocolor);
-
+	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -270,14 +272,19 @@ TextureManager::TextureManager() {
 		new float[1] {0},
 		1
 	};
-	
+	//upcollider
+	textures[UPCOLLIDER] = new Animatable{
+		new QPixmap[1]{upcollidertex.copy(background)},
+		new float[1] {0},
+		1
+	};
 
+	//particle
 	textures[PARTICLE_1] = new Animatable{
 		new QPixmap[4]{kirbytex.copy(particle_1), kirbytex.copy(moveBy(particle_1, 1)),kirbytex.copy(moveBy(particle_1, 2)),kirbytex.copy(moveBy(particle_1, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		4
 	};
-
 
 }
 

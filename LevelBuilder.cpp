@@ -31,7 +31,10 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 
 		// terrains
 		std::thread tt = std::thread([]() {
-			
+
+			Terrain* upclld = new Terrain(QPointF(0, -8), QPointF(0, 0), 400, 500, objects::TERRAIN, TexID::UPCOLLIDER);
+			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(upclld));
+
 			Terrain* bkgrnd = new Terrain(QPointF(0, -8), QPointF(0, 0), 400,500, objects::PARTICLE, TexID::BACKGROUND);
 			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(bkgrnd));
 
