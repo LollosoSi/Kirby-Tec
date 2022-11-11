@@ -10,6 +10,7 @@
 #include "RigidBody.h"
 #include "Serializable.h"
 #include "Particle.h"
+#include "LevelBuilder.h"
 
 #include "ObjectsHolder.h"
 
@@ -48,11 +49,13 @@ class GameLoop : public QObject
 
 private:
 	
-
+	KA::LevelBuilder* _builder;
+	KA::LevelType		_level;
 public:
 	std::thread loopthread;
 
 	std::string		_music;
+	
 	
 	
 	// Relativi al singleton

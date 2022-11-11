@@ -4,10 +4,15 @@
 #include "CollisionDetection.h"
 #include "Sounds.h"
 #include "Sprites.h"
+#include "LevelBuilder.h"
 
 
 
-GameLoop::GameLoop() {}
+GameLoop::GameLoop() {
+
+	 _builder = new KA::LevelBuilder();
+	 _level = KA::LevelType::OVERWORLD;
+}
 
 GameLoop::~GameLoop() {
 	clear();
@@ -267,27 +272,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 		
 		clear();
-		
-		if (!GameLoop::getInstance().loadGame("testout")) {
+		_builder->load("world-1-1", _level);
 
-			std::thread tt = std::thread([]() {
-				for (int j = 0; j < 1; j++)
-					for (int i = 0; i < 9; i++) {
-						Terrain* t = new Terrain(QPointF(i, j));
-						GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
-						}
-
-						
-				});
-
-
-			Kirby* k = new Kirby(QPointF(0.0, -5.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
-			//KirbyInstance = 0;
-			tt.join();
-			
 			KA::Sounds::instance()->play("Vegetable Valley_Theme");
-		} 
+		
 		//start();
 	}
 
