@@ -46,6 +46,9 @@ public:
 
 };
 
+
+//Background
+inline Terrain Background(QPointF(0,0), QPointF(0, 0), 400, 500, objects::TERRAIN, TexID::BACKGROUND);
 //Terrain
 inline Terrain MarginTerrainL(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::MARGINTERRAINL);
 inline Terrain MarginTerrainR(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::MARGINTERRAINR);

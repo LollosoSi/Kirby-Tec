@@ -45,6 +45,9 @@ TextureManager::TextureManager() {
 	// title screen
 	QRect title_screen = QRect(0, 0, 1023, 895);
 
+	//background
+	QRect background = QRect(0, 0, 3047, 231);
+
 	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
 	QRect terrain_2 = getStandardQRect(18,1);
@@ -68,7 +71,8 @@ TextureManager::TextureManager() {
 	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
 	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
 	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
-	
+	QPixmap backgroundtex = loadTexture(file_background, nocolor);
+
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -260,12 +264,20 @@ TextureManager::TextureManager() {
 		1
 	};
 
+	//background
+	textures[BACKGROUND] = new Animatable{
+		new QPixmap[1]{backgroundtex.copy(background)},
+		new float[1] {0},
+		1
+	};
+	
 
 	textures[PARTICLE_1] = new Animatable{
 		new QPixmap[4]{kirbytex.copy(particle_1), kirbytex.copy(moveBy(particle_1, 1)),kirbytex.copy(moveBy(particle_1, 2)),kirbytex.copy(moveBy(particle_1, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		4
 	};
+
 
 }
 
@@ -303,3 +315,11 @@ QPixmap TextureManager::replaceColor(QPixmap pix, QColor old_color, QColor new_c
 	p.end();
 	return pix;
 }
+/*
+QPixmap TextureManager::getLevelBackground(const std::string& level)
+{
+
+	QPixmap pix = loadTexture(std::string("/design/MapwithHUD.png"), QColor(147, 187, 236));
+	return pix;
+}
+*/

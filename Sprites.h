@@ -52,9 +52,11 @@ namespace TexManager {
 		KIRBY_SPIT_CLOUD = 25,
 		KIRBY_BIG_FLYING = 26,
 		KIRBY_BIG_STAND = 27,
-		KIRBY_BIG_WALKING = 28
+		KIRBY_BIG_WALKING = 28,
+
+		BACKGROUND = 29
 	};
-	const int TEXTURE_COUNT = 29;
+	const int TEXTURE_COUNT = 30;
 
 };
 
@@ -65,8 +67,10 @@ class TextureManager {
 public:
 	static TextureManager& getInstance() { static TextureManager instance; return instance; }
 	~TextureManager();
+	static TextureManager* instance();
 
 	Animatable* getAnimatable(unsigned int position = 0) { return textures[position];}
+	//QPixmap getLevelBackground(const std::string& level);
 
 private:
 	TextureManager();
@@ -78,13 +82,14 @@ private:
 	const std::string file_terrain = "sprites/SpriteBlocks.png";
 	const std::string file_terrain_part2 = "sprites/KirbyTileLevels.png";
 	const std::string file_titlescreen = "sprites/titlescreen.png";
-	const std::string file_background = "design/MapwithHUD.png";
+	const std::string file_background = "sprites/MapwithHUD.png";
 
+	//levelbackgroundmap
 	
-
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
 	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
+	
 
 	Animatable* textures[TEXTURE_COUNT];
 	

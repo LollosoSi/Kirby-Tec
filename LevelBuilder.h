@@ -23,4 +23,7 @@ class KA::LevelBuilder
 	public:
 
 		Kirby* load(const QString& level_name, LevelType & level_type);
+
 };
+
+

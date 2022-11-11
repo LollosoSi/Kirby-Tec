@@ -11,6 +11,7 @@
 #include "Serializable.h"
 #include "Particle.h"
 #include "LevelBuilder.h"
+#include "Sprites.h"
 
 #include "ObjectsHolder.h"
 
@@ -24,6 +25,7 @@
 
 // Rendering
 #include <QGraphicsScene>
+#include <QGraphicsView>
 
 // Handle Keys
 #include <QKeyEvent>
@@ -51,19 +53,24 @@ private:
 	
 	KA::LevelBuilder* _builder;
 	KA::LevelType		_level;
+	QGraphicsScene* _world;
+	
 public:
 	std::thread loopthread;
-
+	
 	std::string		_music;
 	
-	
+	//getter
+	QGraphicsScene* world() { return _world; };
+
 	
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
+	static GameLoop* instance();
 	~GameLoop();
 	void recalculateTicks(int target_ticks);
 	void recalculateFps(int target_fps);
-	//
+	
 
 	const char obj_separator = '@';
 
