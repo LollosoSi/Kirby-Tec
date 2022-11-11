@@ -47,8 +47,8 @@ TextureManager::TextureManager() {
 
 	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
-	QRect terrain_2 = getStandardQRect(19,1);
-	QRect terrain_3 = getStandardQRect(36,1);
+	QRect terrain_2 = getStandardQRect(18,1);
+	QRect terrain_3 = getStandardQRect(35,1);
 	QRect terrain_4 = getStandardQRect(18,18);
 	QRect terrain_5 = getStandardQRect(35,18);
 	
