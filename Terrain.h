@@ -46,9 +46,19 @@ public:
 
 };
 
+//Terrain
 inline Terrain MarginTerrainL(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::MARGINTERRAINL);
+inline Terrain MarginTerrainR(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::MARGINTERRAINR);
 
+inline Terrain SecondTerrainL(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::SECONDTERRAINL);
+inline Terrain SecondTerrainR(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::SECONDTERRAINR);
 
+inline Terrain Terrain2(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::TERRAIN2);
+inline Terrain TerrainBlock(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::TERRAINBLOCK);
+
+inline Terrain PlatformLeft(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::PLATFORMLEFT);
+inline Terrain PlatformCenter(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::PLATFORMCENTER);
+inline Terrain PlatformRight(QPointF(0, 0), QPointF(0, 0), 16, 16, objects::TERRAIN, TexID::PLATFORMRIGHT);
 
 class TerrainSloped : public Terrain {
 
