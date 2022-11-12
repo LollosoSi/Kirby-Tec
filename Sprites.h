@@ -56,6 +56,7 @@ namespace TexManager {
 
 		BACKGROUND = 29,
 		UPCOLLIDER = 30
+		
 	};
 	const int TEXTURE_COUNT = 31;
 
@@ -83,7 +84,7 @@ private:
 	const std::string file_terrain = "sprites/SpriteBlocks.png";
 	const std::string file_terrain_part2 = "sprites/KirbyTileLevels.png";
 	const std::string file_titlescreen = "sprites/titlescreen.png";
-	const std::string file_background = "sprites/MapNew.png";
+	const std::string file_background = "sprites/back.png";
 	const std::string file_upcollider = "sprites/Invisible.png";
 
 	//levelbackgroundmap

@@ -10,12 +10,13 @@
 #include "Sprites.h"
 #include "Camera.h"
 
+
 using namespace TexManager;
 
 class Terrain : public RigidBody {
 
 	TexID tid;
-
+	
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsItem* hitbox = 0;
 
@@ -44,6 +45,7 @@ public:
 		return this;
 	};
 
+	
 };
 
 

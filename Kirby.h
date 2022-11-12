@@ -29,6 +29,8 @@ public:
 		setObjectId(objects::KIRBY);
 	}
 
+
+
 	Kirby() : Kirby(QPointF(0.0, 0.0)) {}
 
 

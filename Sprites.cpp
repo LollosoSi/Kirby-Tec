@@ -20,6 +20,7 @@ TextureManager::TextureManager() {
 
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
+
 	// Kirby Actions
 	QRect kirby_inhale = getStandardQRect(6, 83); // 2 images (4 totale)
 	QRect kirby_inhale2 = QRect(46, 75, 16 , 24 ); // bigger
@@ -46,7 +47,8 @@ TextureManager::TextureManager() {
 	QRect title_screen = QRect(0, 0, 1023, 895);
 
 	//background
-	QRect background = QRect(0, 0, 3040, 232);
+	QRect background = QRect(0, 0, 1008, 168);
+	//QRect background1 = QRect(1008, 0, 1008, 168);
 
 	//upcollider
 	QRect upcollider = QRect(0, 0, 3040, 232);
@@ -211,7 +213,7 @@ TextureManager::TextureManager() {
 		1
 	};
 	textures[MARGINTERRAINL] = new Animatable{
-		new QPixmap[1]{terraintex.copy(terrain_2)},
+		new QPixmap[2]{terraintex.copy(terrain_2)},
 		new float[1] {0},
 		1
 	};
@@ -268,10 +270,15 @@ TextureManager::TextureManager() {
 
 	//background
 	textures[BACKGROUND] = new Animatable{
-		new QPixmap[1]{backgroundtex.copy(background)},
-		new float[1] {0},
-		1
-	};
+		new QPixmap[2]{
+			backgroundtex.copy(background),
+			backgroundtex.copy(moveBy(background, 1)),
+		},
+		new float[2] {0.2f, 0.2f},
+		2
+		};
+
+
 	//upcollider
 	textures[UPCOLLIDER] = new Animatable{
 		new QPixmap[1]{upcollidertex.copy(background)},
