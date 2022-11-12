@@ -2,27 +2,30 @@
 
 #include <QString>
 #include "Kirby.h"
+#include <string>
 
 namespace KA
 {
-	class LevelBuilder;
+	//class LevelBuilder;
 	enum class LevelType{ OVERWORLD };
 
-	static inline std::string level2str(LevelType l)
-	{
-		if (l == LevelType::OVERWORLD)
-			return "overworld";
-		else
-			return "";
-	}
+	
+}
+
+static inline std::string level2str(KA::LevelType l)
+{
+	if (l == KA::LevelType::OVERWORLD)
+		return "overworld";
+	else
+		return "";
 }
 
 // @TODO: load/save from/to file
-class KA::LevelBuilder
+class LevelBuilder
 {
 	public:
 
-		Kirby* load(const QString& level_name, LevelType & level_type);
+	void load(const QString& level_name, KA::LevelType & level_type);
 
 };
 

@@ -8,16 +8,12 @@
 #include "Hothead.h"
 
 
-
-
-using namespace KA;
-
-Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
+void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
 {
 	
 	if (level_name == "world-1-1")
 	{
-		level_type = LevelType::OVERWORLD;
+		level_type = KA::LevelType::OVERWORLD;
 
 		// death by falling
 		
@@ -30,11 +26,14 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 	
 
 		// terrains
-		std::thread tt = std::thread([]() {
+		//std::thread tt = std::thread([]() {
 
-			Terrain* bkgrnd = new Terrain(QPointF(0, -8), QPointF(0, 0), 400,500, objects::BACKGROUND, TexID::BACKGROUND);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(bkgrnd));
+			//Camera::getInstance().setX(0);
+			Camera::getInstance().setY(-8);
 
+			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400,500, objects::BACKGROUND, TexID::BACKGROUND);
+			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(bkgrnd));
+			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(bkgrnd));
 			
 			for (int j = 0; j < 1; j++)
 				for (int i = 0; i < 17; i++) {
@@ -150,13 +149,13 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 					Terrain* t18 = new Terrain(QPointF(i + 118, 0), objects::TERRAIN, TexID::TERRAIN2);
 					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t18));
 				}
-			});
+			//});
 
 
 		Kirby* k = new Kirby(QPointF(0.0, -5.0));
 		GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
 		//KirbyInstance = 0;
-		tt.join();
+		//tt.join();
 
 		
 		// enemies
@@ -169,6 +168,6 @@ Kirby* LevelBuilder::load(const QString& level_name, LevelType& level_type)
 	else
 	{
 		std::cerr << "Cannot load level: level " << level_name.toStdString() << " not found\n";
-		return 0;
+		
 	}
 }

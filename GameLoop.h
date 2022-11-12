@@ -51,7 +51,7 @@ class GameLoop : public QObject
 
 private:
 	
-	KA::LevelBuilder* _builder;
+	LevelBuilder* _builder;
 	KA::LevelType		_level;
 	QGraphicsScene* _world;
 	

@@ -14,6 +14,9 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 		case objects::KIRBY:
 			return new Kirby();
 
+		case objects::BACKGROUND:
+			return new Background();
+
 		case objects::TERRAIN:
 			return new Terrain();
 

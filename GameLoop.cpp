@@ -10,7 +10,6 @@
 
 GameLoop::GameLoop() {
 
-	 _builder = new KA::LevelBuilder();
 	 _level = KA::LevelType::OVERWORLD;
 }
 
@@ -102,6 +101,11 @@ bool GameLoop::loadGame(std::string fileName) {
 		
 		case objects::KIRBY:
 			addKirby(obj);
+			break;
+
+		case objects::BACKGROUND:
+			addTerrain(obj);
+			tickableObjects.push_back(dynamic_cast<TickableObject*>(obj));
 			break;
 
 		case objects::TERRAIN:
@@ -272,7 +276,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 		
 		clear();
-		_builder->load("world-1-1", _level);
+		LevelBuilder().load("world-1-1", _level);
 
 			KA::Sounds::instance()->play("Vegetable Valley_Theme");
 		
