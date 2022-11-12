@@ -54,6 +54,7 @@ TextureManager::TextureManager() {
 
 	QRect background1 = QRect(0, 0, 1016, 168);
 
+	QRect background2 = QRect(0, 0, 1016, 168);
 	//upcollider
 	QRect upcollider = QRect(0, 0, 3040, 232);
 
@@ -82,6 +83,8 @@ TextureManager::TextureManager() {
 	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
 	QPixmap backgroundtex = loadTexture(file_background, nocolor);
 	QPixmap backgroundtex1 = loadTexture(file_background1, nocolor);
+	QPixmap backgroundtex2 = loadTexture(file_background2, nocolor);
+
 	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
 
 	QRect transparent = QRect(153, 25, 2, 2);
@@ -304,6 +307,16 @@ TextureManager::TextureManager() {
 			backgroundtex1.copy(background1),
 			backgroundtex1.copy(moveBy(background1,1,0,background1.width(),background1.height(),0,0)),
 			backgroundtex1.copy(moveBy(background1,2,0,background1.width(),background1.height(),0,0))
+		},
+		new float[3] {0.12f, 0.14f, 0.18f},
+		3
+	};
+
+	textures[BACKGROUND2] = new Animatable{
+		new QPixmap[3]{
+			backgroundtex1.copy(background2),
+			backgroundtex1.copy(moveBy(background2,1,0,background2.width(),background2.height(),0,0)),
+			backgroundtex1.copy(moveBy(background2,2,0,background2.width(),background2.height(),0,0))
 		},
 		new float[3] {0.12f, 0.14f, 0.18f},
 		3
