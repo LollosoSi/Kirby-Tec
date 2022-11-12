@@ -30,13 +30,6 @@
 // Handle Keys
 #include <QKeyEvent>
 
-
-class LevelManager {
-
-
-
-};
-
 /** Classe GameLoop
 * Responsabilita':
 * loop di gioco, chiamate a tick() per ogni tickableObject registrato, render() per ogni renderableObject registrato
@@ -52,7 +45,7 @@ class GameLoop : public QObject
 private:
 	
 	LevelBuilder* _builder;
-	KA::LevelType		_level;
+	KA::LevelType	_level;
 	QGraphicsScene* _world;
 	
 public:
@@ -60,13 +53,14 @@ public:
 	
 	std::string		_music;
 	
+	std::vector<RenderableObject*> renderableObjects;
+
 	//getter
 	QGraphicsScene* world() { return _world; };
 
 	
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
-	static GameLoop* instance();
 	~GameLoop();
 	void recalculateTicks(int target_ticks);
 	void recalculateFps(int target_fps);
@@ -98,7 +92,7 @@ public:
 
 
 signals:
-	void pleaseRender(std::vector<RenderableObject*>* objects, bool clearscene = false);
+	void pleaseRender(bool clearscene);
 
 public slots:
 	void renderingCompleted();
@@ -106,8 +100,6 @@ public slots:
 protected:
 	QGraphicsScene* scene = nullptr;
 	std::atomic_bool thread_working = true;
-	
-	bool shouldclearscene = false;
 
 private:
 	// Relativi al singleton
@@ -121,7 +113,7 @@ private:
 	// Internal calls for watchdog & methods
 	void loop();
 	void mergeQueues();
-	void render();
+	void render(bool clear = false);
 	void tick(double deltatime);
 
 	int target_ticks = 20, target_fps = 144;
@@ -133,7 +125,6 @@ private:
 
 	// Elementi da iterare
 	std::vector<TickableObject*> tickableObjects;
-	std::vector<RenderableObject*> renderableObjects;
 	std::vector<Serializable*> serializableObjects;
 	std::vector<RigidBody*> collidableObjects;
 	std::vector<Particle*> particleObjects;

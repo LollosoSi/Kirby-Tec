@@ -40,9 +40,9 @@ public:
 
 	KA::Vec2Df movement{ 2, -0.01};
 
-	virtual void render(QGraphicsScene& scene) {
+	virtual void render(QGraphicsScene& scene, bool shouldClear = false) {
 
-		if (shouldDelete(true)) {
+		if (shouldDelete(true) || shouldClear) {
 		
 			if (pm) {
 				scene.removeItem(pm);

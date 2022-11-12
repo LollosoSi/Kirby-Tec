@@ -27,10 +27,11 @@ public:
 
     QGraphicsView* view;
     QGraphicsScene* scene;
+    QOpenGLWidget* qgl;
     QRect sceneRect;
 
     public slots:
-        void pleaseRender(std::vector<RenderableObject*>* objects, bool clearscene);
+        void pleaseRender(bool clearscene);
 signals:
     void renderingCompleted();
 

@@ -155,7 +155,7 @@ public:
 	}
 
 	QGraphicsLineItem* qli = 0;
-	void render(QGraphicsScene& scene) {
+	void render(QGraphicsScene& scene, bool shouldClear = false) {
 
 		bool visible = Camera::isVisible(getCollider());
 		if (!pm && !visible)

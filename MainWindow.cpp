@@ -26,7 +26,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
     format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
     
-    QOpenGLWidget* qgl = new QOpenGLWidget();
+    qgl = new QOpenGLWidget();
     qgl->setFormat(format);
 
     view->setViewport(qgl);
@@ -86,13 +86,20 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     GameLoop::getInstance().pause(false);
 }
 
-void MainWindow::pleaseRender(std::vector<RenderableObject*>* renderableObjects, bool clearscene) {
-    if(scene->items().size() == 0 || clearscene)
-        scene->clear();
+void MainWindow::pleaseRender(bool clearscene) {
+   
     
-    //qDeleteAll(scene->items());
-    for (auto* item : *renderableObjects) item->render(*scene);
+    for (auto* item : GameLoop::getInstance().renderableObjects) item->render(*scene, clearscene);
+
+    if (scene->items().size() == 0 || clearscene) {
+        scene->clear();
+        qDeleteAll(scene->items());
+        //qgl->update();
+        //view->update();
+    }
+
     scene->update();
+
     emit(renderingCompleted());
 }
 
