@@ -44,24 +44,19 @@ class GameLoop : public QObject
 
 private:
 	
-	LevelBuilder* _builder;
-	KA::LevelType	_level;
-	QGraphicsScene* _world;
 	
 public:
 	std::thread loopthread;
-	
+
 	std::string		_music;
 	
 	std::vector<RenderableObject*> renderableObjects;
-
-	//getter
-	QGraphicsScene* world() { return _world; };
 
 	
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();
+
 	void recalculateTicks(int target_ticks);
 	void recalculateFps(int target_fps);
 	

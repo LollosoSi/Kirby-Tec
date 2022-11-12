@@ -104,10 +104,5 @@ void MainWindow::pleaseRender(bool clearscene) {
 }
 
 void MainWindow::closeEvent(QCloseEvent* event){
-    GameLoop::stop();
-    
     this->hide();
-
-    GameLoop::getInstance().loopthread.join();
-
 }

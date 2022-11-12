@@ -17,7 +17,12 @@ class MainWindow : public QMainWindow {
 
 
 private:    
-    ~MainWindow() {};
+    ~MainWindow() {
+    
+        qDeleteAll(scene->items());
+        scene->clear();
+    
+    };
 
 public:
     MainWindow(QGraphicsView* parent = 0);

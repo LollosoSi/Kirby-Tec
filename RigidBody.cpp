@@ -25,7 +25,7 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		// scene.removeItem(hitbox);
 		 hitbox = 0;
 
-		 std::cout << "Cleared " << getObjectId() << "\n";
+		 //std::cout << "Cleared " << getObjectId() << "\n";
 
 	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());

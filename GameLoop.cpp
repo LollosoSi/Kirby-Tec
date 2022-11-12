@@ -10,11 +10,13 @@
 
 GameLoop::GameLoop() {
 
-	 _level = KA::LevelType::OVERWORLD;
 }
 
 GameLoop::~GameLoop() {
 	clear();
+	stop();
+	if (loopthread.joinable())
+		loopthread.join();
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -28,7 +30,7 @@ void GameLoop::recalculateFps(int target_fps) {
 }
 
 void GameLoop::loop() {
-	std::cout << "Loop started\n";
+	//std::cout << "Loop started\n";
 
 	thread_working = true;
 
@@ -86,7 +88,7 @@ void GameLoop::loop() {
 
 	}
 	thread_working = false;
-	std::cout << "Loop done\n";
+	//std::cout << "Loop done\n";
 
 }
 
@@ -283,9 +285,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		return;
 
 
-	if (e->key() == Qt::Key_1 && !isPressed)
-
+	if (e->key() == Qt::Key_1 && !isPressed) {
 		GameLoop::getInstance().loadGame("levels/level1");
+		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
+	}
 
 	if (e->key() == Qt::Key_2 && !isPressed) {
 
@@ -305,12 +308,9 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		}
 
-		//clear();
-		//LevelBuilder().load("world-1-1", _level);
+		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
 
-			//KA::Sounds::instance()->play("Vegetable Valley_Theme");
 		
-		//start();
 	}
 
 	
@@ -365,16 +365,7 @@ void GameLoop::clear() {
 		
 		
 		GameLoop::getInstance().render(true);
-
-
-
-
-
-		
-
-		//shouldclearscene = 1;
-
-		
+	
 
 		});
 	

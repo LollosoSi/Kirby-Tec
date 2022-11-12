@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 	
 	
 	
-	KA::Sounds::instance();
+	KA::Sounds::getInstance();
 
 	GameLoop::getInstance().start();
 	GameLoop::getInstance().recalculateTicks(60);

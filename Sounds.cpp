@@ -3,12 +3,6 @@
 
 using namespace KA;
 
-Sounds* Sounds::instance()
-{
-	static Sounds uniqueInstance;
-	return &uniqueInstance;
-}
-
 Sounds::Sounds()
 {
 	QStringList sound_files = QDir("sounds/").entryList(QStringList() << "*.wav", QDir::Files);
@@ -31,10 +25,12 @@ Sounds::Sounds()
 
 void Sounds::play(const std::string& id, bool music)
 {
-	if (!music && _sounds.find(id) != _sounds.end())
+
+	if (!music && _sounds.find(id) != _sounds.end()) {
 		_sounds[id]->play();
-	else if (music && _musics.find(id) != _musics.end())
+	}else if (music && _musics.find(id) != _musics.end()) {
 		_musics[id]->play();
+	}
 }
 
 void Sounds::stopMusic(const std::string& id)
