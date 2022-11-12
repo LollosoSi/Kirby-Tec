@@ -23,8 +23,6 @@ void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
 
 		// background
 		
-	
-
 		// terrains
 		//std::thread tt = std::thread([]() {
 
