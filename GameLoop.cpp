@@ -277,7 +277,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->isAutoRepeat())
 		return;
 
-	
+
+	if (e->key() == Qt::Key_1 && !isPressed)
+
+		GameLoop::getInstance().loadGame("levels/level1");
 
 	if (e->key() == Qt::Key_2 && !isPressed) {
 
