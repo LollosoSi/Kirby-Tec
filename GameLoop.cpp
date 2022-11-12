@@ -272,10 +272,12 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->isAutoRepeat())
 		return;
 
-	if (e->key() == Qt::Key_V && !isPressed) {
+	
+
+	if (e->key() == Qt::Key_2 && !isPressed) {
 
 		//Camera::getInstance().setX(0);
-		Camera::getInstance().setY(-8);
+		//Camera::getInstance().setY(-8);
 
 		
 		if (!GameLoop::getInstance().loadGame("levels/level2")) {
