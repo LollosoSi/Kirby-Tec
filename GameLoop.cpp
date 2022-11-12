@@ -111,6 +111,11 @@ bool GameLoop::loadGame(std::string fileName) {
 		case objects::TERRAIN:
 			addTerrain(obj);
 			break;
+
+		case objects::STEPUP:
+			addTerrain(obj);
+			break;
+
 		case objects::SLOPED_TERRAIN_25:
 			addTerrain(obj);
 			break;

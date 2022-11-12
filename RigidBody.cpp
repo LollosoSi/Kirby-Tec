@@ -131,6 +131,14 @@ void RigidBody::tick(double deltatime){
 				}
 				
 			}
+			else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y == -1) {
+
+				if (cn.y != 0) {
+					overridey = (getY() + (getVelocity().y * ct));
+					velocity.y = 0;
+				}
+
+			}
 			
 			
 			

@@ -20,6 +20,9 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 		case objects::TERRAIN:
 			return new Terrain();
 
+		case objects::STEPUP:
+			return new Terrain(objects::STEPUP);
+
 		case objects::SLOPED_TERRAIN_45:
 			return new TerrainSloped(objects::SLOPED_TERRAIN_45);
 		case objects::SLOPED_TERRAIN_25:

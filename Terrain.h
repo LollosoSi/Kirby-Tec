@@ -21,11 +21,11 @@ protected:
 	QGraphicsItem* hitbox = 0;
 
 public:
-	Terrain(QPointF pos, QPointF offset, int sizex, int sizey, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : RigidBody(pos, offset, sizex, sizey) {
+	Terrain(QPointF pos, QPointF offset, double sizex, double sizey, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : RigidBody(pos, offset, sizex, sizey) {
 		setObjectId(id);
 		this->tid = tid;
 	}
-	Terrain(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(pos, QPointF(0, 0), 1, 1, id, tid) {}
+	Terrain(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN, QPointF offset = QPointF(0,0), double sizeX = 1, double sizeY = 1) : Terrain(pos, offset, sizeX, sizeY, id, tid) {}
 	Terrain(objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(QPointF(0, 0), id, tid) {}
 	~Terrain() {}
 
@@ -56,7 +56,7 @@ class Background : public Terrain {
 	Animator anim;
 
 public:
-	Background(QPointF pos, QPointF offset, int sizex, int sizey, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Terrain(pos, offset, sizex, sizey) {
+	Background(QPointF pos, QPointF offset, double sizex, double sizey, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Terrain(pos, offset, sizex, sizey) {
 		setObjectId(id);
 		this->tid = tid;
 		anim.setAnimatable(TextureManager::getInstance().getAnimatable((tid)));
@@ -68,7 +68,7 @@ public:
 
 
 	}
-	Background(QPointF pos, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Background(pos, QPointF(0, 0), 1, 1, id, tid) {}
+	Background(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Background(pos, offset, sizeX, sizeY, id, tid) {}
 	Background(objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Background(QPointF(0, 0), id, tid) {}
 	~Background() {}
 

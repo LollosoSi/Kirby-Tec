@@ -16,7 +16,8 @@ namespace objects {
 		SLOPED_TERRAIN_225 = 6,
 		CAMERA = 7,
 		PARTICLE = 8,
-		BACKGROUND = 9
+		BACKGROUND = 9,
+		STEPUP = 10
 	};
 
 }

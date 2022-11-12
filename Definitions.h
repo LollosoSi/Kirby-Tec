@@ -4,6 +4,8 @@
 
 #include <QPointF>
 
+inline double scalemultiplier = 5;
+
 inline double scale = 1;
 inline double standardsize = 16; //Pixels
 inline double aspectratio = 1023/895.0;

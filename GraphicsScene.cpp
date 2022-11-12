@@ -62,7 +62,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         snapped.setY((double)(floor(snapped.y()) ));
 
 
-        Terrain* t = new Terrain(snapped);
+        Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPointF(0,0), 1.0, 0.2);
         GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
 
     } 
