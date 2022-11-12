@@ -125,7 +125,7 @@ public:
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
-		out << GameObject::serialize(divider) << getOffset().x() << divider << getOffset().y() << divider << getSizeX() << divider << getSizeY();
+		out << GameObject::serialize(divider) << divider << getOffset().x() << divider << getOffset().y() << divider << getSizeX() << divider << getSizeY();
 
 		return out.str();
 	}

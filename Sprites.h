@@ -55,10 +55,14 @@ namespace TexManager {
 		KIRBY_BIG_WALKING = 28,
 
 		BACKGROUND = 29,
-		UPCOLLIDER = 30
+		UPCOLLIDER = 30,
+
+		TRANSPARENT = 31,
+
+		BACKGROUND1 = 32
 		
 	};
-	const int TEXTURE_COUNT = 31;
+	const int TEXTURE_COUNT = 33;
 
 };
 
@@ -86,6 +90,7 @@ private:
 	const std::string file_titlescreen = "sprites/titlescreen.png";
 	const std::string file_background = "sprites/back.png";
 	const std::string file_upcollider = "sprites/Invisible.png";
+	const std::string file_background1 = "sprites/back2.png";
 
 	//levelbackgroundmap
 	

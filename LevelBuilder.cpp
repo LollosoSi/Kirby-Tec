@@ -34,6 +34,7 @@ void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
 			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400,500, objects::BACKGROUND, TexID::BACKGROUND);
 			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(bkgrnd));
 			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(bkgrnd));
+			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
 			
 			for (int j = 0; j < 1; j++)
 				for (int i = 0; i < 17; i++) {

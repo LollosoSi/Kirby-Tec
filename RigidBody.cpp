@@ -16,7 +16,7 @@ void RigidBody::render(QGraphicsScene& scene) {
 	KA::RectF rf = getColliderRectF();
 	
 	 QPen qp;
-	 qp.setColor(Qt::red);
+	 qp.setColor(Qt::blue);
 
 	if (!pm) {
 		pm = scene.addPixmap(getTexture());

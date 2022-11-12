@@ -261,24 +261,39 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 	// Save
 	if (e->key() == Qt::Key_K)
-		GameLoop::getInstance().saveGame("filesave");
+		GameLoop::getInstance().saveGame("level2");
 
 
 	if (e->key() == Qt::Key_R)
 	{
-		KirbyInstance->setX(4); KirbyInstance->setY(-10);
+		KirbyInstance->setX(4); KirbyInstance->setY(-4);
 	}
 
 	if (e->isAutoRepeat())
 		return;
 
 	if (e->key() == Qt::Key_V && !isPressed) {
-		
-		
-		clear();
-		LevelBuilder().load("world-1-1", _level);
 
-			KA::Sounds::instance()->play("Vegetable Valley_Theme");
+		//Camera::getInstance().setX(0);
+		Camera::getInstance().setY(-8);
+
+		
+		if (!GameLoop::getInstance().loadGame("levels/level2")) {
+
+			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400, 500, objects::BACKGROUND, TexID::BACKGROUND1);
+			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(bkgrnd));
+			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(bkgrnd));
+			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
+
+			Kirby* k = new Kirby(QPointF(0.0, -5.0));
+			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+
+		}
+
+		//clear();
+		//LevelBuilder().load("world-1-1", _level);
+
+			//KA::Sounds::instance()->play("Vegetable Valley_Theme");
 		
 		//start();
 	}
