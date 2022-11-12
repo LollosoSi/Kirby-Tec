@@ -48,10 +48,12 @@ TextureManager::TextureManager() {
 
 	//background
 	QRect background = QRect(0, 0, 1008, 168);
-	//QRect background1 = QRect(1008, 0, 1008, 168);
+
+	QRect background1 = QRect(0, 0, 1016, 168);
 
 	//upcollider
 	QRect upcollider = QRect(0, 0, 3040, 232);
+
 	//stage 1
 	QRect terrain_1 = getStandardQRect(1,1);
 	QRect terrain_2 = getStandardQRect(18,1);
@@ -76,7 +78,10 @@ TextureManager::TextureManager() {
 	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
 	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
 	QPixmap backgroundtex = loadTexture(file_background, nocolor);
+	QPixmap backgroundtex1 = loadTexture(file_background1, nocolor);
 	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
+
+	QRect transparent = QRect(153, 25, 2, 2);
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -87,6 +92,12 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(kirby_walk, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		4
+	};
+
+	textures[TRANSPARENT] = new Animatable{
+		new QPixmap[1]{ kirbytex.copy(transparent) },
+		new float[1] {1.0f},
+		1
 	};
 
 	textures[KIRBY_STAND] = new Animatable{
@@ -199,8 +210,7 @@ TextureManager::TextureManager() {
 			kirbytex.copy(kirby_big_walking),
 			kirbytex.copy(moveBy(kirby_big_flying, 1)),
 			kirbytex.copy(moveBy(kirby_big_flying, 2)),
-			kirbytex.copy(moveBy(kirby_big_flying, 3)),
-			
+			kirbytex.copy(moveBy(kirby_big_flying, 3)),	
 	},
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		1
@@ -270,14 +280,25 @@ TextureManager::TextureManager() {
 
 	//background
 	textures[BACKGROUND] = new Animatable{
-		new QPixmap[2]{
+		new QPixmap[3]{
 			backgroundtex.copy(background),
 			backgroundtex.copy(moveBy(background,1,0,background.width(),background.height(),0,0)),
+			backgroundtex.copy(moveBy(background,2,0,background.width(),background.height(),0,0))
 		},
-		new float[2] {0.5f, 0.5f},
-		2
+		new float[3] {0.3f, 0.3f, 0.3f},
+		3
 		};
 
+	//background
+	textures[BACKGROUND1] = new Animatable{
+		new QPixmap[3]{
+			backgroundtex1.copy(background1),
+			backgroundtex1.copy(moveBy(background1,1,0,background1.width(),background1.height(),0,0)),
+			backgroundtex1.copy(moveBy(background1,2,0,background1.width(),background1.height(),0,0))
+		},
+		new float[3] {0.12f, 0.14f, 0.18f},
+		3
+	};
 
 	//upcollider
 	textures[UPCOLLIDER] = new Animatable{

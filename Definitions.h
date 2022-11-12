@@ -27,3 +27,8 @@ template<typename Base, typename T>
 bool instanceof(const T* ptr) {
 	return dynamic_cast<const Base*>(ptr) != nullptr;
 }
+
+template <class T>
+static T clamp(T valore, T min, T max) {
+	return valore > max ? max : valore < min ? min : valore;
+}

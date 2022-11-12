@@ -39,6 +39,10 @@ file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sprites"
 file(CREATE_LINK "${PROJECT_SOURCE_DIR}/sounds"
         "${CMAKE_CURRENT_BINARY_DIR}/sounds" SYMBOLIC)
 
+# Collega la cartella con i livelli al progetto
+file(CREATE_LINK "${PROJECT_SOURCE_DIR}/levels"
+        "${CMAKE_CURRENT_BINARY_DIR}/levels" SYMBOLIC)
+
 # Aggiungo eseguibile
 add_executable(${project} ${sorgenti})
 # Seleziona startup project per visual studio
@@ -130,6 +134,7 @@ install(TARGETS ${project} RUNTIME DESTINATION bin)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/sounds/" DESTINATION bin/sounds)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/sprites/" DESTINATION bin/sprites)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/design/" DESTINATION bin/design)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/levels/" DESTINATION bin/levels)
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")

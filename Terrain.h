@@ -15,8 +15,8 @@ using namespace TexManager;
 
 class Terrain : public RigidBody {
 
+protected:
 	TexID tid;
-
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsItem* hitbox = 0;
 
@@ -53,16 +53,20 @@ public:
 
 class Background : public Terrain {
 
-	TexID tid;
 	Animator anim;
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
 
 public:
 	Background(QPointF pos, QPointF offset, int sizex, int sizey, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Terrain(pos, offset, sizex, sizey) {
 		setObjectId(id);
 		this->tid = tid;
-		anim.setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::BACKGROUND));
+		anim.setAnimatable(TextureManager::getInstance().getAnimatable((tid)));
+
+		Camera::getInstance().setBounds(QRectF(getX(), getY(), anim.getCurrentPixmap().width() / (double)standardsize, anim.getCurrentPixmap().height() / (double)standardsize));
+
+		setSizeX(anim.getCurrentPixmap().width() / (double)standardsize);
+		setSizeY(anim.getCurrentPixmap().height() / (double)standardsize);
+
+
 	}
 	Background(QPointF pos, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Background(pos, QPointF(0, 0), 1, 1, id, tid) {}
 	Background(objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Background(QPointF(0, 0), id, tid) {}
@@ -72,6 +76,7 @@ public:
 	virtual void tick(double delta) override {anim.tick(delta); }
 
 
+	
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
 		out << Terrain::serialize(divider);
@@ -81,6 +86,14 @@ public:
 
 	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
 		Terrain::deserialize(start);
+
+		anim.setAnimatable(TextureManager::getInstance().getAnimatable((tid)));
+
+		
+		Camera::getInstance().setBounds(QRectF(getX(), getY(), anim.getCurrentPixmap().width() / (double)standardsize, anim.getCurrentPixmap().height() / (double)standardsize));
+		
+		setSizeX(anim.getCurrentPixmap().width() / (double)standardsize);
+		setSizeY(anim.getCurrentPixmap().height() / (double)standardsize);
 
 		return this;
 	};

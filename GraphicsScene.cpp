@@ -24,11 +24,12 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 
-    int deltaX = (lm.x - mouseEvent->scenePos().x()) , deltaY = (lm.y - mouseEvent->scenePos().y());
+    int deltaX = (lm.x - mouseEvent->scenePos().x()), deltaY = (lm.y - mouseEvent->scenePos().y());
 
     //qDebug() << "DeltaX: " << deltaX << " DeltaY: " << deltaY;
 
-    QPointF snapped = Camera::screenToWorld(QPointF(Camera::getInstance().getX() + deltaX, Camera::getInstance().getY() + deltaY));
+    QPointF cam = Camera::worldToScreen(QPointF(Camera::getInstance().getX(), Camera::getInstance().getY()));
+    QPointF snapped = Camera::screenToWorld(QPointF(cam.x() + deltaX, cam.y() + deltaY));
     
 
     Camera::getInstance().setX(snapped.x());
@@ -57,8 +58,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
 
         QPointF snapped = Camera::screenToWorld(QPointF(lm.x, lm.y));
-        snapped.setX((int)(floor(snapped.x())));
-        snapped.setY((int)(floor(snapped.y())));
+        snapped.setX((double)(round(snapped.x()) + ( (snapped.x() - ((int)snapped.x())) > 0.6 ? 0.5 : 0)));
+        snapped.setY((double)(round(snapped.y()) ));
 
 
         Terrain* t = new Terrain(snapped);

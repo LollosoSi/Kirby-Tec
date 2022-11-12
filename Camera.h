@@ -18,14 +18,27 @@
 */
 class Camera : public GameObject, public TickableObject {
 
+protected:
+	QRectF bounds = QRectF(0, 0, 0, 0);
+
 public:
+
+	void setBounds(QRectF r) { bounds = r; }
+
 	// Relativi al singleton
 	static Camera& getInstance() { static Camera instance; return instance; }
 	~Camera() {}
 
-	void goTo(QPointF coord) {
+	QPointF fitcoordinates(QPointF coordinates, QRectF bound) {
+	
+		double x = clamp<double>(coordinates.x(), bound.x(), bound.x()+bound.width() - (screenwidth / (double)scalefactor) );
+		double y = clamp<double>(coordinates.y(), bound.y(), bound.y() + bound.height() - (screenheight / (double)scalefactor) + (128/(double)scalefactor));
 
-		gotoXY = coord; triggerGoto = true;
+		return QPointF(x, y);
+	}
+
+	void goTo(QPointF coord) {
+		gotoXY = fitcoordinates(coord, bounds); triggerGoto = true;
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 
