@@ -59,10 +59,12 @@ namespace TexManager {
 
 		TRANSPARENT = 31,
 
-		BACKGROUND1 = 32
+		BACKGROUND1 = 32,
+
+		KIRBY_DOORS = 33
 		
 	};
-	const int TEXTURE_COUNT = 33;
+	const int TEXTURE_COUNT = 34;
 
 };
 

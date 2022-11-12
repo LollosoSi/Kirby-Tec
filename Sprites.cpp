@@ -20,6 +20,9 @@ TextureManager::TextureManager() {
 
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
+	// Kirby enters doors
+	QRect kirby_doors = getStandardQRect(103,314);
+
 
 	// Kirby Actions
 	QRect kirby_inhale = getStandardQRect(6, 83); // 2 images (4 totale)
@@ -118,6 +121,12 @@ TextureManager::TextureManager() {
 		new QPixmap[1]{kirbytex.copy(kirby_strafe)},
 		new float[1] {0.06f},
 		1
+	};
+
+	textures[KIRBY_DOORS] = new Animatable{
+		new QPixmap[2]{kirbytex.copy(kirby_doors),kirbytex.copy(moveBy(kirby_doors, 1))},
+		new float[2] {0.06f, 0.06f},
+		2
 	};
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
