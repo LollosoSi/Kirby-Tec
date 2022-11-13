@@ -97,7 +97,7 @@ private:
 	const std::string file_upcollider = "sprites/Invisible.png";
 	const std::string file_background1 = "sprites/back2.png";
 	const std::string file_background2 = "sprites/back3.png";
-	const std::string file_lobby = "sprites/VegetableValley.png";
+	const std::string file_lobby = "sprites/Hub1.png";
 
 
 
