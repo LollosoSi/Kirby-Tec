@@ -4,11 +4,12 @@
 
 #include <QPointF>
 
-inline double scalemultiplier = 5;
+inline double scalemultiplier = 6;
 
 inline double scale = 1;
 inline double standardsize = 16; //Pixels
-inline double aspectratio = 1023/895.0;
+//inline double aspectratio = 1023/895.0;
+inline double aspectratio = 16/9.0;
 inline double scalefactor = scale * standardsize;
 
 static double toRadians(const double deg) { return deg*M_PI/180.0; }

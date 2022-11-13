@@ -3,6 +3,8 @@
 #include "GameLoop.h"
 #include "Particle.h"
 
+#include "Door.h"
+
 void Kirby::processAcceleration() {
 
 	KA::Vec2Df temp{ 0.0, 0.0 };
@@ -10,12 +12,12 @@ void Kirby::processAcceleration() {
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
 			mirror = false;
-			temp.x += (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed));
+			temp.x += (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x < 0 ? 2 : 1);
 		}
 
 		if (buttons[LEFT] && (velocity.x > -maxwalkspeed) ) {
 			mirror = true;
-			temp.x -= (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed));
+			temp.x -= (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x > 0 ? 2 : 1);
 		}
 	} else if (isGrounded()) {
 		if(abs(velocity.x) > 0.3)
@@ -48,7 +50,7 @@ void Kirby::processAcceleration() {
 	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
-		jumpImpulse.remainingtime += !angle ? 25 : 15;
+		jumpImpulse.remainingtime += !angle || true ? 25 : 15;
 		KA::Sounds::getInstance().play("jump");
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
@@ -63,6 +65,13 @@ void Kirby::processAcceleration() {
 	}
 
 	this->accel = temp;
+
+	if (buttons[ENTERDOOR]) {
+		buttons[ENTERDOOR] = 0;
+
+		
+
+	}
 
 }
 
@@ -147,6 +156,13 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 	if (e->key() == Qt::Key_Z) {
 		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
+	}
+	if (e->key() == Qt::Key_G && isPressed) {
+		buttons[Kirby::ENTERDOOR] = isPressed;
+
+		GameObject* obj = getCollidingObject(objects::DOOR);
+		if (obj)
+			(dynamic_cast<Door*>(obj))->launchAction();
 	}
 
 }

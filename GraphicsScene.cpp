@@ -9,6 +9,7 @@
 #include "qmath.h"
 
 #include "Camera.h"
+#include "Door.h"
 
 GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent) {
     //this->setBackgroundBrush(Qt::white);
@@ -62,8 +63,14 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         snapped.setY((double)(floor(snapped.y()) ));
 
 
-        Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPointF(0,0), 1.0, 0.2);
-        GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+        if (me->button() == Qt::RightButton) {
+            Door* t = new Door(snapped, std::string("levels/level1"));
+            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+        }
+        else {
+            Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAIN, QPoint(0, 0), 1, 0.3);
+            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+        }
 
     } 
 }

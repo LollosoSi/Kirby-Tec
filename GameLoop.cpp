@@ -263,10 +263,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_P && isPressed) {
 		
 		if (paused) {
-			
-			start(); 	
+			start();
 		} else { 
-			
 			pause(); 
 		}
 	}
@@ -307,7 +305,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		}
 
-		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
+		//KA::Sounds::getInstance().play("Vegetable Valley_Theme");
 
 		
 	}
@@ -318,7 +316,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		//Camera::getInstance().setY(-8);
 
 
-		if (!GameLoop::getInstance().loadGame("levels/level3")) {
+		if (!GameLoop::getInstance().loadGame("levels/lobby")) {
 
 			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400, 500, objects::BACKGROUND, TexID::BACKGROUND2);
 			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(bkgrnd));
@@ -330,7 +328,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		}
 
-		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
+		//KA::Sounds::getInstance().play("Vegetable Valley_Theme");
 
 
 	}
@@ -384,17 +382,17 @@ void GameLoop::clear() {
 		GameLoop::getInstance().stop();
 		GameLoop::getInstance().loopthread.join();
 		
-		
 		GameLoop::getInstance().render(true);
 	
 
 		});
 	
-	t.join();
+	if(t.joinable())
+		t.join();
 
 	std::vector<GameObject*> obj;
 
-	// TODO: Avoid memory leaks
+	// Avoid memory leaks
 	for (auto* item : this->renderableObjects)
 	{
 		std::vector<GameObject*>::iterator it = std::find(obj.begin(), obj.end(), dynamic_cast<GameObject*>(item));

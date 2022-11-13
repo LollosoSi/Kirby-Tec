@@ -21,12 +21,16 @@ class Kirby : public RigidBody {
 	Animator animator;
 
 protected:
-	int maxwalkspeed = 14;
+	int maxwalkspeed = 8;
 
 public:
-	Kirby(const QPointF pos) : RigidBody(pos, QPointF(0,0), 1,1) {
+
+	double kirbyscale = 0.8;
+
+	Kirby(const QPointF pos) : RigidBody(pos, QPointF(0,0), 1, 1) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 		setObjectId(objects::KIRBY);
+		rigiddrawscale = kirbyscale;
 	}
 
 
@@ -48,9 +52,9 @@ public:
 	}
 	Cloneable* clone() const { return new Kirby(*this); }
 
-	#define buttonsize 9
+	#define buttonsize 10
 	enum {
-		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, INHALE_EXHALE = 5, INHALE_ENEMIES = 6, USE_SPECIALPWR = 7, DROP_SPECIALPWR = 8
+		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, INHALE_EXHALE = 5, INHALE_ENEMIES = 6, USE_SPECIALPWR = 7, DROP_SPECIALPWR = 8, ENTERDOOR = 9
 	};
 	bool buttons[buttonsize]{false};
 
@@ -59,7 +63,7 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ KA::Vec2Df{0,-250},0 };
+	Impulse jumpImpulse{ KA::Vec2Df{0,-170},0 };
 
 	void tick(double deltatime) {
 

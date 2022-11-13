@@ -97,6 +97,7 @@ target_sources(${project}
 		Hud.h
 		Enemy.cpp
 		Enemy.h
+		Door.h
 		Brontoburt.h
 		Brontoburt.cpp
 		Hothead.h

@@ -124,6 +124,9 @@ public:
 	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
 
 	int textureId() {
+		if (tid == TexManager::TRANSPARENT)
+			return tid;
+
 		switch (getObjectId()) {
 		default:
 			return TexManager::TERRAIN_SLOPED_25;
@@ -158,7 +161,7 @@ public:
 	void render(QGraphicsScene& scene, bool shouldClear = false) {
 
 		bool visible = Camera::isVisible(getCollider());
-		if (!pm && !visible)
+		if ((!pm && !visible) || tid==TRANSPARENT)
 			return;
 
 

@@ -23,14 +23,15 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		 scene.removeItem(pm);
 		 pm = 0;
 
-	//	scene.removeItem(hitbox);
+		 scene.removeItem(hitbox);
+
 		 hitbox = 0;
 
 		 //std::cout << "Cleared " << getObjectId() << "\n";
 
 	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());
-		//hitbox = scene.addRect(getCollider(), qp);
+		hitbox = scene.addRect(getCollider(), qp);
 	} 
 	
 	
@@ -39,12 +40,13 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		pm->setPixmap(getTexture());
 		pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
 		//pm->setRotation(renderAngles[currentDegree]);
-		pm->setScale(scale);
+		pm->setScale(scale * rigiddrawscale);
 
 		QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
 
-		//scene.removeItem(hitbox);
-	//	hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+
+		scene.removeItem(hitbox);
+		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 
 	}
 	
@@ -117,7 +119,7 @@ void RigidBody::tick(double deltatime){
 				break;
 					
 			}
-			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.05) {
+			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.04) {
 				hit = 1;
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;
@@ -127,7 +129,7 @@ void RigidBody::tick(double deltatime){
 
 				if (cn.x != 0) {
 					overridex = (getX() + (getVelocity().x * ct));
-					velocity.x = -velocity.x / 2;
+					velocity.x = -velocity.x / 7;
 				}
 				if (cn.y != 0) {
 					overridey = (getY() + (getVelocity().y * ct));
@@ -135,8 +137,10 @@ void RigidBody::tick(double deltatime){
 				}
 				
 			}
-			else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y == -1) {
-
+			else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y != 1) {
+				hit = 1;
+				lastHitNormals = cn;
+				angle = 0;
 				if (cn.y != 0) {
 					overridey = (getY() + (getVelocity().y * ct));
 					velocity.y = 0;
@@ -183,10 +187,27 @@ void RigidBody::tick(double deltatime){
 #undef ty
 }
 
+GameObject* RigidBody::getCollidingObject(objects::ObjectID filter){
 
-void solve_collisions() {
+	double overridex = 0, overridey = 0;
 
+
+	//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
+
+	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
+
+	KA::Vec2Df cp, cn;
+	double ct = 0, min_t = 1;
+	bool hit = 0;
+	// solve the collisions in correct order 
+	for (auto& obj : cs)
+		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
+			if (obj.first->getObjectId() == filter && ct >= -0.3 && ct <= 0) 
+				return dynamic_cast<GameObject*>(obj.first);
+
+	return 0;
 }
+
 
 /** Find if line mx + q intersects p1 and p2
 * NOTE: if m = INT_MAX then line will be y wide at x = q

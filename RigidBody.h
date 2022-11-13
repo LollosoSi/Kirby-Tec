@@ -49,6 +49,7 @@ public:
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
 
+	double rigiddrawscale = 1;
 
 	//RenderDegree currentDegree = NO_SLOPE;
 	double angle = 0;
@@ -65,6 +66,7 @@ public:
 	RigidBody() : RigidBody(QPointF(0.0, 0.0), QPointF(0.0, 0.0)) {}
 	virtual void tick(double deltatime);
 	virtual void render(QGraphicsScene& scene, bool shouldClear = false);
+	GameObject* getCollidingObject(objects::ObjectID filter);
 	//virtual QPixmap getTexture() = 0;
 	~RigidBody() {
 	

@@ -17,7 +17,8 @@ namespace objects {
 		CAMERA = 7,
 		PARTICLE = 8,
 		BACKGROUND = 9,
-		STEPUP = 10
+		STEPUP = 10,
+		DOOR = 11
 	};
 
 }
