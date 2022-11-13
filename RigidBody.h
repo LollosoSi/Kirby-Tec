@@ -139,7 +139,7 @@ public:
 		setSizeY(std::atof((*(start++)).c_str()));
 
 		return this;
-	};
+	}
 	
 	
 

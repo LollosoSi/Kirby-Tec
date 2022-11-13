@@ -96,7 +96,7 @@ void GameLoop::saveGame(std::string fileName) {
 }
 
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
-
+	
 	static std::string currentlevel;
 
 	if (savecurrent && currentlevel.length() != 0)
@@ -124,6 +124,10 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 			break;
 
 		case objects::TERRAIN:
+			addTerrain(obj);
+			break;
+
+		case objects::BARRIER:
 			addTerrain(obj);
 			break;
 
@@ -394,9 +398,11 @@ void GameLoop::clear() {
 	std::thread t([]() {
 		
 		GameLoop::getInstance().stop();
-		GameLoop::getInstance().loopthread.join();
+		if (GameLoop::getInstance().loopthread.joinable())
+			GameLoop::getInstance().loopthread.join();
 		
-		GameLoop::getInstance().render(true);
+		if(GameLoop::getInstance().renderableObjects.size() > 0)
+			GameLoop::getInstance().render(true);
 	
 
 		});

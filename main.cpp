@@ -35,18 +35,21 @@ int main(int argc, char* argv[]) {
 	
 	
 	
-	
+	TextureManager::getInstance();
 	KA::Sounds::getInstance();
+	GameLoop::getInstance();
 
-	GameLoop::getInstance().start();
-	GameLoop::getInstance().recalculateTicks(60);
-	GameLoop::getInstance().recalculateFps(75);
+//	GameLoop::getInstance().start();
+	
 
 	if(!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)){
 	
 		// Show introduction
 		GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
 	}
+
+	GameLoop::getInstance().recalculateTicks(60);
+	GameLoop::getInstance().recalculateFps(75);
 
     // eseguo applicazione Qt
     return a.exec();

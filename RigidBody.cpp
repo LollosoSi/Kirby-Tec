@@ -23,15 +23,14 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		 scene.removeItem(pm);
 		 pm = 0;
 
-		 scene.removeItem(hitbox);
-
-		 hitbox = 0;
+		 //scene.removeItem(hitbox);
+		 //hitbox = 0;
 
 		 //std::cout << "Cleared " << getObjectId() << "\n";
 
 	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());
-		hitbox = scene.addRect(getCollider(), qp);
+		//hitbox = scene.addRect(getCollider(), qp);
 	} 
 	
 	
@@ -42,11 +41,10 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		//pm->setRotation(renderAngles[currentDegree]);
 		pm->setScale(scale * rigiddrawscale);
 
-		QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
+		//QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
 
-
-		scene.removeItem(hitbox);
-		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+		//scene.removeItem(hitbox);
+		//hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 
 	}
 	
@@ -119,7 +117,7 @@ void RigidBody::tick(double deltatime){
 				break;
 					
 			}
-			else if(obid == objects::TERRAIN && ct >= 0 && ct < 0.04) {
+			else if((obid == objects::TERRAIN || obid == objects::BARRIER) && ct >= 0 && ct < 0.04) {
 				hit = 1;
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;

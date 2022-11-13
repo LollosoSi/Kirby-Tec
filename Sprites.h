@@ -64,10 +64,12 @@ namespace TexManager {
 
 		KIRBY_DOORS = 34,
 
-		LOBBY = 35
+		LOBBY = 35,
+		BARRIER_1 = 36,
+		BARRIER_2 = 37
 		
 	};
-	const int TEXTURE_COUNT = 36;
+	const int TEXTURE_COUNT = 38;
 
 };
 
@@ -78,7 +80,6 @@ class TextureManager {
 public:
 	static TextureManager& getInstance() { static TextureManager instance; return instance; }
 	~TextureManager();
-	static TextureManager* instance();
 
 	Animatable* getAnimatable(unsigned int position = 0) { return textures[position];}
 	//QPixmap getLevelBackground(const std::string& level);
@@ -97,11 +98,8 @@ private:
 	const std::string file_upcollider = "sprites/Invisible.png";
 	const std::string file_background1 = "sprites/back2.png";
 	const std::string file_background2 = "sprites/back3.png";
-	const std::string file_lobby = "sprites/Hub1.png";
-
-
-
-	//levelbackgroundmap
+	const std::string file_lobby = "sprites/VegetableValley.png";
+	const std::string file_barriers = "sprites/Base.png";
 	
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);

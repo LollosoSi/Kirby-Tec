@@ -74,9 +74,14 @@ TextureManager::TextureManager() {
 	QRect terrain3S_1 = getStandardQRect(69,1);
 	QRect terrain3S_2 = getStandardQRect(86,1);
 	QRect terrain3S_3 = getStandardQRect(103,1);
+
+	QRect barrier = getStandardQRect(0, 0);
 	
+
 	// Slopped Section
 	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
+
+	QRect transparent = QRect(153, 25, 2, 2);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
 	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
@@ -86,10 +91,10 @@ TextureManager::TextureManager() {
 	QPixmap backgroundtex1 = loadTexture(file_background1, nocolor);
 	QPixmap backgroundtex2 = loadTexture(file_background2, nocolor);
 	QPixmap lobbytex = loadTexture(file_lobby, nocolor);
-
 	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
+	QPixmap barrierstex = loadTexture(file_barriers, nocolor);
 
-	QRect transparent = QRect(153, 25, 2, 2);
+	
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -343,6 +348,18 @@ TextureManager::TextureManager() {
 		new QPixmap[4]{kirbytex.copy(particle_1), kirbytex.copy(moveBy(particle_1, 1)),kirbytex.copy(moveBy(particle_1, 2)),kirbytex.copy(moveBy(particle_1, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
 		4
+	};
+
+	textures[BARRIER_1] = new Animatable{
+		new QPixmap[1]{barrierstex.copy(moveBy(barrier, 1, 0, 16, 16, 0, 0))},
+		new float[1] {0.2f},
+		1
+	};
+
+	textures[BARRIER_2] = new Animatable{
+		new QPixmap[1]{barrierstex.copy(moveBy(barrier, 2, 0, 16, 16, 0, 0))},
+		new float[1] {0.2f},
+		1
 	};
 
 }

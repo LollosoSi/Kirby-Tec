@@ -18,7 +18,8 @@ namespace objects {
 		PARTICLE = 8,
 		BACKGROUND = 9,
 		STEPUP = 10,
-		DOOR = 11
+		DOOR = 11,
+		BARRIER = 12
 	};
 
 }

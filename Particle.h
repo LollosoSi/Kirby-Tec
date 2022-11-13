@@ -11,6 +11,7 @@
 
 class Particle : public GameObject, public TickableObject, public RenderableObject {
 
+protected:
 	Animator statepicker;
 
 	double startlifetime, lifetime, pixscale;
@@ -79,3 +80,4 @@ public:
 	virtual QPixmap getTexture() { return statepicker.getCurrentPixmap(); }
 
 };
+
