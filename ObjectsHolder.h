@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Kirby.h"
 #include "Terrain.h"
+#include "Door.h"
 
 static GameObject* getInstanceOf(objects::ObjectID obj) {
 	
@@ -19,6 +20,9 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 
 		case objects::TERRAIN:
 			return new Terrain();
+
+		case objects::DOOR:
+			return new Door();
 
 		case objects::STEPUP:
 			return new Terrain(objects::STEPUP);

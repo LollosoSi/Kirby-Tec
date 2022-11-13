@@ -326,7 +326,8 @@ TextureManager::TextureManager() {
 
 	textures[LOBBY] = new Animatable{
 		new QPixmap[1] {lobbytex.copy(lobby)},
-new float[1] {0.12f},
+		new float[1] {0.12f},
+		1
 	};
 
 

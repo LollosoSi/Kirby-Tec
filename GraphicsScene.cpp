@@ -65,10 +65,15 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
 
         if (me->button() == Qt::RightButton) {
             Door* t = new Door(snapped, std::string("levels/level1"));
-            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+            GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
+            GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
+            GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));
         }
-        else {
-            Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAIN, QPoint(0, 0), 1, 0.3);
+        else if (me->button() == Qt::MiddleButton) {
+            Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);
+            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+        } else {
+            Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAIN, QPoint(0, 0), 1, 1);
             GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
         }
 

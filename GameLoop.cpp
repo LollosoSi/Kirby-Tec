@@ -119,6 +119,12 @@ bool GameLoop::loadGame(std::string fileName) {
 			addTerrain(obj);
 			break;
 
+		case objects::DOOR:
+			GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(obj));
+			GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(obj));
+			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(obj));
+			break;
+
 		case objects::STEPUP:
 			addTerrain(obj);
 			break;
@@ -318,7 +324,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		if (!GameLoop::getInstance().loadGame("levels/lobby")) {
 
-			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400, 500, objects::BACKGROUND, TexID::BACKGROUND2);
+			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400, 500, objects::BACKGROUND, TexID::LOBBY);
 			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(bkgrnd));
 			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(bkgrnd));
 			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));

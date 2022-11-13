@@ -98,6 +98,7 @@ target_sources(${project}
 		Enemy.cpp
 		Enemy.h
 		Door.h
+		Door.cpp
 		Brontoburt.h
 		Brontoburt.cpp
 		Hothead.h

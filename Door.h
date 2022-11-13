@@ -14,16 +14,7 @@ public:
 
 	Door() : Door(QPointF(0.0, 0.0)) {}
 
-	void launchAction() {
-
-		if (!GameLoop::getInstance().loadGame(level + std::string(".save"))) {
-			GameLoop::getInstance().loadGame(level);
-		}
-
-			
-		
-
-	}
+	void launchAction();
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);

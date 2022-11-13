@@ -27,7 +27,7 @@ public:
 
 	double kirbyscale = 0.8;
 
-	Kirby(const QPointF pos) : RigidBody(pos, QPointF(0,0), 1, 1) {
+	Kirby(const QPointF pos) : RigidBody(pos, QPointF(0,0), 1 * kirbyscale, 1 * kirbyscale	) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 		setObjectId(objects::KIRBY);
 		rigiddrawscale = kirbyscale;
