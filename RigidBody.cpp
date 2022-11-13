@@ -17,12 +17,13 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 	
 	 QPen qp;
 	 qp.setColor(Qt::blue);
+	 
 
 	 if (!visible || shouldClear) {
 		 scene.removeItem(pm);
 		 pm = 0;
 
-		// scene.removeItem(hitbox);
+	//	scene.removeItem(hitbox);
 		 hitbox = 0;
 
 		 //std::cout << "Cleared " << getObjectId() << "\n";
@@ -43,7 +44,7 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
 
 		//scene.removeItem(hitbox);
-		//hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+	//	hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 
 	}
 	

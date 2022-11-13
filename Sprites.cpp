@@ -23,7 +23,6 @@ TextureManager::TextureManager() {
 	// Kirby enters doors
 	QRect kirby_doors = getStandardQRect(103,314);
 
-
 	// Kirby Actions
 	QRect kirby_inhale = getStandardQRect(6, 83); // 2 images (4 totale)
 	QRect kirby_inhale2 = QRect(46, 75, 16 , 24 ); // bigger
@@ -55,6 +54,8 @@ TextureManager::TextureManager() {
 	QRect background1 = QRect(0, 0, 1016, 168);
 
 	QRect background2 = QRect(0, 0, 1016, 168);
+
+	QRect lobby = QRect(0,0,511,367);
 	//upcollider
 	QRect upcollider = QRect(0, 0, 3040, 232);
 
@@ -84,6 +85,7 @@ TextureManager::TextureManager() {
 	QPixmap backgroundtex = loadTexture(file_background, nocolor);
 	QPixmap backgroundtex1 = loadTexture(file_background1, nocolor);
 	QPixmap backgroundtex2 = loadTexture(file_background2, nocolor);
+	QPixmap lobbytex = loadTexture(file_lobby, nocolor);
 
 	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
 
@@ -321,6 +323,12 @@ TextureManager::TextureManager() {
 		new float[3] {0.12f, 0.14f, 0.18f},
 		3
 	};
+
+	textures[LOBBY] = new Animatable{
+		new QPixmap[1] {lobbytex.copy(lobby)},
+new float[1] {0.12f},
+	};
+
 
 	//upcollider
 	textures[UPCOLLIDER] = new Animatable{
