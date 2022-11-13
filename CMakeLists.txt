@@ -105,6 +105,10 @@ target_sources(${project}
 		Waddledee.cpp
 		Waddledoo.h
 		Waddledoo.cpp
+		Sparky.cpp
+		Sparky.h
+		PoppyBrosJr.cpp
+		PoppyBrosJr.h
 		Levelbuilder.cpp
 		Levelbuilder.h
 )
