@@ -313,6 +313,30 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 	}
 
+	if (e->key() == Qt::Key_3 && !isPressed) {
+
+		//Camera::getInstance().setX(0);
+		//Camera::getInstance().setY(-8);
+
+
+		if (!GameLoop::getInstance().loadGame("levels/level3")) {
+
+			Background* bkgrnd = new Background(QPointF(0, -8), QPointF(0, 0), 400, 500, objects::BACKGROUND, TexID::BACKGROUND2);
+			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(bkgrnd));
+			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(bkgrnd));
+			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
+
+			Kirby* k = new Kirby(QPointF(0.0, -5.0));
+			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+
+		}
+
+		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
+
+
+	}
+
+
 	
 
 	

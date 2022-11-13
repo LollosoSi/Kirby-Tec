@@ -314,9 +314,9 @@ TextureManager::TextureManager() {
 
 	textures[BACKGROUND2] = new Animatable{
 		new QPixmap[3]{
-			backgroundtex1.copy(background2),
-			backgroundtex1.copy(moveBy(background2,1,0,background2.width(),background2.height(),0,0)),
-			backgroundtex1.copy(moveBy(background2,2,0,background2.width(),background2.height(),0,0))
+			backgroundtex2.copy(background2),
+			backgroundtex2.copy(moveBy(background2,1,0,background2.width(),background2.height(),0,0)),
+			backgroundtex2.copy(moveBy(background2,2,0,background2.width(),background2.height(),0,0))
 		},
 		new float[3] {0.12f, 0.14f, 0.18f},
 		3
