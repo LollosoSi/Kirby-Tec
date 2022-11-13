@@ -7,7 +7,6 @@
 #include "LevelBuilder.h"
 
 
-
 GameLoop::GameLoop() {
 
 }
@@ -304,7 +303,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
 
 			Kirby* k = new Kirby(QPointF(0.0, -5.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));			
 
 		}
 
@@ -336,9 +335,6 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	}
 
-
-	
-
 	
 	if(KirbyInstance)
 		KirbyInstance->keyPressEvent(e,isPressed);
@@ -352,6 +348,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
 		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
 			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
+
 
 	}
 

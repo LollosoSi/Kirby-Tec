@@ -297,7 +297,7 @@ TextureManager::TextureManager() {
 			backgroundtex.copy(moveBy(background,1,0,background.width(),background.height(),0,0)),
 			backgroundtex.copy(moveBy(background,2,0,background.width(),background.height(),0,0))
 		},
-		new float[3] {0.3f, 0.3f, 0.3f},
+		new float[3] {0.15f, 0.15f, 0.15f},
 		3
 		};
 
