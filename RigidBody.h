@@ -64,7 +64,7 @@ public:
 	RigidBody(const QPointF& coord, const QPointF& offset) : RigidBody(coord, offset, 16, 16) {}
 	RigidBody() : RigidBody(QPointF(0.0, 0.0), QPointF(0.0, 0.0)) {}
 	virtual void tick(double deltatime);
-	virtual void render(QGraphicsScene& scene);
+	virtual void render(QGraphicsScene& scene, bool shouldClear = false);
 	//virtual QPixmap getTexture() = 0;
 	~RigidBody() {
 	

@@ -10,11 +10,13 @@
 
 GameLoop::GameLoop() {
 
-	 _level = KA::LevelType::OVERWORLD;
 }
 
 GameLoop::~GameLoop() {
 	clear();
+	stop();
+	if (loopthread.joinable())
+		loopthread.join();
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -28,6 +30,8 @@ void GameLoop::recalculateFps(int target_fps) {
 }
 
 void GameLoop::loop() {
+	//std::cout << "Loop started\n";
+
 	thread_working = true;
 
 	QTime current = QTime::currentTime();
@@ -84,6 +88,8 @@ void GameLoop::loop() {
 
 	}
 	thread_working = false;
+	//std::cout << "Loop done\n";
+
 }
 
 void GameLoop::saveGame(std::string fileName) {
@@ -91,6 +97,8 @@ void GameLoop::saveGame(std::string fileName) {
 }
 
 bool GameLoop::loadGame(std::string fileName) {
+	clear();
+
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName);
 
 	for (Serializable* item : tempserializableObjects) {
@@ -160,10 +168,9 @@ void GameLoop::mergeQueues() {
 	collidableObjectsQueue.clear();
 }
 
-void GameLoop::render() {
+void GameLoop::render(bool clear) {
 	waitingForRender = true;
-	emit(pleaseRender(&renderableObjects), shouldclearscene);
-	if (shouldclearscene)shouldclearscene = 0;
+	emit(pleaseRender(clear));
 }
 
 void GameLoop::tick(double deltatime) {
@@ -278,9 +285,10 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		return;
 
 
-	if (e->key() == Qt::Key_1 && !isPressed)
-
+	if (e->key() == Qt::Key_1 && !isPressed) {
 		GameLoop::getInstance().loadGame("levels/level1");
+		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
+	}
 
 	if (e->key() == Qt::Key_2 && !isPressed) {
 
@@ -300,12 +308,9 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		}
 
-		//clear();
-		//LevelBuilder().load("world-1-1", _level);
+		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
 
-			//KA::Sounds::instance()->play("Vegetable Valley_Theme");
 		
-		//start();
 	}
 
 	
@@ -350,35 +355,60 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 void GameLoop::clear() {
 	
 	//stop();
-	/* TODO: Avoid memory leaks
+
+	
+	
+	std::thread t([]() {
+		
+		GameLoop::getInstance().stop();
+		GameLoop::getInstance().loopthread.join();
+		
+		
+		GameLoop::getInstance().render(true);
+	
+
+		});
+	
+	t.join();
+
+	std::vector<GameObject*> obj;
+
+	// TODO: Avoid memory leaks
 	for (auto* item : this->renderableObjects)
-		{
-		delete item;
+	{
+		std::vector<GameObject*>::iterator it = std::find(obj.begin(), obj.end(), dynamic_cast<GameObject*>(item));
+		if (it != obj.end())
+			obj.push_back(dynamic_cast<GameObject*>(item));
 	}
 	for (auto* item : this->tickableObjects)
-		{
-		delete item;
-		}
+	{
+		std::vector<GameObject*>::iterator it = std::find(obj.begin(), obj.end(), dynamic_cast<GameObject*>(item));
+		if (it != obj.end())
+			obj.push_back(dynamic_cast<GameObject*>(item));
+	}
 	for (auto* item : this->particleObjects)
-		 {
-		delete item;
-		}
+	{
+		std::vector<GameObject*>::iterator it = std::find(obj.begin(), obj.end(), dynamic_cast<GameObject*>(item));
+		if (it != obj.end())
+			obj.push_back(dynamic_cast<GameObject*>(item));
+	}
 	for (auto* item : this->serializableObjects)
-		{
-		delete item;
-		}
+	{
+		std::vector<GameObject*>::iterator it = std::find(obj.begin(), obj.end(), dynamic_cast<GameObject*>(item));
+		if (it != obj.end())
+			obj.push_back(dynamic_cast<GameObject*>(item));
+	}
 	for (auto* item : this->collidableObjects)
-		 {
+	{
+		std::vector<GameObject*>::iterator it = std::find(obj.begin(), obj.end(), dynamic_cast<GameObject*>(item));
+		if (it != obj.end())
+			obj.push_back(dynamic_cast<GameObject*>(item));
+	}
+
+	for (auto* item : obj)
+	{
 		delete item;
-		}*/
-	
-	
-	
-	pause();
-	while (waitingForRender) {}
-
-
-	
+	}
 
 	tickableObjects.clear();
 	renderableObjects.clear();
@@ -386,7 +416,6 @@ void GameLoop::clear() {
 	collidableObjects.clear();
 	particleObjects.clear();
 
-	shouldclearscene = 1;
+	GameLoop::getInstance().start();
 
-	start();
 }

@@ -76,7 +76,7 @@ public:
 	}
 
 	int l = 0;
-	void render(QGraphicsScene& scene) override {
+	void render(QGraphicsScene& scene, bool shouldClear = false) override {
 		RigidBody::render(scene); 
 
 		

@@ -60,11 +60,12 @@ namespace TexManager {
 		TRANSPARENT = 31,
 
 		BACKGROUND1 = 32,
+		BACKGROUND2 = 33,
 
-		KIRBY_DOORS = 33
+		KIRBY_DOORS = 34
 		
 	};
-	const int TEXTURE_COUNT = 34;
+	const int TEXTURE_COUNT = 35;
 
 };
 
@@ -93,6 +94,8 @@ private:
 	const std::string file_background = "sprites/back.png";
 	const std::string file_upcollider = "sprites/Invisible.png";
 	const std::string file_background1 = "sprites/back2.png";
+	const std::string file_background2 = "sprites/back3.png";
+
 
 	//levelbackgroundmap
 	

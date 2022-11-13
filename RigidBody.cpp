@@ -6,7 +6,7 @@
 
 
 
-void RigidBody::render(QGraphicsScene& scene) {
+void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 
 	bool visible = Camera::isVisible(getCollider());
 	if (!pm && !visible)
@@ -18,29 +18,32 @@ void RigidBody::render(QGraphicsScene& scene) {
 	 QPen qp;
 	 qp.setColor(Qt::blue);
 
-	if (!pm) {
+	 if (!visible || shouldClear) {
+		 scene.removeItem(pm);
+		 pm = 0;
+
+		// scene.removeItem(hitbox);
+		 hitbox = 0;
+
+		 //std::cout << "Cleared " << getObjectId() << "\n";
+
+	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());
-		
-
-		hitbox = scene.addRect(getCollider(), qp);
-	} else if (!visible) {
-		scene.removeItem(pm);
-		pm = 0;
-
-		scene.removeItem(hitbox);
-		hitbox = 0;
-
+		//hitbox = scene.addRect(getCollider(), qp);
 	} 
 	
-	if (pm) {
+	
+	
+	if (pm && !shouldClear) {
 		pm->setPixmap(getTexture());
 		pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
 		//pm->setRotation(renderAngles[currentDegree]);
 		pm->setScale(scale);
 
 		QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
-		scene.removeItem(hitbox);
-		hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+
+		//scene.removeItem(hitbox);
+		//hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 
 	}
 	
