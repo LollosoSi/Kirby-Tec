@@ -2,8 +2,8 @@
 #include "GameLoop.h"
 
 void Door::launchAction() {
-
-	if (!GameLoop::getInstance().loadGame(level + std::string(".save"))) {
-		GameLoop::getInstance().loadGame(level);
+	
+	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {
+		GameLoop::getInstance().loadGame(level, false, false);
 	}
 }

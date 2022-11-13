@@ -42,6 +42,12 @@ int main(int argc, char* argv[]) {
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);
 
+	if(!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)){
+	
+		// Show introduction
+		GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
+	}
+
     // eseguo applicazione Qt
     return a.exec();
 }

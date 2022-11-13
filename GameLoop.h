@@ -69,7 +69,7 @@ public:
 	void clear();
 	static void stop();
 	void saveGame(std::string fileName);
-	bool loadGame(std::string fileName);
+	bool loadGame(std::string fileName, bool issave = false, bool savecurrent = false);
 
 	void addKirby(GameObject* kb);
 	void addTerrain(GameObject* t);

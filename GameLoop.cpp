@@ -95,10 +95,18 @@ void GameLoop::saveGame(std::string fileName) {
 	Serializer::serializeToFile(serializableObjects, fileName);
 }
 
-bool GameLoop::loadGame(std::string fileName) {
+bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
+
+	static std::string currentlevel;
+
+	if (savecurrent && currentlevel.length() != 0)
+		saveGame(currentlevel+std::string(".save"));
+
+	currentlevel = fileName;
+
 	clear();
 
-	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName);
+	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName + (issave ? std::string(".save") : std::string("")));
 
 	for (Serializable* item : tempserializableObjects) {
 		GameObject* obj = dynamic_cast<GameObject*>(item);

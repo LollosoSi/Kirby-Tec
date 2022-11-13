@@ -69,8 +69,7 @@ public:
 
 		std::vector<Serializable*> objects;
 
-		std::ifstream target;
-		target.open(filename.c_str());
+		std::ifstream target(filename.c_str());
 
 		if (!target.good()) {
 			// Whoops, something is off! I don't really care, find a better path and try again.
