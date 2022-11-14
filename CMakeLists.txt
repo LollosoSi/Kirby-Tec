@@ -99,18 +99,6 @@ target_sources(${project}
 		Enemy.h
 		Door.h
 		Door.cpp
-		Brontoburt.h
-		Brontoburt.cpp
-		Hothead.h
-		Hothead.cpp
-		Waddledee.h
-		Waddledee.cpp
-		Waddledoo.h
-		Waddledoo.cpp
-		Sparky.cpp
-		Sparky.h
-		PoppyBrosJr.cpp
-		PoppyBrosJr.h
 		Levelbuilder.cpp
 		Levelbuilder.h
 )
