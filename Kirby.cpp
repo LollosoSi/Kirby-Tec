@@ -47,15 +47,15 @@ void Kirby::processAcceleration() {
 	
 	}
 
-	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0) && jumpImpulse.remainingtime == 0) {
+
+	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0)) {
 		//buttons[SPACE] = false;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
-		jumpImpulse.remainingtime += !angle || true ? 45 : 15;
-		//KA::Sounds::getInstance().play("jump");
+		jumpImpulse.remainingtime += 50;
+		KA::Sounds::getInstance().play("jump");
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
-	
 
 
 	if (jumpImpulse.remainingtime > 0) {

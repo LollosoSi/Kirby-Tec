@@ -68,15 +68,18 @@ public:
 	void tick(double deltatime) {
 
 		processAcceleration();
+		
+		if (jumpImpulse.remainingtime != 0) {
+			jumpImpulse.remainingtime -= deltatime * 1000.0;
+			if (jumpImpulse.remainingtime < 0)
+				jumpImpulse.remainingtime = 0;
+		}
+		
 		processAnimation();
 		animator.tick(deltatime);
 		RigidBody::tick(deltatime);
 
-		if (jumpImpulse.remainingtime != 0) {
-			jumpImpulse.remainingtime -= deltatime*1000.0;
-			if (jumpImpulse.remainingtime < 0)
-				jumpImpulse.remainingtime = 0;
-		}
+		
 	}
 
 	int l = 0;

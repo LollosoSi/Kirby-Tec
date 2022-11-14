@@ -204,6 +204,7 @@ void GameLoop::tick(double deltatime) {
 			delete item;
 		}
 
+	KA::Sounds::getInstance().tick(deltatime);
 }
 
 void GameLoop::start() {
@@ -302,7 +303,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	if (e->key() == Qt::Key_1 && !isPressed) {
 		GameLoop::getInstance().loadGame("levels/level1");
-		KA::Sounds::getInstance().play("Vegetable Valley_Theme");
+		KA::Sounds::getInstance().play("Vegetable Valley_Theme", 0);
 	}
 
 	if (e->key() == Qt::Key_2 && !isPressed) {
