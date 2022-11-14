@@ -48,8 +48,6 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     lm.x = mouseEvent->scenePos().x();
     lm.y = mouseEvent->scenePos().y();
 
-  
-
 }
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
