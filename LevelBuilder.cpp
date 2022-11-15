@@ -2,10 +2,6 @@
 #include "Sprites.h"
 #include "Gameloop.h"
 
-#include "Waddledee.h"
-#include "Waddledoo.h"
-#include "Brontoburt.h"
-#include "Hothead.h"
 
 
 void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
