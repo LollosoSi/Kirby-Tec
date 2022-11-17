@@ -209,3 +209,50 @@ public:
 
 	}
 };
+
+
+
+class MovablePlatform : public Terrain {
+
+protected:
+	TexID tid;
+	QGraphicsPixmapItem* pm = 0;
+	QGraphicsItem* hitbox = 0;
+
+public:
+
+	double time = 0, omega = 2 * M_PI * 0.2;
+	QPointF startpos;
+
+	MovablePlatform(QPointF pos, QPointF offset, double sizex, double sizey, objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN) : Terrain(pos, offset, sizex, sizey) {
+		setObjectId(id);
+		this->tid = tid;
+		startpos = pos;
+	}
+	MovablePlatform(QPointF pos, objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : MovablePlatform(pos, offset, sizeX, sizeY, id, tid) {}
+	MovablePlatform(objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN) : MovablePlatform(QPointF(0, 0), id, tid) {}
+	~MovablePlatform() {}
+
+	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
+
+	void tick(double delta) override {
+		time += delta;
+		setY(startpos.y() + (sin(omega*time)));
+	}
+
+	std::string serialize(const char& divider) const override {
+		std::stringstream out("", std::ios_base::app | std::ios_base::out);
+		out << Terrain::serialize(divider) << divider << startpos.x() << divider << startpos.y();
+
+		return out.str();
+	}
+
+	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
+		Terrain::deserialize(start);
+		startpos = QPointF(std::atof((*(start++)).c_str()), std::atof((*(start++)).c_str()));
+
+		return this;
+	};
+
+
+};

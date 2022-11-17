@@ -27,6 +27,9 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 		case objects::DOOR:
 			return new Door();
 
+		case objects::PLATFORM:
+			return new MovablePlatform();
+
 		case objects::STEPUP:
 			return new Terrain(objects::STEPUP);
 

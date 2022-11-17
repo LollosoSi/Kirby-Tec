@@ -19,7 +19,8 @@ namespace objects {
 		BACKGROUND = 9,
 		STEPUP = 10,
 		DOOR = 11,
-		BARRIER = 12
+		BARRIER = 12,
+		PLATFORM = 13
 	};
 
 }

@@ -131,6 +131,11 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 			addTerrain(obj);
 			break;
 
+		case objects::PLATFORM:
+			addTerrain(obj);
+			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(obj));
+			break;
+
 		case objects::DOOR:
 			GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(obj));
 			GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(obj));

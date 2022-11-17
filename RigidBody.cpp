@@ -117,7 +117,7 @@ void RigidBody::tick(double deltatime){
 				break;
 					
 			}
-			else if((obid == objects::TERRAIN || obid == objects::BARRIER) && ct >= 0 && ct < 0.04) {
+			else if((obid == objects::TERRAIN || obid == objects::BARRIER) && ct >= 0 && ct < 0.05) {
 				hit = 1;
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;
@@ -134,6 +134,24 @@ void RigidBody::tick(double deltatime){
 					velocity.y = 0;
 				}
 				
+			}
+			else if (obid == objects::PLATFORM && ct >= -0.15 && ct < 0.1) {
+				hit = 1;
+				lastHitNormals = cn;
+				//currentDegree = NO_SLOPE;
+				angle = 0;
+
+
+
+				if (cn.x != 0) {
+					overridex = (getX() + (getVelocity().x * ct));
+					velocity.x = -velocity.x / 7;
+				}
+				if (cn.y != 0) {
+					overridey = (getY() + (getVelocity().y * ct));
+					velocity.y = 0;
+				}
+
 			}
 			else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y != 1) {
 				hit = 1;
