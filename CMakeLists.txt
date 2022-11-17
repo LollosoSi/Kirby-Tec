@@ -101,6 +101,7 @@ target_sources(${project}
 		Door.cpp
 		Levelbuilder.cpp
 		Levelbuilder.h
+		NetworkElement.h
 )
 
 
