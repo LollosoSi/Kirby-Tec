@@ -5,9 +5,11 @@
 class Door : public RigidBody {
 
 	std::string level = "";
-	bool savecurrent = 0;
+	
 
 public:
+	bool savecurrent = 0;
+
 	Door(const QPointF& coords, std::string level = std::string("levels/lobby"), const QPointF offset = QPointF(0.0, 0.0), const double sizeX = 1, const double sizeY = 1) : RigidBody(coords, offset, sizeX, sizeY) {
 		this->level = level;
 		setObjectId(objects::DOOR);

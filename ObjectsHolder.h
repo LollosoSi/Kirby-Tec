@@ -5,6 +5,7 @@
 #include "Terrain.h"
 #include "Door.h"
 
+
 static GameObject* getInstanceOf(objects::ObjectID obj) {
 	
 	switch (obj) {

@@ -97,6 +97,8 @@ void GameLoop::saveGame(std::string fileName) {
 
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	
+	
+
 	static std::string currentlevel;
 
 	if (savecurrent && currentlevel.length() != 0)
@@ -105,6 +107,8 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	currentlevel = fileName;
 
 	clear();
+	
+	Camera::getInstance().setBounds(QRectF(0, 0, 0, 0));
 
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName + (issave ? std::string(".save") : std::string("")));
 
@@ -210,6 +214,12 @@ void GameLoop::tick(double deltatime) {
 		}
 
 	KA::Sounds::getInstance().tick(deltatime);
+}
+
+void GameLoop::loadNetworkData(){
+
+
+
 }
 
 void GameLoop::start() {

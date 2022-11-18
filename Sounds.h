@@ -36,7 +36,8 @@ public:
 	static Sounds& getInstance() { static Sounds instance; return instance; }
 	~Sounds() {
 		running = false;
-		worker.join();
+		if(worker.joinable())
+			worker.join();
 	}
 
 	std::vector <std::pair<std::string, bool>> execlist;
@@ -54,4 +55,5 @@ public:
 	// controls
 	void play(const std::string& id, bool music = false);
 	void stopMusic(const std::string& id);
+	void stop(const std::string& id, bool music = false);
 };

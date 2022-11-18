@@ -65,10 +65,22 @@ void Sounds::playfile(const std::string& id, bool music) {
 	
 }
 
+void Sounds::stop(const std::string& id, bool music) {
+
+	if (!music && _sounds.find(id) != _sounds.end()) {
+		_sounds[id]->stop();
+	}
+	else if (music && _musics.find(id) != _musics.end()) {
+		_musics[id]->stop();
+	}
+
+}
+
 
 void Sounds::play(const std::string& id, bool music)
 {
-	execlist.push_back(std::pair<std::string, bool>(id, music));
+	playfile(id,music);
+	//execlist.push_back(std::pair<std::string, bool>(id, music));
 
 	
 }

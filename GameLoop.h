@@ -116,7 +116,7 @@ private:
 	QTime last_millis_render, last_millis_tick, last_log;
 	bool waitingForRender = false;
 
-	
+	void loadNetworkData();
 
 	// Elementi da iterare
 	std::vector<TickableObject*> tickableObjects;

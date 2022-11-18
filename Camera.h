@@ -38,8 +38,13 @@ public:
 	}
 
 	void goTo(QPointF coord) {
-		gotoXY = fitcoordinates(coord, bounds); triggerGoto = true;
-		//gotoXY = coord; triggerGoto = true;
+		if(bounds.width() != 0)
+			gotoXY = fitcoordinates(coord, bounds);
+		else
+			gotoXY = coord;
+		
+		triggerGoto = true;
+
 		//std::cout << "Going to " << gotoXY.x() << " " << gotoXY.y() << std::endl;
 	}
 

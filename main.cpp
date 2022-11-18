@@ -15,6 +15,8 @@
 #include "Kirby.h"
 #include "Sounds.h"
 
+#include "Door.h"
+
 
 int main(int argc, char* argv[]) {
 
@@ -42,11 +44,16 @@ int main(int argc, char* argv[]) {
 //	GameLoop::getInstance().start();
 	
 
-	if(!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)){
+	//if(!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)){
 	
 		// Show introduction
-		GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
-	}
+	//	GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
+	//}
+
+	Door d(QPoint(0, 0), std::string("levels/lobby"));
+	d.launchAction();
+	
+	
 
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);
