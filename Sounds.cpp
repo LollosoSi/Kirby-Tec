@@ -85,6 +85,18 @@ void Sounds::play(const std::string& id, bool music)
 	
 }
 
+void Sounds::setVolume(const std::string& id, bool music, double volume)
+
+{
+	if (!music && _sounds.find(id) != _sounds.end()) {
+		_sounds[id]->setVolume(volume);
+	}
+	else if (music && _musics.find(id) != _musics.end()) {
+		_musics[id]->setVolume(volume);
+	}
+
+}
+
 void Sounds::stopMusic(const std::string& id)
 {
 	if (_musics.find(id) != _musics.end())

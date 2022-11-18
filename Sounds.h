@@ -54,6 +54,7 @@ public:
 
 	// controls
 	void play(const std::string& id, bool music = false);
+	void setVolume(const std::string& id, bool music, double volume);
 	void stopMusic(const std::string& id);
 	void stop(const std::string& id, bool music = false);
 };
