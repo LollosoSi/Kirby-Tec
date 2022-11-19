@@ -110,16 +110,22 @@ class TerrainSloped : public Terrain {
 	QGraphicsItem* hitbox = 0;
 
 public:
-	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25) : Terrain(pos, QPointF(0, 0), 62, 32) { 
+	
+	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25, double sizex = 62.0, double sizey = 32.0) : Terrain(pos, QPointF(0, 0), sizex, sizey) { 
 		setObjectId(id); 
 	}
 	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN_25) : TerrainSloped(QPointF(0, 0), id) {}
 	~TerrainSloped() {}
 
+	QPointF vert1 = QPointF(0,0), vert2 = QPointF(0, 0);
+
 	// Returns m in x and q in y
-	QPointF getVert1() { return QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
-	QPointF getVert2() { return QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
-	KA::Vec2Df getHitLine() { QPointF v1 = getVert1(), v2 = getVert2(); double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x())); return KA::Vec2Df{ m,v1.y() - (double)(v1.x() * m) }; }
+	QPointF getVert1() { return vert1 != QPointF(0, 0) ? vert1 : QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
+	QPointF getVert2() { return vert2 != QPointF(0, 0) ? vert2 : QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
+	KA::Vec2Df getHitLine() {
+		QPointF v1 = getVert1(), v2 = getVert2();
+		double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x()));
+		return KA::Vec2Df{ m,v1.y() - (double)(v1.x() * m) }; }
 
 	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
 
@@ -160,8 +166,10 @@ public:
 	QGraphicsLineItem* qli = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) {
 
+		//collider = QRectF(vert1.x(), vert1.y(), vert2.x() - vert1.x(), vert2.y() - vert1.y());
+
 		bool visible = Camera::isVisible(getCollider());
-		if ((!pm && !visible) || tid==TRANSPARENT)
+		if ((!pm && !visible) /* || tid == TRANSPARENT */ )
 			return;
 
 
@@ -177,7 +185,7 @@ public:
 			hitbox = scene.addRect(getCollider(), qp);
 
 			QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
-			QPointF c2 = Camera::worldToScreen(QPointF(getVert1().x() + (64 * scale), getHitLine().y + (getHitLine().x * (getVert1().x() + 64 * scale))));
+			QPointF c2 = Camera::worldToScreen(QPointF(getVert1().x() + (2 * scalefactor), getHitLine().y + (getHitLine().x * (getVert1().x() + 2 * scalefactor))));
 			qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
 		}
 		else if (!visible) {
@@ -196,7 +204,7 @@ public:
 
 			scene.removeItem(qli);
 			QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
-			QPointF c2 = Camera::worldToScreen(QPointF(getVert1().x() + (64 * scale), getHitLine().y + (getHitLine().x * (getVert1().x() + 64 * scale))));
+			QPointF c2 = Camera::worldToScreen(QPointF(getVert1().x() + (2 * scale), getHitLine().y + (getHitLine().x * (getVert1().x() + 2 * scale))));
 			qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
 
 			QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));

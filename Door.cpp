@@ -12,12 +12,12 @@ void Door::launchAction() {
 	KA::Sounds::getInstance().stop("Kirby_Adventure_theme", 0);
 	KA::Sounds::getInstance().stop("pigstep", 0);
 
-	KA::Sounds::getInstance().setVolume("Vegetable Valley_Theme", 0, 0.01);
-	KA::Sounds::getInstance().setVolume("craft", 0, 0.01);
-	KA::Sounds::getInstance().setVolume("wii", 0, 0.01);
-	KA::Sounds::getInstance().setVolume("elevator", 0, 0.01);
-	KA::Sounds::getInstance().setVolume("Kirby_Adventure_theme", 0, 0.01);
-	KA::Sounds::getInstance().setVolume("pigstep", 0, 0.01);
+	KA::Sounds::getInstance().setVolume("Vegetable Valley_Theme", 0, volumecoefficient);
+	KA::Sounds::getInstance().setVolume("craft", 0, volumecoefficient);
+	KA::Sounds::getInstance().setVolume("wii", 0, volumecoefficient);
+	KA::Sounds::getInstance().setVolume("elevator", 0, volumecoefficient);
+	KA::Sounds::getInstance().setVolume("Kirby_Adventure_theme", 0, volumecoefficient);
+	KA::Sounds::getInstance().setVolume("pigstep", 0, volumecoefficient);
 
 	if (level == std::string("levels/lobby")) {
 		KA::Sounds::getInstance().play("wii", 0);

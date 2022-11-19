@@ -50,6 +50,8 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
 }
 
+
+
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     qDebug() << Q_FUNC_INFO << me->scenePos();
     QGraphicsScene::mouseReleaseEvent(me);
@@ -57,24 +59,28 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
 
         QPointF snapped = Camera::screenToWorld(QPointF(lm.x, lm.y));
-        snapped.setX((double)(floor(snapped.x()) + ( (snapped.x() - ((int)snapped.x())) > 0.4 ? 0.5 : 0)));
-        snapped.setY((double)(floor(snapped.y()) ));
+        //snapped.setX((double)(floor(snapped.x()) + ( (snapped.x() - ((int)snapped.x())) > 0.4 ? 0.5 : 0)));
+        //snapped.setY((double)(floor(snapped.y()) ));
 
-
+        static QPointF vert2;
         if (me->button() == Qt::RightButton) {
-            Door* t = new Door(snapped, std::string("levels/level1"));
-            GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
-            GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
-            GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));
+            vert2 = QPointF(snapped.x(), snapped.y());
+          //  Door* t = new Door(snapped, std::string("levels/level1"));
+          //  GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
+          //  GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
+          //  GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));
         }
         else if (me->button() == Qt::MiddleButton) {
             //Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);
-            Terrain* t = new Terrain(snapped, objects::BARRIER, BARRIER_2, QPoint(0, 0), 1, 1);
-            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+          //  Terrain* t = new Terrain(snapped, objects::BARRIER, BARRIER_2, QPoint(0, 0), 1, 1);
+         //   GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
         } else {
+            static QPointF vert1 = QPointF(snapped.x(), snapped.y());
             //Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAINBLOCK, QPoint(0, 0), 1, 1);
-            MovablePlatform* t = new MovablePlatform(snapped, objects::PLATFORM, TERRAINBLOCK, QPoint(0, 0), 1, 1);
-            GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
+            TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN_25, 100, 100);
+            t->vert1 = vert1;
+            t->vert2 = vert2;
+            //GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
             GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
         }
 

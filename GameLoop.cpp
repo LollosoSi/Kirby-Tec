@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "LevelBuilder.h"
 
+#include "Definitions.h"
 
 GameLoop::GameLoop() {
 
@@ -293,6 +294,24 @@ void GameLoop::addParticle(Particle* p) {
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
+
+	if (e->key() == Qt::Key_J && isPressed) {
+		double s = scale / scalemultiplier;
+		scalemultiplier-=0.1;
+
+		scale = s * scalemultiplier;
+		scalefactor = scale * standardsize;
+	}
+
+	if (e->key() == Qt::Key_K && isPressed) {
+		
+		double s = scale / scalemultiplier;
+		scalemultiplier+=0.1;
+
+		scale = s * scalemultiplier;
+		scalefactor = scale * standardsize;
+	}
+
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed) {
 		
@@ -343,6 +362,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		
 	}
+
+	
 
 	if (e->key() == Qt::Key_3 && !isPressed) {
 

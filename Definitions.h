@@ -1,10 +1,11 @@
 #pragma once
 
 #include "qmath.h"
-
 #include <QPointF>
 
-inline double scalemultiplier = 6;
+inline double scalemultiplier = 5.5;
+
+inline double volumecoefficient = 0.01;
 
 inline double scale = 1;
 inline double standardsize = 16; //Pixels

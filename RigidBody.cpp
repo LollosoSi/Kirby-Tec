@@ -98,7 +98,6 @@ void RigidBody::tick(double deltatime){
 
 					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
 					
-					
 					// Remove perpendicular component
 					KA::Vec2Df rot = velocity;
 					double rad = -angle;
