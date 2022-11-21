@@ -89,7 +89,7 @@ void RigidBody::tick(double deltatime){
 				
 
 				double dist = pitagoricDistance(center, intersection);
-				if (dist < 0.5) {
+				if (dist < 0.3) {
 
 					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
 
@@ -98,6 +98,9 @@ void RigidBody::tick(double deltatime){
 
 					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
 					
+					
+					velocity.y = velocity.y - (-9.8 * deltatime);
+
 					// Remove perpendicular component
 					KA::Vec2Df rot = velocity;
 					double rad = -angle;

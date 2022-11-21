@@ -15,6 +15,7 @@ class GraphicsScene : public QGraphicsScene
 
 protected:
     lastmov lm;
+    QPointF vert2;
 
 public:
     explicit GraphicsScene(QObject* parent = 0);
