@@ -76,9 +76,9 @@ void RigidBody::tick(double deltatime){
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
 		{
 			objects::ObjectID obid = obj.first->getObjectId();
-			if (((obid == objects::SLOPED_TERRAIN_25)|| (obid == objects::SLOPED_TERRAIN_45)|| (obid == objects::SLOPED_TERRAIN_205)|| (obid == objects::SLOPED_TERRAIN_225)) && (ct >= -1 && ct < 0.2)) {
+			if (((obid == objects::SLOPED_TERRAIN_25)|| (obid == objects::SLOPED_TERRAIN_45)|| (obid == objects::SLOPED_TERRAIN_205)|| (obid == objects::SLOPED_TERRAIN_225)) ) {
 				
-				std::cout << "Contact time with slope " << ct << "\n";
+				//std::cout << "Contact time with slope " << ct << "\n";
 
 				hit = true;
 
@@ -90,24 +90,26 @@ void RigidBody::tick(double deltatime){
 				QPointF intersection = findIntersection(m1, q1, line2.x, line2.y);
 				
 				double dist = pitagoricDistance(center, intersection);
-				if (dist < 0.5) {
+				if (dist < 0.3) {
 
 					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
 
 					// Our angle is actually calculated for the intersection! Corresponds to line2.x
 					angle = line2.x;
 
-					std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
-					
+					//std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
+
 
 					// Reset y
-					overridey = (getY() - ((0.5-dist)));
-					
-					
-					//velocity.y = velocity.y - (-9.8 * deltatime);
+					//overridey = (getY() - ((0.4-dist)));
+
+
+
+
+					velocity.y = velocity.y - (dist * deltatime);
 
 					// Remove perpendicular component
-					/*
+
 					KA::Vec2Df rot = velocity;
 					double rad = -angle;
 					rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
@@ -115,15 +117,21 @@ void RigidBody::tick(double deltatime){
 					if (rot.y > 0)
 						rot.y = 0;
 
+					//rot.y -= 2*dist / pow(ct,2);
+
 					KA::Vec2Df rot2 = rot;
 					double rad2 = angle;
 					rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
 					rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
 					velocity = rot2;
-					*/
+
 
 				}
-				break;
+				else {
+					angle = 0;
+
+				}
+				//break;
 					
 			}
 			else if((obid == objects::TERRAIN || obid == objects::BARRIER) && ct >= 0 && ct < 0.05) {
@@ -183,9 +191,10 @@ void RigidBody::tick(double deltatime){
 		}
 	
 		if (!hit) {
-			angle = 0;
-			//std::cout << "No hit " << "\n";
-		}
+			//angle = 0;
+			std::cout << "No hit " << "\n";
+		}else
+		std::cout << "Hit " << "\n";
 
 	if (angle != 0) {
 
@@ -199,7 +208,11 @@ void RigidBody::tick(double deltatime){
 			rot.y = 0;
 
 		rot.x += accel.x * deltatime;
-		rot.y += (accel.y) * deltatime;
+		rot.y += accel.y * deltatime;
+
+		if(rot.y > 0)
+			rot.y = 0;
+
 
 		KA::Vec2Df rot2 = tempvel;
 		double rad2 = angle;

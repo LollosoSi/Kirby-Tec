@@ -56,7 +56,7 @@ protected:
 	Animator animator;
 
 	public:
-		Enemy(QPointF coords, QPointF offset, EnemyID eid = WADDLEDEE, double sizeX = 1, double sizeY = 1) : RigidBody(coords, offset, sizeX, sizeY) {
+		Enemy(QPointF coords, QPointF offset, EnemyID eid = WADDLEDEE, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
 			this->eid = eid;
 			accel.x = maxwalkspeed;
 			animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));

@@ -9,8 +9,6 @@ void Kirby::processAcceleration() {
 
 	KA::Vec2Df temp{ 0.0, 0.0 };
 
-	temp.y += 9.8;
-
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
 			mirror = false;
@@ -61,11 +59,17 @@ void Kirby::processAcceleration() {
 		//currentDegree = NO_SLOPE;
 	}
 
+	
+	temp.y += 9.8;
+
 	this->accel = temp;
 
 	if (buttons[ENTERDOOR]) {
 		buttons[ENTERDOOR] = 0;
 	}
+
+	
+
 
 }
 
