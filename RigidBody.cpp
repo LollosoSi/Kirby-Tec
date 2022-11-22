@@ -190,11 +190,13 @@ void RigidBody::tick(double deltatime){
 			
 		}
 	
+		/*
 		if (!hit) {
 			//angle = 0;
 			std::cout << "No hit " << "\n";
 		}else
 		std::cout << "Hit " << "\n";
+		*/
 
 	if (angle != 0) {
 
