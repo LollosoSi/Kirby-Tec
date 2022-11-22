@@ -81,6 +81,13 @@ TextureManager::TextureManager() {
 	// Slopped Section
 	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
 
+	//HUD
+	QRect hud_power = QRect(5,19,32,40);
+	QRect hud_health = QRect(25,211,8,14);
+	QRect hud_lives = QRect(92,212,13,12);
+	QRect hud_numbers = QRect(234,214,8,8);
+
+
 	QRect transparent = QRect(153, 25, 2, 2);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
@@ -93,6 +100,7 @@ TextureManager::TextureManager() {
 	QPixmap lobbytex = loadTexture(file_lobby, nocolor);
 	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
 	QPixmap barrierstex = loadTexture(file_barriers, nocolor);
+	QPixmap hudtex = loadTexture(file_HUDcomponents, nocolor);
 
 	
 
@@ -358,6 +366,28 @@ TextureManager::TextureManager() {
 
 	textures[BARRIER_2] = new Animatable{
 		new QPixmap[1]{barrierstex.copy(moveBy(barrier, 2, 0, 16, 16, 0, 0))},
+		new float[1] {0.2f},
+		1
+	};
+
+	//HUD
+	textures[HUD_POWER] = new Animatable{
+		new QPixmap[1] {hudtex.copy(hud_power)},
+		new float[1] {0.2f},
+		1
+	};
+	textures[HUD_HEALTH] = new Animatable{
+		new QPixmap[1] {hudtex.copy(hud_health)},
+		new float[1] {0.2f},
+		1
+	};
+	textures[HUD_LIVES] = new Animatable{
+		new QPixmap[1] {hudtex.copy(hud_lives)},
+		new float[1] {0.2f},
+		1
+	};
+	textures[HUD_NUMBERS] = new Animatable{
+		new QPixmap[1] {hudtex.copy(hud_numbers)},
 		new float[1] {0.2f},
 		1
 	};

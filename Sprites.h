@@ -66,10 +66,15 @@ namespace TexManager {
 
 		LOBBY = 35,
 		BARRIER_1 = 36,
-		BARRIER_2 = 37
-		
+		BARRIER_2 = 37,
+
+		// HUD
+		HUD_POWER = 38,
+		HUD_HEALTH = 39,
+		HUD_LIVES = 40,
+		HUD_NUMBERS = 41
 	};
-	const int TEXTURE_COUNT = 38;
+	const int TEXTURE_COUNT = 42;
 
 };
 
@@ -100,6 +105,7 @@ private:
 	const std::string file_background2 = "sprites/back3.png";
 	const std::string file_lobby = "sprites/VegetableValley.png";
 	const std::string file_barriers = "sprites/Base.png";
+	const std::string file_HUDcomponents = "sprites/HUD.png";
 	
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
