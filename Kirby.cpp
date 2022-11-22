@@ -69,9 +69,6 @@ void Kirby::processAcceleration() {
 
 }
 
-bool circa(double val, double targ, double perc = 0.2){
-	return (val > targ - (targ * perc)) && (val < targ + (targ * perc));
-}
 
 void Kirby::processAnimation() {
 

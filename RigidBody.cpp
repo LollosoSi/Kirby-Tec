@@ -70,7 +70,7 @@ void RigidBody::tick(double deltatime){
 
 	KA::Vec2Df cp, cn;
 	double ct = 0, min_t = 1;
-	bool hit = 0;
+	hit = 0;
 	// solve the collisions in correct order 
 	for (auto& obj: cs)
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
@@ -184,7 +184,7 @@ void RigidBody::tick(double deltatime){
 	
 		if (!hit) {
 			angle = 0;
-			std::cout << "No hit " << "\n";
+			//std::cout << "No hit " << "\n";
 		}
 
 	if (angle != 0) {

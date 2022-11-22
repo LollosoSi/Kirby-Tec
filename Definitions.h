@@ -36,3 +36,7 @@ template <class T>
 static T clamp(T valore, T min, T max) {
 	return valore > max ? max : valore < min ? min : valore;
 }
+
+static bool circa(double val, double targ, double perc = 0.2) {
+	return (val > targ - (targ * perc)) && (val < targ + (targ * perc));
+}

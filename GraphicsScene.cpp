@@ -10,6 +10,7 @@
 
 #include "Camera.h"
 #include "Door.h"
+#include "Enemy.h"
 
 GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent) {
     //this->setBackgroundBrush(Qt::white);
@@ -65,10 +66,11 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
-          //  Door* t = new Door(snapped, std::string("levels/level1"));
-          //  GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
-          //  GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
-          //  GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));
+            Enemy* t = new Enemy(vert2, QPointF(0,0));
+            GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
+            GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
+            GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));
+            GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
         }
         else if (me->button() == Qt::MiddleButton) {
             //Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);

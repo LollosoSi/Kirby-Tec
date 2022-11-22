@@ -44,6 +44,9 @@ struct Collision{
 
 class RigidBody : public GameObject, public TickableObject, public RenderableObject {
 
+protected:
+	bool hit = 0;
+
 public:
 	QPointF offset;
 	QGraphicsPixmapItem* pm = 0;
