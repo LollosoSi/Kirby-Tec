@@ -72,9 +72,10 @@ namespace TexManager {
 		HUD_POWER = 38,
 		HUD_HEALTH = 39,
 		HUD_LIVES = 40,
-		HUD_NUMBERS = 41
+		HUD_NUMBERS = 41,
+		HUD_VIEW = 42
 	};
-	const int TEXTURE_COUNT = 42;
+	const int TEXTURE_COUNT = 43;
 
 };
 

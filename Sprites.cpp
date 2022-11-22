@@ -82,6 +82,7 @@ TextureManager::TextureManager() {
 	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
 
 	//HUD
+	QRect hud_view = QRect(5,245,248,64);
 	QRect hud_power = QRect(5,19,32,40);
 	QRect hud_health = QRect(25,211,8,14);
 	QRect hud_lives = QRect(92,212,13,12);
@@ -371,6 +372,11 @@ TextureManager::TextureManager() {
 	};
 
 	//HUD
+	textures[HUD_VIEW] = new Animatable{
+		new QPixmap[1] {hudtex.copy(hud_view)},
+		new float[1] {0.2f},
+		1
+	};
 	textures[HUD_POWER] = new Animatable{
 		new QPixmap[1] {hudtex.copy(hud_power)},
 		new float[1] {0.2f},
