@@ -111,9 +111,7 @@ class TerrainSloped : public Terrain {
 
 public:
 	
-	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25, double sizex = 62.0, double sizey = 32.0) : Terrain(pos, QPointF(0, 0), sizex, sizey) { 
-		setObjectId(id); 
-	}
+	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25, double sizex = 62.0, double sizey = 32.0, TexManager::TexID texture = TERRAIN_SLOPED_25) : Terrain(pos, QPointF(0, 0), sizex, sizey, id, texture) {}
 	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN_25) : TerrainSloped(QPointF(0, 0), id) {}
 	~TerrainSloped() {}
 
@@ -128,9 +126,11 @@ public:
 			   lx = vert1.x() < vert2.x() ? vert1.x() : vert2.x(),
 			   hy = vert1.y() > vert2.y() ? vert1.y() : vert2.y(),
 			   ly = vert1.y() < vert2.y() ? vert1.y() : vert2.y();
+		
+		setX(lx);
+		setY(ly);
 
 		collider = QRectF(lx, ly, (hx - lx), (hy - ly));
-
 
 	}
 	void fixverts() {
@@ -145,8 +145,8 @@ public:
 	}
 
 	// Returns m in x and q in y
-	QPointF getVert1() { return vert1 != QPointF(0, 0) ? vert1 : QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
-	QPointF getVert2() { return vert2 != QPointF(0, 0) ? vert2 : QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
+	QPointF getVert1() const { return vert1 != QPointF(0, 0) ? vert1 : QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
+	QPointF getVert2() const { return vert2 != QPointF(0, 0) ? vert2 : QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
 	KA::Vec2Df getHitLine() {
 		QPointF v1 = getVert1(), v2 = getVert2();
 		double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x()));
@@ -154,6 +154,30 @@ public:
 	}
 
 	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
+
+	std::string serialize(const char& divider) const override {
+		std::stringstream out("", std::ios_base::app | std::ios_base::out);
+		out << Terrain::serialize(divider) << divider << vert1.x() << divider << vert1.y() << divider << vert2.x() << divider << vert2.y();
+
+		return out.str();
+	}
+
+	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
+		Terrain::deserialize(start);
+
+		double x1, y1, x2, y2;
+
+		x1 = std::atof((*(start++)).c_str());
+		y1 = std::atof((*(start++)).c_str());
+		x2 = std::atof((*(start++)).c_str());
+		y2 = std::atof((*(start++)).c_str());
+
+		QPointF v1(x1,y1), v2(x2,y2);
+
+		setVerts(v1, v2);
+
+		return this;
+	};
 
 	int textureId() {
 		if (tid == TexManager::TRANSPARENT)

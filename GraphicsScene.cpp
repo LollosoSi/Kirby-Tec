@@ -77,7 +77,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         } else {
             QPointF vert1 = QPointF(snapped.x(), snapped.y());
             //Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAINBLOCK, QPoint(0, 0), 1, 1);
-            TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN_25, 100, 100);
+            TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN_25, 100, 100, TRANSPARENT);
+            
             t->setVerts(vert1, vert2);
             //GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
             GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));

@@ -9,6 +9,8 @@ void Kirby::processAcceleration() {
 
 	KA::Vec2Df temp{ 0.0, 0.0 };
 
+	temp.y += 9.8;
+
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
 			mirror = false;
@@ -41,11 +43,6 @@ void Kirby::processAcceleration() {
 		temp = rot;
 	}
 	*/
-	if(true) {
-	
-		temp.y += 9.8;
-	
-	}
 
 
 	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0)) {
@@ -80,15 +77,15 @@ void Kirby::processAnimation() {
 
 	if (!animator.isPlayingOneShot())
 		if (isGrounded()) {
-			if (abs(velocity.x) < 1) {
+
+			if (abs(velocity.x) < 2) {
+
 				double degang = toDegrees(angle);
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(
 					!angle ? KIRBY_STAND : 
 					circa(degang, 25) ? (mirror ? KIRBY_SLOPED_25_LEFT : KIRBY_SLOPED_25) :
 					circa(degang, 45) ? mirror ? KIRBY_SLOPED_45_LEFT : KIRBY_SLOPED_45 :
 					circa(degang, -25) ? mirror ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT : mirror ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT
-
-
 				));
 
 			}
