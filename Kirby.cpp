@@ -7,7 +7,7 @@
 
 void Kirby::processAcceleration() {
 
-	KA::Vec2Df temp{ 0.0, 0.0 };
+	KA::Vec2Df temp{ 0.0, 9.8 };
 
 	if (buttons[RIGHT] ^ buttons[LEFT]) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
@@ -59,18 +59,8 @@ void Kirby::processAcceleration() {
 		//currentDegree = NO_SLOPE;
 	}
 
-	
-	temp.y += 9.8;
-
 	this->accel = temp;
-
-	if (buttons[ENTERDOOR]) {
-		buttons[ENTERDOOR] = 0;
-	}
-
 	
-
-
 }
 
 
@@ -154,10 +144,11 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_G && isPressed) {
 		buttons[Kirby::ENTERDOOR] = isPressed;
 
-		GameObject* obj = getCollidingObject(objects::DOOR);
-		if (obj)
-			
-				(dynamic_cast<Door*>(obj))->launchAction();
+		RigidBody* rb = GameLoop::getInstance().getInside(this);
+		//GameObject* obj = getCollidingObject(objects::DOOR); DEPRECATED
+		if (rb!=0)
+			if(rb->getObjectId() == objects::DOOR)
+			(dynamic_cast<Door*>(rb))->launchAction();
 			
 	}
 

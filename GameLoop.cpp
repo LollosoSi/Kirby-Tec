@@ -29,6 +29,14 @@ void GameLoop::recalculateFps(int target_fps) {
 	min_delta_millis_fps = target_fps != 0 ? 1000 / target_fps : 0;
 }
 
+RigidBody* GameLoop::getInside(RigidBody* rb) {
+	for (RigidBody* obj : collidableObjects)
+		if (obj != rb && obj->getObjectId() != objects::BACKGROUND)
+			if (rb->getCollider().intersects(obj->getCollider()))
+				return obj;
+	return 0;
+}
+
 void GameLoop::loop() {
 	//std::cout << "Loop started\n";
 
@@ -418,8 +426,7 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 		if (DynamicRectVsRect(rb->getColliderRectF(), rb->getVelocity(), obj->getColliderRectF(), cp, cn, ct))
 			sortedByContactTime.push_back({ obj, ct });
 	std::sort(sortedByContactTime.begin(), sortedByContactTime.end(),
-		[this](const std::pair<RigidBody*, double>& a, const std::pair<RigidBody*, double>& b)
-		{
+		[this](const std::pair<RigidBody*, double>& a, const std::pair<RigidBody*, double>& b){
 			// if contact time is the same, give priority to nearest object
 			return a.second != b.second ? a.second < b.second : pitagoricDistance(a.first->getCollider().center(), b.first->getCollider().center()) < 0;
 		});

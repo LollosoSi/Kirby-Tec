@@ -84,6 +84,8 @@ public:
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
+	RigidBody* getInside(RigidBody* rb);
+
 
 
 signals:
