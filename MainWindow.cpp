@@ -89,7 +89,12 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 void MainWindow::pleaseRender(bool clearscene) {
    
     
-    for (auto* item : GameLoop::getInstance().renderableObjects) item->render(*scene, clearscene);
+    for (auto* item : GameLoop::getInstance().renderableObjects)
+        item->render(*scene, clearscene);
+
+    for (auto* item : GameLoop::getInstance().GUIItems)
+        item->render(*scene, clearscene);
+    
 
     if (scene->items().size() == 0 || clearscene) {
         scene->clear();

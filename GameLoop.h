@@ -52,6 +52,8 @@ public:
 	
 	std::vector<RenderableObject*> renderableObjects;
 
+	std::vector<RenderableObject*> GUIItems;
+
 	
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
@@ -125,6 +127,8 @@ private:
 	std::vector<Serializable*> serializableObjects;
 	std::vector<RigidBody*> collidableObjects;
 	std::vector<Particle*> particleObjects;
+
+	
 
 	// Elementi in fila
 	std::vector<TickableObject*> tickableObjectsQueue;
