@@ -132,8 +132,6 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		buttons[Kirby::RIGHT] = isPressed;
 	if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
 		buttons[Kirby::LEFT] = isPressed;
-
-	// enter doors
 	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
 		buttons[Kirby::UP] = isPressed;
 
@@ -152,12 +150,15 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_Z) {
 		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
 	}
+	//enter doors
 	if (e->key() == Qt::Key_G && isPressed) {
 		buttons[Kirby::ENTERDOOR] = isPressed;
 
 		GameObject* obj = getCollidingObject(objects::DOOR);
 		if (obj)
-			(dynamic_cast<Door*>(obj))->launchAction();
+			
+				(dynamic_cast<Door*>(obj))->launchAction();
+			
 	}
 
 }
