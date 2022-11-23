@@ -26,7 +26,7 @@ public:
 
 	}
 
-	virtual void render(GraphicsScene& scene, bool shouldClear) {
+	virtual void render(QGraphicsScene& scene, bool shouldClear) {
 	}
 
 };
