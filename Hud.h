@@ -28,6 +28,9 @@ public:
 	BaseGUI(QPointF pos, TexManager::TexID id) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
 		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
 		setObjectId(objects::HUD);
+
+		//rigiddrawscale = anim.getCurrentPixmap().width() / Camera::getInstance().screenwidth;
+
 	}
 
 	virtual bool processClick() {
@@ -77,11 +80,11 @@ public:
 			std::cout << "Rendering gui\n";
 
 			pm->setPixmap(getTexture());
-			//pm->setPos(Camera::fromPercentageToScreen(QPointF(getX(), getY())));
-			pm->setPos(QPointF(getX(), getY()));
+			pm->setPos(Camera::fromPercentageToScreen(QPointF(getX(), getY())));
+			//pm->setPos(QPointF(getX(), getY()));
 
 			//pm->setRotation(renderAngles[currentDegree]);
-			pm->setScale(scale * rigiddrawscale);
+			pm->setScale(scale);
 
 			if (hitboxenabled) {
 				QPointF p = Camera::fromPercentageToScreen(QPointF(rf.pos.x, rf.pos.y));

@@ -125,7 +125,7 @@ public:
 	QRectF collider;
 	double mass = 1;
 
-	bool isGrounded() { return ((velocity.y == 0) || (angle != 0)); }
+	bool isGrounded() { return ( (velocity.y == 0) || (angle != 0) ); }
 
 
 	std::string serialize(const char& divider) const override {

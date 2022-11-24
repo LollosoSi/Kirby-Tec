@@ -9,8 +9,8 @@ inline double volumecoefficient = 0.01;
 
 inline double scale = 1;
 inline double standardsize = 16; //Pixels
-//inline double aspectratio = 1023/895.0;
-inline double aspectratio = 683 / 384;
+inline double aspectratio = 1023/895.0;
+//inline double aspectratio = 683 / 384;
 
 inline double scalefactor = scale * standardsize;
 

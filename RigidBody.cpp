@@ -106,7 +106,8 @@ void RigidBody::tick(double deltatime){
 
 
 					// Reset y
-					//overridey = (getY() - ((0.4-dist)));
+					if(dist < 0.05)
+						overridey = (getY() - ((0.3-dist)));
 
 
 

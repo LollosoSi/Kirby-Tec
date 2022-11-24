@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);
 
-	BaseGUI view(QPointF(0,0), TexManager::HUD_PARASOL);
+	BaseGUI view(QPointF(0,0.7f), TexManager::HUD_VIEW);
 
 	GameLoop::getInstance().GUIItems.push_back(dynamic_cast<RenderableObject*>(&view));
 
