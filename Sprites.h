@@ -69,13 +69,53 @@ namespace TexManager {
 		BARRIER_2 = 37,
 
 		// HUD
-		HUD_POWER = 38,
+		
 		HUD_HEALTH = 39,
 		HUD_LIVES = 40,
 		HUD_NUMBERS = 41,
-		HUD_VIEW = 42
+		HUD_VIEW = 38,
+
+		HUD_POWER = 42,
+		HUD_BACKDROP = 43,
+		HUD_BALL = 44,
+		HUD_BEAM = 45,
+		HUD_CRASH = 46,
+		HUD_CUTTER = 47,
+		HUD_FIRE = 48,
+		HUD_FIREBALL = 49,
+		HUD_FREEZE = 50,
+
+		HUD_HAMMER = 51,
+		HUD_HIGHJUMP = 52,
+		HUD_ICE = 53,
+		HUD_LASER = 54,
+		HUD_LIGHT = 55,
+		HUD_MIKE = 56,
+		HUD_NEEDLE = 57,
+		HUD_PARASOL = 58,
+		HUD_SLEEP = 59,
+
+		HUD_SPARK = 60,
+		HUD_STARROD = 61,
+		HUD_STONE = 62,
+		HUD_SWORD = 63,
+		HUD_THROW = 64,
+		HUD_TORNADO = 65,
+		HUD_UFO = 66,
+		HUD_WHEEL = 67,
+		HUD_MIX = 68,
+
+		HUD_NOTHING = 60,
+		HUD_HYPER = 61,
+		HUD_WORKSTAR = 62,
+		HUD_OUCH = 63,
+		HUD_MISS = 64,
+		HUD_GOAL = 65,
+		HUD_CLEAR = 66,
+		HUD_BYEBYE = 67
+
 	};
-	const int TEXTURE_COUNT = 43;
+	const int TEXTURE_COUNT = 68;
 
 };
 

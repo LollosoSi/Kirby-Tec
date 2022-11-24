@@ -10,8 +10,11 @@ inline double volumecoefficient = 0.01;
 inline double scale = 1;
 inline double standardsize = 16; //Pixels
 //inline double aspectratio = 1023/895.0;
-inline double aspectratio = 16/9.0;
+inline double aspectratio = 683 / 384;
+
 inline double scalefactor = scale * standardsize;
+
+static bool hitboxenabled = 0;
 
 static double toRadians(const double deg) { return deg*M_PI/180.0; }
 static double toDegrees(const double rad) { return (rad / M_PI ) * 180.0; }
