@@ -61,7 +61,7 @@ void Sounds::playfile(const std::string& id, bool music) {
 			_musics[id]->play();
 		}
 
-		std::cout << "Playing " << id << "\n";
+		//std::cout << "Playing " << id << "\n";
 	
 }
 

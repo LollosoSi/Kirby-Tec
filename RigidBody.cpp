@@ -197,7 +197,7 @@ void RigidBody::tick(double deltatime){
 				//std::cout << "No hit " << "\n";
 			}
 			else {
-				std::cout << "Inside\n";
+				//std::cout << "Inside\n";
 
 				if (((rb->getObjectId() == objects::SLOPED_TERRAIN_25) || (rb->getObjectId() == objects::SLOPED_TERRAIN_45) || (rb->getObjectId() == objects::SLOPED_TERRAIN_205) || (rb->getObjectId() == objects::SLOPED_TERRAIN_225))) {
 

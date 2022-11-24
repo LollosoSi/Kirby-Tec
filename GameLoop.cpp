@@ -413,7 +413,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	}
 
-	std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
+	//std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }
 
 std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* rb) {
