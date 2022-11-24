@@ -29,8 +29,7 @@ public:
 		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
 		setObjectId(objects::HUD);
 
-		//rigiddrawscale = anim.getCurrentPixmap().width() / Camera::getInstance().screenwidth;
-
+		rigiddrawscale = 0.836;
 	}
 
 	virtual bool processClick() {
@@ -69,6 +68,7 @@ public:
 		}
 		else if (!pm) {
 			pm = scene.addPixmap(getTexture());
+			pm->setZValue(1);
 			if (hitboxenabled)
 				hitbox = scene.addRect(getCollider(), qp);
 		}
@@ -77,14 +77,14 @@ public:
 
 		if (pm && !shouldClear && show) {
 
-			std::cout << "Rendering gui\n";
+			//std::cout << "Rendering gui\n";
 
 			pm->setPixmap(getTexture());
 			pm->setPos(Camera::fromPercentageToScreen(QPointF(getX(), getY())));
 			//pm->setPos(QPointF(getX(), getY()));
 
 			//pm->setRotation(renderAngles[currentDegree]);
-			pm->setScale(scale);
+			pm->setScale(scale*rigiddrawscale);
 
 			if (hitboxenabled) {
 				QPointF p = Camera::fromPercentageToScreen(QPointF(rf.pos.x, rf.pos.y));

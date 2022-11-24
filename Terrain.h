@@ -14,6 +14,15 @@
 
 using namespace TexManager;
 
+class Node {
+protected:
+	bool walkable = false;
+public:
+	bool isWalkable() { return walkable; }
+	virtual QPointF getPos() = 0;
+
+};
+
 class Terrain : public RigidBody {
 
 protected:

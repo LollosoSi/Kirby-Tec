@@ -87,7 +87,7 @@ public:
 	void render(QGraphicsScene& scene, bool shouldClear = false) override {
 		RigidBody::render(scene); 
 
-	double h = 2 * (Camera::getInstance().screenheight / scalefactor) / 3;
+	double h = (2 * (Camera::getInstance().screenheight / scalefactor) / 3) - (96/scalefactor);
 	double w = (Camera::getInstance().screenwidth / scalefactor) / 4;
 	QPointF pos = (QPointF(getX() - w, getY() - h));
 	//std::cout << " # " << getY() << " : " << pos.y() << (!((l++) % 10) ? "\n" : "\t");

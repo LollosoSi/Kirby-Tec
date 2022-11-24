@@ -187,7 +187,7 @@ private:
 	const std::string file_background2 = "sprites/back3.png";
 	const std::string file_lobby = "sprites/VegetableValley.png";
 	const std::string file_barriers = "sprites/Base.png";
-	const std::string file_HUDcomponents = "sprites/HUD.png";
+	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	
 	
