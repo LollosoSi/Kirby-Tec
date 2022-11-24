@@ -17,6 +17,8 @@
 
 #include "Door.h"
 
+#include "Sprites.h"
+
 
 int main(int argc, char* argv[]) {
 
@@ -57,6 +59,10 @@ int main(int argc, char* argv[]) {
 
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);
+
+	BaseGUI view(QPointF(0,0), TexManager::HUD_PAUSE_BEAM);
+
+	GameLoop::getInstance().GUIItems.push_back(dynamic_cast<RenderableObject*>(&view));
 
     // eseguo applicazione Qt
     return a.exec();

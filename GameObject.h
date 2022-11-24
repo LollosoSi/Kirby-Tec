@@ -20,7 +20,8 @@ namespace objects {
 		STEPUP = 10,
 		DOOR = 11,
 		BARRIER = 12,
-		PLATFORM = 13
+		PLATFORM = 13,
+		HUD = 14
 	};
 
 }

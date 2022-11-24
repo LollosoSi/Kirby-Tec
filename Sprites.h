@@ -69,12 +69,11 @@ namespace TexManager {
 		BARRIER_2 = 37,
 
 		// HUD
-		
+		HUD_VIEW = 38,
 		HUD_HEALTH = 39,
 		HUD_LIVES = 40,
-		HUD_NUMBERS = 41,
-		HUD_VIEW = 38,
-
+		HUD_STAR = 41,
+		
 		HUD_POWER = 42,
 		HUD_BACKDROP = 43,
 		HUD_BALL = 44,
@@ -112,10 +111,52 @@ namespace TexManager {
 		HUD_MISS = 64,
 		HUD_GOAL = 65,
 		HUD_CLEAR = 66,
-		HUD_BYEBYE = 67
+		HUD_BYEBYE = 67,
+
+			HUD_PAUSE_POWER = 68,
+			HUD_PAUSE_BACKDROP = 69,
+			HUD_PAUSE_BALL = 70,
+			HUD_PAUSE_BEAM = 71,
+			HUD_PAUSE_CRASH = 72,
+			HUD_PAUSE_CUTTER = 73,
+			HUD_PAUSE_FIRE = 74,
+			HUD_PAUSE_FIREBALL = 75,
+			HUD_PAUSE_FREEZE = 76,
+
+			HUD_PAUSE_HAMMER = 77,
+			HUD_PAUSE_HIGHJUMP = 78,
+			HUD_PAUSE_ICE = 79,
+			HUD_PAUSE_LASER = 80,
+			HUD_PAUSE_LIGHT = 81,
+			HUD_PAUSE_MIKE = 82,
+			HUD_PAUSE_NEEDLE = 83,
+			HUD_PAUSE_PARASOL = 84,
+			HUD_PAUSE_SLEEP = 85,
+
+			HUD_PAUSE_SPARK = 86,
+			HUD_PAUSE_STARROD = 87,
+			HUD_PAUSE_STONE = 88,
+			HUD_PAUSE_SWORD = 89,
+			HUD_PAUSE_THROW = 90,
+			HUD_PAUSE_TORNADO = 91,
+			HUD_PAUSE_UFO = 92,
+			HUD_PAUSE_WHEEL = 93,
+
+			HUD_PAUSE_SCREEN = 94,
+
+			HUD_NUM_0 = 95,
+			HUD_NUM_1 = 96,
+			HUD_NUM_2 = 97,
+			HUD_NUM_3 = 98,
+			HUD_NUM_4 = 99,
+			HUD_NUM_5 = 100,
+			HUD_NUM_6 = 101,
+			HUD_NUM_7 = 102,
+			HUD_NUM_8 = 103,
+			HUD_NUM_9 = 104
 
 	};
-	const int TEXTURE_COUNT = 68;
+	const int TEXTURE_COUNT = 105;
 
 };
 
@@ -147,6 +188,8 @@ private:
 	const std::string file_lobby = "sprites/VegetableValley.png";
 	const std::string file_barriers = "sprites/Base.png";
 	const std::string file_HUDcomponents = "sprites/HUD.png";
+	const std::string file_HUDpause = "sprites/PauseUnicas.png";
+	
 	
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);

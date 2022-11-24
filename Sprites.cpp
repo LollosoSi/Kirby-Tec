@@ -90,6 +90,11 @@ TextureManager::TextureManager() {
 
 	QRect hud_power_normal = QRect(5, 19, 32, 40);
 
+	QRect hud_pause_power = QRect(558, 44, 192, 128);
+	QRect hud_pause_backdrop = QRect(3, 230, 192, 128);
+
+	QRect hud_pause_screen = QRect(256, 3, 248, 224);
+
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -104,7 +109,7 @@ TextureManager::TextureManager() {
 	QPixmap upcollidertex = loadTexture(file_upcollider, nocolor);
 	QPixmap barrierstex = loadTexture(file_barriers, nocolor);
 	QPixmap hudtex = loadTexture(file_HUDcomponents, nocolor);
-
+	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
 	
 
 	// FORMAT: QPixmap array, float array, size
@@ -381,31 +386,56 @@ TextureManager::TextureManager() {
 	};
 
 	// Load power textures
+	for (int i = 0; i < (HUD_NUM_9 - HUD_NUM_0); i++)
+		textures[HUD_NUM_0 + i] = new Animatable{
+			new QPixmap[1] {hudtex.copy(moveBy(hud_numbers, i, 0, hud_numbers.width(), hud_numbers.height(), 3, 0))},
+			new float[1] {0.2f},
+			1
+	};
+
+	// Load power textures
 	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER); i++)
-	textures[HUD_POWER+i] = new Animatable{
-		new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width(), hud_power_normal.height(), (40-37), (62-59)))},
+		textures[HUD_POWER+i] = new Animatable{
+			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width(), hud_power_normal.height(), (40-37), (62-59)))},
+			new float[1] {0.2f},
+			1
+		};
+
+	textures[HUD_PAUSE_POWER] = new Animatable{
+		new QPixmap[1] {hudpausetex.copy(hud_pause_power)},
 		new float[1] {0.2f},
 		1
 	};
 
+	// Load power pause explain textures
+	for (int i = 0; i < (HUD_PAUSE_WHEEL - HUD_PAUSE_BACKDROP); i++)
+		textures[HUD_PAUSE_BACKDROP + i] = new Animatable{
+			new QPixmap[1] {hudpausetex.copy(moveBy(hud_pause_backdrop, i % 5, floor(i / 5), hud_pause_backdrop.width(), hud_power_normal.height(), 3, 3))},
+			new float[1] {0.2f},
+			1
+	};
+
+	textures[HUD_PAUSE_SCREEN] = new Animatable{
+		new QPixmap[1] {hudpausetex.copy(hud_pause_screen)},
+		new float[1] {0.2f},
+		1
+	};
+	
 	textures[HUD_HEALTH] = new Animatable{
-		new QPixmap[2] {hudtex.copy(hud_health),
-	hudtex.copy(moveBy(hud_health,1))
-	},
-		new float[2] {0.2f , 0.2f},
+		new QPixmap[2] {
+			hudtex.copy(hud_health),
+			hudtex.copy(moveBy(hud_health,1))
+		},
+		new float[2] {1.0f, 1.0f},
 		2
 	};
 	textures[HUD_LIVES] = new Animatable{
-		new QPixmap[3] {hudtex.copy(hud_lives),
-		hudtex.copy(moveBy(hud_lives,1)),
-		hudtex.copy(moveBy(hud_lives,1))
-	},
-		new float[3] {0.2f,0.2f,0.2f},
-		1
-	};
-	textures[HUD_NUMBERS] = new Animatable{
-		new QPixmap[1] {hudtex.copy(hud_numbers)},
-		new float[1] {0.2f},
+		new QPixmap[3] {
+			hudtex.copy(hud_lives),
+			hudtex.copy(moveBy(hud_lives,1)),
+			hudtex.copy(moveBy(hud_lives,1))
+		},
+		new float[3] {1.0f,1.0f,1.0f},
 		1
 	};
 

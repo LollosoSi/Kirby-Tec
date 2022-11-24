@@ -10,6 +10,7 @@
 #include "Sprites.h"
 #include "Camera.h"
 
+#include "Hud.h"
 
 using namespace TexManager;
 

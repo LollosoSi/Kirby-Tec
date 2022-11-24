@@ -56,6 +56,12 @@ public:
 	}
 	static QPointF screenToWorld(QPointF coord) { return QPointF((coord.x() / (double)scalefactor) + Camera::getInstance().getX(), (coord.y() / (double)scalefactor ) + Camera::getInstance().getY()); }
 
+	static QPointF fromPercentageToScreen(QPointF coord) {
+
+		return QPointF(((double)Camera::getInstance().screenwidth * coord.x()), ((double)Camera::getInstance().screenheight/coord.y()));
+
+	}
+
 	static bool isVisible(QRectF bound) {
 		return
 			(
