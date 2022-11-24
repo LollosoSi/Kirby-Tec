@@ -12,6 +12,8 @@
 #include "GameLoop.h"
 #include "GraphicsScene.h"
 
+#include <QOpenGLWidget>
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
