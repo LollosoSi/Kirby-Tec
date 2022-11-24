@@ -8,7 +8,6 @@
 #include <QGraphicsPixmapItem>
 #include "Camera.h"
 
-
 struct Impulse {
 
 	KA::Vec2Df value{0,0};
@@ -66,6 +65,8 @@ public:
 	Impulse jumpImpulse{ KA::Vec2Df{0,-120}, 0};
 
 	void tick(double deltatime) {
+
+		
 
 		processAcceleration();
 		

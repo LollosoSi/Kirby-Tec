@@ -104,11 +104,14 @@ void GameLoop::saveGame(std::string fileName) {
 	Serializer::serializeToFile(serializableObjects, fileName);
 }
 
+void GameLoop::reload() {
+	loadGame(currentlevel, false, false);
+}
+
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	
 	
-
-	static std::string currentlevel;
+	
 
 	if (savecurrent && currentlevel.length() != 0)
 		saveGame(currentlevel+std::string(".save"));
@@ -117,6 +120,9 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 
 	clear();
 	
+	std::cout << "Loading " << fileName << "\n";
+
+
 	Camera::getInstance().setBounds(QRectF(0, 0, 0, 0));
 
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName + (issave ? std::string(".save") : std::string("")));

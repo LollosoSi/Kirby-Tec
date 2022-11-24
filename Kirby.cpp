@@ -7,6 +7,16 @@
 
 void Kirby::processAcceleration() {
 
+	if (getY() > 15) {
+		std::thread t(
+			[]() {
+				GameLoop::getInstance().reload(); 
+			}
+		);
+		t.detach();
+		return;
+	}
+
 	KA::Vec2Df temp{ 0.0, 9.8 };
 
 	if (buttons[RIGHT] ^ buttons[LEFT]) {

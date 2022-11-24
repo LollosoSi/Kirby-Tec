@@ -79,7 +79,7 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     scene->setSceneRect(QRect(0,0,sceneRect.width()-5, sceneRect.height()-5));
     view->setGeometry(sceneRect);
 
-    scale = ((expectedheight) / (double)(895)) * scalemultiplier;
+    scale = ((expectedheight) / ((double)(1280.0/aspectratio))) * scalemultiplier;
     scalefactor = scale * standardsize;
 
 

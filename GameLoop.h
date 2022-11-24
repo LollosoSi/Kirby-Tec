@@ -43,6 +43,7 @@ class GameLoop : public QObject
 	Q_OBJECT
 
 private:
+	std::string currentlevel = "";
 	
 	
 public:
@@ -54,6 +55,7 @@ public:
 
 	std::vector<RenderableObject*> GUIItems;
 
+	void reload();
 	
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
