@@ -308,6 +308,9 @@ void GameLoop::addParticle(Particle* p) {
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
+	if (e->key() == Qt::Key_H && isPressed) {
+		hitboxenabled = !hitboxenabled;
+	}
 
 	if (e->key() == Qt::Key_J && isPressed) {
 		double s = scale / scalemultiplier;

@@ -83,10 +83,12 @@ TextureManager::TextureManager() {
 
 	//HUD
 	QRect hud_view = QRect(5,245,248,64);
-	QRect hud_power = QRect(5,19,32,40);
+	
 	QRect hud_health = QRect(25,211,8,14);
 	QRect hud_lives = QRect(92,212,13,12);
 	QRect hud_numbers = QRect(234,214,8,8);
+
+	QRect hud_power_normal = QRect(5, 19, 32, 40);
 
 
 	QRect transparent = QRect(153, 25, 2, 2);
@@ -377,11 +379,15 @@ TextureManager::TextureManager() {
 		new float[1] {0.2f},
 		1
 	};
-	textures[HUD_POWER] = new Animatable{
-		new QPixmap[1] {hudtex.copy(hud_power)},
+
+	// Load power textures
+	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER); i++)
+	textures[HUD_POWER+i] = new Animatable{
+		new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width(), hud_power_normal.height(), (40-37), (62-59)))},
 		new float[1] {0.2f},
 		1
 	};
+
 	textures[HUD_HEALTH] = new Animatable{
 		new QPixmap[2] {hudtex.copy(hud_health),
 	hudtex.copy(moveBy(hud_health,1))
