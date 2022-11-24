@@ -378,13 +378,6 @@ TextureManager::TextureManager() {
 		1
 	};
 
-	//HUD
-	textures[HUD_VIEW] = new Animatable{
-		new QPixmap[1] {hudtex.copy(hud_view)},
-		new float[1] {0.2f},
-		1
-	};
-
 	// Load power textures
 	for (int i = 0; i < (HUD_NUM_9 - HUD_NUM_0); i++)
 		textures[HUD_NUM_0 + i] = new Animatable{
@@ -436,6 +429,15 @@ TextureManager::TextureManager() {
 			hudtex.copy(moveBy(hud_lives,1))
 		},
 		new float[3] {1.0f,1.0f,1.0f},
+		1
+	};
+
+	//HUD
+	textures[HUD_VIEW] = new Animatable{
+		new QPixmap[1] {
+			hudtex.copy(hud_view)
+		},
+		new float[1] {1.0f},
 		1
 	};
 
