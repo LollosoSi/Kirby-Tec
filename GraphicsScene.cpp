@@ -59,6 +59,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
 
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
 
+        std::cout << "Percentage of click coordinates: " << ((double)lm.x / (double)Camera::getInstance().screenwidth) << "% : " << ((double)lm.y / (double)Camera::getInstance().screenheight) << "\n%";
+
         QPointF snapped = Camera::screenToWorld(QPointF(lm.x, lm.y));
         snapped.setX((double)(floor(snapped.x()) + ( (snapped.x() - ((int)snapped.x())) > 0.4 ? 0.5 : 0)));
         snapped.setY((double)(floor(snapped.y()) ));
@@ -85,6 +87,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
             //GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
             GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
         }
+
+        
 
     } 
 }

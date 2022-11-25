@@ -417,19 +417,20 @@ TextureManager::TextureManager() {
 	textures[HUD_HEALTH] = new Animatable{
 		new QPixmap[2] {
 			hudtex.copy(hud_health),
-			hudtex.copy(moveBy(hud_health,1))
+			hudtex.copy(moveBy(hud_health,1,0, hud_health.width(), hud_health.height(), 3, 3))
 		},
-		new float[2] {1.0f, 1.0f},
+		new float[2] {0.5f, 0.5f},
 		2
 	};
 	textures[HUD_LIVES] = new Animatable{
-		new QPixmap[3] {
+		new QPixmap[4] {
 			hudtex.copy(hud_lives),
-			hudtex.copy(moveBy(hud_lives,1)),
-			hudtex.copy(moveBy(hud_lives,1))
+			hudtex.copy(moveBy(hud_lives,1,0, hud_lives.width(), hud_lives.height(), 2)),
+			hudtex.copy(moveBy(hud_lives,2,0, hud_lives.width(), hud_lives.height(), 2)),
+			hudtex.copy(moveBy(hud_lives,1,0, hud_lives.width(), hud_lives.height(), 2)),
 		},
-		new float[3] {1.0f,1.0f,1.0f},
-		1
+		new float[4] {0.3f, 0.3f, 0.3f, 0.3f},
+		4
 	};
 
 	//HUD

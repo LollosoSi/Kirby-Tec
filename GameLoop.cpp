@@ -221,6 +221,9 @@ void GameLoop::tick(double deltatime) {
 	for (auto* item : this->tickableObjects) 
 		item->tick(deltatime);
 	
+	for (auto* item : this->GUIItems)
+		dynamic_cast<TickableObject*>(item)->tick(deltatime);
+
 	for (auto* item : this->particleObjects)
 		if (item->shouldDelete()) {
 			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
@@ -228,6 +231,8 @@ void GameLoop::tick(double deltatime) {
 			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
 			delete item;
 		}
+
+	
 
 	KA::Sounds::getInstance().tick(deltatime);
 }
