@@ -32,7 +32,7 @@ public:
 	QPointF fitcoordinates(QPointF coordinates, QRectF bound) {
 	
 		double x = clamp<double>(coordinates.x(), bound.x(), bound.x()+bound.width() - (screenwidth / (double)scalefactor) );
-		double y = clamp<double>(coordinates.y(), bound.y(), bound.y() + bound.height() - (screenheight / (double)scalefactor) + (128/(double)scalefactor));
+		double y = clamp<double>(coordinates.y(), bound.y(), bound.y() + bound.height() - (screenheight / (double)scalefactor) + (128 / (double)scalefactor)  );
 
 		return QPointF(x, y);
 	}

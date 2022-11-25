@@ -379,7 +379,7 @@ TextureManager::TextureManager() {
 	};
 
 	// Load power textures
-	for (int i = 0; i < (HUD_NUM_9 - HUD_NUM_0); i++)
+	for (int i = 0; i < (HUD_NUM_9 - HUD_NUM_0) +1; i++)
 		textures[HUD_NUM_0 + i] = new Animatable{
 			new QPixmap[1] {hudtex.copy(moveBy(hud_numbers, i, 0, hud_numbers.width(), hud_numbers.height(), 3, 0))},
 			new float[1] {0.2f},
@@ -387,9 +387,9 @@ TextureManager::TextureManager() {
 	};
 
 	// Load power textures
-	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER); i++)
+	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER) + 1; i++)
 		textures[HUD_POWER+i] = new Animatable{
-			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width(), hud_power_normal.height(), (40-37), (62-59)))},
+			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width()+1, hud_power_normal.height()+1, (40-37), (62-59)))},
 			new float[1] {0.2f},
 			1
 		};
@@ -401,7 +401,7 @@ TextureManager::TextureManager() {
 	};
 
 	// Load power pause explain textures
-	for (int i = 0; i < (HUD_PAUSE_WHEEL - HUD_PAUSE_BACKDROP); i++)
+	for (int i = 0; i < (HUD_PAUSE_WHEEL - HUD_PAUSE_BACKDROP) + 1; i++)
 		textures[HUD_PAUSE_BACKDROP + i] = new Animatable{
 			new QPixmap[1] {hudpausetex.copy(moveBy(hud_pause_backdrop, i % 5, floor(i / 5), hud_pause_backdrop.width(), hud_power_normal.height(), 3, 3))},
 			new float[1] {0.2f},

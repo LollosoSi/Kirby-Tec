@@ -62,7 +62,10 @@ int main(int argc, char* argv[]) {
 
 	BaseGUI view(QPointF(0, 0.757f), TexManager::HUD_VIEW);
 
+	BaseGUI state(QPointF(0.579f, 0.757f + (0.151f * (1-0.757f))), TexManager::HUD_BYEBYE);
+
 	GameLoop::getInstance().GUIItems.push_back(dynamic_cast<RenderableObject*>(&view));
+	GameLoop::getInstance().GUIItems.push_back(dynamic_cast<RenderableObject*>(&state));
 
     // eseguo applicazione Qt
     return a.exec();

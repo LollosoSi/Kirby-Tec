@@ -29,7 +29,7 @@ public:
 		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
 		setObjectId(objects::HUD);
 
-		rigiddrawscale = 0.836;
+		rigiddrawscale = 0.936;
 	}
 
 	virtual bool processClick() {
