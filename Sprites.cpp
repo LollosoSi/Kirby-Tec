@@ -95,10 +95,18 @@ TextureManager::TextureManager() {
 
 	QRect hud_pause_screen = QRect(256, 3, 248, 224);
 
+	//Enemies
+	QRect waddledee = getStandardQRect(95,659);
+	QRect waddledoo = getStandardQRect(95,59);
+	QRect sparky = getStandardQRect(95,79);
+	QRect hothead = getStandardQRect(95, 119);
+	QRect poppybrosjr = getStandardQRect(95,758);
+	QRect brontoburt = getStandardQRect(95,897);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
+	QPixmap enemytex = loadTexture(file_enemy, nocolor);
 	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
 	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
 	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
@@ -440,6 +448,16 @@ TextureManager::TextureManager() {
 		},
 		new float[1] {1.0f},
 		1
+	};
+
+	// Enemies
+	textures[WADDLEDEE] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(waddledee),
+		enemytex.copy(moveBy(waddledee,1)),
+},
+new float[1] {1.0f,1.0f},
+		2
 	};
 
 }

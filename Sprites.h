@@ -153,10 +153,17 @@ namespace TexManager {
 			HUD_NUM_6 = 110,
 			HUD_NUM_7 = 111,
 			HUD_NUM_8 = 112,
-			HUD_NUM_9 = 113
+			HUD_NUM_9 = 113,
+
+			WADDLEDEE = 114,
+			WADDLEDOO = 115,
+			SPARKY = 116,
+			BRONTOBURT = 117,
+			POPPYBROSJR = 118,
+			HOTHEAD = 119
 
 	};
-	const int TEXTURE_COUNT = 114;
+	const int TEXTURE_COUNT = 120;
 
 };
 
