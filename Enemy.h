@@ -56,7 +56,7 @@ protected:
 	Animator animator;
 
 	public:
-		Enemy(QPointF coords, QPointF offset, objects::ObjectID eid, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
+		Enemy(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), objects::ObjectID eid = objects::WADDLEDEE, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
 			
 			
 			this->setObjectId(eid);
@@ -89,10 +89,12 @@ protected:
 };
 // enemies
 class WaddleDee : public Enemy {
-	WaddleDee(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
-		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
-	}
 public:
+	WaddleDee(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+		accel.x = maxwalkspeed;
+	}
+
 	void tick(double delta) override
 {
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
@@ -105,10 +107,11 @@ public:
 };
 
 class WaddleDoo : public Enemy {
-	WaddleDoo(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDOO, sizeX, sizeY) {
+public:
+	WaddleDoo(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDOO, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 	}
-public:
+
 	void tick(double delta) override
 	{
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
@@ -121,10 +124,11 @@ public:
 };
 
 class PoppyBrosJr : public Enemy {
-	PoppyBrosJr(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::POPPYBROSJR, sizeX, sizeY) {
+public:
+	PoppyBrosJr(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::POPPYBROSJR, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 	}
-public:
+
 	void tick(double delta) override
 	{
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
@@ -137,10 +141,11 @@ public:
 };
 
 class Sparky : public Enemy {
-	Sparky(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::SPARKY, sizeX, sizeY) {
+public:
+	Sparky(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::SPARKY, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 	}
-public:
+
 	void tick(double delta) override
 	{
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
@@ -153,10 +158,11 @@ public:
 };
 
 class HotHead : public Enemy {
-	HotHead(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
+public:
+	HotHead(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 	}
-public:
+
 	void tick(double delta) override
 	{
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
@@ -169,10 +175,11 @@ public:
 };
 
 class BrontoBurt : public Enemy {
-	BrontoBurt(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
+public:
+	BrontoBurt(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0,0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
 	}
-public:
+
 	void tick(double delta) override
 	{
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {

@@ -178,9 +178,31 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 		case objects::SLOPED_TERRAIN_225:
 			addTerrain(obj);
 			break;
+
 		case objects::WADDLEDEE:
 			addEnemy(obj);
 			break;
+
+		case objects::WADDLEDOO:
+			addEnemy(obj);
+			break;
+
+		case objects::BRONTOBURT:
+			addEnemy(obj);
+			break;
+
+		case objects::HOTHEAD:
+			addEnemy(obj);
+			break;
+
+		case objects::POPPYBROSJR:
+			addEnemy(obj);
+			break;
+
+		case objects::SPARKY:
+			addEnemy(obj);
+			break;
+
 		}
 	
 	}	
