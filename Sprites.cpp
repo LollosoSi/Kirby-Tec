@@ -459,6 +459,45 @@ TextureManager::TextureManager() {
 		new float[2] {0.35f,0.35f},
 		2
 	};
+	textures[WADDLEDOO] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(waddledoo),
+		enemytex.copy(moveBy(waddledoo,1)),
+		},
+		new float[2] {0.35f,0.35f},
+		2
+	};
+	textures[BRONTOBURT] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(brontoburt),
+		enemytex.copy(moveBy(brontoburt,1)),
+		},
+		new float[2] {0.35f,0.35f},
+		2
+	};
+	textures[SPARKY] = new Animatable{
+		new QPixmap[1] {
+		enemytex.copy(sparky),
+		
+		},
+		new float[1] {0.35f},
+		1
+	};
+	textures[POPPYBROSJR] = new Animatable{
+		new QPixmap[1] {
+		enemytex.copy(poppybrosjr),
+		},
+		new float[1] {0.35f},
+		1
+	};
+	textures[HOTHEAD] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(hothead),
+		enemytex.copy(moveBy(hothead,1)),
+		},
+		new float[2] {0.35f,0.35f},
+		2
+	};
 
 }
 
