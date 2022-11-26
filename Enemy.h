@@ -51,15 +51,15 @@ class Enemy : public RigidBody
 protected:
 	double maxwalkspeed = 2;
 	bool started = 0;
-	EnemyID eid = WADDLEDEE;
+	
 
 	Animator animator;
 
 	public:
-		Enemy(QPointF coords, QPointF offset, EnemyID eid = WADDLEDEE, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
-			this->eid = eid;
-			accel.x = maxwalkspeed;
-			animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+		Enemy(QPointF coords, QPointF offset, objects::ObjectID eid, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
+			
+			
+			this->setObjectId(eid);
 		}
 		
 		QPixmap getTexture() { return animator.getCurrentPixmap(mirror); }
@@ -77,11 +77,7 @@ protected:
 			
 			accel.y = 9.8;
 
-			if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
-				accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
-				//velocity.x = 0;
-				std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
-			}
+			
 
 			RigidBody::tick(delta);
 			
@@ -90,20 +86,100 @@ protected:
 			processAnimation();
 		}
 
-		std::string serialize(const char& divider) const override {
-			std::stringstream out("", std::ios_base::app | std::ios_base::out);
-			out << RigidBody::serialize(divider) << divider << eid;
-
-			return out.str();
+};
+// enemies
+class WaddleDee : public Enemy {
+	WaddleDee(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	}
+public:
+	void tick(double delta) override
+{
+		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+			//velocity.x = 0;
+			std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
 		}
+		Enemy::tick(delta);
+	}
+};
 
-		Serializable* deserialize(std::vector<std::string>::iterator& start) override {
-			RigidBody::deserialize(start);
+class WaddleDoo : public Enemy {
+	WaddleDoo(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDOO, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	}
+public:
+	void tick(double delta) override
+	{
+		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+			//velocity.x = 0;
+			std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+		}
+		Enemy::tick(delta);
+	}
+};
 
-			eid = (EnemyID)std::atoi((*(start++)).c_str());
+class PoppyBrosJr : public Enemy {
+	PoppyBrosJr(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::POPPYBROSJR, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	}
+public:
+	void tick(double delta) override
+	{
+		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+			//velocity.x = 0;
+			std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+		}
+		Enemy::tick(delta);
+	}
+};
 
-			return this;
-		};
+class Sparky : public Enemy {
+	Sparky(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::SPARKY, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	}
+public:
+	void tick(double delta) override
+	{
+		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+			//velocity.x = 0;
+			std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+		}
+		Enemy::tick(delta);
+	}
+};
 
+class HotHead : public Enemy {
+	HotHead(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	}
+public:
+	void tick(double delta) override
+	{
+		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+			//velocity.x = 0;
+			std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+		}
+		Enemy::tick(delta);
+	}
+};
 
+class BrontoBurt : public Enemy {
+	BrontoBurt(QPointF coords, QPointF offset, double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	}
+public:
+	void tick(double delta) override
+	{
+		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+			//velocity.x = 0;
+			std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+		}
+		Enemy::tick(delta);
+	}
 };

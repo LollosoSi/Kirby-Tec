@@ -178,6 +178,9 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 		case objects::SLOPED_TERRAIN_225:
 			addTerrain(obj);
 			break;
+		case objects::WADDLEDEE:
+			addEnemy(obj);
+			break;
 		}
 	
 	}	
@@ -185,6 +188,7 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	return tempserializableObjects.size() != 0;
 
 }
+
 
 void GameLoop::renderingCompleted() {
 	this->last_millis_render = QTime::currentTime();
@@ -283,6 +287,13 @@ void GameLoop::addTerrain(GameObject* t) {
 	addToRenderable(dynamic_cast<RenderableObject*>(t));
 	addToCollidable(dynamic_cast<RigidBody*>(t));
 	addToSerializable(dynamic_cast<Serializable*>(t));
+}
+
+void GameLoop::addEnemy(GameObject * obj) {
+	addToTickable(dynamic_cast<TickableObject*>(obj));
+	addToRenderable(dynamic_cast<RenderableObject*>(obj));
+	addToCollidable(dynamic_cast<RigidBody*>(obj));
+	addToSerializable(dynamic_cast<Serializable*>(obj));
 }
 
 

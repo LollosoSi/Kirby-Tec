@@ -21,7 +21,13 @@ namespace objects {
 		DOOR = 11,
 		BARRIER = 12,
 		PLATFORM = 13,
-		HUD = 14
+		HUD = 14,
+		WADDLEDEE = 15,
+		WADDLEDOO = 16,
+		POPPYBROSJR = 17,
+		SPARKY = 18,
+		HOTHEAD = 19,
+		BRONTOBURT = 20
 	};
 
 }

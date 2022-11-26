@@ -77,6 +77,7 @@ public:
 
 	void addKirby(GameObject* kb);
 	void addTerrain(GameObject* t);
+	void addEnemy(GameObject* obj);
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);

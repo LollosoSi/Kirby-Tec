@@ -43,6 +43,9 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 		case objects::SLOPED_TERRAIN_225:
 			return new TerrainSloped(objects::SLOPED_TERRAIN_225);
 
+		case objects::WADDLEDEE:
+			return new WaddleDee();
+		
 	}
 
 }
