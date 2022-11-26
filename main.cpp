@@ -111,6 +111,25 @@ int main(int argc, char* argv[]) {
 	}
 
 
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new WaddleDee(QPointF(5+rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new WaddleDoo(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new PoppyBrosJr(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new BrontoBurt(QPointF(5+ rand() % 5, -5 + rand()%5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new HotHead(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new Sparky(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+
 
 	std::cout << "Element: " << Camera::fromPercentageToScreen(QPointF(view.getX(), view.getY())).y() << "\n";
 	std::cout << "Screen : " << Camera::getInstance().screenwidth << " x " << Camera::getInstance().screenheight << "\n";

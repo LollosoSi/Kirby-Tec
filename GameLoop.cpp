@@ -110,9 +110,6 @@ void GameLoop::reload() {
 }
 
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
-	
-	
-	
 
 	if (savecurrent && currentlevel.length() != 0)
 		saveGame(currentlevel+std::string(".save"));

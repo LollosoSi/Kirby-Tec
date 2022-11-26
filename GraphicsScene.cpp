@@ -60,19 +60,19 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
 
         std::cout << "Percentage of click coordinates: " << ((double)lm.x / (double)Camera::getInstance().screenwidth) << "% : " << ((double)lm.y / (double)Camera::getInstance().screenheight) << "\n%";
+        
 
         QPointF snapped = Camera::screenToWorld(QPointF(lm.x, lm.y));
         snapped.setX((double)(floor(snapped.x()) + ( (snapped.x() - ((int)snapped.x())) > 0.4 ? 0.5 : 0)));
         snapped.setY((double)(floor(snapped.y()) ));
 
+
+        std::cout << "Click coodrinates: " << snapped.x() << " : " << snapped.y() << "\n";
         
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
-            Enemy* t = new WaddleDee(vert2, QPointF(0,0));
-            GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
-            GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
-            GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));
-            GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
+            WaddleDee* t = new WaddleDee(vert2, QPointF(0,0));
+            GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(t));
         }
         else if (me->button() == Qt::MiddleButton) {
             //Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);
