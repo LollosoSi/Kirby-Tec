@@ -455,8 +455,8 @@ TextureManager::TextureManager() {
 		new QPixmap[2] {
 		enemytex.copy(waddledee),
 		enemytex.copy(moveBy(waddledee,1)),
-},
-new float[1] {1.0f,1.0f},
+		},
+		new float[2] {0.35f,0.35f},
 		2
 	};
 

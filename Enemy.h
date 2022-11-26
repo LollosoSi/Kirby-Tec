@@ -57,8 +57,6 @@ protected:
 
 	public:
 		Enemy(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), objects::ObjectID eid = objects::WADDLEDEE, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
-			
-			
 			this->setObjectId(eid);
 		}
 		
@@ -83,7 +81,7 @@ protected:
 			
 		
 			mirror = velocity.x < 0;
-			processAnimation();
+			//processAnimation();
 		}
 
 };
@@ -91,7 +89,7 @@ protected:
 class WaddleDee : public Enemy {
 public:
 	WaddleDee(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
-		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+		animator.setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::WADDLEDEE));
 		accel.x = maxwalkspeed;
 	}
 
