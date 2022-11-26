@@ -68,7 +68,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
-            Enemy* t = new Enemy(vert2, QPointF(0,0));
+            Enemy* t = new WaddleDee(vert2, QPointF(0,0));
             GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(t));
             GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(t));
             GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(t));

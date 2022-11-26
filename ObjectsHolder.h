@@ -5,6 +5,8 @@
 #include "Terrain.h"
 #include "Door.h"
 
+#include "Enemy.h"
+
 
 static GameObject* getInstanceOf(objects::ObjectID obj) {
 	
@@ -45,6 +47,22 @@ static GameObject* getInstanceOf(objects::ObjectID obj) {
 
 		case objects::WADDLEDEE:
 			return new WaddleDee();
+
+		case objects::WADDLEDOO:
+			return new WaddleDoo();
+
+		case objects::POPPYBROSJR:
+			return new PoppyBrosJr();
+
+		case objects::SPARKY:
+			return new Sparky();
+
+		case objects::HOTHEAD:
+			return new HotHead();
+
+		case objects::BRONTOBURT:
+			return new BrontoBurt();
+
 		
 	}
 
