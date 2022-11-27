@@ -217,18 +217,21 @@ public:
 			pm = scene.addPixmap(getTexture());
 			pm->setScale(scale);
 
-			hitbox = scene.addRect(getCollider(), qp);
-
-			QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
-			QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x() )));
-			qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
+			if (hitboxenabled) {
+				hitbox = scene.addRect(getCollider(), qp);
+				QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
+				QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
+				qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
+			}
 		}
 		else if (!visible) {
 			scene.removeItem(pm);
 			pm = 0;
 
-			scene.removeItem(hitbox);
-			hitbox = 0;
+			if (hitbox) {
+				scene.removeItem(hitbox);
+				hitbox = 0;
+			}
 
 		}
 
@@ -237,15 +240,16 @@ public:
 			pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
 			//pm->setRotation(renderAngles[currentDegree]);
 
-			scene.removeItem(qli);
-			QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
-			QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
-			qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
+			if (hitboxenabled) {
+				scene.removeItem(qli);
+				QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
+				QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
+				qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
 
-			QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
-			scene.removeItem(hitbox);
-			hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
-
+				QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
+				scene.removeItem(hitbox);
+				hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+			}
 		}
 
 
