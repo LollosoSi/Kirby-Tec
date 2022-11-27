@@ -78,6 +78,9 @@ public:
 	void addKirby(GameObject* kb);
 	void addTerrain(GameObject* t);
 	void addEnemy(GameObject* obj);
+	QPointF getKirbyPos() {
+		return KirbyInstance ? QPointF(KirbyInstance->getX(), KirbyInstance->getY()) : QPointF(0, 0);
+	}
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);

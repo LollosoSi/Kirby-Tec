@@ -72,12 +72,6 @@ protected:
 					return;
 
 			animator.tick(delta);
-
-			
-			accel.y = 9.8;
-
-			
-
 			RigidBody::tick(delta);
 			
 		
@@ -91,18 +85,10 @@ class WaddleDee : public Enemy {
 public:
 	WaddleDee(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::WADDLEDEE));
-		accel.x = -maxwalkspeed;
+		velocity.x = -maxwalkspeed;
 	}
 
-	void tick(double delta) override
-{
-		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
-			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
-			//velocity.x = 0;
-		//	std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
-		}
-		Enemy::tick(delta);
-	}
+	void tick(double delta);
 };
 
 class WaddleDoo : public Enemy {
@@ -114,6 +100,7 @@ public:
 
 	void tick(double delta) override
 	{
+		accel.y = 9.8;
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
 			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
 			//velocity.x = 0;
@@ -131,11 +118,13 @@ public:
 
 	void tick(double delta) override
 	{
-		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
-			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+		accel.y = 9.8;
+
+		//if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+		//	accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
 			//velocity.x = 0;
 			//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
-		}
+		//}
 		Enemy::tick(delta);
 	}
 };
@@ -148,6 +137,7 @@ public:
 
 	void tick(double delta) override
 	{
+		accel.y = 9.8;
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
 			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
 			//velocity.x = 0;
@@ -161,20 +151,16 @@ class HotHead : public Enemy {
 public:
 	HotHead(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::HOTHEAD));
+		accel.x = -maxwalkspeed;
 	}
 
-	void tick(double delta) override
-	{
-		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
-			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
-			//velocity.x = 0;
-			//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
-		}
-		Enemy::tick(delta);
-	}
+	void tick(double delta);
 };
 
 class BrontoBurt : public Enemy {
+protected:
+	double time = 0;
+	const double Y_accel = 3.5;
 public:
 	BrontoBurt(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0,0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::BRONTOBURT));
@@ -182,6 +168,11 @@ public:
 
 	void tick(double delta) override
 	{
+
+		time += delta;
+		velocity.x = -1;
+		velocity.y = Y_accel*(sin(2 * M_PI * 0.6 * time));
+
 		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
 			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
 			//velocity.x = 0;
