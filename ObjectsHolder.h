@@ -7,67 +7,44 @@
 
 #include "Enemy.h"
 
+class ObjectsHolder {
 
-static GameObject* getInstanceOf(objects::ObjectID obj) {
-	
-	switch (obj) {
-	
-		default:
-			return new GameObject();
 
-		case objects::KIRBY:
-			return new Kirby();
-
-		case objects::BACKGROUND:
-			return new Background();
-
-		case objects::TERRAIN:
-			return new Terrain();
-
-		case objects::BARRIER:
-			return new Terrain(objects::BARRIER);
-
-		case objects::DOOR:
-			return new Door();
-
-		case objects::PLATFORM:
-			return new MovablePlatform();
-
-		case objects::STEPUP:
-			return new Terrain(objects::STEPUP);
-
-		case objects::SLOPED_TERRAIN_45:
-			return new TerrainSloped(objects::SLOPED_TERRAIN_45);
-		case objects::SLOPED_TERRAIN_25:
-			return new TerrainSloped(objects::SLOPED_TERRAIN_25);
-		case objects::SLOPED_TERRAIN_205:
-			return new TerrainSloped(objects::SLOPED_TERRAIN_205);
-		case objects::SLOPED_TERRAIN_225:
-			return new TerrainSloped(objects::SLOPED_TERRAIN_225);
-
-		case objects::WADDLEDEE:
-			return new WaddleDee();
-
-		case objects::WADDLEDOO:
-			return new WaddleDoo();
-
-		case objects::POPPYBROSJR:
-			return new PoppyBrosJr();
-
-		case objects::SPARKY:
-			return new Sparky();
-
-		case objects::HOTHEAD:
-			return new HotHead();
-
-		case objects::BRONTOBURT:
-			return new BrontoBurt();
-
-		
+public:
+	// Relativi al singleton
+	static ObjectsHolder& getInstance() { static ObjectsHolder instance; return instance; }
+	~ObjectsHolder() {
+		for (auto* item : holder)
+			delete item;
 	}
 
-}
+	GameObject* getObject(objects::ObjectID obj) {
+		return dynamic_cast<GameObject*>(holder[obj]->clone());
+	}
 
+private:
+	GameObject* holder[objects::totalObjects];
+	ObjectsHolder(ObjectsHolder& obj) = delete;
+	ObjectsHolder() {
+		holder[objects::GAMEOBJECT] = new GameObject();
+		holder[objects::KIRBY] = new Kirby();
+		holder[objects::SPARKY] = new Sparky();
+		holder[objects::BRONTOBURT] = new BrontoBurt();
+		holder[objects::POPPYBROSJR] = new PoppyBrosJr();
+		holder[objects::SLOPED_TERRAIN] = new TerrainSloped();
+		holder[objects::BACKGROUND] = new Background();
+		holder[objects::TERRAIN] = new Terrain();
+		holder[objects::STEPUP] = new Terrain(objects::STEPUP);
+		holder[objects::DOOR] = new Door();
+		holder[objects::BARRIER] = new Terrain(objects::BARRIER);
+		holder[objects::PLATFORM] = new MovablePlatform();
+		holder[objects::WADDLEDEE] = new WaddleDee();
+		holder[objects::WADDLEDOO] = new WaddleDoo();
+		holder[objects::HOTHEAD] = new HotHead();
+		holder[objects::WATER] = new Water();
+	}
+
+};
 
 static char objectdivider = '\n', intradivider = '_';
 class Serializer {
@@ -120,7 +97,7 @@ public:
 			}
 
 			std::vector<std::string>::iterator it = data.begin();
-			objects.push_back(getInstanceOf(static_cast<objects::ObjectID>(std::atoi((*it).c_str())))->deserialize(++it));
+			objects.push_back(ObjectsHolder::getInstance().getObject(static_cast<objects::ObjectID>(std::atoi((*it).c_str())))->deserialize(++it));
 
 		}
 

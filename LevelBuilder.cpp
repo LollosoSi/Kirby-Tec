@@ -33,76 +33,76 @@ void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
 			for (int j = 0; j < 1; j++)
 				for (int i = 0; i < 17; i++) {
 					Terrain* t = new Terrain(QPointF(i, j));
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
 				}
 				
 			Terrain* t = new Terrain(QPointF(17, -1 ), objects::TERRAIN, TexID::MARGINTERRAINL);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
 
 			Terrain* t1 = new Terrain(QPointF(18, -1), objects::TERRAIN, TexID::MARGINTERRAINR);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t1));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t1));
 
 			for (int j = 0; j < 1; j++)
 				for (int i = 0; i < 13; i++) {
 					Terrain* t2 = new Terrain(QPointF(i+19, j));
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t2));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t2));
 				}
 
 			Terrain* t3 = new Terrain(QPointF(32, -1), objects::TERRAIN, TexID::MARGINTERRAINL);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t3));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t3));
 
 			for (int i = 0; i < 4; i++) {
 				Terrain* t2 = new Terrain(QPointF(i + 33, -1));
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t2));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t2));
 			}
 
 			Terrain* t4 = new Terrain(QPointF(37, -1), objects::TERRAIN, TexID::MARGINTERRAINR);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t4));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t4));
 
 			for (int j = 0; j < 1; j++)
 				for (int i = 0; i < 4; i++) {
 					Terrain* t5 = new Terrain(QPointF(i + 38, j));
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t5));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t5));
 				}
 
 			Terrain* t6 = new Terrain(QPointF(42, -1), objects::TERRAIN, TexID::MARGINTERRAINL);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t6)); 
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t6)); 
 
 			for (int i = 0; i < 5; i++) {
 				Terrain* t7 = new Terrain(QPointF(i + 43, -1));
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t7));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t7));
 			}
 
 			for (int j = -4; j < -1; j++) {
 				Terrain* t8 = new Terrain(QPointF(48, j), objects::TERRAIN, TexID::SECONDTERRAINL);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t8));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t8));
 			} 
 
 		/*	Terrain* t9 = new Terrain(QPointF(48, -5), objects::TERRAIN, TexID::MARGINTERRAINL);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t9)); */
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t9)); */
 
 			Terrain* t10 = new Terrain(QPointF(49, -5), objects::TERRAIN, TexID::MARGINTERRAINR);
-			GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t10));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t10));
 
 			for (int j = -4; j < -3; j++) {
 				Terrain* t11 = new Terrain(QPointF(49, j), objects::TERRAIN, TexID::SECONDTERRAINR);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t11));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t11));
 			}
 			
 				Terrain* t12 = new Terrain(QPointF(50, -3), objects::TERRAIN, TexID::MARGINTERRAINR);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t12));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t12));
 
 				Terrain* t13 = new Terrain(QPointF(50, -2), objects::TERRAIN, TexID::SECONDTERRAINR);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t13));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t13));
 			
 				for (int i = 0; i < 11; i++) {
 					Terrain* t14 = new Terrain(QPointF(i+51 , -1), objects::TERRAIN, TexID::TERRAIN);
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t14));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t14));
 				}
 			
 				for (int i = 0; i < 18; i++) {
 					Terrain* t15 = new Terrain(QPointF(i + 62, 0), objects::TERRAIN, TexID::TERRAIN2);
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t15));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t15));
 				}
 				/*Sloped Section not done
 				12 blocks
@@ -110,31 +110,31 @@ void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
 				*/
 				for (int i = 0; i < 7; i++) {
 					Terrain* t16 = new Terrain(QPointF(i + 92, 0), objects::TERRAIN, TexID::TERRAIN2);
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t16));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t16));
 				}
 				for (int i = 0; i < 3; i++) {
 					Terrain* t17 = new Terrain(QPointF(i + 93.5, -1), objects::TERRAIN, TexID::TERRAINBLOCK);
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t17));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t17));
 				}
 				for (int i = 0; i < 2; i++) {
 					Terrain* t18 = new Terrain(QPointF(i + 94.5, -2), objects::TERRAIN, TexID::TERRAINBLOCK);
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t18));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t18));
 				}
 				Terrain* t19 = new Terrain(QPointF( 95.5, -3), objects::TERRAIN, TexID::TERRAINBLOCK);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t19));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t19));
 
 				/*Sloped Section not done
 				4.5 blocks
 				 HERE
 				*/
 				Terrain* t20 = new Terrain(QPointF(104.5, 1), objects::TERRAIN, TexID::TERRAINBLOCK);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t20));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t20));
 				Terrain* t21 = new Terrain(QPointF(106.5, 1), objects::TERRAIN, TexID::TERRAINBLOCK);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t21));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t21));
 				Terrain* t22 = new Terrain(QPointF(108.5, 1), objects::TERRAIN, TexID::TERRAINBLOCK);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t22));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t22));
 				Terrain* t23 = new Terrain(QPointF(110.5, 1), objects::TERRAIN, TexID::TERRAINBLOCK);
-				GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t23));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t23));
 				
 				/*Sloped Section not done
 				7.5 blocks
@@ -142,13 +142,13 @@ void LevelBuilder::load(const QString& level_name, KA::LevelType& level_type)
 				*/
 				for (int i = 0; i < 20; i++) {
 					Terrain* t18 = new Terrain(QPointF(i + 118, 0), objects::TERRAIN, TexID::TERRAIN2);
-					GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t18));
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t18));
 				}
 			//});
 
 
 		Kirby* k = new Kirby(QPointF(0.0, -5.0));
-		GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(k));
 		//KirbyInstance = 0;
 		//tt.join();
 

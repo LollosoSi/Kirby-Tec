@@ -48,11 +48,12 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
 
-    GameLoop::getInstance().pause();
+    //GameLoop::getInstance().pause();
 
     double expectedwidth = (double)(this->height() * aspectratio);
     double expectedheight = (double)(this->width() / aspectratio);
 
+    // Resize window to avoi
     if (expectedwidth != this->width() && false) {
         event->accept();
         this->resize(QSize(expectedwidth, this->height()));
@@ -66,9 +67,8 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
         expectedheight = this->height();
     }
 
-
-
     QMainWindow::resizeEvent(event);
+
     // Resize drawspace here
     sceneRect.setWidth(expectedwidth);
     sceneRect.setHeight(expectedheight);
@@ -83,7 +83,7 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     scalefactor = scale * standardsize;
 
 
-    GameLoop::getInstance().pause(false);
+    //GameLoop::getInstance().pause(false);
 }
 
 void MainWindow::pleaseRender(bool clearscene) {

@@ -34,13 +34,16 @@ int main(int argc, char* argv[]) {
 	
 	/*if (!GameLoop::getInstance().loadGame("title")) {
 		Terrain* t = new Terrain(objects::TERRAIN, TexManager::TITLESCREEN);
-		GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
 	} */
 	
 	
 	
 	TextureManager::getInstance();
 	KA::Sounds::getInstance();
+
+	while (!TextureManager::getInstance().done) {}
+
 	GameLoop::getInstance();
 
 //	GameLoop::getInstance().start();
@@ -52,7 +55,7 @@ int main(int argc, char* argv[]) {
 	//	GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
 	//}
 
-	Door d(QPoint(0, 0), std::string("levels/lobby"));
+	Door d(QPoint(0, 0), std::string("levels/level3"));
 	d.launchAction();
 	
 	
@@ -110,25 +113,25 @@ int main(int argc, char* argv[]) {
 		//GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(item));
 	}
 
-
+	/*
 	for (int i = 0; i < 3; i++) {
-		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new WaddleDee(QPointF(5+rand() % 5, -5 + rand() % 5))));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new WaddleDee(QPointF(5+rand() % 5, -5 + rand() % 5))));
 	}
 	for (int i = 0; i < 3; i++) {
-		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new WaddleDoo(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new WaddleDoo(QPointF(5+ rand() % 5, -5 + rand() % 5))));
 	}
 	for (int i = 0; i < 3; i++) {
-		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new PoppyBrosJr(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new PoppyBrosJr(QPointF(5+ rand() % 5, -5 + rand() % 5))));
 	}
 	for (int i = 0; i < 3; i++) {
-		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new BrontoBurt(QPointF(5+ rand() % 5, -5 + rand()%5))));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new BrontoBurt(QPointF(5+ rand() % 5, -5 + rand()%5))));
 	}
 	for (int i = 0; i < 3; i++) {
-		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new HotHead(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new HotHead(QPointF(5+ rand() % 5, -5 + rand() % 5))));
 	}
 	for (int i = 0; i < 3; i++) {
-		GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(new Sparky(QPointF(5+ rand() % 5, -5 + rand() % 5))));
-	}
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new Sparky(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}*/
 
 
 	std::cout << "Element: " << Camera::fromPercentageToScreen(QPointF(view.getX(), view.getY())).y() << "\n";

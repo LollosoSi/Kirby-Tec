@@ -4,6 +4,7 @@
 #include <QPointF>
 
 inline double scalemultiplier = 5.5;
+inline double gui_scalemultiplier = 5.5;
 
 inline double timescale = 1;
 
@@ -16,7 +17,7 @@ inline double aspectratio = 1023/895.0;
 
 inline double scalefactor = scale * standardsize;
 
-static bool hitboxenabled = 0;
+inline bool hitboxenabled = 0;
 
 static double toRadians(const double deg) { return deg*M_PI/180.0; }
 static double toDegrees(const double rad) { return (rad / M_PI ) * 180.0; }
@@ -42,6 +43,6 @@ static T clamp(T valore, T min, T max) {
 	return valore > max ? max : valore < min ? min : valore;
 }
 
-static bool circa(double val, double targ, double perc = 0.2) {
-	return (val > targ - (targ * perc)) && (val < targ + (targ * perc));
+static bool circa(double val, double targ, double perc = 1) {
+	return (val > targ - perc) && (val < targ + perc);
 }

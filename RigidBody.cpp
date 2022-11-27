@@ -23,13 +23,13 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		 scene.removeItem(pm);
 		 pm = 0;
 
-		 if (hitboxenabled) {
+		 if (hitbox) {
 			 scene.removeItem(hitbox);
 			 hitbox = 0;
 		}
 
 		 //std::cout << "Cleared " << getObjectId() << "\n";
-
+		 return;
 	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());
 		if (hitboxenabled)
@@ -81,7 +81,7 @@ void RigidBody::tick(double deltatime){
 		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
 		{
 			objects::ObjectID obid = obj.first->getObjectId();
-			if (((obid == objects::SLOPED_TERRAIN_25)|| (obid == objects::SLOPED_TERRAIN_45)|| (obid == objects::SLOPED_TERRAIN_205)|| (obid == objects::SLOPED_TERRAIN_225)) ) {
+			if (obid == objects::SLOPED_TERRAIN) {
 				
 				//std::cout << "Contact time with slope " << ct << "\n";
 
@@ -145,9 +145,7 @@ void RigidBody::tick(double deltatime){
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;
 				angle = 0;
-			
 				
-
 				if (cn.x != 0) {
 					overridex = (getX() + (getVelocity().x * ct));
 					velocity.x = -velocity.x / 7;
@@ -157,8 +155,7 @@ void RigidBody::tick(double deltatime){
 					velocity.y = 0;
 				}
 				
-			}
-			else if (obid == objects::PLATFORM && ct >= -0.15 && ct < 0.1) {
+			} else if (obid == objects::PLATFORM && ct >= -0.15 && ct < 0.1) {
 				hit = 1;
 				lastHitNormals = cn;
 				//currentDegree = NO_SLOPE;
@@ -197,7 +194,7 @@ void RigidBody::tick(double deltatime){
 		}
 	
 		RigidBody* rb = 0;
-		if (!hit) 
+		
 			if(!(rb=GameLoop::getInstance().getInside(this))){
 				angle = 0;
 				//std::cout << "No hit " << "\n";
@@ -205,7 +202,15 @@ void RigidBody::tick(double deltatime){
 			else {
 				//std::cout << "Inside\n";
 
-				if (((rb->getObjectId() == objects::SLOPED_TERRAIN_25) || (rb->getObjectId() == objects::SLOPED_TERRAIN_45) || (rb->getObjectId() == objects::SLOPED_TERRAIN_205) || (rb->getObjectId() == objects::SLOPED_TERRAIN_225))) {
+				if (rb->getObjectId() == objects::WATER) {
+					hit = 1;
+					lastHitNormals = cn;
+					velocity.y += -9.8 * pow(2,(abs(rb->getY() - getY()))) * deltatime;
+					//currentDegree = NO_SLOPE;
+					angle = 0;
+				}
+
+				if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
 
 					//std::cout << "Contact time with slope " << ct << "\n";
 

@@ -100,7 +100,7 @@ public:
 			//pm->setPos(QPointF(getX(), getY()));
 
 			//pm->setRotation(renderAngles[currentDegree]);
-			pm->setScale(scale*rigiddrawscale);
+			pm->setScale(scale*rigiddrawscale * gui_scalemultiplier / scalemultiplier);
 
 			if (hitboxenabled) {
 				QPointF p = Camera::fromPercentageToScreen(QPointF(rf.pos.x, rf.pos.y));

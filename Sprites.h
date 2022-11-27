@@ -178,6 +178,7 @@ using namespace TexManager;
 class TextureManager {
 
 public:
+	bool done = 0;
 	static TextureManager& getInstance() { static TextureManager instance; return instance; }
 	~TextureManager();
 

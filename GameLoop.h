@@ -58,6 +58,8 @@ public:
 
 	std::vector<RenderableObject*> GUIItems;
 
+	void addElement(GameObject* item);
+
 	void reload();
 	
 	// Relativi al singleton
@@ -79,12 +81,7 @@ public:
 	void saveGame(std::string fileName);
 	bool loadGame(std::string fileName, bool issave = false, bool savecurrent = false);
 
-	void addKirby(GameObject* kb);
-	void addTerrain(GameObject* t);
-	void addEnemy(GameObject* obj);
-	QPointF getKirbyPos() {
-		return KirbyInstance ? QPointF(KirbyInstance->getX(), KirbyInstance->getY()) : QPointF(0, 0);
-	}
+	QPointF getKirbyPos() { return KirbyInstance ? QPointF(KirbyInstance->getX(), KirbyInstance->getY()) : QPointF(0, 0); }
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);
@@ -97,8 +94,6 @@ public:
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
 	RigidBody* getInside(RigidBody* rb);
-
-
 
 signals:
 	void pleaseRender(bool clearscene);

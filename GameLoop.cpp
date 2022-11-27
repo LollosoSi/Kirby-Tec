@@ -111,6 +111,23 @@ void GameLoop::reload() {
 	loadGame(currentlevel, false, false);
 }
 
+void GameLoop::addElement(GameObject* obj) {
+
+	bool* chars = obj->getObjectCharacteristics();
+	if (chars[0])
+		addToTickable(dynamic_cast<TickableObject*>(obj));
+	if (chars[1])
+		addToRenderable(dynamic_cast<RenderableObject*>(obj));
+	if (chars[2])
+		addToCollidable(dynamic_cast<RigidBody*>(obj));
+	if (chars[3])
+		addToSerializable(dynamic_cast<Serializable*>(obj));
+	if (chars[4])
+		KirbyInstance = obj;
+
+	delete[] chars;
+}
+
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 
 	if (savecurrent && currentlevel.length() != 0)
@@ -119,97 +136,16 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	currentlevel = fileName;
 
 	clear();
-	
-	std::cout << "Loading " << fileName << "\n";
-
 
 	Camera::getInstance().setBounds(QRectF(0, 0, 0, 0));
 
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName + (issave ? std::string(".save") : std::string("")));
-
-	for (Serializable* item : tempserializableObjects) {
-		GameObject* obj = dynamic_cast<GameObject*>(item);
-		switch (obj->getObjectId()) {
-		case objects::GAMEOBJECT:
-			break;
-		
-		case objects::KIRBY:
-			addKirby(obj);
-			break;
-
-		case objects::BACKGROUND:
-			addTerrain(obj);
-			tickableObjects.push_back(dynamic_cast<TickableObject*>(obj));
-			break;
-
-		case objects::TERRAIN:
-			addTerrain(obj);
-			break;
-
-		case objects::BARRIER:
-			addTerrain(obj);
-			break;
-
-		case objects::PLATFORM:
-			addTerrain(obj);
-			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(obj));
-			break;
-
-		case objects::DOOR:
-			GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(obj));
-			GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(obj));
-			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(obj));
-			break;
-
-		case objects::STEPUP:
-			addTerrain(obj);
-			break;
-
-		case objects::SLOPED_TERRAIN_25:
-			addTerrain(obj);
-			break;
-		case objects::SLOPED_TERRAIN_45:
-			addTerrain(obj);
-			break;
-		case objects::SLOPED_TERRAIN_205:
-			addTerrain(obj);
-			break;
-		case objects::SLOPED_TERRAIN_225:
-			addTerrain(obj);
-			break;
-
-		case objects::WADDLEDEE:
-			addEnemy(obj);
-			break;
-
-		case objects::WADDLEDOO:
-			addEnemy(obj);
-			break;
-
-		case objects::BRONTOBURT:
-			addEnemy(obj);
-			break;
-
-		case objects::HOTHEAD:
-			addEnemy(obj);
-			break;
-
-		case objects::POPPYBROSJR:
-			addEnemy(obj);
-			break;
-
-		case objects::SPARKY:
-			addEnemy(obj);
-			break;
-
-		}
+	for (Serializable* item : tempserializableObjects) 
+		addElement(dynamic_cast<GameObject*>(item));
 	
-	}	
-
 	return tempserializableObjects.size() != 0;
 
 }
-
 
 void GameLoop::renderingCompleted() {
 	this->last_millis_render = QTime::currentTime();
@@ -269,7 +205,9 @@ void GameLoop::loadNetworkData(){
 
 void GameLoop::start() {
 	running = true;
-	paused = false;
+	//paused = false;
+
+	pause(false);
 
 	if(!loopthread.joinable()) loopthread = std::thread(&GameLoop::loop, this);
 }
@@ -283,27 +221,6 @@ void GameLoop::pause(bool pause) {
 void GameLoop::stop() {
 	running = false;
 	paused = false;
-}
-
-void GameLoop::addKirby(GameObject* kb) {
-	KirbyInstance = kb;
-	addToTickable(dynamic_cast<TickableObject*>(kb));
-	addToRenderable(dynamic_cast<RenderableObject*>(kb));
-	addToCollidable(dynamic_cast<RigidBody*>(kb));
-	addToSerializable(dynamic_cast<Serializable*>(kb));
-}
-
-void GameLoop::addTerrain(GameObject* t) {
-	addToRenderable(dynamic_cast<RenderableObject*>(t));
-	addToCollidable(dynamic_cast<RigidBody*>(t));
-	addToSerializable(dynamic_cast<Serializable*>(t));
-}
-
-void GameLoop::addEnemy(GameObject * obj) {
-	addToTickable(dynamic_cast<TickableObject*>(obj));
-	addToRenderable(dynamic_cast<RenderableObject*>(obj));
-	addToCollidable(dynamic_cast<RigidBody*>(obj));
-	addToSerializable(dynamic_cast<Serializable*>(obj));
 }
 
 void GameLoop::addToTickable(TickableObject* tco) {
@@ -330,12 +247,13 @@ void GameLoop::addParticle(Particle* p) {
 	particleObjects.push_back(p);
 }
 
-
-
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
 	if (e->key() == Qt::Key_H && isPressed) {
+		
 		hitboxenabled = !hitboxenabled;
+		//loadGame(currentlevel,false,false);
+		
 	}
 
 	if (e->key() == Qt::Key_J && isPressed) {
@@ -363,7 +281,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 	// Save
 	if (e->key() == Qt::Key_K)
-		GameLoop::getInstance().saveGame("level2");
+		GameLoop::getInstance().saveGame(currentlevel + ".edited");
 
 
 	if (e->key() == Qt::Key_R)
@@ -409,7 +327,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
 
 			Kirby* k = new Kirby(QPointF(0.0, -5.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));			
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(k));			
 
 		}
 
@@ -434,7 +352,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
 
 			Kirby* k = new Kirby(QPointF(0.0, -5.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(k));
 
 		}
 

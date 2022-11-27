@@ -6,14 +6,14 @@
 
 namespace objects {
 
-	enum ObjectID {
+	const enum ObjectID {
 		GAMEOBJECT = 0,
 		TERRAIN = 1,
 		KIRBY = 2,
-		SLOPED_TERRAIN_25 = 3,
-		SLOPED_TERRAIN_45 = 4,
-		SLOPED_TERRAIN_205 = 5,
-		SLOPED_TERRAIN_225 = 6,
+		SLOPED_TERRAIN = 3,
+		freespace1 = 4,
+		freespace2 = 5,
+		freespace3 = 6,
 		CAMERA = 7,
 		PARTICLE = 8,
 		BACKGROUND = 9,
@@ -27,9 +27,10 @@ namespace objects {
 		POPPYBROSJR = 17,
 		SPARKY = 18,
 		HOTHEAD = 19,
-		BRONTOBURT = 20
+		BRONTOBURT = 20,
+		WATER = 21
 	};
-
+	const uint totalObjects = 22;
 }
 
 class Cloneable {
@@ -49,14 +50,15 @@ public:
 		this->setX(go.getX());
 		this->setY(go.getY());
 	}
-	Cloneable* clone() const { return new GameObject(*this); }
+
+	virtual Cloneable* clone() const { return new GameObject(*this); }
 
 	virtual const double getX() const { return x; }
 	virtual const double getY() const { return y; }
 	virtual void setX(const double x) { this->x = x; }
 	virtual void setY(const double y) { this->y = y; }
 
-	virtual void setObjectId(objects::ObjectID obid) { thisObjectId = obid; }
+	virtual GameObject* setObjectId(objects::ObjectID obid) { thisObjectId = obid; return this; }
 	virtual objects::ObjectID getObjectId() const { return thisObjectId; }
 
 
@@ -76,6 +78,8 @@ public:
 
 	
 	virtual void keyPressEvent(QKeyEvent* e, bool isPressed) {};
+
+	bool* getObjectCharacteristics();
 
 protected:
 	double x;

@@ -41,6 +41,7 @@ public:
 
 	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
 
+	void tick(double deltatime) override {}
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
@@ -56,10 +57,17 @@ public:
 		return this;
 	};
 
-	
+	Cloneable* clone() const override { return (new Terrain(*this))->setObjectId(getObjectId()); }
 };
 
+class Water : public Terrain {
 
+public:
+	Water(QPointF pos = QPointF(0,0), QPointF offset = QPointF(0, 0), double sizex = 1, double sizey = 1, objects::ObjectID id = objects::WATER, TexID tid = TRANSPARENT) : Terrain(pos, offset, sizex, sizey, id, tid) {
+
+	}
+	Cloneable* clone() const override { return new Water(*this); }
+};
 
 class Background : public Terrain {
 
@@ -85,7 +93,7 @@ public:
 	QPixmap getTexture() override { return anim.getCurrentPixmap(); }
 	virtual void tick(double delta) override {anim.tick(delta); }
 
-
+	Cloneable* clone() const override { return new Background(*this); }
 	
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
@@ -121,9 +129,11 @@ class TerrainSloped : public Terrain {
 
 public:
 	
-	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25, double sizex = 62.0, double sizey = 32.0, TexManager::TexID texture = TERRAIN_SLOPED_25) : Terrain(pos, QPointF(0, 0), sizex, sizey, id, texture) {}
-	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN_25) : TerrainSloped(QPointF(0, 0), id) {}
+	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN, double sizex = 62.0, double sizey = 32.0, TexManager::TexID texture = TERRAIN_SLOPED_25) : Terrain(pos, QPointF(0, 0), sizex, sizey, id, texture) {}
+	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN) : TerrainSloped(QPointF(0, 0), id) {}
 	~TerrainSloped() {}
+
+	Cloneable* clone() const override { return new TerrainSloped(*this); }
 
 	QPointF vert1 = QPointF(0,0), vert2 = QPointF(0, 0);
 
@@ -144,26 +154,23 @@ public:
 
 	}
 	void fixverts() {
-	
 		if (vert1.x() > vert2.x()) {
-		
 			QPointF temp = vert2;
 			vert2 = vert1;
 			vert1 = temp;
 		}
-	
 	}
 
 	// Returns m in x and q in y
-	QPointF getVert1() const { return vert1 != QPointF(0, 0) ? vert1 : QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
-	QPointF getVert2() const { return vert2 != QPointF(0, 0) ? vert2 : QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
+	QPointF getVert1() const { return vert1; }
+	QPointF getVert2() const { return vert2; }
 	KA::Vec2Df getHitLine() {
 		QPointF v1 = getVert1(), v2 = getVert2();
 		double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x()));
 		return KA::Vec2Df{ m,v1.y() - (double)(v1.x() * m) };
 	}
 
-	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
+	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
@@ -188,40 +195,6 @@ public:
 
 		return this;
 	};
-
-	int textureId() {
-		if (tid == TexManager::TRANSPARENT)
-			return tid;
-
-		switch (getObjectId()) {
-		default:
-			return TexManager::TERRAIN_SLOPED_25;
-		case objects::SLOPED_TERRAIN_25:
-			return TexManager::TERRAIN_SLOPED_25;
-		case objects::SLOPED_TERRAIN_205:
-			return TexManager::TERRAIN_SLOPED_25;
-		case objects::SLOPED_TERRAIN_45:
-			return TexManager::TERRAIN_SLOPED_45;
-		case objects::SLOPED_TERRAIN_225:
-			return TexManager::TERRAIN_SLOPED_45;
-		}
-	
-	}
-	bool shouldMirror(){
-
-		switch (getObjectId()) {
-		default:
-			return false;
-		case objects::SLOPED_TERRAIN_25:
-			return false;
-		case objects::SLOPED_TERRAIN_205:
-			return true;
-		case objects::SLOPED_TERRAIN_45:
-			return false;
-		case objects::SLOPED_TERRAIN_225:
-			return true;
-		}
-	}
 
 	QGraphicsLineItem* qli = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) {
@@ -324,5 +297,5 @@ public:
 		return this;
 	};
 
-
+	Cloneable* clone() const override { return new MovablePlatform(*this); }
 };

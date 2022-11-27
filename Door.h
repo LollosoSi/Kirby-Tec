@@ -16,7 +16,7 @@ public:
 	}
 
 	Door() : Door(QPointF(0.0, 0.0)) {}
-
+	Cloneable* clone() const override { return new Door(*this); }
 	void launchAction();
 
 	std::string serialize(const char& divider) const override {

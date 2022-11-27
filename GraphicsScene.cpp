@@ -72,20 +72,20 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
             WaddleDee* t = new WaddleDee(vert2, QPointF(0,0));
-            GameLoop::getInstance().addEnemy(dynamic_cast<GameObject*>(t));
+            GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         }
         else if (me->button() == Qt::MiddleButton) {
             //Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);
             Terrain* t = new Terrain(snapped, objects::BARRIER, BARRIER_2, QPoint(0, 0), 1, 1);
-            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+            GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         } else {
             QPointF vert1 = QPointF(snapped.x(), snapped.y());
             //Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAINBLOCK, QPoint(0, 0), 1, 1);
-            TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN_25, 100, 100, TRANSPARENT);
+            TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN, 100, 100, TRANSPARENT);
             
             t->setVerts(vert1, vert2);
             //GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
-            GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+            GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         }
 
         
