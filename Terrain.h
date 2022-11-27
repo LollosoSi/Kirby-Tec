@@ -199,7 +199,7 @@ public:
 	QGraphicsLineItem* qli = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) {
 
-		//RigidBody::render(scene, shouldClear);
+		RigidBody::render(scene, shouldClear);
 		
 		//collider = QRectF(vert1.x(), vert1.y(), vert2.x() - vert1.x(), vert2.y() - vert1.y());
 
@@ -218,19 +218,20 @@ public:
 			pm->setScale(scale);
 
 			if (hitboxenabled) {
-				hitbox = scene.addRect(getCollider(), qp);
 				QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
 				QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
 				qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
 			}
 		}
-		else if (!visible) {
+		else if (!visible || shouldClear || (!hitboxenabled && qli)) {
 			scene.removeItem(pm);
+			delete pm;
 			pm = 0;
 
-			if (hitbox) {
-				scene.removeItem(hitbox);
-				hitbox = 0;
+			if (qli) {
+				scene.removeItem(qli);
+				qli = 0;
+				delete qli;
 			}
 
 		}
@@ -242,13 +243,11 @@ public:
 
 			if (hitboxenabled) {
 				scene.removeItem(qli);
+				delete qli;
 				QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
 				QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
 				qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
 
-				QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
-				scene.removeItem(hitbox);
-				hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 			}
 		}
 

@@ -19,21 +19,23 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 	 qp.setColor(Qt::blue);
 	 
 
-	 if (!visible || shouldClear) {
+	 if (!visible || shouldClear || (!hitboxenabled && hitbox)) {
 		 scene.removeItem(pm);
+		 delete pm;
 		 pm = 0;
 
 		 if (hitbox) {
 			 scene.removeItem(hitbox);
+			 delete hitbox;
 			 hitbox = 0;
-		}
+		 }
 
 		 //std::cout << "Cleared " << getObjectId() << "\n";
 		 return;
 	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());
-		if (hitboxenabled)
-			hitbox = scene.addRect(getCollider(), qp);
+		//if (hitboxenabled)
+		//	hitbox = scene.addRect(getCollider(), qp);
 	} 
 	
 	
@@ -46,8 +48,10 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 
 		 if (hitboxenabled) {
 			 QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
-
-			 scene.removeItem(hitbox);
+			 if (hitbox) {
+				 scene.removeItem(hitbox);
+				 delete hitbox;
+			 }
 			 hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
 		 }
 
