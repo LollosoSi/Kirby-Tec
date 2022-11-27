@@ -42,6 +42,9 @@ void Kirby::processAcceleration() {
 
 	}
 
+	if (isGrounded())
+		jumpsLeft = 2;
+
 	/*
 	if ((currentDegree != NO_SLOPE) && false) {
 		PB::Vec2Df rot = temp;
@@ -53,10 +56,12 @@ void Kirby::processAcceleration() {
 	*/
 
 
-	if (buttons[SPACE] && isGrounded() && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0)) {
+	if (buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
 		//buttons[SPACE] = false;
+		jumpsLeft--;
+		jumpCooldown = jumpCooldownDefault;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
-		jumpImpulse.remainingtime += 50;
+		jumpImpulse.remainingtime += 30;
 		KA::Sounds::getInstance().play("jump");
 		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
@@ -64,7 +69,10 @@ void Kirby::processAcceleration() {
 
 
 	if (jumpImpulse.remainingtime > 0) {
-		temp += jumpImpulse.value;
+		//temp += jumpImpulse.value;
+		velocity += jumpImpulse.value * (jumpImpulse.remainingtime/1000.0);
+		jumpImpulse.remainingtime = 0;
+
 		angle = 0;
 		//currentDegree = NO_SLOPE;
 	}
@@ -137,6 +145,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	if (e->key() == Qt::Key_Space) {
 		buttons[Kirby::SPACE] = isPressed;
+		if (!isPressed)
+			jumpCooldown = 0;
 	}
 	if (e->key() == Qt::Key_Q) {
 		buttons[Kirby::INHALE_EXHALE] = isPressed;

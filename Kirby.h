@@ -21,6 +21,9 @@ class Kirby : public RigidBody {
 
 protected:
 	int maxwalkspeed = 8;
+	uint jumpsLeft = 2;
+	const int jumpCooldownDefault = 300;
+	int jumpCooldown = 0;
 
 public:
 
@@ -62,7 +65,7 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ KA::Vec2Df{0,-120}, 0};
+	Impulse jumpImpulse{ KA::Vec2Df{0,-180}, 0};
 
 	void tick(double deltatime) {
 
@@ -70,10 +73,19 @@ public:
 
 		processAcceleration();
 		
-		if (jumpImpulse.remainingtime != 0) {
-			jumpImpulse.remainingtime -= deltatime * 1000.0;
+		if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
+			int time = deltatime * 1000.0;
+			jumpImpulse.remainingtime -= time;
 			if (jumpImpulse.remainingtime < 0)
 				jumpImpulse.remainingtime = 0;
+
+			if (jumpCooldown != 0) {
+				if (jumpCooldown < time)
+					jumpCooldown = 0;
+				else
+					jumpCooldown -= time;
+			}
+
 		}
 		
 		processAnimation();

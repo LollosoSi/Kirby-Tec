@@ -30,6 +30,8 @@
 // Handle Keys
 #include <QKeyEvent>
 
+#include <QPointF>
+
 /** Classe GameLoop
 * Responsabilita':
 * loop di gioco, chiamate a tick() per ogni tickableObject registrato, render() per ogni renderableObject registrato
@@ -45,6 +47,7 @@ class GameLoop : public QObject
 private:
 	std::string currentlevel = "";
 	
+	BaseGUI *pauseGUI;
 	
 public:
 	std::thread loopthread;
@@ -64,6 +67,7 @@ public:
 	void recalculateTicks(int target_ticks);
 	void recalculateFps(int target_fps);
 	
+	BaseGUI& getPauseGUI() { return *pauseGUI; }
 
 	const char obj_separator = '@';
 

@@ -20,15 +20,23 @@ public:
 
 class BaseGUI : public RigidBody, public ClickableObject {
 
-public:
+protected:
 	bool show = true;
-
 	Animator anim;
+	uint ZValue = 1;
+	std::vector<BaseGUI*> children;
 
-	BaseGUI(QPointF pos, TexManager::TexID id) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
+public:
+	
+	void setShow(bool value) {
+		show = value;
+		std::cout << "Setting show " << value << "\n";
+	}
+
+	BaseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
 		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
 		setObjectId(objects::HUD);
-
+		this->ZValue = ZValue;
 		rigiddrawscale = 0.936;
 	}
 
@@ -38,6 +46,14 @@ public:
 
 	void tick(double delta) {
 		anim.tick(delta);
+	}
+
+	void addChild(BaseGUI* element) {
+		children.push_back(element);
+	}
+
+	void removeChild(BaseGUI* element) {
+		
 	}
 
 	QPixmap getTexture() { return anim.getCurrentPixmap(); }
@@ -56,7 +72,7 @@ public:
 		qp.setColor(Qt::blue);
 
 
-		if (!show || shouldClear) {
+		if ((!show || shouldClear) && pm) {
 			scene.removeItem(pm);
 			pm = 0;
 
@@ -66,9 +82,9 @@ public:
 			}
 
 		}
-		else if (!pm) {
+		else if (!pm && show) {
 			pm = scene.addPixmap(getTexture());
-			pm->setZValue(1);
+			pm->setZValue(ZValue);
 			if (hitboxenabled)
 				hitbox = scene.addRect(getCollider(), qp);
 		}
@@ -97,6 +113,14 @@ public:
 	}
 
 };
+
+class PauseGUI : public BaseGUI {
+
+	PauseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : BaseGUI(pos, id, ZValue) {
+		
+	}
+};
+
 
 class HUD : public QWidget
 {

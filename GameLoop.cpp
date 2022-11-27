@@ -10,7 +10,7 @@
 #include "Definitions.h"
 
 GameLoop::GameLoop() {
-
+	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
 }
 
 GameLoop::~GameLoop() {
@@ -18,6 +18,8 @@ GameLoop::~GameLoop() {
 	stop();
 	if (loopthread.joinable())
 		loopthread.join();
+	
+	delete pauseGUI;
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -256,12 +258,11 @@ void GameLoop::tick(double deltatime) {
 		}
 
 	
-
 	KA::Sounds::getInstance().tick(deltatime);
 }
 
+// Optional setup: Multiplayer
 void GameLoop::loadNetworkData(){
-
 
 
 }
@@ -269,37 +270,27 @@ void GameLoop::loadNetworkData(){
 void GameLoop::start() {
 	running = true;
 	paused = false;
-	// KA::Sounds::instance()->play("Kirby_Adventure_theme");
-	
-	
-	if(!loopthread.joinable())
-		loopthread = std::thread(&GameLoop::loop, this);
 
-	
+	if(!loopthread.joinable()) loopthread = std::thread(&GameLoop::loop, this);
 }
 
 
 void GameLoop::pause(bool pause) {
 	paused = pause;
-	
+	pauseGUI->setShow(pause);
 }
 
 void GameLoop::stop() {
 	running = false;
 	paused = false;
-
-	//GameLoop::getInstance().saveGame("testout");
-	
 }
 
 void GameLoop::addKirby(GameObject* kb) {
-
 	KirbyInstance = kb;
 	addToTickable(dynamic_cast<TickableObject*>(kb));
 	addToRenderable(dynamic_cast<RenderableObject*>(kb));
 	addToCollidable(dynamic_cast<RigidBody*>(kb));
 	addToSerializable(dynamic_cast<Serializable*>(kb));
-
 }
 
 void GameLoop::addTerrain(GameObject* t) {
@@ -314,7 +305,6 @@ void GameLoop::addEnemy(GameObject * obj) {
 	addToCollidable(dynamic_cast<RigidBody*>(obj));
 	addToSerializable(dynamic_cast<Serializable*>(obj));
 }
-
 
 void GameLoop::addToTickable(TickableObject* tco) {
 	this->tickableObjectsQueue.push_back(tco);
@@ -368,11 +358,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed) {
 		
-		if (paused) {
-			start();
-		} else { 
-			pause(); 
-		}
+		pause(!paused); 
+		
 	}
 	// Save
 	if (e->key() == Qt::Key_K)
@@ -384,8 +371,23 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		KirbyInstance->setX(4); KirbyInstance->setY(-4);
 	}
 
+
 	if (e->isAutoRepeat())
 		return;
+
+	if (KirbyInstance)
+		KirbyInstance->keyPressEvent(e, isPressed);
+	else {
+		// Controls
+		if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
+			Camera::getInstance().setY(Camera::getInstance().getY() + 10);
+		if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
+			Camera::getInstance().setX(Camera::getInstance().getX() + 10);
+		if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
+			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
+		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
+			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
+	}
 
 
 	if (e->key() == Qt::Key_1 && !isPressed) {
@@ -442,22 +444,6 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 
 	
-	if(KirbyInstance)
-		KirbyInstance->keyPressEvent(e,isPressed);
-	else {
-		// Controls
-		if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
-			Camera::getInstance().setY(Camera::getInstance().getY()+10);
-		if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
-			Camera::getInstance().setX(Camera::getInstance().getX() + 10);
-		if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
-			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
-		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
-			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
-
-
-	}
-
 	//std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }
 

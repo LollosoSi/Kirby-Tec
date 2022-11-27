@@ -5,6 +5,8 @@
 
 inline double scalemultiplier = 5.5;
 
+inline double timescale = 1;
+
 inline double volumecoefficient = 0.01;
 
 inline double scale = 1;

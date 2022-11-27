@@ -13,19 +13,24 @@ namespace TexManager {
 
 	/** Elements must be caps */
 	enum TexID {
+		// Kirby base movements
 		KIRBY_STAND = 0,
 		KIRBY_WALK = 1,
 		KIRBY_ROLL = 2,
 		KIRBY_JUMP = 3,
 		KIRBY_STRAFE = 4,
 
+		// Base elements
 		TERRAIN = 5,
 		PARTICLE_1 = 6,
 
+		// Kirby sloped
 		KIRBY_SLOPED_25 = 7,
 		KIRBY_SLOPED_45 = 8,
 		KIRBY_SLOPED_25_LEFT = 9,
 		KIRBY_SLOPED_45_LEFT = 10,
+
+		// Sloped Terrain
 		TERRAIN_SLOPED_25 = 11,
 		TERRAIN_SLOPED_45 = 12,
 
@@ -34,6 +39,7 @@ namespace TexManager {
 		MARGINTERRAINR = 14,
 		SECONDTERRAINL = 15,
 		SECONDTERRAINR = 16,
+
 		// stage 2
 		TERRAIN2 = 17,
 		TERRAINBLOCK = 18,
