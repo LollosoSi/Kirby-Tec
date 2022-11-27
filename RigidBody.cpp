@@ -68,156 +68,96 @@ void RigidBody::tick(double deltatime){
 
 	double overridex = 0, overridey = 0;
 
-
-	//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
-
-	std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
-
-	KA::Vec2Df cp, cn;
-	double ct = 0, min_t = 1;
 	hit = 0;
-	// solve the collisions in correct order 
-	for (auto& obj: cs)
-		if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
-		{
-			objects::ObjectID obid = obj.first->getObjectId();
-			if (obid == objects::SLOPED_TERRAIN) {
-				
-				//std::cout << "Contact time with slope " << ct << "\n";
+	RigidBody* rb = 0;
+	if (!(rb = GameLoop::getInstance().getInside(this))) {
+		angle = 0;
+		//std::cout << "No hit " << "\n";
+		hit = 0;
+	} else {
+		//std::cout << "Inside\n";
 
-				hit = true;
-
-				QPointF center = getCollider().center();
-				KA::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
-				double m1 = -1/line2.x, q1 = center.y() - (center.x() * m1);
-				// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
-
-				QPointF intersection = findIntersection(m1, q1, line2.x, line2.y);
-				
-				double dist = pitagoricDistance(center, intersection);
-				if (dist < 0.3) {
-
-					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
-
-					// Our angle is actually calculated for the intersection! Corresponds to line2.x
-					angle = line2.x;
-
-					//std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
-
-
-					// Reset y
-					if(dist < 0.05)
-						overridey = (getY() - ((0.3-dist)));
-
-
-
-
-					velocity.y = velocity.y - (dist * deltatime);
-
-					// Remove perpendicular component
-
-					KA::Vec2Df rot = velocity;
-					double rad = -angle;
-					rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
-					rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
-					if (rot.y > 0)
-						rot.y = 0;
-
-					//rot.y -= 2*dist / pow(ct,2);
-
-					KA::Vec2Df rot2 = rot;
-					double rad2 = angle;
-					rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
-					rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
-					velocity = rot2;
-
-
-				}
-				else {
-					angle = 0;
-
-				}
-				//break;
-					
-			}
-			else if((obid == objects::TERRAIN || obid == objects::BARRIER) && ct >= 0 && ct < 0.05) {
-				hit = 1;
-				lastHitNormals = cn;
-				//currentDegree = NO_SLOPE;
-				angle = 0;
-				
-				if (cn.x != 0) {
-					overridex = (getX() + (getVelocity().x * ct));
-					velocity.x = -velocity.x / 7;
-				}
-				if (cn.y != 0) {
-					overridey = (getY() + (getVelocity().y * ct));
-					velocity.y = 0;
-				}
-				
-			} else if (obid == objects::PLATFORM && ct >= -0.15 && ct < 0.1) {
-				hit = 1;
-				lastHitNormals = cn;
-				//currentDegree = NO_SLOPE;
-				angle = 0;
-
-
-
-				if (cn.x != 0) {
-					overridex = (getX() + (getVelocity().x * ct));
-					velocity.x = -velocity.x / 7;
-				}
-				if (cn.y != 0) {
-					overridey = (getY() + (getVelocity().y * ct));
-					velocity.y = 0;
-				}
-
-			}
-			else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y != 1) {
-				hit = 1;
-				lastHitNormals = cn;
-				angle = 0;
-				if (cn.y != 0) {
-					overridey = (getY() + (getVelocity().y * ct));
-					velocity.y = 0;
-				}
-
-			}
-			
-			
-			
-
-			//std::cout << "Contact point at: " << cp.x << ":" << cp.y << " Contact time: " << ct << std::endl;
-			
-		
-			
+		if (rb->getObjectId() == objects::WATER) {
+			hit = 1;
+			velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;
+			//currentDegree = NO_SLOPE;
+			angle = 0;
 		}
-	
-		RigidBody* rb = 0;
-		
-			if(!(rb=GameLoop::getInstance().getInside(this))){
-				angle = 0;
-				//std::cout << "No hit " << "\n";
+
+		if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
+
+			//std::cout << "Contact time with slope " << ct << "\n";
+
+			hit = true;
+
+			QPointF center = getCollider().center();
+			KA::Vec2Df line2 = ((TerrainSloped*)rb)->getHitLine();
+			double m1 = -1 / line2.x, q1 = center.y() - (center.x() * m1);
+			// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
+
+			QPointF intersection = findIntersection(m1, q1, line2.x, line2.y);
+
+			double dist = pitagoricDistance(center, intersection);
+			if (dist < 0.3) {
+
+				//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
+
+				// Our angle is actually calculated for the intersection! Corresponds to line2.x
+				angle = line2.x;
+
+				//std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
+
+
+				// Reset y
+				//overridey = (getY() - ((0.4-dist)));
+
+				velocity.y = velocity.y - (dist * deltatime);
+
+				// Remove perpendicular component
+
+				KA::Vec2Df rot = velocity;
+				double rad = -angle;
+				rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
+				rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
+				if (rot.y > 0)
+					rot.y = 0;
+
+				//rot.y -= 2*dist / pow(ct,2);
+
+				KA::Vec2Df rot2 = rot;
+				double rad2 = angle;
+				rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
+				rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
+				velocity = rot2;
+
+
 			}
-			else {
-				//std::cout << "Inside\n";
 
-				if (rb->getObjectId() == objects::WATER) {
-					hit = 1;
-					lastHitNormals = cn;
-					velocity.y += -9.8 * pow(2,(abs(rb->getY() - getY()))) * deltatime;
-					//currentDegree = NO_SLOPE;
-					angle = 0;
-				}
+			//break;
 
-				if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
+		}
+
+	}
+
+	
+		//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
+		std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
+		KA::Vec2Df cp, cn;
+		double ct = 0, min_t = 1;
+		hit = 0;
+		// solve the collisions in correct order 
+		for (auto& obj : cs)
+			if (DynamicRectVsRect(getColliderRectF(), getVelocity(), obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t)
+			{
+				objects::ObjectID obid = obj.first->getObjectId();
+				if (obid == objects::SLOPED_TERRAIN) {
 
 					//std::cout << "Contact time with slope " << ct << "\n";
 
 					hit = true;
 
 					QPointF center = getCollider().center();
-					KA::Vec2Df line2 = ((TerrainSloped*)rb)->getHitLine();
+					KA::Vec2Df line2 = ((TerrainSloped*)obj.first)->getHitLine();
 					double m1 = -1 / line2.x, q1 = center.y() - (center.x() * m1);
 					// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
 
@@ -235,7 +175,8 @@ void RigidBody::tick(double deltatime){
 
 
 						// Reset y
-						//overridey = (getY() - ((0.4-dist)));
+						if (dist < 0.05)
+							overridey = (getY() - ((0.3 - dist)));
 
 
 
@@ -261,12 +202,69 @@ void RigidBody::tick(double deltatime){
 
 
 					}
+					else {
+						angle = 0;
 
+					}
 					//break;
 
 				}
+				else if ((obid == objects::TERRAIN || obid == objects::BARRIER) && ct >= 0 && ct < 0.05) {
+					hit = 1;
+					lastHitNormals = cn;
+					//currentDegree = NO_SLOPE;
+					angle = 0;
+
+					if (cn.x != 0) {
+						overridex = (getX() + (getVelocity().x * ct));
+						velocity.x = -velocity.x / 7;
+					}
+					if (cn.y != 0) {
+						overridey = (getY() + (getVelocity().y * ct));
+						velocity.y = 0;
+					}
+
+				}
+				else if (obid == objects::PLATFORM && ct >= -0.15 && ct < 0.1) {
+					hit = 1;
+					lastHitNormals = cn;
+					//currentDegree = NO_SLOPE;
+					angle = 0;
+
+
+
+					if (cn.x != 0) {
+						overridex = (getX() + (getVelocity().x * ct));
+						velocity.x = -velocity.x / 7;
+					}
+					if (cn.y != 0) {
+						overridey = (getY() + (getVelocity().y * ct));
+						velocity.y = 0;
+					}
+
+				}
+				else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y != 1) {
+					hit = 1;
+					lastHitNormals = cn;
+					angle = 0;
+					if (cn.y != 0) {
+						overridey = (getY() + (getVelocity().y * ct));
+						velocity.y = 0;
+					}
+
+				}
+
+
+
+
+				//std::cout << "Contact point at: " << cp.x << ":" << cp.y << " Contact time: " << ct << std::endl;
+
+
 
 			}
+	
+	
+		
 			
 		
 
