@@ -70,17 +70,17 @@ int main(int argc, char* argv[]) {
 
 	
 	BaseGUI* scoredigits[7]{
-		new BaseGUI(QPointF(0.29,0.90422), TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.322848, 0.90447), TexManager::HUD_NUM_1),
-		new BaseGUI(QPointF(0.354305,0.90447), TexManager::HUD_NUM_2),
-		new BaseGUI(QPointF(0.386589,0.90447), TexManager::HUD_NUM_3),
-		new BaseGUI(QPointF(0.418046,0.90447), TexManager::HUD_NUM_4),
-		new BaseGUI(QPointF(0.450331,0.90447), TexManager::HUD_NUM_5),
-		new BaseGUI(QPointF(0.481788,0.90447), TexManager::HUD_NUM_6)
+		new BaseGUI(QPointF(0.29,0.90422),		TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.322848,0.90447),	TexManager::HUD_NUM_1),
+		new BaseGUI(QPointF(0.354305,0.90447),	TexManager::HUD_NUM_2),
+		new BaseGUI(QPointF(0.386589,0.90447),	TexManager::HUD_NUM_3),
+		new BaseGUI(QPointF(0.418046,0.90447),	TexManager::HUD_NUM_4),
+		new BaseGUI(QPointF(0.450331,0.90447),	TexManager::HUD_NUM_5),
+		new BaseGUI(QPointF(0.481788,0.90447),	TexManager::HUD_NUM_6)
 	};
 	
 	BaseGUI* KHealth[6]{
-		new BaseGUI(QPointF(0.29,0.817408), TexManager::HUD_HEALTH),
+		new BaseGUI(QPointF(0.29,0.817408),		TexManager::HUD_HEALTH),
 		new BaseGUI(QPointF(0.322848,0.817408), TexManager::HUD_HEALTH),
 		new BaseGUI(QPointF(0.354305,0.817408), TexManager::HUD_HEALTH),
 		new BaseGUI(QPointF(0.386589,0.817408), TexManager::HUD_HEALTH),

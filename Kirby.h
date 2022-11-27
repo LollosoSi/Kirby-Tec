@@ -107,7 +107,7 @@ public:
 
 	}
 	
-	QPixmap getTexture() override { return animator.getCurrentPixmap((angle == 0 || !circa(velocity.x,0,0.1) ? mirror : ( (angle < 0) ? mirror : !mirror))); }
+	QPixmap getTexture() override { return animator.getCurrentPixmap((angle == 0 || !circa(velocity.x,0.05) ? mirror : ( angle < 0 ))); }
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
 

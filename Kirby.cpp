@@ -90,13 +90,14 @@ void Kirby::processAnimation() {
 			if (abs(velocity.x) < 2) {
 
 				double degang = toDegrees(angle);
-				std::cout << "Angle is " << degang << "\n";
+				std::cout << "Angle is " << degang << " Mirror: " << mirror << "\n";
 				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(
-					!angle ? KIRBY_STAND : 
-					circa(abs(degang), 28, 10) ? mirror ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT :
-					circa(abs(degang), 57, 10) ? mirror ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT :
+					!angle ? KIRBY_STAND :
+					circa(abs(degang), 28, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT)) :
+					circa(abs(degang), 57, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT)) :
 					KIRBY_STAND
 					));
+
 
 			}
 			else

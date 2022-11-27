@@ -189,13 +189,13 @@ TextureManager::TextureManager() {
 	};
 
 	textures[KIRBY_SLOPED_25_LEFT] = new Animatable{
-		new QPixmap[1]{kirbytex.copy(kirby_sloped_25_left)},
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_25_left).transformed(QTransform().scale(-1, 1))},
 		new float[1] {0.06f},
 		1
 	};
 
 	textures[KIRBY_SLOPED_45_LEFT] = new Animatable{
-		new QPixmap[1]{kirbytex.copy(kirby_sloped_45_left)},
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_45_left).transformed(QTransform().scale(-1, 1))},
 		new float[1] {0.06f},
 		1
 	};
