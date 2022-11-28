@@ -12,6 +12,8 @@
 #include "Door.h"
 #include "Enemy.h"
 
+#include <string>
+
 GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent) {
     //this->setBackgroundBrush(Qt::white);
 }
@@ -23,8 +25,12 @@ void GraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* mouseEvent) 
 
 
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-    qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
+    //qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
     QGraphicsScene::mouseMoveEvent(mouseEvent);
+    
+    if (mouseEvent->button() != Qt::MiddleButton)
+        return;
+
 
     int deltaX = (lm.x - mouseEvent->scenePos().x()), deltaY = (lm.y - mouseEvent->scenePos().y());
 
@@ -43,8 +49,11 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 #include "Terrain.h"
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-    qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
+    //qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
     QGraphicsScene::mousePressEvent(mouseEvent);
+
+    if (mouseEvent->button() != Qt::MiddleButton)
+        return;
 
     lm.x = mouseEvent->scenePos().x();
     lm.y = mouseEvent->scenePos().y();
@@ -54,7 +63,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) {
 
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
-    qDebug() << Q_FUNC_INFO << me->scenePos();
+    //qDebug() << Q_FUNC_INFO << me->scenePos();
     QGraphicsScene::mouseReleaseEvent(me);
 
     if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
@@ -67,7 +76,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         snapped.setY((double)(floor(snapped.y()) ));
 
 
-        std::cout << "Click coodrinates: " << snapped.x() << " : " << snapped.y() << "\n";
+        std::cout << "Click coordinates: " << snapped.x() << " : " << snapped.y() << "\n";
         
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
@@ -82,10 +91,14 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         } else {
             QPointF vert1 = QPointF(snapped.x(), snapped.y());
             //Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAINBLOCK, QPoint(0, 0), 1, 1);
-            TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN, 100, 100, TRANSPARENT);
             
-            t->setVerts(vert1, vert2);
-            //GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(t));
+            //TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN, 100, 100, TRANSPARENT);
+            //t->setVerts(vert1, vert2);
+            static std::string r[] = { "Andrea Roccaccino","Edoardo Evangelista", "Roberto Pittiglio", "Jason Canzoniero", "Alessandro Bria", "Federico Massaro" };
+            static int i = 0;
+            Kirby* t = new Kirby(snapped);
+            t->setName(r[i++]);
+
             GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         }
 

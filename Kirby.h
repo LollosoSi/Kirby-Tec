@@ -25,7 +25,12 @@ protected:
 	const int jumpCooldownDefault = 300;
 	int jumpCooldown = 0;
 
+	QGraphicsTextItem* name = 0;
+	std::string sname = "";
+
 public:
+
+	Kirby* setName(std::string nm) { sname = nm; return this; }
 
 	double kirbyscale = 0.8;
 
@@ -67,8 +72,6 @@ public:
 
 	void tick(double deltatime) {
 
-		
-
 		processAcceleration();
 		
 		if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
@@ -94,18 +97,7 @@ public:
 	}
 
 	int l = 0;
-	void render(QGraphicsScene& scene, bool shouldClear = false) override {
-		RigidBody::render(scene); 
-
-	double h = (3.0 * (Camera::getInstance().screenheight / scalefactor) / 7.0);
-	double w = (Camera::getInstance().screenwidth / scalefactor) / 4.0;
-	QPointF pos = (QPointF(getX() - w, getY() - h));
-	//std::cout << " # " << getY() << " : " << pos.y() << (!((l++) % 10) ? "\n" : "\t");
-	//Camera::getInstance().setX(pos.x());
-	//Camera::getInstance().setY(pos.y());
-	Camera::getInstance().goTo(pos);
-
-	}
+	void render(QGraphicsScene& scene, bool shouldClear = false) override;
 	
 	QPixmap getTexture() override { return animator.getCurrentPixmap((angle == 0 || !circa(velocity.x,0.05) ? mirror : ( angle < 0 ))); }
 

@@ -246,6 +246,10 @@ void GameLoop::start() {
 
 void GameLoop::pause(bool pause) {
 	paused = pause;
+
+	if (pause)
+		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
 }

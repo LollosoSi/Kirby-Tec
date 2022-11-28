@@ -413,7 +413,7 @@ TextureManager::TextureManager() {
 	// Load power pause explain textures
 	for (int i = 0; i < (HUD_PAUSE_WHEEL - HUD_PAUSE_BACKDROP) + 1; i++)
 		textures[HUD_PAUSE_BACKDROP + i] = new Animatable{
-			new QPixmap[1] {hudpausetex.copy(moveBy(hud_pause_backdrop, i % 5, floor(i / 5), hud_pause_backdrop.width(), hud_power_normal.height(), 3, 3))},
+			new QPixmap[1] {hudpausetex.copy(moveBy(hud_pause_backdrop, i % 5, floor(i / 5), hud_pause_backdrop.width(), hud_pause_backdrop.height(), 3, 3))},
 			new float[1] {0.2f},
 			1
 	};

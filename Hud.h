@@ -40,6 +40,11 @@ public:
 		rigiddrawscale = 0.936;
 	}
 
+	BaseGUI* setTexture(TexManager::TexID id) {
+		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
+		return this;
+	}
+
 	virtual bool processClick() {
 		return 0;
 	}

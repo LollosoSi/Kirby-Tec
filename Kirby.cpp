@@ -3,6 +3,10 @@
 #include "GameLoop.h"
 #include "Particle.h"
 
+#include <QString>
+#include <QFont>
+#include <QGraphicsTextItem>
+
 #include "Door.h"
 #include "CollisionDetection.h"
 
@@ -165,6 +169,37 @@ void Kirby::processAnimation() {
 	}
 }
 
+void Kirby::render(QGraphicsScene& scene, bool shouldClear) {
+	RigidBody::render(scene);
+
+	if (this == GameLoop::getInstance().KirbyInstance) {
+		double h = (3.0 * (Camera::getInstance().screenheight / scalefactor) / 7.0);
+		double w = (Camera::getInstance().screenwidth / scalefactor) / 4.0;
+		QPointF pos = (QPointF(getX() - w, getY() - h));
+		//std::cout << " # " << getY() << " : " << pos.y() << (!((l++) % 10) ? "\n" : "\t");
+		//Camera::getInstance().setX(pos.x());
+		//Camera::getInstance().setY(pos.y());
+		Camera::getInstance().goTo(pos);
+	}
+	if(sname.length() > 0) {
+		if (shouldClear) {
+			scene.removeItem(name);
+			delete name;
+			name = 0;
+		}
+		else {
+			if (!name) {
+				QFont qf("Times", 10, QFont::Bold);
+				
+				name = scene.addText(QString(sname.c_str()), qf);
+				name->setZValue(3);
+			}
+			if (name) {
+				name->setPos(Camera::worldToScreen(QPointF(getX(), getY()-0.6)));
+			}
+		}
+	}
+}
 
 void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	

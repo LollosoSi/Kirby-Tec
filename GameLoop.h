@@ -75,6 +75,8 @@ public:
 	BaseGUI& getPauseGUI() { return *pauseGUI; }
 	BaseGUI& getPauseSuggestion() { return *pauseSuggestion; }
 
+	GameObject* KirbyInstance = 0;
+
 	const char obj_separator = '@';
 
 	// Avvia / ferma loop
@@ -100,6 +102,7 @@ public:
 	std::vector<RigidBody*> getInside(RigidBody* rb, QRectF area = QRectF(0,0,0,0));
 	std::vector<std::pair<RigidBody*, double>> rayCast(RigidBody* startbody, QPointF ray);
 
+
 signals:
 	void pleaseRender(bool clearscene);
 
@@ -117,7 +120,7 @@ private:
 	void operator=(GameLoop const&) = delete;
 	//
 
-	GameObject* KirbyInstance = 0;
+	
 
 	// Internal calls for watchdog & methods
 	void loop();
