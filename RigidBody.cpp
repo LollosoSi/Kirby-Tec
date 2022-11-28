@@ -72,75 +72,79 @@ void RigidBody::tick(double deltatime){
 
 	double overridex = 0, overridey = 0;
 
-	hit = 0;
-	RigidBody* rb = 0;
-	if (!(rb = GameLoop::getInstance().getInside(this))) {
-		angle = 0;
-		//std::cout << "No hit " << "\n";
+	std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
+	if (!inside.empty()) {
+
 		hit = 0;
-	} else {
-		//std::cout << "Inside\n";
-
-		if (rb->getObjectId() == objects::WATER) {
-			hit = 1;
-			velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;
-			//currentDegree = NO_SLOPE;
+		RigidBody* rb = 0;
+		if (!(rb = inside.front())) {
 			angle = 0;
+			//std::cout << "No hit " << "\n";
+			hit = 0;
 		}
+		else {
+			//std::cout << "Inside\n";
 
-		if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
-
-			//std::cout << "Contact time with slope " << ct << "\n";
-
-			hit = true;
-
-			QPointF center = getCollider().center();
-			KA::Vec2Df line2 = ((TerrainSloped*)rb)->getHitLine();
-			double m1 = -1 / line2.x, q1 = center.y() - (center.x() * m1);
-			// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
-
-			QPointF intersection = findIntersection(m1, q1, line2.x, line2.y);
-
-			double dist = pitagoricDistance(center, intersection);
-			if (dist < 0.3) {
-
-				//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
-
-				// Our angle is actually calculated for the intersection! Corresponds to line2.x
-				angle = line2.x;
-
-				//std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
-
-
-				// Reset y
-				//overridey = (getY() - ((0.4-dist)));
-
-				velocity.y = velocity.y - (dist * deltatime);
-
-				// Remove perpendicular component
-
-				KA::Vec2Df rot = velocity;
-				double rad = -angle;
-				rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
-				rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
-				if (rot.y > 0)
-					rot.y = 0;
-
-				//rot.y -= 2*dist / pow(ct,2);
-
-				KA::Vec2Df rot2 = rot;
-				double rad2 = angle;
-				rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
-				rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
-				velocity = rot2;
-
-
+			if (rb->getObjectId() == objects::WATER) {
+				hit = 1;
+				velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;
+				//currentDegree = NO_SLOPE;
+				angle = 0;
 			}
 
-			//break;
+			if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
 
+				//std::cout << "Contact time with slope " << ct << "\n";
+
+				hit = true;
+
+				QPointF center = getCollider().center();
+				KA::Vec2Df line2 = ((TerrainSloped*)rb)->getHitLine();
+				double m1 = -1 / line2.x, q1 = center.y() - (center.x() * m1);
+				// std::cout << "Angle: " << toDegrees(line2.x) << std::endl;
+
+				QPointF intersection = findIntersection(m1, q1, line2.x, line2.y);
+
+				double dist = pitagoricDistance(center, intersection);
+				if (dist < 0.3) {
+
+					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
+
+					// Our angle is actually calculated for the intersection! Corresponds to line2.x
+					angle = line2.x;
+
+					//std::cout << "Distance: " << pitagoricDistance(center, intersection) << "\n";
+
+
+					// Reset y
+					//overridey = (getY() - ((0.4-dist)));
+
+					velocity.y = velocity.y - (dist * deltatime);
+
+					// Remove perpendicular component
+
+					KA::Vec2Df rot = velocity;
+					double rad = -angle;
+					rot.x = (velocity.x * cos(rad)) - (velocity.y * sin(rad));
+					rot.y = (rot.x * sin(rad)) + (rot.y * cos(rad));
+					if (rot.y > 0)
+						rot.y = 0;
+
+					//rot.y -= 2*dist / pow(ct,2);
+
+					KA::Vec2Df rot2 = rot;
+					double rad2 = angle;
+					rot2.x = (rot.x * cos(rad2)) - (rot.y * sin(rad2));
+					rot2.y = (rot.x * sin(rad2)) + (rot.y * cos(rad2));
+					velocity = rot2;
+
+
+				}
+
+				//break;
+
+			}
 		}
-
 	}
 
 	

@@ -55,10 +55,12 @@ public:
 	std::string		_music;
 	
 	std::vector<RenderableObject*> renderableObjects;
+	std::vector<RenderableObject*> renderableObjectsToBeDeleted;
 
 	std::vector<RenderableObject*> GUIItems;
 
 	void addElement(GameObject* item);
+	void removeElement(GameObject* item);
 
 	void reload();
 	
@@ -93,7 +95,8 @@ public:
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
-	RigidBody* getInside(RigidBody* rb);
+	std::vector<RigidBody*> getInside(RigidBody* rb, QRectF area = QRectF(0,0,0,0));
+	std::vector<std::pair<RigidBody*, double>> rayCast(RigidBody* startbody, QPointF ray);
 
 signals:
 	void pleaseRender(bool clearscene);
@@ -132,7 +135,6 @@ private:
 	std::vector<Serializable*> serializableObjects;
 	std::vector<RigidBody*> collidableObjects;
 	std::vector<Particle*> particleObjects;
-
 	
 
 	// Elementi in fila

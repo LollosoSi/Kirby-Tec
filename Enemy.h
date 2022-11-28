@@ -154,18 +154,5 @@ public:
 		animator.setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::BRONTOBURT));
 	}
 	Cloneable* clone() const override { return new BrontoBurt(*this); }
-	void tick(double delta) override
-	{
-
-		time += delta;
-		velocity.x = -1;
-		velocity.y = Y_accel*(sin(2 * M_PI * 0.6 * time));
-
-		if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
-			accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
-			//velocity.x = 0;
-			//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
-		}
-		Enemy::tick(delta);
-	}
+	void tick(double delta) override;
 };

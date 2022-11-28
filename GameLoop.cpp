@@ -29,12 +29,14 @@ void GameLoop::recalculateFps(int target_fps) {
 	min_delta_millis_fps = target_fps != 0 ? 1000 / target_fps : 0;
 }
 
-RigidBody* GameLoop::getInside(RigidBody* rb) {
+std::vector<RigidBody*> GameLoop::getInside(RigidBody* rb, QRectF area) {
+	bool usearea = area.width() != 0;
+	std::vector<RigidBody*> objs;
 	for (RigidBody* obj : collidableObjects)
 		if (obj != rb && obj->getObjectId() != objects::BACKGROUND)
-			if (rb->getCollider().intersects(obj->getCollider()))
-				return obj;
-	return 0;
+			if ((usearea ? area : rb->getCollider()).intersects(obj->getCollider()))
+				objs.push_back(obj);
+	return objs;
 }
 
 void GameLoop::loop() {
@@ -124,6 +126,37 @@ void GameLoop::addElement(GameObject* obj) {
 
 	delete[] chars;
 }
+
+void GameLoop::removeElement(GameObject* obj) {
+	bool* chars = obj->getObjectCharacteristics();
+	if (chars[0]) {
+		std::vector<TickableObject*>::iterator it = std::find(tickableObjects.begin(), tickableObjects.end(), dynamic_cast<TickableObject*>(obj));
+		if (it != tickableObjects.end())
+			tickableObjects.erase(it);
+	}
+	if (chars[1]) {
+		std::vector<RenderableObject*>::iterator it = std::find(renderableObjects.begin(), renderableObjects.end(), dynamic_cast<RenderableObject*>(obj));
+		if (it != renderableObjects.end()) {
+			renderableObjectsToBeDeleted.push_back(*it);
+			renderableObjects.erase(it);
+		}
+	}
+	if (chars[2]) {
+		std::vector<RigidBody*>::iterator it = std::find(collidableObjects.begin(), collidableObjects.end(), dynamic_cast<RigidBody*>(obj));
+		if (it != collidableObjects.end())
+			collidableObjects.erase(it);
+	}
+	if (chars[3]) {
+		std::vector<Serializable*>::iterator it = std::find(serializableObjects.begin(), serializableObjects.end(), dynamic_cast<Serializable*>(obj));
+		if (it != serializableObjects.end())
+			serializableObjects.erase(it);
+	}
+	if (chars[4])
+		KirbyInstance = 0;
+
+	delete[] chars;
+}
+
 
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 
@@ -361,6 +394,28 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
 	//std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }
+
+std::vector<std::pair<RigidBody*, double>> GameLoop::rayCast(RigidBody* startbody, QPointF ray) {
+
+	KA::Vec2Df testvelocity{(double)ray.x(), (double)ray.y()};
+
+	KA::Vec2Df cp, cn;
+	double ct = 0, min_t = INFINITY;
+	std::vector<std::pair<RigidBody*, double>> sortedByContactTime;
+	for (RigidBody* obj : collidableObjects)
+		if (obj != startbody)
+			if (DynamicRectVsRect(startbody->getColliderRectF(), testvelocity, obj->getColliderRectF(), cp, cn, ct))
+				sortedByContactTime.push_back({ obj, ct });
+	std::sort(sortedByContactTime.begin(), sortedByContactTime.end(),
+		[this](const std::pair<RigidBody*, double>& a, const std::pair<RigidBody*, double>& b) {
+			// if contact time is the same, give priority to nearest object
+			return a.second != b.second ? a.second < b.second : pitagoricDistance(a.first->getCollider().center(), b.first->getCollider().center()) < 0;
+		});
+
+	return sortedByContactTime;
+
+}
+
 
 std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* rb) {
 

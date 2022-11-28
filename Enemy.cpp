@@ -47,3 +47,17 @@ void PoppyBrosJr::tick(double delta)
 
 	Enemy::tick(delta);
 }
+
+void BrontoBurt::tick(double delta) {
+
+	time += delta;
+	accel.x = -1;
+	accel.y = Y_accel * (sin(2 * M_PI * 0.6 * time));
+
+	if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+		accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+		//velocity.x = 0;
+		//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+	}
+	Enemy::tick(delta);
+}

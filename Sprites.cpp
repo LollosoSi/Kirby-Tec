@@ -210,11 +210,11 @@ TextureManager::TextureManager() {
 		new QPixmap[4]{
 			kirbytex.copy(kirby_inhale),
 			kirbytex.copy(moveBy(kirby_inhale, 1)),
-			kirbytex.copy(moveBy(kirby_inhale2, 2)),
-			kirbytex.copy(moveBy(kirby_inhale3, 3)),
+			kirbytex.copy(kirby_inhale2),
+			kirbytex.copy(kirby_inhale3),
 		},
-		new float[4] {0.2f , 0.2f , 0.2f , 0.2f},
-		1
+		new float[4] {0.2f , 0.4f , 0.5f , 0.1f},
+		3
 	};
 
 	textures[KIRBY_EXHALE] = new Animatable{
@@ -225,7 +225,7 @@ TextureManager::TextureManager() {
 		kirbytex.copy(moveBy(kirby_exhale3, 3)),
 		},
 		new float[4] {0.2f , 0.2f , 0.2f , 0.2f},
-		1
+		4
 	};
 
 	textures[KIRBY_SPIT_CLOUD] = new Animatable{
