@@ -99,8 +99,6 @@ target_sources(${project}
 		Enemy.h
 		Door.h
 		Door.cpp
-		Levelbuilder.cpp
-		Levelbuilder.h
 		NetworkElement.h
 )
 
