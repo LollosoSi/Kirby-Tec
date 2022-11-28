@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 	//	GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
 	//}
 
-	Door d(QPoint(0, 0), std::string("levels/level3"));
+	Door d(QPoint(0, 0), std::string("levels/lobby"));
 	d.launchAction();
 	
 	

@@ -47,7 +47,8 @@ class GameLoop : public QObject
 private:
 	std::string currentlevel = "";
 	
-	BaseGUI *pauseGUI;
+	BaseGUI* pauseGUI;
+	BaseGUI* pauseSuggestion;
 	
 public:
 	std::thread loopthread;
@@ -70,6 +71,7 @@ public:
 	void recalculateFps(int target_fps);
 	
 	BaseGUI& getPauseGUI() { return *pauseGUI; }
+	BaseGUI& getPauseSuggestion() { return *pauseSuggestion; }
 
 	const char obj_separator = '@';
 

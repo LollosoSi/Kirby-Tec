@@ -96,6 +96,7 @@ void MainWindow::pleaseRender(bool clearscene) {
         item->render(*scene, clearscene);
     
     GameLoop::getInstance().getPauseGUI().render(*scene, clearscene);
+    GameLoop::getInstance().getPauseSuggestion().render(*scene, clearscene);
 
     if (scene->items().size() == 0 || clearscene) {
         scene->clear();

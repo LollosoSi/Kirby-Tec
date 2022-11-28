@@ -11,6 +11,7 @@
 
 GameLoop::GameLoop() {
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
+	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 }
 
 GameLoop::~GameLoop() {
@@ -216,6 +217,7 @@ void GameLoop::start() {
 void GameLoop::pause(bool pause) {
 	paused = pause;
 	pauseGUI->setShow(pause);
+	pauseSuggestion->setShow(pause);
 }
 
 void GameLoop::stop() {
