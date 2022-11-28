@@ -19,5 +19,12 @@ bool* GameObject::getObjectCharacteristics() {
 		instanceof<Kirby, GameObject>(this)
 	};
 
+	if(getObjectId() == objects::PLATFORM){
+		std::cout << "Platform: ";
+		for (int i = 0; i<5; i++)
+			std::cout << " " << characteristics[i];
+		std::cout << "\n";
+	}
+
 	return characteristics;
 }

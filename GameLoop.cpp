@@ -1,12 +1,9 @@
 #include "GameLoop.h"
-
 #include "Vec2D.h"
 #include "Camera.h"
 #include "CollisionDetection.h"
 #include "Sounds.h"
 #include "Sprites.h"
-#include "LevelBuilder.h"
-
 #include "Definitions.h"
 
 GameLoop::GameLoop() {
