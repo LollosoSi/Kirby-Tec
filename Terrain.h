@@ -276,8 +276,8 @@ public:
 		velocity.y = (amplitude * sin(omega * time));
 
 		//velocity.y = accel.y * delta;
-		RigidBody::tick(delta);
-		//setY(startpos.y() + (velocity.y*delta));
+		//RigidBody::tick(delta);
+		setY(startpos.y() + (amplitude * sin(omega * time)));
 	}
 
 	std::string serialize(const char& divider) const override {
