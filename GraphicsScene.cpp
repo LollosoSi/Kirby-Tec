@@ -12,6 +12,7 @@
 #include "Door.h"
 #include "Enemy.h"
 
+#include "ObjectsHolder.h"
 #include <string>
 
 GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent) {
@@ -88,7 +89,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
            // Terrain* t = new Terrain(snapped, objects::BARRIER, BARRIER_2, QPoint(0, 0), 1, 1);
             MovablePlatform* t = new MovablePlatform(snapped);
             GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
-        } else {
+        } 
+        //else {
             QPointF vert1 = QPointF(snapped.x(), snapped.y());
             //Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAINBLOCK, QPoint(0, 0), 1, 1);
             
@@ -96,11 +98,13 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
             //t->setVerts(vert1, vert2);
             static std::string r[] = { "Andrea Roccaccino","Edoardo Evangelista", "Roberto Pittiglio", "Jason Canzoniero", "Alessandro Bria", "Federico Massaro" };
             static int i = 0;
-            Kirby* t = new Kirby(snapped);
-            t->setName(r[i++]);
+            GameObject* t = ObjectsHolder::getInstance().getObject(objects::KIRBY);
+            (dynamic_cast<Kirby*>(t))->setName(r[i++]);
+            t->setX(snapped.x());
+            t->setY(snapped.y());
 
-            GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
-        }
+            GameLoop::getInstance().addElement(t);
+       // }
 
         
 
