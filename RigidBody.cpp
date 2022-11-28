@@ -229,14 +229,14 @@ void RigidBody::tick(double deltatime){
 					}
 
 				}
-				else if (obid == objects::PLATFORM && ct >= -0.15 && ct < 0.1) {
+				else if (obid == objects::PLATFORM && ct >= -0.3 && ct < 0.15) {
 					hit = 1;
 					lastHitNormals = cn;
 					//currentDegree = NO_SLOPE;
 					angle = 0;
 
-
-
+					
+					
 					if (cn.x != 0) {
 						overridex = (getX() + (getVelocity().x * ct));
 						velocity.x = -velocity.x / 7;
@@ -244,7 +244,14 @@ void RigidBody::tick(double deltatime){
 					if (cn.y != 0) {
 						overridey = (getY() + (getVelocity().y * ct));
 						velocity.y = 0;
+						if (cn.y == 1) {
+							velocity.y = (obj.first)->getVelocity().y;
+							accel.y = 0;
+						}
 					}
+
+					
+
 
 				}
 				else if (obid == objects::STEPUP && ct >= 0 && ct < 0.05 && cn.y != 1) {

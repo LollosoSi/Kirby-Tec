@@ -23,17 +23,17 @@ public:
 
 };
 
+
+
 class Terrain : public RigidBody {
 
 protected:
-	TexID tid;
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
+	TexID tid = TexManager::KIRBY_STAND;
 
 public:
 	Terrain(QPointF pos = QPointF(0,0), QPointF offset = QPointF(0, 0), double sizex = 1, double sizey = 1, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : RigidBody(pos, offset, sizex, sizey) {
-		setObjectId(id);
 		this->tid = tid;
+		setObjectId(id);
 	}
 	Terrain(objects::ObjectID id, TexID tid = TERRAIN) : Terrain(QPointF(0, 0), QPointF(0,0), 1, 1, id, tid) {}
 	~Terrain() {}
@@ -85,7 +85,7 @@ public:
 
 
 	}
-	Background(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Background(pos, offset, sizeX, sizeY, id, tid) {}
+	Background(QPointF pos, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Background(pos, offset, sizeX, sizeY, id, tid) {}
 	Background(objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Background(QPointF(0, 0), id, tid) {}
 	~Background() {}
 
@@ -122,9 +122,6 @@ public:
 
 
 class TerrainSloped : public Terrain {
-
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
 
 public:
 	
@@ -259,31 +256,28 @@ public:
 
 class MovablePlatform : public Terrain {
 
-protected:
-	TexID tid;
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
-
 public:
-
-	double time = 0, omega = 2 * M_PI * 0.2;
+	double time = 0, omega = 2 * M_PI * 0.12;
 	double amplitude = 1.0;
 	QPointF startpos = QPointF(0,0);
 
-	MovablePlatform(QPointF pos, QPointF offset, double sizex, double sizey, objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN) : Terrain(pos, offset, sizex, sizey, id, tid) {
+	MovablePlatform(QPointF pos, QPointF offset = QPointF(0,0), double sizex = 1, double sizey = 1, objects::ObjectID id = objects::PLATFORM, TexID textureid = TexManager::PLATFORMCENTER) : Terrain(pos, offset, sizex, sizey, id, textureid) {
 		//setObjectId(id);
 		//this->tid = tid;
 		startpos = pos;
 	}
-	MovablePlatform(QPointF pos, objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : MovablePlatform(pos, offset, sizeX, sizeY, id, tid) {}
-	MovablePlatform(objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN) : MovablePlatform(QPointF(0, 0), id, tid) {}
+	MovablePlatform(TexID textureid = TexManager::PLATFORMCENTER) : MovablePlatform(QPointF(0, 0), QPointF(0,0), 1,1, objects::PLATFORM, textureid) {}
 	~MovablePlatform() {}
 
-	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
+	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(this->tid)->pixmaps[0]; }
 
 	void tick(double delta) override {
 		time += delta;
-		setY(startpos.y() + (amplitude*sin(omega*time)));
+		velocity.y = (amplitude * sin(omega * time));
+
+		//velocity.y = accel.y * delta;
+		RigidBody::tick(delta);
+		//setY(startpos.y() + (velocity.y*delta));
 	}
 
 	std::string serialize(const char& divider) const override {

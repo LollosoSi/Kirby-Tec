@@ -77,7 +77,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         else if (me->button() == Qt::MiddleButton) {
             //Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);
            // Terrain* t = new Terrain(snapped, objects::BARRIER, BARRIER_2, QPoint(0, 0), 1, 1);
-            MovablePlatform* t = new MovablePlatform(snapped, objects::BARRIER, BARRIER_2, QPoint(0, 0), 1, 1);
+            MovablePlatform* t = new MovablePlatform(snapped);
             GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         } else {
             QPointF vert1 = QPointF(snapped.x(), snapped.y());
