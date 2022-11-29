@@ -49,6 +49,7 @@ private:
 	
 	BaseGUI* pauseGUI;
 	BaseGUI* pauseSuggestion;
+	BaseGUI* startGUI;
 	
 public:
 	std::thread loopthread;
@@ -74,6 +75,7 @@ public:
 	
 	BaseGUI& getPauseGUI() { return *pauseGUI; }
 	BaseGUI& getPauseSuggestion() { return *pauseSuggestion; }
+	BaseGUI& getStartGUI() { return *startGUI; }
 
 	GameObject* KirbyInstance = 0;
 
@@ -102,6 +104,7 @@ public:
 	std::vector<RigidBody*> getInside(RigidBody* rb, QRectF area = QRectF(0,0,0,0));
 	std::vector<std::pair<RigidBody*, double>> rayCast(RigidBody* startbody, QPointF ray);
 
+	void showStart();
 
 signals:
 	void pleaseRender(bool clearscene);

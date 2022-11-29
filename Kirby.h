@@ -17,8 +17,6 @@ struct Impulse {
 
 class Kirby : public RigidBody {
 
-	Animator animator;
-
 protected:
 	int maxwalkspeed = 8;
 	uint jumpsLeft = 2;
@@ -28,21 +26,26 @@ protected:
 	QGraphicsTextItem* name = 0;
 	std::string sname = "";
 
+	bool isThisTheKirbyInstance();
+
 public:
 
 	Kirby* setName(std::string nm) { sname = nm; return this; }
 
-	double kirbyscale = 0.8;
+	const double kirbyscale = 0.8;
 
-	Kirby(const QPointF pos) : RigidBody(pos, QPointF(0,0), 1 * kirbyscale, 1 * kirbyscale	) {
-		animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK));
+	Kirby(QPointF pos = QPointF(0.0, 0.0)) : RigidBody(pos, QPointF(0,0), 1 * kirbyscale, 1 * kirbyscale) {
 		setObjectId(objects::KIRBY);
 		rigiddrawscale = kirbyscale;
+		animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
+		setZValue(4);
+		setSizeX(kirbyscale);
+		setSizeY(kirbyscale);
 	}
 
-	Kirby() : Kirby(QPointF(0.0, 0.0)) {}
+	
 
-	Cloneable* clone() const override { return new Kirby(*this); }
+	Cloneable* clone() const override { return new Kirby(QPointF(getX(), getY())); }
 
 	virtual void setX(const double x) override {
 		RigidBody::setX(x);
@@ -51,10 +54,8 @@ public:
 		RigidBody::setY(y);
 	}
 
-	Kirby(const Kirby& go) {
-		this->setX(go.getX());
-		this->setY(go.getY());
-		this->setObjectId(go.getObjectId());
+	Kirby(const Kirby& go) : Kirby(QPointF(go.getX(), go.getY())){
+		setObjectId(objects::KIRBY);
 	}
 	
 	const static uint8_t buttonsize = 10;
@@ -90,7 +91,7 @@ public:
 		}
 		
 		processAnimation();
-		animator.tick(deltatime);
+		animator->tick(deltatime);
 		RigidBody::tick(deltatime);
 
 		
@@ -99,7 +100,9 @@ public:
 	int l = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) override;
 	
-	QPixmap getTexture() override { return animator.getCurrentPixmap((angle == 0 || !circa(velocity.x,0.05) ? mirror : ( angle < 0 ))); }
+	QPixmap getTexture() override {
+		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x,0.05) ? mirror : ( angle < 0 )));
+	}
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
 

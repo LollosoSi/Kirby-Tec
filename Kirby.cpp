@@ -10,6 +10,10 @@
 #include "Door.h"
 #include "CollisionDetection.h"
 
+
+bool Kirby::isThisTheKirbyInstance() { return dynamic_cast<Kirby*>(GameLoop::getInstance().KirbyInstance) == this; }
+
+
 void Kirby::processAcceleration() {
 
 	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
@@ -33,7 +37,7 @@ void Kirby::processAcceleration() {
 						std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
 				}
 		}*/
-		if (animator.isPlayingOneShot()) {
+		if (animator->isPlayingOneShot()) {
 			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
 			for (auto* item : objs) {
 				if (instanceof<Enemy, RigidBody>(item)) {
@@ -50,7 +54,7 @@ void Kirby::processAcceleration() {
 
 	}
 
-	if (getY() > 15) {
+	if (getY() > 15 && isThisTheKirbyInstance()) {
 		std::thread t(
 			[]() {
 				GameLoop::getInstance().reload(); 
@@ -106,8 +110,8 @@ void Kirby::processAcceleration() {
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 30;
 		KA::Sounds::getInstance().play("jump");
-		this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
-		this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
+		this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+		this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 	}
 
 
@@ -127,14 +131,14 @@ void Kirby::processAcceleration() {
 
 void Kirby::processAnimation() {
 
-	if (!animator.isPlayingOneShot()) {
+	if (!animator->isPlayingOneShot()) {
 		if (isGrounded()) {
 
 			if (abs(velocity.x) < 2) {
 
 				double degang = toDegrees(angle);
 				//std::cout << "Angle is " << degang << " Mirror: " << mirror << "\n";
-				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(
 					!angle ? KIRBY_STAND :
 					circa(abs(degang), 28, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT)) :
 					circa(abs(degang), 57, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT)) :
@@ -144,7 +148,7 @@ void Kirby::processAnimation() {
 
 			}
 			else
-				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
 
 			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 1)) {
 				if (!(rand() % 2)) {
@@ -153,18 +157,18 @@ void Kirby::processAnimation() {
 					p->movement.y *= (velocity.mag() * 5);
 					p->movement.x = 0;
 				}
-				this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
 			}
 
 		}
 		else {
-			this->animator.setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 
 		}
 	
 	
 		if (buttons[Kirby::INHALE_ENEMIES]) {
-			this->animator.playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 		}
 	}
 }
@@ -172,7 +176,7 @@ void Kirby::processAnimation() {
 void Kirby::render(QGraphicsScene& scene, bool shouldClear) {
 	RigidBody::render(scene);
 
-	if (this == GameLoop::getInstance().KirbyInstance) {
+	if (isThisTheKirbyInstance()) {
 		double h = (3.0 * (Camera::getInstance().screenheight / scalefactor) / 7.0);
 		double w = (Camera::getInstance().screenwidth / scalefactor) / 4.0;
 		QPointF pos = (QPointF(getX() - w, getY() - h));

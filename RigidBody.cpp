@@ -34,6 +34,7 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 		 return;
 	 }else if (!pm) {
 		pm = scene.addPixmap(getTexture());
+		pm->setZValue(getZValue());
 		//if (hitboxenabled)
 		//	hitbox = scene.addRect(getCollider(), qp);
 	} 
@@ -72,31 +73,24 @@ void RigidBody::tick(double deltatime){
 
 	double overridex = 0, overridey = 0;
 
+	bool hasHitSlope = false;
+	hit = 0;
 	std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
-	if (!inside.empty()) {
-
-		hit = 0;
-		RigidBody* rb = 0;
-		if (!(rb = inside.front())) {
-			angle = 0;
-			//std::cout << "No hit " << "\n";
-			hit = 0;
-		}
-		else {
+	for(auto* item : inside){
+		
+		RigidBody* rb = item;
+		
 			//std::cout << "Inside\n";
 
 			if (rb->getObjectId() == objects::WATER) {
 				hit = 1;
 				velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;
-				//currentDegree = NO_SLOPE;
 				angle = 0;
 			}
 
 			if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
 
-				//std::cout << "Contact time with slope " << ct << "\n";
-
-				hit = true;
+				hasHitSlope = 1;
 
 				QPointF center = getCollider().center();
 				KA::Vec2Df line2 = ((TerrainSloped*)rb)->getHitLine();
@@ -107,6 +101,12 @@ void RigidBody::tick(double deltatime){
 
 				double dist = pitagoricDistance(center, intersection);
 				if (dist < 0.3) {
+
+					
+
+					//std::cout << "Contact time with slope " << ct << "\n";
+
+					hit = true;
 
 					//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
 
@@ -141,12 +141,14 @@ void RigidBody::tick(double deltatime){
 
 				}
 
-				//break;
-
-			}
+			
 		}
 	}
 
+	if (inside.empty()) {
+		angle = 0;
+		hit = 0;
+	}
 	
 		//std::cout << "Accx: " <<  accel.x << " velx: " << velocity.x << std::endl;
 		std::vector<std::pair<RigidBody*, double>> cs = GameLoop::getInstance().findCollisions(this);
@@ -173,6 +175,8 @@ void RigidBody::tick(double deltatime){
 
 					double dist = pitagoricDistance(center, intersection);
 					if (dist < 0.3) {
+
+						hasHitSlope = 1;
 
 						//currentDegree = (obid == objects::SLOPED_TERRAIN_25) ? SLOPED_25 :(obid == objects::SLOPED_TERRAIN_45) ? SLOPED_45 :(obid == objects::SLOPED_TERRAIN_225) ? SLOPED_225 : SLOPED_205;
 
@@ -281,7 +285,8 @@ void RigidBody::tick(double deltatime){
 	
 		
 			
-		
+			if (!hasHitSlope)
+				angle = 0;
 
 	if (angle != 0) {
 
