@@ -182,7 +182,11 @@ public:
 	static TextureManager& getInstance() { static TextureManager instance; return instance; }
 	~TextureManager();
 
-	Animatable* getAnimatable(unsigned int position = 0) { return textures[position];}
+	Animatable* getAnimatable(unsigned int position = 0) {
+		if (!textures[position]) {
+			std::cout << "Returned nullptr as texture. This is BAD\n";
+		}
+		return textures[position];}
 	//QPixmap getLevelBackground(const std::string& level);
 
 private:
@@ -210,7 +214,7 @@ private:
 	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 	
 
-	Animatable* textures[TEXTURE_COUNT];
+	Animatable* textures[TEXTURE_COUNT]{0};
 	
 
 

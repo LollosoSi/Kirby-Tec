@@ -506,7 +506,15 @@ TextureManager::TextureManager() {
 
 // Destructor
 TextureManager::~TextureManager() {
-	for (Animatable* a : textures) { delete[] a->pixmaps; delete[] a->duration; delete a; }
+	for (int i = 0; i < TexManager::TEXTURE_COUNT; i++) {
+		if (!textures[i]) {
+			std::cout << "Element " << i << " is not assigned or loaded\n";
+			continue;
+		}
+		delete [] textures[i]->pixmaps;
+		delete [] textures[i]->duration;
+		delete textures[i];
+	}
 	//delete [] textures;
 }
 
