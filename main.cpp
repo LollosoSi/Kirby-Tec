@@ -56,12 +56,12 @@ int main(int argc, char* argv[]) {
 	//}
 
 	Door d(QPoint(0, 0), std::string("levels/lobby"));
-	d.launchAction();
-	
-	
+	d.launchAction();	
 
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);
+
+	GameLoop::getInstance().showStart();
 
 	BaseGUI view(QPointF(0, 0.757f), TexManager::HUD_VIEW);
 	//BaseGUI state(QPointF(0.579f, 0.757f + (0.151f * (1-0.757f))), TexManager::HUD_BYEBYE)

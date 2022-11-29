@@ -9,6 +9,8 @@
 GameLoop::GameLoop() {
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
+	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 3);
+	startGUI->setDrawScale(0.23);
 }
 
 GameLoop::~GameLoop() {
@@ -18,6 +20,15 @@ GameLoop::~GameLoop() {
 		loopthread.join();
 	
 	delete pauseGUI;
+	delete pauseSuggestion;
+	delete startGUI;
+}
+
+void GameLoop::showStart() {
+	pause(true);
+	pauseSuggestion->setShow(false);
+	pauseGUI->setShow(false);
+	startGUI->setShow(true);
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -122,7 +133,7 @@ void GameLoop::addElement(GameObject* obj) {
 		addToCollidable(dynamic_cast<RigidBody*>(obj));
 	if (chars[3])
 		addToSerializable(dynamic_cast<Serializable*>(obj));
-	if (chars[4])
+	if (chars[4] && !KirbyInstance)
 		KirbyInstance = obj;
 
 	delete[] chars;
@@ -170,6 +181,8 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 
 	Camera::getInstance().setBounds(QRectF(0, 0, 0, 0));
 
+	KirbyInstance = 0;
+
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName + (issave ? std::string(".save") : std::string("")));
 	for (Serializable* item : tempserializableObjects) 
 		addElement(dynamic_cast<GameObject*>(item));
@@ -213,8 +226,10 @@ void GameLoop::tick(double deltatime) {
 	for (auto* item : this->tickableObjects) 
 		item->tick(deltatime);
 	
-	for (auto* item : this->GUIItems)
-		dynamic_cast<TickableObject*>(item)->tick(deltatime);
+	for (auto* item : this->GUIItems) {
+		TickableObject* obj = dynamic_cast<TickableObject*>(item);
+		if (obj) obj->tick(deltatime);
+	}
 
 	for (auto* item : this->particleObjects)
 		if (item->shouldDelete()) {
@@ -252,6 +267,7 @@ void GameLoop::pause(bool pause) {
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
+	startGUI->setShow(false);
 }
 
 void GameLoop::stop() {
