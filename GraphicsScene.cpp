@@ -29,8 +29,8 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
     //qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
     QGraphicsScene::mouseMoveEvent(mouseEvent);
     
-    if (mouseEvent->button() != Qt::MiddleButton)
-        return;
+    if (mouseEvent->button() == Qt::NoButton)
+       return;
 
 
     int deltaX = (lm.x - mouseEvent->scenePos().x()), deltaY = (lm.y - mouseEvent->scenePos().y());
@@ -67,7 +67,11 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
     //qDebug() << Q_FUNC_INFO << me->scenePos();
     QGraphicsScene::mouseReleaseEvent(me);
 
-    if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
+   // if (lm.x == me->scenePos().x() && lm.y == me->scenePos().y()) {
+
+    lm.x = me->scenePos().x();
+    lm.y = me->scenePos().y();
+
 
         std::cout << "Percentage of click coordinates: " << ((double)lm.x / (double)Camera::getInstance().screenwidth) << "% : " << ((double)lm.y / (double)Camera::getInstance().screenheight) << "\n%";
         
@@ -81,7 +85,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
-            WaddleDee* t = new WaddleDee(vert2, QPointF(0,0));
+            Terrain* t = new Terrain(vert2);
             GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         }
         else if (me->button() == Qt::MiddleButton) {
@@ -90,25 +94,25 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
             MovablePlatform* t = new MovablePlatform(snapped);
             GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         } 
-        //else {
+        else {
             QPointF vert1 = QPointF(snapped.x(), snapped.y());
             //Terrain* t = new Terrain(snapped, objects::TERRAIN, TERRAINBLOCK, QPoint(0, 0), 1, 1);
             
             //TerrainSloped* t = new TerrainSloped(snapped, objects::SLOPED_TERRAIN, 100, 100, TRANSPARENT);
             //t->setVerts(vert1, vert2);
-            static std::string r[] = { "Andrea Roccaccino","Edoardo Evangelista", "Roberto Pittiglio", "Jason Canzoniero", "Alessandro Bria", "Federico Massaro" };
+            static std::string r[] = { "Giovanni Muciaccia"};
             static int i = 0;
             GameObject* t = ObjectsHolder::getInstance().getObject(objects::KIRBY);
-            (dynamic_cast<Kirby*>(t))->setName(r[i++]);
+            (dynamic_cast<Kirby*>(t))->setName(r[0]);
             t->setX(snapped.x());
             t->setY(snapped.y());
 
             GameLoop::getInstance().addElement(t);
-       // }
+        }
 
         
 
-    } 
+   // } 
 }
 
 void GraphicsScene::keyPressEvent(QKeyEvent* e)
