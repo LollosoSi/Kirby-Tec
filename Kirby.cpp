@@ -44,6 +44,7 @@ void Kirby::processAcceleration() {
 					if (0.2 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						std::cout << "should delete << \n";
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
+						GameLoop::getInstance().addScore(25);
 					} else {
 						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
 						item->velocity.y += 1 * (getY() > item->getY() ? 1 : -1);
@@ -128,6 +129,80 @@ void Kirby::processAcceleration() {
 	
 }
 
+void Kirby::tick(double deltatime) {
+
+
+	processAcceleration();
+
+	if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
+		int time = deltatime * 1000.0;
+		jumpImpulse.remainingtime -= time;
+		if (jumpImpulse.remainingtime < 0)
+			jumpImpulse.remainingtime = 0;
+
+		if (jumpCooldown != 0) {
+			if (jumpCooldown < time)
+				jumpCooldown = 0;
+			else
+				jumpCooldown -= time;
+		}
+
+	}
+
+	if (damageCooldown > 0) {
+		damageCooldown -= deltatime * 1000.0;
+		if (damageCooldown < 0)
+			damageCooldown = 0;
+	}
+
+	processAnimation();
+	animator->tick(deltatime);
+	RigidBody::tick(deltatime);
+
+
+
+	if (damage) {
+		if (!damageCooldown && !(buttons[Kirby::INHALE_ENEMIES] && animator->isPlayingOneShot())) {
+			damageCooldown = damageCooldownDefault;
+			damage = 0;
+			GameLoop::getInstance().setHealth(--health);
+			if (health == 0) {
+				// die
+				health = 6;
+				GameLoop::getInstance().setHealth(health);
+				GameLoop::getInstance().addLives(-1);
+
+
+				if (GameLoop::getInstance().getLives() >= 0) {
+
+					std::thread tt(
+						[]() {
+							GameLoop::getInstance().reload();
+						}
+					);
+					tt.detach();
+
+					return;
+
+				} else {
+
+					GameLoop::getInstance().setLives(3);
+
+					std::thread t([]() {
+						GameLoop::getInstance().loadGame("levels/lobby");
+						}
+					);
+					t.detach();
+					return;
+				}
+			}
+		}
+		else {
+			damage = 0;
+		}
+	}
+
+}
 
 void Kirby::processAnimation() {
 

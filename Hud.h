@@ -25,6 +25,7 @@ protected:
 	Animator anim;
 	uint ZValue = 1;
 	std::vector<BaseGUI*> children;
+	TexManager::TexID id;
 
 public:
 	
@@ -34,13 +35,14 @@ public:
 	}
 
 	BaseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
-		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
+		setTexture(id);
 		setObjectId(objects::HUD);
 		this->ZValue = ZValue;
 		rigiddrawscale = 0.936;
 	}
 
 	BaseGUI* setTexture(TexManager::TexID id) {
+		this->id = id;
 		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
 		return this;
 	}
@@ -87,7 +89,8 @@ public:
 			}
 
 		}
-		else if (!pm && show) {
+
+		if (!pm && show && !shouldClear) {
 			pm = scene.addPixmap(getTexture());
 			pm->setZValue(ZValue);
 			if (hitboxenabled)
@@ -98,7 +101,8 @@ public:
 
 		if (pm && !shouldClear && show) {
 
-			//std::cout << "Rendering gui\n";
+			//std::cout << "Rendering gui"<< id <<"\n";
+
 
 			pm->setPixmap(getTexture());
 			pm->setPos(Camera::fromPercentageToScreen(QPointF(getX(), getY())));

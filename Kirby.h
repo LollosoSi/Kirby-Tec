@@ -28,6 +28,11 @@ protected:
 
 	bool isThisTheKirbyInstance();
 
+	int health = 5;
+	const int damageCooldownDefault = 300;
+	int damageCooldown = 0;
+
+
 public:
 
 	Kirby* setName(std::string nm) { sname = nm; return this; }
@@ -42,8 +47,6 @@ public:
 		setSizeX(kirbyscale);
 		setSizeY(kirbyscale);
 	}
-
-	
 
 	Cloneable* clone() const override { return new Kirby(QPointF(getX(), getY())); }
 
@@ -71,31 +74,7 @@ public:
 
 	Impulse jumpImpulse{ KA::Vec2Df{0,-180}, 0};
 
-	void tick(double deltatime) {
-
-		processAcceleration();
-		
-		if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
-			int time = deltatime * 1000.0;
-			jumpImpulse.remainingtime -= time;
-			if (jumpImpulse.remainingtime < 0)
-				jumpImpulse.remainingtime = 0;
-
-			if (jumpCooldown != 0) {
-				if (jumpCooldown < time)
-					jumpCooldown = 0;
-				else
-					jumpCooldown -= time;
-			}
-
-		}
-		
-		processAnimation();
-		animator->tick(deltatime);
-		RigidBody::tick(deltatime);
-
-		
-	}
+	void tick(double deltatime);
 
 	int l = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) override;

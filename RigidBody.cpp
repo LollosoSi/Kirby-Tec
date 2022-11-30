@@ -82,6 +82,10 @@ void RigidBody::tick(double deltatime){
 		
 			//std::cout << "Inside\n";
 
+			if (dynamic_cast<Enemy*>(rb)) {
+				damage = 1;
+			}
+
 			if (rb->getObjectId() == objects::WATER) {
 				hit = 1;
 				velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;

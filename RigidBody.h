@@ -50,6 +50,8 @@ protected:
 	Animator* animator;
 	bool hit = 0;
 
+	bool damage = 0;
+
 public:
 	QPointF offset;
 	QGraphicsPixmapItem* pm = 0;

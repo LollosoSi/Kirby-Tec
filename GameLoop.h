@@ -50,7 +50,15 @@ private:
 	BaseGUI* pauseGUI;
 	BaseGUI* pauseSuggestion;
 	BaseGUI* startGUI;
-	
+
+	BaseGUI** scoredigits;
+	BaseGUI** KHealth;
+	BaseGUI** LivesCounter;
+
+	BaseGUI* view;
+	BaseGUI* state;
+	BaseGUI* Lives;
+
 public:
 	std::thread loopthread;
 
@@ -66,6 +74,37 @@ public:
 
 	void reload();
 	
+	int lives = 1;
+	int health = 6;
+	long score = 0;
+
+	void updateView();
+
+	void addScore(long n) {
+		setScore(getScore() + n);
+	}
+	void addLives(int n) {
+		setLives(getLives() + n);
+	}
+	void setScore(int s) {
+		score = s;
+		updateView();
+
+	}
+	void setHealth(int h) {
+		health = h;
+		updateView();
+
+	}
+	void setLives(int l) {
+		lives = l;
+		updateView();
+	}
+
+	long getScore() { return score; }
+	int getLives() { return lives; }
+	int getHealth() { return health; }
+
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();
