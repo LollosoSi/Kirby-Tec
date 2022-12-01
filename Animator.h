@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 #include "TickableObject.h"
-
+#include "CollisionDetection.h"
 #include <iostream>
 
 struct Animatable {
