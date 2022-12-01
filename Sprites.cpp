@@ -591,7 +591,7 @@ TextureManager::TextureManager() {
 
 		2
 
-	}
+	};
 
 
 	textures[POPPYBROSJR] = new Animatable{
