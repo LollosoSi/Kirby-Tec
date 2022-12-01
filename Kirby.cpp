@@ -209,6 +209,8 @@ void Kirby::tick(double deltatime) {
 			damageCooldown = damageCooldownDefault;
 			damage = 0;
 			GameLoop::getInstance().setHealth(--health);
+			velocity.y += -6;
+			velocity.x *= -1;
 			if (health == 0) {
 				// die
 				health = 6;
