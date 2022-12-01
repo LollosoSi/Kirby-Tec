@@ -166,10 +166,12 @@ namespace TexManager {
 			SPARKY = 116,
 			BRONTOBURT = 117,
 			POPPYBROSJR = 118,
-			HOTHEAD = 119
+			HOTHEAD = 119,
+
+			SPARKY_JUMP = 120
 
 	};
-	const int TEXTURE_COUNT = 120;
+	const int TEXTURE_COUNT = 121;
 
 };
 
