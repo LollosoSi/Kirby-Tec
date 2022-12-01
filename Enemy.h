@@ -43,7 +43,7 @@ protected:
 	bool started = 0;
 
 	public:
-		Enemy(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), objects::ObjectID eid = objects::WADDLEDEE, double sizeX = 0.8, double sizeY = 0.8) : RigidBody(coords, offset, sizeX, sizeY) {
+		Enemy(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), objects::ObjectID eid = objects::WADDLEDEE, double sizeX = 1, double sizeY = 1) : RigidBody(coords, offset, sizeX, sizeY) {
 			this->setObjectId(eid);
 			
 		}
@@ -72,7 +72,7 @@ protected:
 // enemies
 class WaddleDee : public Enemy {
 public:
-	WaddleDee(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
+	WaddleDee(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::WADDLEDEE));
 		velocity.x = -maxwalkspeed;
 	}
@@ -82,7 +82,7 @@ public:
 
 class WaddleDoo : public Enemy {
 public:
-	WaddleDoo(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::WADDLEDOO, sizeX, sizeY) {
+	WaddleDoo(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::WADDLEDOO, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::WADDLEDOO));
 		accel.x = -maxwalkspeed;
 	}
@@ -101,7 +101,7 @@ public:
 
 class PoppyBrosJr : public Enemy {
 public:
-	PoppyBrosJr(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::POPPYBROSJR, sizeX, sizeY) {
+	PoppyBrosJr(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::POPPYBROSJR, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::POPPYBROSJR));
 	}
 	Cloneable* clone() const override { return new PoppyBrosJr(*this); }
@@ -111,7 +111,7 @@ public:
 
 class Sparky : public Enemy {
 public:
-	Sparky(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::SPARKY, sizeX, sizeY) {
+	Sparky(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::SPARKY, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::SPARKY));
 	}
 	Cloneable* clone() const override { return new Sparky(*this); }
@@ -132,9 +132,10 @@ public:
 
 };
 
+
 class HotHead : public Enemy {
 public:
-	HotHead(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
+	HotHead(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::HOTHEAD));
 		accel.x = -maxwalkspeed;
 	}
@@ -147,7 +148,7 @@ protected:
 	double time = 0;
 	const double Y_accel = 3.5;
 public:
-	BrontoBurt(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0,0), double sizeX = 0.8, double sizeY = 0.8) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
+	BrontoBurt(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0,0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::BRONTOBURT));
 	}
 	Cloneable* clone() const override { return new BrontoBurt(*this); }

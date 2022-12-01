@@ -10,6 +10,7 @@
 struct Animatable {
 	QPixmap* pixmaps = 0;
 	float* duration = 0;
+	KA::Vec2Df* offset = 0;
 	unsigned int size = 0;
 };
 
