@@ -43,7 +43,7 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 	
 	 if (pm && !shouldClear) {
 		 pm->setPixmap(getTexture());
-		 pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
+		 pm->setPos(Camera::worldToScreen(QPointF(getX() + animator->getCurrentOffset().x, getY() + animator->getCurrentOffset().y)));
 		 //pm->setRotation(renderAngles[currentDegree]);
 		 pm->setScale(scale * rigiddrawscale);
 
