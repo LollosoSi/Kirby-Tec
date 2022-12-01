@@ -28,7 +28,7 @@ double Kirby::groundDistance() {
 	//hit = 0;
 	// solve the collisions in correct order 
 	for (auto& obj : raycasted) {
-		if (obj.first->getObjectId() != objects::BACKGROUND)
+		if ((obj.first->getObjectId()) != objects::BACKGROUND)
 			if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
 				if (ct >= 0 && ct < 1 && dynamic_cast<Terrain*>(obj.first))
 					return ct*ray.y();
@@ -39,6 +39,20 @@ double Kirby::groundDistance() {
 }
 
 void Kirby::processAcceleration() {
+
+	if (buttons[Kirby::USE_SPECIALPWR]) {
+		buttons[Kirby::USE_SPECIALPWR] = false;
+
+		Projectile* p = new Projectile(getCollider().center(),
+			KA::Vec2Df{0,0},
+			TextureManager::getInstance().getAnimatable(TexManager::KIRBY_STAND),
+			1500, 0.3);
+		p->velocity.x = 10.0 * (mirror ? -1 : 1);
+		p->velocity.y = -3.0;
+
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));
+
+	}
 
 	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
 		/* WORKING RAYCAST
@@ -255,10 +269,10 @@ void Kirby::processAnimation() {
 
 			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 1)) {
 				if (!(rand() % 2)) {
-					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 1000, 0.3);
-					GameLoop::getInstance().addParticle(p);
-					p->movement.y *= (velocity.mag() * 5);
-					p->movement.x = 0;
+					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 600, 0.3);
+					GameLoop::getInstance().addElement(p);
+					p->velocity.y = -(abs(velocity.mag())/1.2);
+					p->movement.x = -velocity.x/20;
 				}
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
 			}

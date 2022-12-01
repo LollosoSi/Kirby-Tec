@@ -90,6 +90,7 @@ target_sources(${project}
 		Kirby.h
 		Kirby.cpp
 		Particle.h
+		Particle.cpp
 		ObjectsHolder.h
 		Sounds.cpp
 		Sounds.h

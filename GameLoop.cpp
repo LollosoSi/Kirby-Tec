@@ -226,6 +226,8 @@ void GameLoop::addElement(GameObject* obj) {
 		addToSerializable(dynamic_cast<Serializable*>(obj));
 	if (chars[4] && !KirbyInstance)
 		KirbyInstance = obj;
+	if (chars[5])
+		addParticle(obj);
 
 	delete[] chars;
 }
@@ -256,6 +258,9 @@ void GameLoop::removeElement(GameObject* obj) {
 	}
 	if (chars[4])
 		KirbyInstance = 0;
+
+	if (chars[5])
+		
 
 	delete[] chars;
 }
@@ -326,6 +331,7 @@ void GameLoop::tick(double deltatime) {
 		if (item->shouldDelete()) {
 			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
 			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
+			//collidableObjects.erase(std::find(collidableObjects.begin(), collidableObjects.end(), item));
 			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
 			delete item;
 		}
@@ -382,12 +388,9 @@ void GameLoop::addToCollidable(RigidBody* s) {
 	this->collidableObjectsQueue.push_back(s);
 }
 
-void GameLoop::addParticle(Particle* p) {
-
-	addToRenderable(p);
-	addToTickable(p);
+void GameLoop::addParticle(GameObject* p) {
 	
-	particleObjects.push_back(p);
+	particleObjects.push_back(dynamic_cast<Particle*>(p));
 }
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {

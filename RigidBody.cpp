@@ -82,7 +82,7 @@ void RigidBody::tick(double deltatime){
 		
 			//std::cout << "Inside\n";
 
-			if (dynamic_cast<Enemy*>(rb)) {
+			if (dynamic_cast<Enemy*>(rb) || dynamic_cast<Kirby*>(rb)) {
 				damage = 1;
 			}
 

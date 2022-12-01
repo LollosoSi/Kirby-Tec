@@ -141,7 +141,7 @@ public:
 	void addToSerializable(Serializable* s);
 	void addToCollidable(RigidBody* s);
 
-	void addParticle(Particle *p);
+	void addParticle(GameObject *p);
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 

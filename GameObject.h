@@ -77,7 +77,7 @@ public:
 		return this;
 	};
 
-	bool* getObjectCharacteristics();
+	virtual bool* getObjectCharacteristics();
 	virtual void keyPressEvent(QKeyEvent* e, bool isPressed) {}
 	virtual Cloneable* clone() const { return new GameObject(*this); }
 
