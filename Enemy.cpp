@@ -48,6 +48,7 @@ void PoppyBrosJr::tick(double delta)
 	Enemy::tick(delta);
 }
 
+
 void BrontoBurt::tick(double delta) {
 
 	time += delta;
@@ -59,5 +60,22 @@ void BrontoBurt::tick(double delta) {
 		//velocity.x = 0;
 		//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
 	}
+	Enemy::tick(delta);
+}
+
+
+void Sparky::tick(double delta) {
+	accel.y = 9.8;
+	//if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
+		//accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
+		//velocity.x = 0;
+		//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
+	//}
+
+	if (!(rand() % 200)) {
+		animator->playOneShot(TextureManager::getInstance().getAnimatable(TexManager::SPARKY_JUMP));
+		jump(-4);
+	}
+
 	Enemy::tick(delta);
 }

@@ -23,7 +23,7 @@ void Projectile::tick(double delta) {
 	for (auto* item : objs) {
 		if (instanceof<Enemy, RigidBody>(item)) {
 			GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
-			GameLoop::getInstance().addScore(25);
+			GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
 			GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));
 		}
 	}

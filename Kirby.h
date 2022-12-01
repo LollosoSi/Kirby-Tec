@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GameObject.h"
+
 #include "RenderableObject.h"
 #include "TickableObject.h"
 #include "Sprites.h"
@@ -86,5 +88,8 @@ public:
 	}
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
+
+	static int getScoreFromObject(GameObject* item);
+
 
 };

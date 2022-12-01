@@ -42,7 +42,7 @@ public:
 	void playOneShot(Animatable* anim, int repeat = 0, float timescale = 1) { if (!next_anim) { next_anim = current_anim;  savedtimescale = timescale; } setAnimatable(anim, repeat, timescale); }
 	bool isPlayingOneShot() { return next_anim != 0; }
 
-	KA::Vec2Df getCurrentOffset() { return current_anim->offset[cur]; }
+	KA::Vec2Df getCurrentOffset() { return !current_anim ? KA::Vec2Df(0,0) : current_anim->offset[cur]; }
 
 	Animator() {}
 	Animator(const Animator& go) {

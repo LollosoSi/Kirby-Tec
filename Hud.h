@@ -31,7 +31,7 @@ public:
 	
 	void setShow(bool value) {
 		show = value;
-		std::cout << "Setting show " << value << "\n";
+		//std::cout << "Setting show " << value << "\n";
 	}
 
 	BaseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : RigidBody(pos, QPointF(0,0), 1, 1 ) {

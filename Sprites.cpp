@@ -239,7 +239,7 @@ TextureManager::TextureManager() {
 			kirbytex.copy(kirby_inhale3),
 		},
 		new float[4] {0.2f , 0.4f , 0.5f , 0.1f},
-		new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+		new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.25) },
 		3
 	};
 

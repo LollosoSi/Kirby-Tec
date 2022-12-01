@@ -13,6 +13,19 @@
 
 bool Kirby::isThisTheKirbyInstance() { return dynamic_cast<Kirby*>(GameLoop::getInstance().KirbyInstance) == this; }
 
+int Kirby::getScoreFromObject(GameObject* item) {
+
+	int tempscore = 0;
+	if (dynamic_cast<WaddleDoo*>(item)) tempscore += 300;
+	if (dynamic_cast<WaddleDee*>(item)) tempscore += 400;
+	if (dynamic_cast<PoppyBrosJr*>(item)) tempscore += 400;
+	if (dynamic_cast<HotHead*>(item)) tempscore += 600;
+	if (dynamic_cast<Sparky*>(item)) tempscore += 600;
+	if (dynamic_cast<BrontoBurt*>(item)) tempscore += 1200;
+	return tempscore;
+}
+
+
 double Kirby::groundDistance() {
 
 	QPointF start = getCollider().center();
@@ -45,8 +58,8 @@ void Kirby::processAcceleration() {
 
 		Projectile* p = new Projectile(getCollider().center(),
 			KA::Vec2Df{0,0},
-			TextureManager::getInstance().getAnimatable(TexManager::KIRBY_STAND),
-			1500, 0.3);
+			TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL),
+			1500, 0.38);
 		p->velocity.x = 10.0 * (mirror ? -1 : 1);
 		p->velocity.y = -3.0;
 
@@ -82,8 +95,11 @@ void Kirby::processAcceleration() {
 					if (0.2 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						std::cout << "should delete << \n";
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
-						GameLoop::getInstance().addScore(25);
+						
 						GameLoop::getInstance().setAbility((TexID)(HUD_POWER+(rand()%26)));
+
+						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
+
 					} else {
 						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
 						item->velocity.y += 1 * (getY() > item->getY() ? 1 : -1);
@@ -208,16 +224,19 @@ void Kirby::tick(double deltatime) {
 			
 			damageCooldown = damageCooldownDefault;
 			damage = 0;
-			GameLoop::getInstance().setHealth(--health);
+			if(isThisTheKirbyInstance())
+				GameLoop::getInstance().setHealth(--health);
 			velocity.y += -6;
 			velocity.x *= -1;
 			if (health == 0) {
 				// die
 				health = 6;
-				GameLoop::getInstance().setHealth(health);
-				GameLoop::getInstance().setLives(GameLoop::getInstance().getLives()-1);
+				if (isThisTheKirbyInstance()) {
+					GameLoop::getInstance().setHealth(health);
+					GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
+				}
 
-				if (GameLoop::getInstance().getLives() >= 0) {
+				if (GameLoop::getInstance().getLives() >= 0 && isThisTheKirbyInstance()) {
 
 					std::thread tt(
 						[]() {
@@ -228,7 +247,7 @@ void Kirby::tick(double deltatime) {
 
 					return;
 
-				} else {
+				} else if(isThisTheKirbyInstance()) {
 
 					GameLoop::getInstance().setLives(3);
 

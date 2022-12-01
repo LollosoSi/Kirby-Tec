@@ -115,20 +115,7 @@ public:
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::SPARKY));
 	}
 	Cloneable* clone() const override { return new Sparky(*this); }
-	void tick(double delta) override
-	{
-		accel.y = 9.8;
-		//if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0) {
-			//accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
-			//velocity.x = 0;
-			//std::cout << "Hit: " << lastHitNormals.x << ":" << lastHitNormals.y << "\n";
-		//}
-
-		if (!(rand() % 150))
-			jump(-4);
-
-		Enemy::tick(delta);
-	}
+	void tick(double delta);
 
 };
 
