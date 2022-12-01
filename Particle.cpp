@@ -22,6 +22,7 @@ void Projectile::tick(double delta) {
 	std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX(), getY(), pixscale, pixscale));
 	for (auto* item : objs) {
 		if (instanceof<Enemy, RigidBody>(item)) {
+			lifetime = 0;
 			GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
 			GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
 			GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));

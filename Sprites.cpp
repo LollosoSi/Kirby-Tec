@@ -238,7 +238,7 @@ TextureManager::TextureManager() {
 			kirbytex.copy(kirby_inhale2),
 			kirbytex.copy(kirby_inhale3),
 		},
-		new float[4] {0.2f , 0.4f , 0.5f , 0.1f},
+		new float[4] {0.2f , 0.4f , 1.0f , 0.1f},
 		new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.25) },
 		3
 	};
@@ -267,31 +267,31 @@ TextureManager::TextureManager() {
 	textures[KIRBY_BIG_FLYING] = new Animatable{
 		new QPixmap[2]{
 			kirbytex.copy(kirby_big_flying),
-			kirbytex.copy(moveBy(kirby_big_flying, 1)),
+			kirbytex.copy(moveBy(kirby_big_flying, 1, 0, kirby_big_flying.width(), kirby_big_flying.height(), 4, 4))
+
 	},
 		new float[2] {0.2f, 0.2f},
-				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+		new KA::Vec2Df[2]{KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35)},
 
-		1
+		2
 	};
 
 	textures[KIRBY_BIG_STAND] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_big_stand) },
 		new float[1] {0.2f},
-				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
-
+		new KA::Vec2Df[1]{KA::Vec2Df(0,-0.35)},
 		1
 	};
 
 	textures[KIRBY_BIG_WALKING] = new Animatable{
 		new QPixmap[4]{
 			kirbytex.copy(kirby_big_walking),
-			kirbytex.copy(moveBy(kirby_big_flying, 1)),
-			kirbytex.copy(moveBy(kirby_big_flying, 2)),
-			kirbytex.copy(moveBy(kirby_big_flying, 3)),	
+			kirbytex.copy(moveBy(kirby_big_walking, 1, 0, kirby_big_walking.width(), kirby_big_walking.height(), 4, 4)),
+			kirbytex.copy(moveBy(kirby_big_walking, 2, 0, kirby_big_walking.width(), kirby_big_walking.height(), 4, 4)),
+			kirbytex.copy(moveBy(kirby_big_walking, 1, 0, kirby_big_walking.width(), kirby_big_walking.height(), 4, 4)),
 	},
-		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
-				new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+		new float[4] {0.54f, 0.4f, 0.6f, 0.4f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35)},
 
 		4
 	}; 

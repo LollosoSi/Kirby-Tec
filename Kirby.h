@@ -37,6 +37,8 @@ protected:
 
 public:
 
+	GameObject* storedObject = 0;
+
 	Kirby* setName(std::string nm) { sname = nm; return this; }
 
 	const double kirbyscale = 0.8;

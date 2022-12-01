@@ -56,59 +56,29 @@ void Kirby::processAcceleration() {
 	if (buttons[Kirby::USE_SPECIALPWR]) {
 		buttons[Kirby::USE_SPECIALPWR] = false;
 
-		Projectile* p = new Projectile(getCollider().center(),
-			KA::Vec2Df{0,0},
-			TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL),
-			1500, 0.38);
-		p->velocity.x = 10.0 * (mirror ? -1 : 1);
-		p->velocity.y = -3.0;
-
-		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));
-
-	}
-
-	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
-		/* WORKING RAYCAST
-		QPointF start = getCollider().center();
-		QPointF ray(0, 1);
-
-		KA::RectF testcollider = getColliderRectF();
-
-		KA::Vec2Df testvelocity{ (double)ray.x(), (double)ray.y() };
-
-		std::vector<std::pair<RigidBody*, double>> raycasted = GameLoop::getInstance().rayCast(this, ray);
-		KA::Vec2Df cp, cn;
-		double ct = 0, min_t = 1;
-		hit = 0;
-		// solve the collisions in correct order 
-		for (auto& obj : raycasted) {
-			if (obj.first->getObjectId() != objects::BACKGROUND)
-				if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
-					if (ct >= 0 && ct < 1 && obj.first->getObjectId()==objects::WADDLEDEE)
-						std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
-				}
-		}*/
-		if (animator->isPlayingOneShot()) {
-			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
-			for (auto* item : objs) {
-				if (instanceof<Enemy, RigidBody>(item)) {
-					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
-						std::cout << "should delete << \n";
-						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
-						
-						GameLoop::getInstance().setAbility((TexID)(HUD_POWER+(rand()%26)));
-
-						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
-
-					} else {
-						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
-						item->velocity.y += 1 * (getY() > item->getY() ? 1 : -1);
-					}
-				}
-			}
+		RigidBody* o;
+		if (!storedObject) {
+			Projectile* p = new Projectile(getCollider().center(),
+				KA::Vec2Df{ 0,0 },
+				TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL),
+				1500, 0.38);
+			o=dynamic_cast<RigidBody*>(p);
 		}
+		else {
+			o = dynamic_cast<RigidBody*>(storedObject);
+			o->setPos(getCollider().center());
+			damageCooldown = 350;
+			storedObject = 0;
+		}
+			o->velocity.x = (5.0 * (storedObject ? 5 : 1 ) * (mirror ? -1 : 1)) + getVelocity().x;
+			o->velocity.y = -3.0 + getVelocity().y;
+		
+
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(o));
 
 	}
+
+	
 
 	if (getY() > 15 /* && isThisTheKirbyInstance() */ ) {
 		health = 1;
@@ -165,12 +135,16 @@ void Kirby::processAcceleration() {
 	if (buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
 		//buttons[SPACE] = false;
 		jumpsLeft--;
+		if (storedObject)
+			jumpsLeft = 0;
 		jumpCooldown = jumpCooldownDefault;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 30;
 		KA::Sounds::getInstance().play("jump");
-		this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
-		this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
+		if (!storedObject) {
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
+		}
 	}
 
 
@@ -265,6 +239,54 @@ void Kirby::tick(double deltatime) {
 		}
 	}
 
+	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
+		/* WORKING RAYCAST
+		QPointF start = getCollider().center();
+		QPointF ray(0, 1);
+
+		KA::RectF testcollider = getColliderRectF();
+
+		KA::Vec2Df testvelocity{ (double)ray.x(), (double)ray.y() };
+
+		std::vector<std::pair<RigidBody*, double>> raycasted = GameLoop::getInstance().rayCast(this, ray);
+		KA::Vec2Df cp, cn;
+		double ct = 0, min_t = 1;
+		hit = 0;
+		// solve the collisions in correct order
+		for (auto& obj : raycasted) {
+			if (obj.first->getObjectId() != objects::BACKGROUND)
+				if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
+					if (ct >= 0 && ct < 1 && obj.first->getObjectId()==objects::WADDLEDEE)
+						std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
+				}
+		}*/
+		if (animator->isPlayingOneShot() && !storedObject) {
+			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
+			for (auto* item : objs) {
+				if (instanceof<Enemy, RigidBody>(item)) {
+					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
+						//std::cout << "should delete << \n";
+						storedObject = item;
+						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
+
+						GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));
+
+						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
+
+					}
+					else {
+						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
+						item->velocity.y += 1 * (getY() > item->getY() ? 1 : -1);
+					}
+				}
+			}
+		}
+		else {
+			buttons[KirbyKeys::INHALE_ENEMIES] = false;
+		}
+
+	}
+
 }
 
 void Kirby::processAnimation() {
@@ -277,18 +299,18 @@ void Kirby::processAnimation() {
 				double degang = toDegrees(angle);
 				//std::cout << "Angle is " << degang << " Mirror: " << mirror << "\n";
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(
-					!angle ? KIRBY_STAND :
+					!angle || storedObject ? storedObject ? KIRBY_BIG_STAND : KIRBY_STAND :
 					circa(abs(degang), 28, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT)) :
 					circa(abs(degang), 57, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT)) :
-					KIRBY_STAND
+					storedObject ? KIRBY_BIG_STAND : KIRBY_STAND
 				));
 
 
 			}
 			else
-				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_WALKING : KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
 
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 1)) {
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 1) && !storedObject) {
 				if (!(rand() % 2)) {
 					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 600, 0.3);
 					GameLoop::getInstance().addElement(p);
@@ -300,15 +322,15 @@ void Kirby::processAnimation() {
 
 		}
 		else {
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
-			if (circa(groundDistance(), 2, 0.1) && velocity.y>0 && !circa(velocity.x,0,5)) {
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_FLYING : KIRBY_JUMP));
+			if (circa(groundDistance(), 2, 0.1) && velocity.y>0 && !circa(velocity.x,0,5) && !storedObject) {
 				this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL),0,1.6);
 			}
 
 		}
 	
 	
-		if (buttons[Kirby::INHALE_ENEMIES]) {
+		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 		}
 	}
@@ -380,8 +402,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_Q) {
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
 	}
-	if (e->key() == Qt::Key_E) {
-		buttons[Kirby::INHALE_ENEMIES] = isPressed;
+	if ((e->key() == Qt::Key_E) && isPressed) {
+		buttons[Kirby::INHALE_ENEMIES] = true;
 		
 	}
 	if (e->key() == Qt::Key_X) {
