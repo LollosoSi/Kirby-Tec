@@ -66,7 +66,7 @@ GameLoop::GameLoop() {
 void GameLoop::updateView() {
 
 	int num = score;
-	for (int i = 6; i >= 0 && num > 0; i--) {
+	for (int i = 6; i >= 0 && num >= 0; i--) {
 
 		int dig = num % 10;
 		num = num / 10;
@@ -76,21 +76,21 @@ void GameLoop::updateView() {
 		scoredigits[i]->setTexture((TexManager::TexID)(TexManager::HUD_NUM_0+abs(dig)));
 	}
 
-	num = lives;
-	for (int i = 1; i >= 0 && num > 0; i--) {
+	int num1 = lives;
+	for (int i = 1; i >= 0 && num1 >= 0; i--) {
 
-		int dig = num % 10;
-		num = num / 10;
-		if (num < 0)
-			num = 0;
+		int dig = num1 % 10;
+		num1 = num1 / 10;
+		if (num1 < 0)
+			num1 = 0;
 
 		LivesCounter[i]->setTexture((TexManager::TexID)(TexManager::HUD_NUM_0 + abs(dig)));
 	}
 
 	for (int i = 0; i < 6; i++) 
-		KHealth[i]->setShow(health >= i);
+		KHealth[i]->setShow(health > i);
 	
-
+	this->state->setTexture(ability);
 
 }
 
@@ -549,15 +549,16 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 }
 void GameLoop::clear() {
 	
-	//stop();
+	
+	stop();
 
 	std::thread t([]() {
 		
-		GameLoop::getInstance().stop();
+		
 		if (GameLoop::getInstance().loopthread.joinable())
 			GameLoop::getInstance().loopthread.join();
 		
-		if(GameLoop::getInstance().renderableObjects.size() > 0)
+		//if(GameLoop::getInstance().renderableObjects.size() > 0)
 			GameLoop::getInstance().render(true);
 	
 

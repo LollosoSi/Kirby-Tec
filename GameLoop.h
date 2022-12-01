@@ -77,6 +77,7 @@ public:
 	int lives = 1;
 	int health = 6;
 	long score = 0;
+	TexID ability = HUD_POWER;
 
 	void updateView();
 
@@ -96,9 +97,14 @@ public:
 		updateView();
 
 	}
-	void setLives(int l) {
-		lives = l;
+	void setLives(int lvs) {
+		lives = lvs;
+		std::cout << "New lives: " << lives << "\n";
+
 		updateView();
+	}
+	void setAbility(TexID ab) {
+		ability = ab;
 	}
 
 	long getScore() { return score; }

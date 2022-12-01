@@ -39,6 +39,8 @@ public:
 
 	const double kirbyscale = 0.8;
 
+	double groundDistance();
+
 	Kirby(QPointF pos = QPointF(0.0, 0.0)) : RigidBody(pos, QPointF(0,0), 1 * kirbyscale, 1 * kirbyscale) {
 		setObjectId(objects::KIRBY);
 		rigiddrawscale = kirbyscale;

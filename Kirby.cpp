@@ -13,6 +13,30 @@
 
 bool Kirby::isThisTheKirbyInstance() { return dynamic_cast<Kirby*>(GameLoop::getInstance().KirbyInstance) == this; }
 
+double Kirby::groundDistance() {
+
+	QPointF start = getCollider().center();
+	QPointF ray(0, 10);
+
+	KA::RectF testcollider = getColliderRectF();
+
+	KA::Vec2Df testvelocity{ (double)ray.x(), (double)ray.y() };
+
+	std::vector<std::pair<RigidBody*, double>> raycasted = GameLoop::getInstance().rayCast(this, ray);
+	KA::Vec2Df cp, cn;
+	double ct = 0, min_t = 1;
+	//hit = 0;
+	// solve the collisions in correct order 
+	for (auto& obj : raycasted) {
+		if (obj.first->getObjectId() != objects::BACKGROUND)
+			if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
+				if (ct >= 0 && ct < 1 && dynamic_cast<Terrain*>(obj.first))
+					return ct*ray.y();
+					//std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
+			}
+	}
+
+}
 
 void Kirby::processAcceleration() {
 
@@ -45,6 +69,7 @@ void Kirby::processAcceleration() {
 						std::cout << "should delete << \n";
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
 						GameLoop::getInstance().addScore(25);
+						GameLoop::getInstance().setAbility((TexID)(HUD_POWER+(rand()%26)));
 					} else {
 						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
 						item->velocity.y += 1 * (getY() > item->getY() ? 1 : -1);
@@ -55,14 +80,17 @@ void Kirby::processAcceleration() {
 
 	}
 
-	if (getY() > 15 && isThisTheKirbyInstance()) {
-		std::thread t(
+	if (getY() > 15 /* && isThisTheKirbyInstance() */ ) {
+		health = 1;
+		damage = 1;
+		damageCooldown = 0;
+		/*std::thread t(
 			[]() {
 				GameLoop::getInstance().reload(); 
 			}
 		);
 		t.detach();
-		return;
+		return;*/
 	}
 
 	KA::Vec2Df temp{ 0.0, 9.8 };
@@ -163,6 +191,7 @@ void Kirby::tick(double deltatime) {
 
 	if (damage) {
 		if (!damageCooldown && !(buttons[Kirby::INHALE_ENEMIES] && animator->isPlayingOneShot())) {
+			
 			damageCooldown = damageCooldownDefault;
 			damage = 0;
 			GameLoop::getInstance().setHealth(--health);
@@ -170,8 +199,7 @@ void Kirby::tick(double deltatime) {
 				// die
 				health = 6;
 				GameLoop::getInstance().setHealth(health);
-				GameLoop::getInstance().addLives(-1);
-
+				GameLoop::getInstance().setLives(GameLoop::getInstance().getLives()-1);
 
 				if (GameLoop::getInstance().getLives() >= 0) {
 
@@ -238,6 +266,9 @@ void Kirby::processAnimation() {
 		}
 		else {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+			if (circa(groundDistance(), 2, 0.1) && velocity.y>0 && !circa(velocity.x,0,5)) {
+				this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL),0,1.6);
+			}
 
 		}
 	
