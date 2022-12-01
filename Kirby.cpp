@@ -353,6 +353,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_Space) {
 		buttons[Kirby::SPACE] = isPressed;
 		if (!isPressed)
+			
 			jumpCooldown = 0;
 	}
 	if (e->key() == Qt::Key_Q) {
