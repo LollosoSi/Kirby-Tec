@@ -100,7 +100,10 @@ TextureManager::TextureManager() {
 	//Enemies
 	QRect waddledee = getStandardQRect(95,659);
 	QRect waddledoo = getStandardQRect(95,59);
+
 	QRect sparky = getStandardQRect(95,79);
+	QRect sparky_jump = getStandardQRect(115,79);
+
 	QRect hothead = getStandardQRect(95, 119);
 	QRect poppybrosjr = getStandardQRect(95,758);
 	QRect brontoburt = getStandardQRect(95,897);
@@ -480,11 +483,24 @@ TextureManager::TextureManager() {
 	textures[SPARKY] = new Animatable{
 		new QPixmap[1] {
 		enemytex.copy(sparky),
+	
 		
 		},
 		new float[1] {0.35f},
 		1
 	};
+	textures[SPARKY_JUMP] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(sparky_jump),
+		enemytex.copy(moveBy(sparky_jump,1))
+
+		},
+		new float[2] {0.35f, 0.35f},
+		2
+
+	}
+
+
 	textures[POPPYBROSJR] = new Animatable{
 		new QPixmap[1] {
 		enemytex.copy(poppybrosjr),
