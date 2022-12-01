@@ -92,7 +92,7 @@ void Kirby::processAcceleration() {
 			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
 			for (auto* item : objs) {
 				if (instanceof<Enemy, RigidBody>(item)) {
-					if (0.2 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
+					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						std::cout << "should delete << \n";
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
 						
