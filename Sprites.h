@@ -13,19 +13,24 @@ namespace TexManager {
 
 	/** Elements must be caps */
 	enum TexID {
+		// Kirby base movements
 		KIRBY_STAND = 0,
 		KIRBY_WALK = 1,
 		KIRBY_ROLL = 2,
 		KIRBY_JUMP = 3,
 		KIRBY_STRAFE = 4,
 
+		// Base elements
 		TERRAIN = 5,
 		PARTICLE_1 = 6,
 
+		// Kirby sloped
 		KIRBY_SLOPED_25 = 7,
 		KIRBY_SLOPED_45 = 8,
 		KIRBY_SLOPED_25_LEFT = 9,
 		KIRBY_SLOPED_45_LEFT = 10,
+
+		// Sloped Terrain
 		TERRAIN_SLOPED_25 = 11,
 		TERRAIN_SLOPED_45 = 12,
 
@@ -34,6 +39,7 @@ namespace TexManager {
 		MARGINTERRAINR = 14,
 		SECONDTERRAINL = 15,
 		SECONDTERRAINR = 16,
+
 		// stage 2
 		TERRAIN2 = 17,
 		TERRAINBLOCK = 18,
@@ -153,10 +159,19 @@ namespace TexManager {
 			HUD_NUM_6 = 110,
 			HUD_NUM_7 = 111,
 			HUD_NUM_8 = 112,
-			HUD_NUM_9 = 113
+			HUD_NUM_9 = 113,
+
+			WADDLEDEE = 114,
+			WADDLEDOO = 115,
+			SPARKY = 116,
+			BRONTOBURT = 117,
+			POPPYBROSJR = 118,
+			HOTHEAD = 119,
+
+			SPARKY_JUMP = 120
 
 	};
-	const int TEXTURE_COUNT = 114;
+	const int TEXTURE_COUNT = 121;
 
 };
 
@@ -165,10 +180,15 @@ using namespace TexManager;
 class TextureManager {
 
 public:
+	bool done = 0;
 	static TextureManager& getInstance() { static TextureManager instance; return instance; }
 	~TextureManager();
 
-	Animatable* getAnimatable(unsigned int position = 0) { return textures[position];}
+	Animatable* getAnimatable(unsigned int position = 0) {
+		if (!textures[position]) {
+			std::cout << "Returned nullptr as texture. This is BAD\n";
+		}
+		return textures[position];}
 	//QPixmap getLevelBackground(const std::string& level);
 
 private:
@@ -187,7 +207,7 @@ private:
 	const std::string file_background2 = "sprites/back3.png";
 	const std::string file_lobby = "sprites/VegetableValley.png";
 	const std::string file_barriers = "sprites/Base.png";
-	const std::string file_HUDcomponents = "sprites/HUD.png";
+	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	
 	
@@ -196,7 +216,7 @@ private:
 	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 	
 
-	Animatable* textures[TEXTURE_COUNT];
+	Animatable* textures[TEXTURE_COUNT]{0};
 	
 
 

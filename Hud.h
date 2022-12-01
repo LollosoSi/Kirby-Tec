@@ -20,17 +20,31 @@ public:
 
 class BaseGUI : public RigidBody, public ClickableObject {
 
-public:
+protected:
 	bool show = true;
-
 	Animator anim;
+	uint ZValue = 1;
+	std::vector<BaseGUI*> children;
+	TexManager::TexID id;
 
-	BaseGUI(QPointF pos, TexManager::TexID id) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
-		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
+public:
+	
+	void setShow(bool value) {
+		show = value;
+		//std::cout << "Setting show " << value << "\n";
+	}
+
+	BaseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
+		setTexture(id);
 		setObjectId(objects::HUD);
+		this->ZValue = ZValue;
+		rigiddrawscale = 0.936;
+	}
 
-		//rigiddrawscale = anim.getCurrentPixmap().width() / Camera::getInstance().screenwidth;
-
+	BaseGUI* setTexture(TexManager::TexID id) {
+		this->id = id;
+		anim.setAnimatable(TextureManager::getInstance().getAnimatable(id));
+		return this;
 	}
 
 	virtual bool processClick() {
@@ -39,6 +53,14 @@ public:
 
 	void tick(double delta) {
 		anim.tick(delta);
+	}
+
+	void addChild(BaseGUI* element) {
+		children.push_back(element);
+	}
+
+	void removeChild(BaseGUI* element) {
+		
 	}
 
 	QPixmap getTexture() { return anim.getCurrentPixmap(); }
@@ -57,7 +79,7 @@ public:
 		qp.setColor(Qt::blue);
 
 
-		if (!show || shouldClear) {
+		if ((!show || shouldClear) && pm) {
 			scene.removeItem(pm);
 			pm = 0;
 
@@ -67,8 +89,10 @@ public:
 			}
 
 		}
-		else if (!pm) {
+
+		if (!pm && show && !shouldClear) {
 			pm = scene.addPixmap(getTexture());
+			pm->setZValue(ZValue);
 			if (hitboxenabled)
 				hitbox = scene.addRect(getCollider(), qp);
 		}
@@ -77,14 +101,15 @@ public:
 
 		if (pm && !shouldClear && show) {
 
-			std::cout << "Rendering gui\n";
+			//std::cout << "Rendering gui"<< id <<"\n";
+
 
 			pm->setPixmap(getTexture());
 			pm->setPos(Camera::fromPercentageToScreen(QPointF(getX(), getY())));
 			//pm->setPos(QPointF(getX(), getY()));
 
 			//pm->setRotation(renderAngles[currentDegree]);
-			pm->setScale(scale);
+			pm->setScale(scale*rigiddrawscale * gui_scalemultiplier / scalemultiplier);
 
 			if (hitboxenabled) {
 				QPointF p = Camera::fromPercentageToScreen(QPointF(rf.pos.x, rf.pos.y));
@@ -97,6 +122,14 @@ public:
 	}
 
 };
+
+class PauseGUI : public BaseGUI {
+
+	PauseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : BaseGUI(pos, id, ZValue) {
+		
+	}
+};
+
 
 class HUD : public QWidget
 {

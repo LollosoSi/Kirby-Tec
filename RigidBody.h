@@ -18,6 +18,8 @@
 #include <QPixmap>
 #include <QRect>
 
+#include "Animator.h"
+
 enum {
 	NO_COLLISION = 0,
 	COLLISION_UP = 1,
@@ -45,7 +47,10 @@ struct Collision{
 class RigidBody : public GameObject, public TickableObject, public RenderableObject {
 
 protected:
+	Animator* animator;
 	bool hit = 0;
+
+	bool damage = 0;
 
 public:
 	QPointF offset;
@@ -57,7 +62,9 @@ public:
 	//RenderDegree currentDegree = NO_SLOPE;
 	double angle = 0;
 
-	RigidBody(const QPointF& coords, const QPointF offset, const double sizeX, const double sizeY) : GameObject(coords.x(), coords.y()) {
+	RigidBody(const QPointF& coords = QPointF(0.0, 0.0), const QPointF offset = QPointF(0.0, 0.0), const double sizeX = 16, const double sizeY = 16) : GameObject(coords.x(), coords.y()) {
+		animator = new Animator();
+
 		this->offset = offset;
 		//std::cout << "Setting pos " << coords.x() << ":" << coords.y() << "\n";
 		setSizeX(sizeX);
@@ -65,20 +72,23 @@ public:
 		setX(x);
 		setY(y);
 	}
-	RigidBody(const QPointF& coord, const QPointF& offset) : RigidBody(coord, offset, 16, 16) {}
-	RigidBody() : RigidBody(QPointF(0.0, 0.0), QPointF(0.0, 0.0)) {}
+
 	virtual void tick(double deltatime);
 	virtual void render(QGraphicsScene& scene, bool shouldClear = false);
 	GameObject* getCollidingObject(objects::ObjectID filter);
 	//virtual QPixmap getTexture() = 0;
 	~RigidBody() {
 	
+		delete animator;
+
 		if(pm)
 		pm->setVisible(false);
+		//delete pm;
 		pm = 0;
 
 		if(hitbox)
 		hitbox->setVisible(false);
+		//delete hitbox;
 		hitbox = 0;
 
 	}
@@ -124,6 +134,8 @@ public:
 	//std::vector<Vector> vectors;
 	QRectF collider;
 	double mass = 1;
+
+	void setDrawScale(double scl) { rigiddrawscale = scl; }
 
 	bool isGrounded() { return ( (velocity.y == 0) || (angle != 0) ); }
 

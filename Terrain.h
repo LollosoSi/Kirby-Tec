@@ -14,24 +14,33 @@
 
 using namespace TexManager;
 
+class Node {
+protected:
+	bool walkable = false;
+public:
+	bool isWalkable() { return walkable; }
+	virtual QPointF getPos() = 0;
+
+};
+
+
+
 class Terrain : public RigidBody {
 
 protected:
-	TexID tid;
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
+	TexID tid = TexManager::KIRBY_STAND;
 
 public:
-	Terrain(QPointF pos, QPointF offset, double sizex, double sizey, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : RigidBody(pos, offset, sizex, sizey) {
-		setObjectId(id);
+	Terrain(QPointF pos = QPointF(0,0), QPointF offset = QPointF(0, 0), double sizex = 1, double sizey = 1, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : RigidBody(pos, offset, sizex, sizey) {
 		this->tid = tid;
+		setObjectId(id);
 	}
-	Terrain(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN, QPointF offset = QPointF(0,0), double sizeX = 1, double sizeY = 1) : Terrain(pos, offset, sizeX, sizeY, id, tid) {}
-	Terrain(objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN) : Terrain(QPointF(0, 0), id, tid) {}
+	Terrain(objects::ObjectID id, TexID tid = TERRAIN) : Terrain(QPointF(0, 0), QPointF(0,0), 1, 1, id, tid) {}
 	~Terrain() {}
 
 	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
 
+	void tick(double deltatime) override {}
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
@@ -47,10 +56,17 @@ public:
 		return this;
 	};
 
-	
+	Cloneable* clone() const override { return (new Terrain(*this))->setObjectId(getObjectId()); }
 };
 
+class Water : public Terrain {
 
+public:
+	Water(QPointF pos = QPointF(0,0), QPointF offset = QPointF(0, 0), double sizex = 1, double sizey = 1, objects::ObjectID id = objects::WATER, TexID tid = TRANSPARENT) : Terrain(pos, offset, sizex, sizey, id, tid) {
+
+	}
+	Cloneable* clone() const override { return new Water(*this); }
+};
 
 class Background : public Terrain {
 
@@ -69,14 +85,14 @@ public:
 
 
 	}
-	Background(QPointF pos, objects::ObjectID id = objects::TERRAIN, TexID tid = TERRAIN, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Background(pos, offset, sizeX, sizeY, id, tid) {}
+	Background(QPointF pos, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Background(pos, offset, sizeX, sizeY, id, tid) {}
 	Background(objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND) : Background(QPointF(0, 0), id, tid) {}
 	~Background() {}
 
 	QPixmap getTexture() override { return anim.getCurrentPixmap(); }
 	virtual void tick(double delta) override {anim.tick(delta); }
 
-
+	Cloneable* clone() const override { return new Background(*this); }
 	
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
@@ -107,14 +123,13 @@ public:
 
 class TerrainSloped : public Terrain {
 
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
-
 public:
 	
-	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN_25, double sizex = 62.0, double sizey = 32.0, TexManager::TexID texture = TERRAIN_SLOPED_25) : Terrain(pos, QPointF(0, 0), sizex, sizey, id, texture) {}
-	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN_25) : TerrainSloped(QPointF(0, 0), id) {}
+	TerrainSloped(QPointF pos, objects::ObjectID id = objects::SLOPED_TERRAIN, double sizex = 62.0, double sizey = 32.0, TexManager::TexID texture = TERRAIN_SLOPED_25) : Terrain(pos, QPointF(0, 0), sizex, sizey, id, texture) {}
+	TerrainSloped(objects::ObjectID id = objects::SLOPED_TERRAIN) : TerrainSloped(QPointF(0, 0), id) {}
 	~TerrainSloped() {}
+
+	Cloneable* clone() const override { return new TerrainSloped(*this); }
 
 	QPointF vert1 = QPointF(0,0), vert2 = QPointF(0, 0);
 
@@ -135,26 +150,23 @@ public:
 
 	}
 	void fixverts() {
-	
 		if (vert1.x() > vert2.x()) {
-		
 			QPointF temp = vert2;
 			vert2 = vert1;
 			vert1 = temp;
 		}
-	
 	}
 
 	// Returns m in x and q in y
-	QPointF getVert1() const { return vert1 != QPointF(0, 0) ? vert1 : QPointF(getX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? getSizeY() : 0)); }
-	QPointF getVert2() const { return vert2 != QPointF(0, 0) ? vert2 : QPointF(getX() + getSizeX(), getY() + ((getObjectId() == objects::SLOPED_TERRAIN_25) || (getObjectId() == objects::SLOPED_TERRAIN_45) ? 0 : getSizeY())); }
+	QPointF getVert1() const { return vert1; }
+	QPointF getVert2() const { return vert2; }
 	KA::Vec2Df getHitLine() {
 		QPointF v1 = getVert1(), v2 = getVert2();
 		double m = (v2.y() - ((double)v1.y())) / (v2.x() - ((double)v1.x()));
 		return KA::Vec2Df{ m,v1.y() - (double)(v1.x() * m) };
 	}
 
-	QPixmap getTexture() override { return shouldMirror() ? TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0].transformed(QTransform().scale(-1, 1)) : TextureManager::getInstance().getAnimatable(textureId())->pixmaps[0]; }
+	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
@@ -180,44 +192,10 @@ public:
 		return this;
 	};
 
-	int textureId() {
-		if (tid == TexManager::TRANSPARENT)
-			return tid;
-
-		switch (getObjectId()) {
-		default:
-			return TexManager::TERRAIN_SLOPED_25;
-		case objects::SLOPED_TERRAIN_25:
-			return TexManager::TERRAIN_SLOPED_25;
-		case objects::SLOPED_TERRAIN_205:
-			return TexManager::TERRAIN_SLOPED_25;
-		case objects::SLOPED_TERRAIN_45:
-			return TexManager::TERRAIN_SLOPED_45;
-		case objects::SLOPED_TERRAIN_225:
-			return TexManager::TERRAIN_SLOPED_45;
-		}
-	
-	}
-	bool shouldMirror(){
-
-		switch (getObjectId()) {
-		default:
-			return false;
-		case objects::SLOPED_TERRAIN_25:
-			return false;
-		case objects::SLOPED_TERRAIN_205:
-			return true;
-		case objects::SLOPED_TERRAIN_45:
-			return false;
-		case objects::SLOPED_TERRAIN_225:
-			return true;
-		}
-	}
-
 	QGraphicsLineItem* qli = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) {
 
-		//RigidBody::render(scene, shouldClear);
+		RigidBody::render(scene, shouldClear);
 		
 		//collider = QRectF(vert1.x(), vert1.y(), vert2.x() - vert1.x(), vert2.y() - vert1.y());
 
@@ -235,18 +213,22 @@ public:
 			pm = scene.addPixmap(getTexture());
 			pm->setScale(scale);
 
-			hitbox = scene.addRect(getCollider(), qp);
-
-			QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
-			QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x() )));
-			qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
+			if (hitboxenabled) {
+				QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
+				QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
+				qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
+			}
 		}
-		else if (!visible) {
+		else if (!visible || shouldClear || (!hitboxenabled && qli)) {
 			scene.removeItem(pm);
+			delete pm;
 			pm = 0;
 
-			scene.removeItem(hitbox);
-			hitbox = 0;
+			if (qli) {
+				scene.removeItem(qli);
+				qli = 0;
+				delete qli;
+			}
 
 		}
 
@@ -255,15 +237,14 @@ public:
 			pm->setPos(Camera::worldToScreen(QPointF(getX(), getY())));
 			//pm->setRotation(renderAngles[currentDegree]);
 
-			scene.removeItem(qli);
-			QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
-			QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
-			qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
+			if (hitboxenabled) {
+				scene.removeItem(qli);
+				delete qli;
+				QPointF c1 = Camera::worldToScreen(QPointF(getVert1().x(), getVert1().y()));
+				QPointF c2 = Camera::worldToScreen(QPointF(getVert2().x(), getHitLine().y + (getHitLine().x * getVert2().x())));
+				qli = scene.addLine(c1.x(), c1.y(), c2.x(), c2.y(), qp);
 
-			QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
-			scene.removeItem(hitbox);
-			hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
-
+			}
 		}
 
 
@@ -275,45 +256,46 @@ public:
 
 class MovablePlatform : public Terrain {
 
-protected:
-	TexID tid;
-	QGraphicsPixmapItem* pm = 0;
-	QGraphicsItem* hitbox = 0;
-
 public:
+	double time = 0, omega = 2 * M_PI * 0.12;
+	double amplitude = 1.0;
+	QPointF startpos = QPointF(0,0);
 
-	double time = 0, omega = 2 * M_PI * 0.2;
-	QPointF startpos;
-
-	MovablePlatform(QPointF pos, QPointF offset, double sizex, double sizey, objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN) : Terrain(pos, offset, sizex, sizey) {
-		setObjectId(id);
-		this->tid = tid;
+	MovablePlatform(QPointF pos, QPointF offset = QPointF(0,0), double sizex = 1, double sizey = 1, objects::ObjectID id = objects::PLATFORM, TexID textureid = TexManager::PLATFORMCENTER) : Terrain(pos, offset, sizex, sizey, id, textureid) {
+		//setObjectId(id);
+		//this->tid = tid;
 		startpos = pos;
 	}
-	MovablePlatform(QPointF pos, objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : MovablePlatform(pos, offset, sizeX, sizeY, id, tid) {}
-	MovablePlatform(objects::ObjectID id = objects::PLATFORM, TexID tid = TERRAIN) : MovablePlatform(QPointF(0, 0), id, tid) {}
+	MovablePlatform(TexID textureid = TexManager::PLATFORMCENTER) : MovablePlatform(QPointF(0, 0), QPointF(0,0), 1,1, objects::PLATFORM, textureid) {}
 	~MovablePlatform() {}
 
-	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(tid)->pixmaps[0]; }
+	QPixmap getTexture() override { return TextureManager::getInstance().getAnimatable(this->tid)->pixmaps[0]; }
 
 	void tick(double delta) override {
 		time += delta;
-		setY(startpos.y() + (sin(omega*time)));
+		velocity.y = (amplitude * sin(omega * time));
+
+		//velocity.y = accel.y * delta;
+		//RigidBody::tick(delta);
+		setY(startpos.y() + (amplitude * sin(omega * time)));
 	}
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);
-		out << Terrain::serialize(divider) << divider << startpos.x() << divider << startpos.y();
+		out << Terrain::serialize(divider) << divider << startpos.x() << divider << startpos.y() << divider << amplitude;
 
 		return out.str();
 	}
 
 	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
 		Terrain::deserialize(start);
-		startpos = QPointF(std::atof((*(start++)).c_str()), std::atof((*(start++)).c_str()));
-
+		double x = std::atof((*(start++)).c_str());
+		double y = std::atof((*(start++)).c_str());
+		startpos = QPointF(x, y);
+		setPos(startpos);
+		amplitude = std::atof((*(start++)).c_str());
 		return this;
 	};
 
-
+	Cloneable* clone() const override { return new MovablePlatform(*this); }
 };

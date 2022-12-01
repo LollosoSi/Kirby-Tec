@@ -10,7 +10,7 @@
 #include "RigidBody.h"
 #include "Serializable.h"
 #include "Particle.h"
-#include "LevelBuilder.h"
+
 #include "Sprites.h"
 
 #include "ObjectsHolder.h"
@@ -30,6 +30,8 @@
 // Handle Keys
 #include <QKeyEvent>
 
+#include <QPointF>
+
 /** Classe GameLoop
 * Responsabilita':
 * loop di gioco, chiamate a tick() per ogni tickableObject registrato, render() per ogni renderableObject registrato
@@ -45,18 +47,70 @@ class GameLoop : public QObject
 private:
 	std::string currentlevel = "";
 	
-	
+	BaseGUI* pauseGUI;
+	BaseGUI* pauseSuggestion;
+	BaseGUI* startGUI;
+
+	BaseGUI** scoredigits;
+	BaseGUI** KHealth;
+	BaseGUI** LivesCounter;
+
+	BaseGUI* view;
+	BaseGUI* state;
+	BaseGUI* Lives;
+
 public:
 	std::thread loopthread;
 
 	std::string		_music;
 	
 	std::vector<RenderableObject*> renderableObjects;
+	std::vector<RenderableObject*> renderableObjectsToBeDeleted;
 
 	std::vector<RenderableObject*> GUIItems;
 
+	void addElement(GameObject* item);
+	void removeElement(GameObject* item);
+
 	void reload();
 	
+	int lives = 1;
+	int health = 6;
+	long score = 0;
+	TexID ability = HUD_POWER;
+
+	void updateView();
+
+	void addScore(long n) {
+		setScore(getScore() + n);
+	}
+	void addLives(int n) {
+		setLives(getLives() + n);
+	}
+	void setScore(int s) {
+		score = s;
+		updateView();
+
+	}
+	void setHealth(int h) {
+		health = h;
+		updateView();
+
+	}
+	void setLives(int lvs) {
+		lives = lvs;
+		std::cout << "New lives: " << lives << "\n";
+
+		updateView();
+	}
+	void setAbility(TexID ab) {
+		ability = ab;
+	}
+
+	long getScore() { return score; }
+	int getLives() { return lives; }
+	int getHealth() { return health; }
+
 	// Relativi al singleton
 	static GameLoop& getInstance() { static GameLoop instance; return instance; }
 	~GameLoop();
@@ -64,6 +118,11 @@ public:
 	void recalculateTicks(int target_ticks);
 	void recalculateFps(int target_fps);
 	
+	BaseGUI& getPauseGUI() { return *pauseGUI; }
+	BaseGUI& getPauseSuggestion() { return *pauseSuggestion; }
+	BaseGUI& getStartGUI() { return *startGUI; }
+
+	GameObject* KirbyInstance = 0;
 
 	const char obj_separator = '@';
 
@@ -75,22 +134,22 @@ public:
 	void saveGame(std::string fileName);
 	bool loadGame(std::string fileName, bool issave = false, bool savecurrent = false);
 
-	void addKirby(GameObject* kb);
-	void addTerrain(GameObject* t);
+	QPointF getKirbyPos() { return KirbyInstance ? QPointF(KirbyInstance->getX(), KirbyInstance->getY()) : QPointF(0, 0); }
 
 	void addToTickable(TickableObject* tco);
 	void addToRenderable(RenderableObject* rdo);
 	void addToSerializable(Serializable* s);
 	void addToCollidable(RigidBody* s);
 
-	void addParticle(Particle *p);
+	void addParticle(GameObject *p);
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed = true);
 
 	std::vector<std::pair<RigidBody*, double>> findCollisions(RigidBody *rb);
-	RigidBody* getInside(RigidBody* rb);
+	std::vector<RigidBody*> getInside(RigidBody* rb, QRectF area = QRectF(0,0,0,0));
+	std::vector<std::pair<RigidBody*, double>> rayCast(RigidBody* startbody, QPointF ray);
 
-
+	void showStart();
 
 signals:
 	void pleaseRender(bool clearscene);
@@ -109,7 +168,7 @@ private:
 	void operator=(GameLoop const&) = delete;
 	//
 
-	GameObject* KirbyInstance = 0;
+	
 
 	// Internal calls for watchdog & methods
 	void loop();
@@ -129,7 +188,6 @@ private:
 	std::vector<Serializable*> serializableObjects;
 	std::vector<RigidBody*> collidableObjects;
 	std::vector<Particle*> particleObjects;
-
 	
 
 	// Elementi in fila

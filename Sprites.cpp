@@ -1,5 +1,6 @@
 #include "Sprites.h"
 
+#include "CollisionDetection.h"
 
 using namespace std;
 
@@ -7,6 +8,8 @@ static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 
 // Constructor. Load all textures in the Animatable array
 TextureManager::TextureManager() {
+	done = false;
+
 	QColor kirby_file_mask = QColor(84, 110, 140);
 	QColor terrain_file_mask = QColor(60, 188, 252);
 	QColor terrain_part2_file_mask = QColor(60, 188, 252);
@@ -95,10 +98,21 @@ TextureManager::TextureManager() {
 
 	QRect hud_pause_screen = QRect(256, 3, 248, 224);
 
+	//Enemies
+	QRect waddledee = getStandardQRect(95,659);
+	QRect waddledoo = getStandardQRect(95,59);
+
+	QRect sparky = getStandardQRect(95,79);
+	QRect sparky_jump = getStandardQRect(115,79);
+
+	QRect hothead = getStandardQRect(95, 119);
+	QRect poppybrosjr = getStandardQRect(95,758);
+	QRect brontoburt = getStandardQRect(95,897);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
+	QPixmap enemytex = loadTexture(file_enemy, nocolor);
 	QPixmap terraintex = loadTexture(file_terrain, terrain_file_mask);
 	QPixmap terrainpart2tex = loadTexture(file_terrain_part2, terrain_part2_file_mask);
 	QPixmap titlescreentex = loadTexture(file_titlescreen, nocolor);
@@ -120,12 +134,14 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(kirby_walk, 2)),
 			kirbytex.copy(moveBy(kirby_walk, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 		4
 	};
 
 	textures[TRANSPARENT] = new Animatable{
 		new QPixmap[1]{ kirbytex.copy(transparent) },
 		new float[1] {1.0f},
+		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
 
@@ -134,65 +150,84 @@ TextureManager::TextureManager() {
 			kirbytex.copy(kirby_stand), 
 			kirbytex.copy(moveBy(kirby_stand, 1)) },
 		new float[2] {2.0f, 0.2f},
+		new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
 		2
 	};
 
 	textures[KIRBY_ROLL] = new Animatable{
 		new QPixmap[5]{kirbytex.copy(kirby_roll), kirbytex.copy(moveBy(kirby_roll, 1)), kirbytex.copy(moveBy(kirby_roll, 2)), kirbytex.copy(moveBy(kirby_roll, 3)), kirbytex.copy(moveBy(kirby_roll, 4)) },
 		new float[5] {0.06f, 0.06f, 0.06f, 0.06f, 0.06f},
+		new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
 		5
 	};
 
 	textures[KIRBY_STRAFE] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_strafe)},
 		new float[1] {0.06f},
+		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
 
 	textures[KIRBY_DOORS] = new Animatable{
 		new QPixmap[2]{kirbytex.copy(kirby_doors),kirbytex.copy(moveBy(kirby_doors, 1))},
 		new float[2] {0.06f, 0.06f},
+				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
 		2
 	};
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
 		new QPixmap[1]{terrainpart2tex.copy(terrain_sloped_25)},
 		new float[1] {0.06f},
+				new KA::Vec2Df[4]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[TERRAIN_SLOPED_45] = new Animatable{
 		new QPixmap[1]{terrainpart2tex.copy(terrain_sloped_25)},
 		new float[1] {0.06f},
+				new KA::Vec2Df[4]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[KIRBY_SLOPED_25] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_sloped_25)},
 		new float[1] {0.06f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[KIRBY_SLOPED_45] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_sloped_45)},
 		new float[1] {0.06f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[KIRBY_SLOPED_25_LEFT] = new Animatable{
-		new QPixmap[1]{kirbytex.copy(kirby_sloped_25_left)},
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_25_left).transformed(QTransform().scale(-1, 1))},
 		new float[1] {0.06f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[KIRBY_SLOPED_45_LEFT] = new Animatable{
-		new QPixmap[1]{kirbytex.copy(kirby_sloped_45_left)},
+		new QPixmap[1]{kirbytex.copy(kirby_sloped_45_left).transformed(QTransform().scale(-1, 1))},
 		new float[1] {0.06f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[KIRBY_JUMP] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_jump) },
 		new float[1] {0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 //kirby actions
@@ -200,11 +235,12 @@ TextureManager::TextureManager() {
 		new QPixmap[4]{
 			kirbytex.copy(kirby_inhale),
 			kirbytex.copy(moveBy(kirby_inhale, 1)),
-			kirbytex.copy(moveBy(kirby_inhale2, 2)),
-			kirbytex.copy(moveBy(kirby_inhale3, 3)),
+			kirbytex.copy(kirby_inhale2),
+			kirbytex.copy(kirby_inhale3),
 		},
-		new float[4] {0.2f , 0.2f , 0.2f , 0.2f},
-		1
+		new float[4] {0.2f , 0.4f , 0.5f , 0.1f},
+		new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.25) },
+		3
 	};
 
 	textures[KIRBY_EXHALE] = new Animatable{
@@ -215,13 +251,16 @@ TextureManager::TextureManager() {
 		kirbytex.copy(moveBy(kirby_exhale3, 3)),
 		},
 		new float[4] {0.2f , 0.2f , 0.2f , 0.2f},
-		1
+				new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		4
 	};
 
 	textures[KIRBY_SPIT_CLOUD] = new Animatable{
 		new QPixmap[1]{
 			kirbytex.copy(kirby_spit_cloud) },
 		new float[1] {0.2f},
+		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
 
@@ -231,12 +270,16 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(kirby_big_flying, 1)),
 	},
 		new float[2] {0.2f, 0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[KIRBY_BIG_STAND] = new Animatable{
 		new QPixmap[1]{kirbytex.copy(kirby_big_stand) },
 		new float[1] {0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
@@ -248,33 +291,45 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(kirby_big_flying, 3)),	
 	},
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
-		1
+				new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		4
 	}; 
 
 // stage 1
 	textures[TERRAIN] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain_1)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[MARGINTERRAINL] = new Animatable{
 		new QPixmap[2]{terraintex.copy(terrain_2)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[MARGINTERRAINR] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain_3)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[SECONDTERRAINL] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain_4)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[SECONDTERRAINR] = new Animatable{
 	new QPixmap[1]{terraintex.copy(terrain_5)},
 	new float[1] {0},
+			new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 	1
 	};
 
@@ -282,27 +337,37 @@ TextureManager::TextureManager() {
 	textures[TERRAIN2] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain2S_1)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[TERRAINBLOCK] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain2S_2)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 // stage 3
 	textures[PLATFORMLEFT] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain3S_1)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[PLATFORMCENTER] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain3S_2)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 	textures[PLATFORMRIGHT] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain3S_2)},
-		new float[1] {0},
+		new float[1] {0},		
+		new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
@@ -310,6 +375,8 @@ TextureManager::TextureManager() {
 	textures[TITLESCREEN] = new Animatable{
 		new QPixmap[1]{titlescreentex.copy(title_screen)},
 		new float[1] {0},
+				new KA::Vec2Df[4]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
@@ -321,6 +388,8 @@ TextureManager::TextureManager() {
 			backgroundtex.copy(moveBy(background,2,0,background.width(),background.height(),0,0))
 		},
 		new float[3] {0.15f, 0.15f, 0.15f},
+				new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
 		3
 		};
 
@@ -332,6 +401,8 @@ TextureManager::TextureManager() {
 			backgroundtex1.copy(moveBy(background1,2,0,background1.width(),background1.height(),0,0))
 		},
 		new float[3] {0.12f, 0.14f, 0.18f},
+				new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
 		3
 	};
 
@@ -342,12 +413,16 @@ TextureManager::TextureManager() {
 			backgroundtex2.copy(moveBy(background2,2,0,background2.width(),background2.height(),0,0))
 		},
 		new float[3] {0.12f, 0.14f, 0.18f},
+				new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
 		3
 	};
 
 	textures[LOBBY] = new Animatable{
 		new QPixmap[1] {lobbytex.copy(lobby)},
 		new float[1] {0.12f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
@@ -356,6 +431,8 @@ TextureManager::TextureManager() {
 	textures[UPCOLLIDER] = new Animatable{
 		new QPixmap[1]{upcollidertex.copy(background)},
 		new float[1] {0},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
@@ -363,18 +440,24 @@ TextureManager::TextureManager() {
 	textures[PARTICLE_1] = new Animatable{
 		new QPixmap[4]{kirbytex.copy(particle_1), kirbytex.copy(moveBy(particle_1, 1)),kirbytex.copy(moveBy(particle_1, 2)),kirbytex.copy(moveBy(particle_1, 3)) },
 		new float[4] {0.2f, 0.2f, 0.2f, 0.2f},
+				new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
 		4
 	};
 
 	textures[BARRIER_1] = new Animatable{
 		new QPixmap[1]{barrierstex.copy(moveBy(barrier, 1, 0, 16, 16, 0, 0))},
 		new float[1] {0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	textures[BARRIER_2] = new Animatable{
 		new QPixmap[1]{barrierstex.copy(moveBy(barrier, 2, 0, 16, 16, 0, 0))},
 		new float[1] {0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
@@ -383,53 +466,68 @@ TextureManager::TextureManager() {
 		textures[HUD_NUM_0 + i] = new Animatable{
 			new QPixmap[1] {hudtex.copy(moveBy(hud_numbers, i, 0, hud_numbers.width(), hud_numbers.height(), 3, 0))},
 			new float[1] {0.2f},
+					new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
+
 			1
 	};
 
 	// Load power textures
-	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER); i++)
+	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER) + 1; i++)
 		textures[HUD_POWER+i] = new Animatable{
-			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width(), hud_power_normal.height(), (40-37), (62-59)))},
+			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width()+1, hud_power_normal.height()+1, (40-37), (62-59)))},
 			new float[1] {0.2f},
+					new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 			1
 		};
 
 	textures[HUD_PAUSE_POWER] = new Animatable{
 		new QPixmap[1] {hudpausetex.copy(hud_pause_power)},
 		new float[1] {0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
 	// Load power pause explain textures
-	for (int i = 0; i < (HUD_PAUSE_WHEEL - HUD_PAUSE_BACKDROP); i++)
+	for (int i = 0; i < (HUD_PAUSE_WHEEL - HUD_PAUSE_BACKDROP) + 1; i++)
 		textures[HUD_PAUSE_BACKDROP + i] = new Animatable{
-			new QPixmap[1] {hudpausetex.copy(moveBy(hud_pause_backdrop, i % 5, floor(i / 5), hud_pause_backdrop.width(), hud_power_normal.height(), 3, 3))},
+			new QPixmap[1] {hudpausetex.copy(moveBy(hud_pause_backdrop, i % 5, floor(i / 5), hud_pause_backdrop.width(), hud_pause_backdrop.height(), 3, 3))},
 			new float[1] {0.2f},
+					new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 			1
 	};
 
 	textures[HUD_PAUSE_SCREEN] = new Animatable{
 		new QPixmap[1] {hudpausetex.copy(hud_pause_screen)},
 		new float[1] {0.2f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
+
 		1
 	};
 	
 	textures[HUD_HEALTH] = new Animatable{
 		new QPixmap[2] {
 			hudtex.copy(hud_health),
-			hudtex.copy(moveBy(hud_health,1))
+			hudtex.copy(moveBy(hud_health,1,0, hud_health.width(), hud_health.height(), 3, 3))
 		},
-		new float[2] {1.0f, 1.0f},
+		new float[2] {0.5f, 0.5f},
+				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
 		2
 	};
 	textures[HUD_LIVES] = new Animatable{
-		new QPixmap[3] {
+		new QPixmap[4] {
 			hudtex.copy(hud_lives),
-			hudtex.copy(moveBy(hud_lives,1)),
-			hudtex.copy(moveBy(hud_lives,1))
+			hudtex.copy(moveBy(hud_lives,1,0, hud_lives.width(), hud_lives.height(), 2)),
+			hudtex.copy(moveBy(hud_lives,2,0, hud_lives.width(), hud_lives.height(), 2)),
+			hudtex.copy(moveBy(hud_lives,1,0, hud_lives.width(), hud_lives.height(), 2)),
 		},
-		new float[3] {1.0f,1.0f,1.0f},
-		1
+		new float[4] {0.3f, 0.3f, 0.3f, 0.3f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		4
 	};
 
 	//HUD
@@ -438,14 +536,98 @@ TextureManager::TextureManager() {
 			hudtex.copy(hud_view)
 		},
 		new float[1] {1.0f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
 		1
 	};
 
+	// Enemies
+	textures[WADDLEDEE] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(waddledee),
+		enemytex.copy(moveBy(waddledee,1)),
+		},
+		new float[2] {0.35f,0.35f},
+				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		2
+	};
+	textures[WADDLEDOO] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(waddledoo),
+		enemytex.copy(moveBy(waddledoo,1)),
+		},
+		new float[2] {0.35f,0.35f},
+				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		2
+	};
+	textures[BRONTOBURT] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(brontoburt),
+		enemytex.copy(moveBy(brontoburt,1)),
+		},
+		new float[2] {0.35f,0.35f},
+				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		2
+	};
+	textures[SPARKY] = new Animatable{
+		new QPixmap[1] {
+		enemytex.copy(sparky),
+		},
+		new float[1] {0.35f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
+		1
+	};
+	textures[SPARKY_JUMP] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(sparky_jump),
+		enemytex.copy(moveBy(sparky_jump,1))
+
+		},
+		new float[2] {0.35f, 0.35f},
+				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+
+		2
+
+	};
+
+
+	textures[POPPYBROSJR] = new Animatable{
+		new QPixmap[1] {
+		enemytex.copy(poppybrosjr),
+		},
+		new float[1] {0.35f},
+				new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
+
+		1
+	};
+	textures[HOTHEAD] = new Animatable{
+		new QPixmap[2] {
+		enemytex.copy(hothead),
+		enemytex.copy(moveBy(hothead,1)),
+		},
+		new float[2] {0.35f,0.35f},
+		new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+		2
+	};
+
+	done = true;
 }
 
 // Destructor
 TextureManager::~TextureManager() {
-	for (Animatable* a : textures) { delete[] a->pixmaps; delete[] a->duration; delete a; }
+	for (int i = 0; i < TexManager::TEXTURE_COUNT; i++) {
+		if (!textures[i]) {
+			std::cout << "Element " << i << " is not assigned or loaded\n";
+			continue;
+		}
+		delete [] textures[i]->pixmaps;
+		delete [] textures[i]->duration;
+		delete textures[i];
+	}
 	//delete [] textures;
 }
 

@@ -1,15 +1,96 @@
 #include "GameLoop.h"
-
 #include "Vec2D.h"
 #include "Camera.h"
 #include "CollisionDetection.h"
 #include "Sounds.h"
 #include "Sprites.h"
-#include "LevelBuilder.h"
-
 #include "Definitions.h"
 
 GameLoop::GameLoop() {
+
+	GUIItems = std::vector<RenderableObject*>();
+
+
+	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
+	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
+	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 3);
+	startGUI->setDrawScale(0.23);
+
+	view = new BaseGUI(QPointF(0, 0.757f), TexManager::HUD_VIEW);
+	state = new BaseGUI(QPointF(0.578642, 0.793756), TexManager::HUD_POWER);
+
+
+	scoredigits = new BaseGUI*[7]{
+		new BaseGUI(QPointF(0.29,0.90422),		TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.322848,0.90447),	TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.354305,0.90447),	TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.386589,0.90447),	TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.418046,0.90447),	TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.450331,0.90447),	TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.481788,0.90447),	TexManager::HUD_NUM_0)
+	};
+
+	KHealth = new BaseGUI*[6] {
+		new BaseGUI(QPointF(0.29,0.817408),		TexManager::HUD_HEALTH),
+		new BaseGUI(QPointF(0.322848,0.817408), TexManager::HUD_HEALTH),
+		new BaseGUI(QPointF(0.354305,0.817408), TexManager::HUD_HEALTH),
+		new BaseGUI(QPointF(0.386589,0.817408), TexManager::HUD_HEALTH),
+		new BaseGUI(QPointF(0.418046,0.817408), TexManager::HUD_HEALTH),
+		new BaseGUI(QPointF(0.450331,0.816462), TexManager::HUD_HEALTH)
+	};
+
+	Lives = new BaseGUI(QPointF(0.751656, 0.849574), TexManager::HUD_LIVES);
+	LivesCounter = new BaseGUI*[2]{
+		new BaseGUI(QPointF(0.836093, 0.868496), TexManager::HUD_NUM_0),
+		new BaseGUI(QPointF(0.870033,0.868496), TexManager::HUD_NUM_0)
+	};
+
+	GUIItems.push_back(dynamic_cast<RenderableObject*>(view));
+	GUIItems.push_back(dynamic_cast<RenderableObject*>(state));
+
+	for (int i = 0; i < 7; i++)
+		GUIItems.push_back(dynamic_cast<RenderableObject*>(scoredigits[i]));
+
+	for (int i = 0; i < 6; i++) 
+		GUIItems.push_back(dynamic_cast<RenderableObject*>(KHealth[i]));
+		
+	GUIItems.push_back(dynamic_cast<RenderableObject*>(Lives));
+
+	for (int i = 0; i < 2; i++) 
+		GUIItems.push_back(dynamic_cast<RenderableObject*>(LivesCounter[i]));
+		
+
+}
+
+
+void GameLoop::updateView() {
+
+	int num = score;
+	for (int i = 6; i >= 0 && num >= 0; i--) {
+
+		int dig = num % 10;
+		num = num / 10;
+		if (num < 0)
+			num = 0;
+
+		scoredigits[i]->setTexture((TexManager::TexID)(TexManager::HUD_NUM_0+abs(dig)));
+	}
+
+	int num1 = lives;
+	for (int i = 1; i >= 0 && num1 >= 0; i--) {
+
+		int dig = num1 % 10;
+		num1 = num1 / 10;
+		if (num1 < 0)
+			num1 = 0;
+
+		LivesCounter[i]->setTexture((TexManager::TexID)(TexManager::HUD_NUM_0 + abs(dig)));
+	}
+
+	for (int i = 0; i < 6; i++) 
+		KHealth[i]->setShow(health > i);
+	
+	this->state->setTexture(ability);
 
 }
 
@@ -18,6 +99,27 @@ GameLoop::~GameLoop() {
 	stop();
 	if (loopthread.joinable())
 		loopthread.join();
+	
+	delete pauseGUI;
+	delete pauseSuggestion;
+	delete startGUI;
+	
+	delete[] scoredigits;
+
+	
+	delete[] KHealth;
+
+	
+	delete[] LivesCounter;
+
+
+}
+
+void GameLoop::showStart() {
+	pause(true);
+	pauseSuggestion->setShow(false);
+	pauseGUI->setShow(false);
+	startGUI->setShow(true);
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -30,12 +132,14 @@ void GameLoop::recalculateFps(int target_fps) {
 	min_delta_millis_fps = target_fps != 0 ? 1000 / target_fps : 0;
 }
 
-RigidBody* GameLoop::getInside(RigidBody* rb) {
+std::vector<RigidBody*> GameLoop::getInside(RigidBody* rb, QRectF area) {
+	bool usearea = area.width() != 0;
+	std::vector<RigidBody*> objs;
 	for (RigidBody* obj : collidableObjects)
 		if (obj != rb && obj->getObjectId() != objects::BACKGROUND)
-			if (rb->getCollider().intersects(obj->getCollider()))
-				return obj;
-	return 0;
+			if ((usearea ? area : rb->getCollider()).intersects(obj->getCollider()))
+				objs.push_back(obj);
+	return objs;
 }
 
 void GameLoop::loop() {
@@ -109,10 +213,60 @@ void GameLoop::reload() {
 	loadGame(currentlevel, false, false);
 }
 
+void GameLoop::addElement(GameObject* obj) {
+
+	bool* chars = obj->getObjectCharacteristics();
+	if (chars[0])
+		addToTickable(dynamic_cast<TickableObject*>(obj));
+	if (chars[1])
+		addToRenderable(dynamic_cast<RenderableObject*>(obj));
+	if (chars[2])
+		addToCollidable(dynamic_cast<RigidBody*>(obj));
+	if (chars[3])
+		addToSerializable(dynamic_cast<Serializable*>(obj));
+	if (chars[4] && !KirbyInstance)
+		KirbyInstance = obj;
+	if (chars[5])
+		addParticle(obj);
+
+	delete[] chars;
+}
+
+void GameLoop::removeElement(GameObject* obj) {
+	bool* chars = obj->getObjectCharacteristics();
+	if (chars[0]) {
+		std::vector<TickableObject*>::iterator it = std::find(tickableObjects.begin(), tickableObjects.end(), dynamic_cast<TickableObject*>(obj));
+		if (it != tickableObjects.end())
+			tickableObjects.erase(it);
+	}
+	if (chars[1]) {
+		std::vector<RenderableObject*>::iterator it = std::find(renderableObjects.begin(), renderableObjects.end(), dynamic_cast<RenderableObject*>(obj));
+		if (it != renderableObjects.end()) {
+			renderableObjectsToBeDeleted.push_back(*it);
+			renderableObjects.erase(it);
+		}
+	}
+	if (chars[2]) {
+		std::vector<RigidBody*>::iterator it = std::find(collidableObjects.begin(), collidableObjects.end(), dynamic_cast<RigidBody*>(obj));
+		if (it != collidableObjects.end())
+			collidableObjects.erase(it);
+	}
+	if (chars[3]) {
+		std::vector<Serializable*>::iterator it = std::find(serializableObjects.begin(), serializableObjects.end(), dynamic_cast<Serializable*>(obj));
+		if (it != serializableObjects.end())
+			serializableObjects.erase(it);
+	}
+	if (chars[4])
+		KirbyInstance = 0;
+
+	if (chars[5])
+		
+
+	delete[] chars;
+}
+
+
 bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
-	
-	
-	
 
 	if (savecurrent && currentlevel.length() != 0)
 		saveGame(currentlevel+std::string(".save"));
@@ -120,68 +274,15 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	currentlevel = fileName;
 
 	clear();
-	
-	std::cout << "Loading " << fileName << "\n";
-
 
 	Camera::getInstance().setBounds(QRectF(0, 0, 0, 0));
 
+	KirbyInstance = 0;
+
 	std::vector<Serializable*> tempserializableObjects = Serializer::deserializeFromFile(fileName + (issave ? std::string(".save") : std::string("")));
-
-	for (Serializable* item : tempserializableObjects) {
-		GameObject* obj = dynamic_cast<GameObject*>(item);
-		switch (obj->getObjectId()) {
-		case objects::GAMEOBJECT:
-			break;
-		
-		case objects::KIRBY:
-			addKirby(obj);
-			break;
-
-		case objects::BACKGROUND:
-			addTerrain(obj);
-			tickableObjects.push_back(dynamic_cast<TickableObject*>(obj));
-			break;
-
-		case objects::TERRAIN:
-			addTerrain(obj);
-			break;
-
-		case objects::BARRIER:
-			addTerrain(obj);
-			break;
-
-		case objects::PLATFORM:
-			addTerrain(obj);
-			GameLoop::getInstance().addToTickable(dynamic_cast<TickableObject*>(obj));
-			break;
-
-		case objects::DOOR:
-			GameLoop::getInstance().addToSerializable(dynamic_cast<GameObject*>(obj));
-			GameLoop::getInstance().addToCollidable(dynamic_cast<RigidBody*>(obj));
-			GameLoop::getInstance().addToRenderable(dynamic_cast<RenderableObject*>(obj));
-			break;
-
-		case objects::STEPUP:
-			addTerrain(obj);
-			break;
-
-		case objects::SLOPED_TERRAIN_25:
-			addTerrain(obj);
-			break;
-		case objects::SLOPED_TERRAIN_45:
-			addTerrain(obj);
-			break;
-		case objects::SLOPED_TERRAIN_205:
-			addTerrain(obj);
-			break;
-		case objects::SLOPED_TERRAIN_225:
-			addTerrain(obj);
-			break;
-		}
+	for (Serializable* item : tempserializableObjects) 
+		addElement(dynamic_cast<GameObject*>(item));
 	
-	}	
-
 	return tempserializableObjects.size() != 0;
 
 }
@@ -221,65 +322,55 @@ void GameLoop::tick(double deltatime) {
 	for (auto* item : this->tickableObjects) 
 		item->tick(deltatime);
 	
+	for (auto* item : this->GUIItems) {
+		TickableObject* obj = dynamic_cast<TickableObject*>(item);
+		if (obj) obj->tick(deltatime);
+	}
+
 	for (auto* item : this->particleObjects)
 		if (item->shouldDelete()) {
 			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
 			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
+			//collidableObjects.erase(std::find(collidableObjects.begin(), collidableObjects.end(), item));
 			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
 			delete item;
 		}
 
+	
 	KA::Sounds::getInstance().tick(deltatime);
 }
 
+// Optional setup: Multiplayer
 void GameLoop::loadNetworkData(){
-
 
 
 }
 
 void GameLoop::start() {
 	running = true;
-	paused = false;
-	// KA::Sounds::instance()->play("Kirby_Adventure_theme");
-	
-	
-	if(!loopthread.joinable())
-		loopthread = std::thread(&GameLoop::loop, this);
+	//paused = false;
 
-	
+	pause(false);
+
+	if(!loopthread.joinable()) loopthread = std::thread(&GameLoop::loop, this);
 }
 
 
 void GameLoop::pause(bool pause) {
 	paused = pause;
-	
+
+	if (pause)
+		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+
+	pauseGUI->setShow(pause);
+	pauseSuggestion->setShow(pause);
+	startGUI->setShow(false);
 }
 
 void GameLoop::stop() {
 	running = false;
 	paused = false;
-
-	//GameLoop::getInstance().saveGame("testout");
-	
 }
-
-void GameLoop::addKirby(GameObject* kb) {
-
-	KirbyInstance = kb;
-	addToTickable(dynamic_cast<TickableObject*>(kb));
-	addToRenderable(dynamic_cast<RenderableObject*>(kb));
-	addToCollidable(dynamic_cast<RigidBody*>(kb));
-	addToSerializable(dynamic_cast<Serializable*>(kb));
-
-}
-
-void GameLoop::addTerrain(GameObject* t) {
-	addToRenderable(dynamic_cast<RenderableObject*>(t));
-	addToCollidable(dynamic_cast<RigidBody*>(t));
-	addToSerializable(dynamic_cast<Serializable*>(t));
-}
-
 
 void GameLoop::addToTickable(TickableObject* tco) {
 	this->tickableObjectsQueue.push_back(tco);
@@ -297,20 +388,18 @@ void GameLoop::addToCollidable(RigidBody* s) {
 	this->collidableObjectsQueue.push_back(s);
 }
 
-void GameLoop::addParticle(Particle* p) {
-
-	addToRenderable(p);
-	addToTickable(p);
+void GameLoop::addParticle(GameObject* p) {
 	
-	particleObjects.push_back(p);
+	particleObjects.push_back(dynamic_cast<Particle*>(p));
 }
-
-
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
 	if (e->key() == Qt::Key_H && isPressed) {
+		
 		hitboxenabled = !hitboxenabled;
+		//loadGame(currentlevel,false,false);
+		
 	}
 
 	if (e->key() == Qt::Key_J && isPressed) {
@@ -333,15 +422,12 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed) {
 		
-		if (paused) {
-			start();
-		} else { 
-			pause(); 
-		}
+		pause(!paused); 
+		
 	}
 	// Save
 	if (e->key() == Qt::Key_K)
-		GameLoop::getInstance().saveGame("level2");
+		GameLoop::getInstance().saveGame(currentlevel + ".edited");
 
 
 	if (e->key() == Qt::Key_R)
@@ -349,8 +435,23 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		KirbyInstance->setX(4); KirbyInstance->setY(-4);
 	}
 
+
 	if (e->isAutoRepeat())
 		return;
+
+	if (KirbyInstance)
+		KirbyInstance->keyPressEvent(e, isPressed);
+	else {
+		// Controls
+		if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
+			Camera::getInstance().setY(Camera::getInstance().getY() + 10);
+		if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
+			Camera::getInstance().setX(Camera::getInstance().getX() + 10);
+		if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
+			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
+		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
+			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
+	}
 
 
 	if (e->key() == Qt::Key_1 && !isPressed) {
@@ -372,7 +473,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
 
 			Kirby* k = new Kirby(QPointF(0.0, -5.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));			
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(k));			
 
 		}
 
@@ -397,7 +498,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			GameLoop::getInstance().addToSerializable(dynamic_cast<Serializable*>(bkgrnd));
 
 			Kirby* k = new Kirby(QPointF(0.0, -5.0));
-			GameLoop::getInstance().addKirby(dynamic_cast<GameObject*>(k));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(k));
 
 		}
 
@@ -407,24 +508,30 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 
 	
-	if(KirbyInstance)
-		KirbyInstance->keyPressEvent(e,isPressed);
-	else {
-		// Controls
-		if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
-			Camera::getInstance().setY(Camera::getInstance().getY()+10);
-		if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
-			Camera::getInstance().setX(Camera::getInstance().getX() + 10);
-		if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
-			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
-		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
-			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
-
-
-	}
-
 	//std::cout << (isPressed ? "Pressed: " : "Released: ") << e->key() << "\n";
 }
+
+std::vector<std::pair<RigidBody*, double>> GameLoop::rayCast(RigidBody* startbody, QPointF ray) {
+
+	KA::Vec2Df testvelocity{(double)ray.x(), (double)ray.y()};
+
+	KA::Vec2Df cp, cn;
+	double ct = 0, min_t = INFINITY;
+	std::vector<std::pair<RigidBody*, double>> sortedByContactTime;
+	for (RigidBody* obj : collidableObjects)
+		if (obj != startbody)
+			if (DynamicRectVsRect(startbody->getColliderRectF(), testvelocity, obj->getColliderRectF(), cp, cn, ct))
+				sortedByContactTime.push_back({ obj, ct });
+	std::sort(sortedByContactTime.begin(), sortedByContactTime.end(),
+		[this](const std::pair<RigidBody*, double>& a, const std::pair<RigidBody*, double>& b) {
+			// if contact time is the same, give priority to nearest object
+			return a.second != b.second ? a.second < b.second : pitagoricDistance(a.first->getCollider().center(), b.first->getCollider().center()) < 0;
+		});
+
+	return sortedByContactTime;
+
+}
+
 
 std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* rb) {
 
@@ -445,17 +552,16 @@ std::vector<std::pair<RigidBody*, double>> GameLoop::findCollisions(RigidBody* r
 }
 void GameLoop::clear() {
 	
-	//stop();
+	
+	stop();
 
-	
-	
 	std::thread t([]() {
 		
-		GameLoop::getInstance().stop();
+		
 		if (GameLoop::getInstance().loopthread.joinable())
 			GameLoop::getInstance().loopthread.join();
 		
-		if(GameLoop::getInstance().renderableObjects.size() > 0)
+		//if(GameLoop::getInstance().renderableObjects.size() > 0)
 			GameLoop::getInstance().render(true);
 	
 

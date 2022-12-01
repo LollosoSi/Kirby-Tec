@@ -48,11 +48,12 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
 
-    GameLoop::getInstance().pause();
+    //GameLoop::getInstance().pause();
 
     double expectedwidth = (double)(this->height() * aspectratio);
     double expectedheight = (double)(this->width() / aspectratio);
 
+    // Resize window to avoi
     if (expectedwidth != this->width() && false) {
         event->accept();
         this->resize(QSize(expectedwidth, this->height()));
@@ -66,9 +67,8 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
         expectedheight = this->height();
     }
 
-
-
     QMainWindow::resizeEvent(event);
+
     // Resize drawspace here
     sceneRect.setWidth(expectedwidth);
     sceneRect.setHeight(expectedheight);
@@ -83,7 +83,7 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     scalefactor = scale * standardsize;
 
 
-    GameLoop::getInstance().pause(false);
+    //GameLoop::getInstance().pause(false);
 }
 
 void MainWindow::pleaseRender(bool clearscene) {
@@ -92,9 +92,19 @@ void MainWindow::pleaseRender(bool clearscene) {
     for (auto* item : GameLoop::getInstance().renderableObjects)
         item->render(*scene, clearscene);
 
+    if (GameLoop::getInstance().renderableObjectsToBeDeleted.size() > 0) {
+        for (auto* item : GameLoop::getInstance().renderableObjectsToBeDeleted)
+            item->render(*scene, true);
+        GameLoop::getInstance().renderableObjectsToBeDeleted.clear();
+    }
+
     for (auto* item : GameLoop::getInstance().GUIItems)
         item->render(*scene, clearscene);
-    
+
+    GameLoop::getInstance().getPauseGUI().render(*scene, clearscene);
+    GameLoop::getInstance().getPauseSuggestion().render(*scene, clearscene);
+    GameLoop::getInstance().getStartGUI().render(*scene, clearscene);
+
 
     if (scene->items().size() == 0 || clearscene) {
         scene->clear();

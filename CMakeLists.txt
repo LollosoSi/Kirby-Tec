@@ -90,6 +90,7 @@ target_sources(${project}
 		Kirby.h
 		Kirby.cpp
 		Particle.h
+		Particle.cpp
 		ObjectsHolder.h
 		Sounds.cpp
 		Sounds.h
@@ -99,8 +100,6 @@ target_sources(${project}
 		Enemy.h
 		Door.h
 		Door.cpp
-		Levelbuilder.cpp
-		Levelbuilder.h
 		NetworkElement.h
 )
 

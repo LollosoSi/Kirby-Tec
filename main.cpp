@@ -34,13 +34,16 @@ int main(int argc, char* argv[]) {
 	
 	/*if (!GameLoop::getInstance().loadGame("title")) {
 		Terrain* t = new Terrain(objects::TERRAIN, TexManager::TITLESCREEN);
-		GameLoop::getInstance().addTerrain(dynamic_cast<GameObject*>(t));
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
 	} */
 	
 	
 	
 	TextureManager::getInstance();
 	KA::Sounds::getInstance();
+
+	while (!TextureManager::getInstance().done) {}
+
 	GameLoop::getInstance();
 
 //	GameLoop::getInstance().start();
@@ -53,16 +56,36 @@ int main(int argc, char* argv[]) {
 	//}
 
 	Door d(QPoint(0, 0), std::string("levels/lobby"));
-	d.launchAction();
-	
-	
+	d.launchAction();	
 
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);
 
-	BaseGUI view(QPointF(0,0.7f), TexManager::HUD_VIEW);
+	GameLoop::getInstance().showStart();
 
-	GameLoop::getInstance().GUIItems.push_back(dynamic_cast<RenderableObject*>(&view));
+	/*
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new WaddleDee(QPointF(5+rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new WaddleDoo(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new PoppyBrosJr(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new BrontoBurt(QPointF(5+ rand() % 5, -5 + rand()%5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new HotHead(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}
+	for (int i = 0; i < 3; i++) {
+		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(new Sparky(QPointF(5+ rand() % 5, -5 + rand() % 5))));
+	}*/
+
+
+	//std::cout << "Element: " << Camera::fromPercentageToScreen(QPointF(view.getX(), view.getY())).y() << "\n";
+	//std::cout << "Screen : " << Camera::getInstance().screenwidth << " x " << Camera::getInstance().screenheight << "\n";
 
     // eseguo applicazione Qt
     return a.exec();
