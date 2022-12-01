@@ -48,7 +48,7 @@ double Kirby::groundDistance() {
 					//std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
 			}
 	}
-
+	return 9999;
 }
 
 void Kirby::processAcceleration() {
@@ -324,7 +324,7 @@ void Kirby::processAnimation() {
 		else {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_FLYING : KIRBY_JUMP));
 			if (circa(groundDistance(), 2, 0.1) && velocity.y>0 && !circa(velocity.x,0,5) && !storedObject) {
-				this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL),0,1.6);
+				this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL),0,1.6f);
 			}
 
 		}
