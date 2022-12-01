@@ -5,6 +5,8 @@
 #include "TickableObject.h"
 #include <thread>
 
+#include <QThread>
+
 namespace KA
 {
 	class Sounds;
@@ -16,6 +18,8 @@ class KA::Sounds : public QObject, public TickableObject
 
 private:
 	void playfile(const std::string& id, bool music = false);
+
+	QThread sound_thread;
 
 	// Relativi al singleton
 	Sounds();
@@ -44,16 +48,14 @@ public:
 
 	void tick(double delta) {
 	
-		for (auto item : execlist)
+		for (auto& item : execlist)
 			playfile(item.first, item.second);
 		execlist.clear();
 	
 	}
 
-	
-
 	// controls
-	void play(const std::string& id, bool music = false);
+	void play(const std::string id, bool music = false);
 	void setVolume(const std::string& id, bool music, double volume);
 	void stopMusic(const std::string& id);
 	void stop(const std::string& id, bool music = false);

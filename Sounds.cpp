@@ -26,7 +26,8 @@ Sounds::Sounds()
 		_musics[name]->setSource(QUrl::fromLocalFile(QString("musics/") + f));
 	}
 
-	/*running = true;
+	/*
+	running = true;
 	worker = std::thread([]() {
 
 		
@@ -39,6 +40,7 @@ Sounds::Sounds()
 			for (auto& item : cp) {
 				
 				if (!item.second && Sounds::getInstance()._sounds.find(item.first) != Sounds::getInstance()._sounds.end()) {
+					Sounds::getInstance()._sounds[item.first]->stop();
 					Sounds::getInstance()._sounds[item.first]->play();
 				}
 				else if (item.second && Sounds::getInstance()._musics.find(item.first) != Sounds::getInstance()._musics.end()) {
@@ -49,13 +51,20 @@ Sounds::Sounds()
 
 			std::this_thread::sleep_for(std::chrono::nanoseconds(200));
 
-		});*/
+		});
+*/		
 }
 
 void Sounds::playfile(const std::string& id, bool music) {
 	
+
+
 		if (!music && _sounds.find(id) != _sounds.end()) {
+			//_sounds[id]->stop();
+			//_sounds[id]->moveToThread(new QThread());
 			_sounds[id]->play();
+				
+			
 		}
 		else if (music && _musics.find(id) != _musics.end()) {
 			_musics[id]->play();
@@ -77,10 +86,10 @@ void Sounds::stop(const std::string& id, bool music) {
 }
 
 
-void Sounds::play(const std::string& id, bool music)
+void Sounds::play(const std::string id, bool music)
 {
-	playfile(id,music);
-	//execlist.push_back(std::pair<std::string, bool>(id, music));
+	//playfile(id,music);
+	execlist.push_back(std::pair<std::string, bool>(id, music));
 
 	
 }

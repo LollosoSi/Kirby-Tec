@@ -241,7 +241,7 @@ void RigidBody::tick(double deltatime){
 					}
 
 				}
-				else if (obid == objects::PLATFORM && ct >= -0.3 && ct < 0.07) {
+				else if (obid == objects::PLATFORM && ct >= -0.3 && ct < 0.2) {
 					hit = 1;
 					lastHitNormals = cn;
 					//currentDegree = NO_SLOPE;
