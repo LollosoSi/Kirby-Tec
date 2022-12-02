@@ -67,7 +67,7 @@ public:
 	std::vector<RenderableObject*> renderableObjects;
 	std::vector<RenderableObject*> renderableObjectsToBeDeleted;
 
-	std::vector<RenderableObject*> GUIItems;
+	std::vector<BaseGUI*> GUIItems;
 
 	void addElement(GameObject* item);
 	void removeElement(GameObject* item);

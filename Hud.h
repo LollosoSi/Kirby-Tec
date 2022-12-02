@@ -64,6 +64,8 @@ public:
 	}
 
 	QPixmap getTexture() { return anim.getCurrentPixmap(); }
+	void playOneShot(TexManager::TexID id) { anim.playOneShot(TextureManager::getInstance().getAnimatable(id)); }
+
 
 	void render(QGraphicsScene& scene, bool shouldClear) override {
 
@@ -101,7 +103,7 @@ public:
 
 		if (pm && !shouldClear && show) {
 
-			//std::cout << "Rendering gui"<< id <<"\n";
+			std::cout << "Rendering gui"<< id <<"\n";
 
 
 			pm->setPixmap(getTexture());

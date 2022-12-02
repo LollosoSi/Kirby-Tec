@@ -109,6 +109,8 @@ TextureManager::TextureManager() {
 	QRect poppybrosjr = getStandardQRect(95,758);
 	QRect brontoburt = getStandardQRect(95,897);
 
+	QRect intronomi = QRect(0,0, 1023, 896);
+
 	QRect transparent = QRect(153, 25, 2, 2);
 
 	QPixmap kirbytex = loadTexture(file_kirby, kirby_file_mask);
@@ -124,6 +126,10 @@ TextureManager::TextureManager() {
 	QPixmap barrierstex = loadTexture(file_barriers, nocolor);
 	QPixmap hudtex = loadTexture(file_HUDcomponents, nocolor);
 	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
+	QPixmap hudintronomi = loadTexture(file_HUDtitlescreenintro, nocolor);
+
+
+	
 	
 
 	// FORMAT: QPixmap array, float array, size
@@ -143,6 +149,25 @@ TextureManager::TextureManager() {
 		new float[1] {1.0f},
 		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
+	};
+
+	textures[TITLESCREEN_INTRO] = new Animatable{
+		new QPixmap[11]{
+			hudintronomi.copy(intronomi),
+			hudintronomi.copy(moveBy(intronomi, 1, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 2, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 3, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 4, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 5, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 6, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 7, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 8, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 9, 0, intronomi.width(), intronomi.height(), 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 10, 0, intronomi.width(), intronomi.height(), 0, 0))
+	},
+		new float[11] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,2.0f},
+		new KA::Vec2Df[11]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
+		11
 	};
 
 	textures[KIRBY_STAND] = new Animatable{

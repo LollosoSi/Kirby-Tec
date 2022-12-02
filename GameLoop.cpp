@@ -8,13 +8,14 @@
 
 GameLoop::GameLoop() {
 
-	GUIItems = std::vector<RenderableObject*>();
+	GUIItems = std::vector<BaseGUI*>();
 
 
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
-	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 3);
+	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
+	startGUI->playOneShot(TexManager::TITLESCREEN_INTRO);
 
 	view = new BaseGUI(QPointF(0, 0.757f), TexManager::HUD_VIEW);
 	state = new BaseGUI(QPointF(0.578642, 0.793756), TexManager::HUD_POWER);
@@ -45,21 +46,23 @@ GameLoop::GameLoop() {
 		new BaseGUI(QPointF(0.870033,0.868496), TexManager::HUD_NUM_0)
 	};
 
-	GUIItems.push_back(dynamic_cast<RenderableObject*>(view));
-	GUIItems.push_back(dynamic_cast<RenderableObject*>(state));
+	GUIItems.push_back(view);
+	GUIItems.push_back(state);
 
 	for (int i = 0; i < 7; i++)
-		GUIItems.push_back(dynamic_cast<RenderableObject*>(scoredigits[i]));
+		GUIItems.push_back(scoredigits[i]);
 
 	for (int i = 0; i < 6; i++) 
-		GUIItems.push_back(dynamic_cast<RenderableObject*>(KHealth[i]));
+		GUIItems.push_back(KHealth[i]);
 		
-	GUIItems.push_back(dynamic_cast<RenderableObject*>(Lives));
+	GUIItems.push_back(Lives);
 
 	for (int i = 0; i < 2; i++) 
-		GUIItems.push_back(dynamic_cast<RenderableObject*>(LivesCounter[i]));
+		GUIItems.push_back(LivesCounter[i]);
 		
-
+	GUIItems.push_back(pauseGUI);
+	GUIItems.push_back(pauseSuggestion);
+	GUIItems.push_back(startGUI);
 }
 
 
@@ -160,7 +163,7 @@ void GameLoop::loop() {
 		
 			current = QTime::currentTime();
 			if (!waitingForRender) {
-				if (!paused) {
+				
 					if ((delta_tick = last_millis_tick.msecsTo(current)) >= min_delta_millis_tick) {
 						deltas++;
 						deltasum += delta_tick;
@@ -174,9 +177,7 @@ void GameLoop::loop() {
 							mergeQueues();
 
 					}
-				}
-				else
-					last_millis_tick = current;
+				
 
 
 				if ((delta_fps = last_millis_render.msecsTo(current)) >= min_delta_millis_fps)
@@ -318,25 +319,25 @@ void GameLoop::render(bool clear) {
 
 void GameLoop::tick(double deltatime) {
 
-	Camera::getInstance().tick(deltatime);
-	for (auto* item : this->tickableObjects) 
-		item->tick(deltatime);
-	
 	for (auto* item : this->GUIItems) {
-		TickableObject* obj = dynamic_cast<TickableObject*>(item);
-		if (obj) obj->tick(deltatime);
+		item->tick(deltatime);
 	}
 
-	for (auto* item : this->particleObjects)
-		if (item->shouldDelete()) {
-			renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
-			tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
-			//collidableObjects.erase(std::find(collidableObjects.begin(), collidableObjects.end(), item));
-			particleObjects.erase( std::find(particleObjects.begin(), particleObjects.end(), item) );
-			delete item;
-		}
 
-	
+	if (!paused) {
+		Camera::getInstance().tick(deltatime);
+		for (auto* item : this->tickableObjects)
+			item->tick(deltatime);
+
+		for (auto* item : this->particleObjects)
+			if (item->shouldDelete()) {
+				renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
+				tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
+				//collidableObjects.erase(std::find(collidableObjects.begin(), collidableObjects.end(), item));
+				particleObjects.erase(std::find(particleObjects.begin(), particleObjects.end(), item));
+				delete item;
+			}
+	}
 	KA::Sounds::getInstance().tick(deltatime);
 }
 

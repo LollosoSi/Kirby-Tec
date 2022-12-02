@@ -101,9 +101,9 @@ void MainWindow::pleaseRender(bool clearscene) {
     for (auto* item : GameLoop::getInstance().GUIItems)
         item->render(*scene, clearscene);
 
-    GameLoop::getInstance().getPauseGUI().render(*scene, clearscene);
-    GameLoop::getInstance().getPauseSuggestion().render(*scene, clearscene);
-    GameLoop::getInstance().getStartGUI().render(*scene, clearscene);
+    //GameLoop::getInstance().getPauseGUI().render(*scene, clearscene);
+    //GameLoop::getInstance().getPauseSuggestion().render(*scene, clearscene);
+    //GameLoop::getInstance().getStartGUI().render(*scene, clearscene);
 
 
     if (scene->items().size() == 0 || clearscene) {

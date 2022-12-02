@@ -168,10 +168,11 @@ namespace TexManager {
 			POPPYBROSJR = 118,
 			HOTHEAD = 119,
 
-			SPARKY_JUMP = 120
+			SPARKY_JUMP = 120,
+			TITLESCREEN_INTRO = 121
 
 	};
-	const int TEXTURE_COUNT = 121;
+	const int TEXTURE_COUNT = 122;
 
 };
 
@@ -209,6 +210,8 @@ private:
 	const std::string file_barriers = "sprites/Base.png";
 	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
+	const std::string file_HUDtitlescreenintro = "sprites/IntroNomi.png";
+
 	
 	
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
