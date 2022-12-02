@@ -38,9 +38,9 @@ void PoppyBrosJr::tick(double delta)
 	accel.y = 9.8;
 
 	
-	accel.x = maxwalkspeed * (GameLoop::getInstance().getKirbyPos().x() > getX() ? 1 : -1);
+	accel.x = 3*maxwalkspeed * (GameLoop::getInstance().getKirbyPos().x() > getX() ? 1 : -1);
 	if (abs(GameLoop::getInstance().getKirbyPos().x() - getX()) < 4 && (GameLoop::getInstance().getKirbyPos().y() < getY()) && isGrounded())
-		jump(-7);
+		jump(-8);
 
 	if (this->hit && lastHitNormals.x != 0 && lastHitNormals.y == 0)
 		accel.x = maxwalkspeed * (velocity.x > 0 ? 1 : -1);
@@ -78,12 +78,12 @@ void Sparky::tick(double delta) {
 
 		objects::ObjectID targets[] = { objects::KIRBY };
 
-		int steps = 7;
+		int steps = 25;
 		for (int i = 0; i < steps; i++) {
 			Projectile* p = new Projectile(getCollider().center(),
 				KA::Vec2Df{ 0,0 },
 				TextureManager::getInstance().getAnimatable(TexManager::SPARKY_JUMP), targets, 1,
-				1500, 0.38);
+				1500, 0.15);
 			p->velocity = {sin(M_PI * (i - (steps/2.0))/steps), -6 * cos(M_PI * (i - (steps / 2.0)) / steps) };
 			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));
 		}

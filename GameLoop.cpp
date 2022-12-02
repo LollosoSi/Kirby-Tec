@@ -461,7 +461,8 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 
 	if (e->key() == Qt::Key_1 && !isPressed) {
-		Door d();
+		Door d(QPointF(0,0), "levels/level1");
+		d.launchAction();
 		//GameLoop::getInstance().loadGame("levels/level1");
 		KA::Sounds::getInstance().play("wii", 0);
 	}
