@@ -75,6 +75,19 @@ void Sparky::tick(double delta) {
 	if (!(rand() % 200)) {
 		animator->playOneShot(TextureManager::getInstance().getAnimatable(TexManager::SPARKY_JUMP));
 		jump(-4);
+
+		objects::ObjectID targets[] = { objects::KIRBY };
+
+		int steps = 7;
+		for (int i = 0; i < steps; i++) {
+			Projectile* p = new Projectile(getCollider().center(),
+				KA::Vec2Df{ 0,0 },
+				TextureManager::getInstance().getAnimatable(TexManager::SPARKY_JUMP), targets, 1,
+				1500, 0.38);
+			p->velocity = {sin(M_PI * (i - (steps/2.0))/steps), -6 * cos(M_PI * (i - (steps / 2.0)) / steps) };
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));
+		}
+
 	}
 
 	Enemy::tick(delta);

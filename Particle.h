@@ -105,11 +105,42 @@ public:
 
 class Projectile : public Particle {
 
+	objects::ObjectID* targets = 0;
+	uint8_t size = 0;
+	RigidBody* ignoredObject = 0;
+
 public:
-	Projectile(QPointF pos, KA::Vec2Df vel, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : Particle(pos, textureset, lifetime, pixscale){
+	Projectile(QPointF pos, KA::Vec2Df vel, Animatable* textureset, objects::ObjectID ids[], uint8_t targetsize = 0, double lifetime = 100, double pixscale = 0.5) : Particle(pos, textureset, lifetime, pixscale) {
 	
 		movement = vel;
+
+		setTargets(ids, targetsize);
+	}
+
+	~Projectile() {
+		delete[] targets;
+	}
+
+	void setProtectedObject(RigidBody* g) {
+		ignoredObject = g;
+		setZValue(g->getZValue()-1);
+	}
+
+	void setTargets(objects::ObjectID ids[], uint8_t targetsize = 0) {
+		if (targets)
+			delete[] targets;
+		this->size = targetsize;
+		this->targets = new objects::ObjectID[size];
+		for (int i = 0; i < size; i++)
+			targets[i] = ids[i];
 	
+	}
+
+	bool isTarget(objects::ObjectID id) {
+		for (int i = 0; i < size; i++)
+			if (targets[i]==id)
+				return true;
+		return false;
 	}
 
 	void tick(double delta) override;

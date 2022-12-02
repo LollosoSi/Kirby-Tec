@@ -103,7 +103,7 @@ public:
 
 		if (pm && !shouldClear && show) {
 
-			std::cout << "Rendering gui"<< id <<"\n";
+			//std::cout << "Rendering gui"<< id <<"\n";
 
 
 			pm->setPixmap(getTexture());

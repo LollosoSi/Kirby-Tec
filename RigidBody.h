@@ -48,16 +48,19 @@ class RigidBody : public GameObject, public TickableObject, public RenderableObj
 
 protected:
 	Animator* animator;
-	bool hit = 0;
+	
 
 	bool damage = 0;
 
 public:
+	bool hit = 0;
 	QPointF offset;
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
 
 	double rigiddrawscale = 1;
+
+	void doDamage() { damage = 1; }
 
 	//RenderDegree currentDegree = NO_SLOPE;
 	double angle = 0;

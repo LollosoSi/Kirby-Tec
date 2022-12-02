@@ -57,22 +57,41 @@ void Kirby::processAcceleration() {
 		buttons[Kirby::USE_SPECIALPWR] = false;
 
 		RigidBody* o;
-		if (!storedObject) {
+		//if (!storedObject) {
+
+		objects::ObjectID targets[] = {objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::POPPYBROSJR, objects::HOTHEAD, objects::BRONTOBURT};
+
 			Projectile* p = new Projectile(getCollider().center(),
 				KA::Vec2Df{ 0,0 },
-				TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL),
+				TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL), targets, 6,
 				1500, 0.38);
-			o=dynamic_cast<RigidBody*>(p);
-		}
-		else {
-			o = dynamic_cast<RigidBody*>(storedObject);
-			o->setPos(getCollider().center());
-			damageCooldown = 350;
-			storedObject = 0;
-		}
-			o->velocity.x = (5.0 * (storedObject ? 5 : 1 ) * (mirror ? -1 : 1)) + getVelocity().x;
+		
+		//}
+		//else {
+			
+		//}
+
+			o = dynamic_cast<RigidBody*>(p);
+
+			o->velocity.x = (5.0 * (storedObject ? 2 : 1 ) * (mirror ? -1 : 1)) + getVelocity().x;
 			o->velocity.y = -3.0 + getVelocity().y;
 		
+
+			if (storedObject) {
+				RigidBody* oo = dynamic_cast<RigidBody*>(storedObject);
+				oo->setPos(QPointF(getX(), getY()));
+				oo->accel = { o->velocity.x,-9.8 };
+				damageCooldown = 350;
+				storedObject = 0;
+				oo->velocity.x = o->getVelocity().x; //(5.0 * (storedObject ? 5 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
+				oo->velocity.y = o->getVelocity().y-2; //-3.0 + getVelocity().y;
+
+				oo->hit = false;
+
+				p->setProtectedObject(oo);
+
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(oo));
+			}
 
 		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(o));
 
@@ -272,6 +291,7 @@ void Kirby::tick(double deltatime) {
 						GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));
 
 						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
+						animator->interruptOneShot();
 
 					}
 					else {
