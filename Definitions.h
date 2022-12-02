@@ -6,7 +6,7 @@
 inline double scalemultiplier = 5.5;
 inline double gui_scalemultiplier = 5.5;
 
-inline double timescale = 1;
+inline double timescale = 1.0;
 
 inline double volumecoefficient = 0.01;
 

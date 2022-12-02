@@ -171,7 +171,7 @@ void GameLoop::loop() {
 						last_millis_tick = current;
 						ticks++;
 
-						tick(delta_tick / 1000.0);
+						tick(timescale * delta_tick / 1000.0);
 
 						if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
 							mergeQueues();
@@ -420,6 +420,11 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		scalefactor = scale * standardsize;
 	}
 
+	if (e->key() == Qt::Key_M && isPressed)
+		timescale += 0.1;
+	if (e->key() == Qt::Key_N && isPressed)
+		timescale -= 0.1;
+
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed) {
 		
@@ -427,7 +432,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 	}
 	// Save
-	if (e->key() == Qt::Key_K)
+	if (e->key() == Qt::Key_L)
 		GameLoop::getInstance().saveGame(currentlevel + ".edited");
 
 
