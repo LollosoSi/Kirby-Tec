@@ -338,7 +338,7 @@ void GameLoop::tick(double deltatime) {
 				delete item;
 			}
 	}
-	KA::Sounds::getInstance().tick(deltatime);
+	//KA::Sounds::getInstance().tick(deltatime);
 }
 
 // Optional setup: Multiplayer
@@ -461,8 +461,9 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 
 	if (e->key() == Qt::Key_1 && !isPressed) {
-		GameLoop::getInstance().loadGame("levels/level1");
-		KA::Sounds::getInstance().play("Vegetable Valley_Theme", 0);
+		Door d();
+		//GameLoop::getInstance().loadGame("levels/level1");
+		KA::Sounds::getInstance().play("wii", 0);
 	}
 
 	if (e->key() == Qt::Key_2 && !isPressed) {

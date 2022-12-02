@@ -159,7 +159,7 @@ void Kirby::processAcceleration() {
 		jumpCooldown = jumpCooldownDefault;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 30;
-		KA::Sounds::getInstance().play("jump");
+		KA::Sounds::getInstance().play("jump2");
 		if (!storedObject) {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
@@ -282,7 +282,7 @@ void Kirby::tick(double deltatime) {
 		if (animator->isPlayingOneShot() && !storedObject) {
 			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
 			for (auto* item : objs) {
-				if (instanceof<Enemy, RigidBody>(item)) {
+				if (instanceof<Enemy, RigidBody>(item) && !storedObject) {
 					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						//std::cout << "should delete << \n";
 						storedObject = item;

@@ -5,12 +5,13 @@
 
 void Door::launchAction() {
 
+	/*
 	KA::Sounds::getInstance().stop("Vegetable Valley_Theme", 0);
 	KA::Sounds::getInstance().stop("craft", 0);
 	KA::Sounds::getInstance().stop("wii", 0);
 	KA::Sounds::getInstance().stop("elevator", 0);
 	KA::Sounds::getInstance().stop("Kirby_Adventure_theme", 0);
-	KA::Sounds::getInstance().stop("pigstep", 0);
+	KA::Sounds::getInstance().stop("pigstep", 0);*/
 
 	KA::Sounds::getInstance().setVolume("Vegetable Valley_Theme", 0, volumecoefficient);
 	KA::Sounds::getInstance().setVolume("craft", 0, volumecoefficient);
@@ -31,8 +32,6 @@ void Door::launchAction() {
 	if (level == std::string("levels/elevator")) {
 		KA::Sounds::getInstance().play("elevator", 0);
 	}
-
-
 
 	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {
 		GameLoop::getInstance().loadGame(level, false, false);
