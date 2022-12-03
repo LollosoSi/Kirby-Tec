@@ -59,11 +59,12 @@ void Kirby::processAcceleration() {
 		RigidBody* o;
 		//if (!storedObject) {
 
-		objects::ObjectID targets[] = {objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::POPPYBROSJR, objects::HOTHEAD, objects::BRONTOBURT};
+		// NOTE: PoppyBrosJr is removed from targets
+		objects::ObjectID targets[] = {objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR};
 
 			Projectile* p = new Projectile(getCollider().center(),
 				KA::Vec2Df{ 0,0 },
-				TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL), targets, 6,
+				TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL), targets, 5 + (storedObject ? 1 : 0),
 				1500, 0.38);
 		
 		//}
@@ -289,7 +290,7 @@ void Kirby::tick(double deltatime) {
 					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						//std::cout << "should delete << \n";
 						storedObject = item;
-						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
+						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item), false);
 
 						GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));
 

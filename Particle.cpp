@@ -36,9 +36,10 @@ void Projectile::tick(double delta) {
 			if (item->getObjectId() == objects::KIRBY)
 				dynamic_cast<Kirby*>(item)->doDamage();
 			else {
-				GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item));
 				GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
+				GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item), true);
 				GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));
+
 			}
 		}
 	}

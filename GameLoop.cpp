@@ -176,6 +176,13 @@ void GameLoop::loop() {
 						if (!this->tickableObjectsQueue.empty() || !this->renderableObjectsQueue.empty())
 							mergeQueues();
 
+						if (deleteLater.size()>0 && !renderableObjectsToBeDeleted.size()) {
+							//for (auto* item : deleteLater)
+							//	delete item;
+							deleteLater.clear();
+
+						}
+
 					}
 				
 
@@ -214,6 +221,7 @@ void GameLoop::reload() {
 	loadGame(currentlevel, false, false);
 }
 
+
 void GameLoop::addElement(GameObject* obj) {
 
 	bool* chars = obj->getObjectCharacteristics();
@@ -233,7 +241,7 @@ void GameLoop::addElement(GameObject* obj) {
 	delete[] chars;
 }
 
-void GameLoop::removeElement(GameObject* obj) {
+void GameLoop::removeElement(GameObject* obj, bool willBeDeleted) {
 	bool* chars = obj->getObjectCharacteristics();
 	if (chars[0]) {
 		std::vector<TickableObject*>::iterator it = std::find(tickableObjects.begin(), tickableObjects.end(), dynamic_cast<TickableObject*>(obj));
@@ -260,8 +268,15 @@ void GameLoop::removeElement(GameObject* obj) {
 	if (chars[4])
 		KirbyInstance = 0;
 
-	if (chars[5])
-		
+	if (chars[5]) {
+		std::vector<Particle*>::iterator it = std::find(particleObjects.begin(), particleObjects.end(), dynamic_cast<Particle*>(obj));
+		if (it != particleObjects.end())
+			particleObjects.erase(it);
+	}
+	
+
+	if (willBeDeleted)
+		deleteLater.push_back(obj);
 
 	delete[] chars;
 }
@@ -331,11 +346,7 @@ void GameLoop::tick(double deltatime) {
 
 		for (auto* item : this->particleObjects)
 			if (item->shouldDelete()) {
-				renderableObjects.erase(std::find(renderableObjects.begin(), renderableObjects.end(), item));
-				tickableObjects.erase(std::find(tickableObjects.begin(), tickableObjects.end(), item));
-				//collidableObjects.erase(std::find(collidableObjects.begin(), collidableObjects.end(), item));
-				particleObjects.erase(std::find(particleObjects.begin(), particleObjects.end(), item));
-				delete item;
+				removeElement(item, true);
 			}
 	}
 	//KA::Sounds::getInstance().tick(deltatime);

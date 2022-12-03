@@ -20,7 +20,7 @@ struct Impulse {
 class Kirby : public RigidBody {
 
 protected:
-	int maxwalkspeed = 8;
+	int maxwalkspeed = 5;
 	uint jumpsLeft = 2;
 	const int jumpCooldownDefault = 300;
 	int jumpCooldown = 0;

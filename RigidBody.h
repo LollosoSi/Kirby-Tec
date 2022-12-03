@@ -82,11 +82,15 @@ public:
 	//virtual QPixmap getTexture() = 0;
 	~RigidBody() {
 	
-		delete animator;
+		if (animator) {
+			delete animator;
+			animator = 0;
+		}
 
 		if(pm)
 		pm->setVisible(false);
 		//delete pm;
+		
 		pm = 0;
 
 		if(hitbox)

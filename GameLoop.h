@@ -69,8 +69,10 @@ public:
 
 	std::vector<BaseGUI*> GUIItems;
 
+	std::vector<GameObject*> deleteLater;
+
 	void addElement(GameObject* item);
-	void removeElement(GameObject* item);
+	void removeElement(GameObject* item, bool willBeDeleted = false);
 
 	void reload();
 	
