@@ -213,6 +213,9 @@ void Kirby::tick(double deltatime) {
 
 
 	if (damage) {
+		if (invincible)
+			damage = 0;
+		else
 		if (!damageCooldown && !(buttons[Kirby::INHALE_ENEMIES] && animator->isPlayingOneShot())) {
 			
 			damageCooldown = damageCooldownDefault;

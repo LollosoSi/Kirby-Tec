@@ -37,6 +37,8 @@ protected:
 
 public:
 
+	bool invincible = false;
+
 	GameObject* storedObject = 0;
 
 	Kirby* setName(std::string nm) { sname = nm; return this; }

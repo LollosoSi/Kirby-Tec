@@ -102,8 +102,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
             //t->setVerts(vert1, vert2);
             static std::string r[] = { "Giovanni Muciaccia"};
             static int i = 0;
-            GameObject* t = ObjectsHolder::getInstance().getObject(objects::KIRBY);
-            (dynamic_cast<Kirby*>(t))->setName(r[0]);
+            GameObject* t = ObjectsHolder::getInstance().getObject(objects::POPPYBROSJR);
+           // (dynamic_cast<Kirby*>(t))->setName(r[0]);
             t->setX(snapped.x());
             t->setY(snapped.y());
 

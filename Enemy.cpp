@@ -50,41 +50,42 @@ void PoppyBrosJr::tick(double delta)
 
 		QPointF kirbyPos = GameLoop::getInstance().getKirbyPos();
 		QPointF startPos = getCollider().center();
+		// Invert y
+		//startPos.setY(startPos.y() * -1);
+		kirbyPos.setY(kirbyPos.y()-2);
 
 		KA::Vec2Df anglebetweenkirbyandpoppy = getLineBetweenVerts(startPos, kirbyPos);
 
 		double ang = (anglebetweenkirbyandpoppy.x);
-		while (ang > M_PI / 4.0) {
-			ang -= (M_PI / 4.0);
-		}
+		//while (ang > M_PI / 4.0) {
+		//	ang -= (M_PI / 4.0);
+		//}
+
+		double dY = kirbyPos.y() - startPos.y(), dX = kirbyPos.x() - startPos.x();
+
+		double hit_time = 0.4;
+		double VxSq = pow(dX/hit_time,2);
+
+		
+
 
 		double finalangle = 0;
-		double xVelFinal = 0;
-		double yVelFinal = 0;
+		double xVelFinal = 90;
+		double yVelFinal = 90;
+		double FModule = 999;
 
-		for(double d = 0; d < M_PI/4; d+= M_PI/16){
-			double test = d; // the angle we want to test for
-			double xVel = (startPos.x()>kirbyPos.x() ? -1 : 1) * sqrt((9.8 * abs(startPos.x() - kirbyPos.x())) / (2.0 * (tan(test) - tan(ang))));
-			double yVel = tan(test) * abs(xVel) * (startPos.y() > kirbyPos.y() ? -1 : 1);
+		double FA = atan((dY + (9.81 * (pow(kirbyPos.x(), 2) + pow(startPos.x(), 2) - (2 * startPos.x() * kirbyPos.x())) / (2 * VxSq))) / dX);
 
-			if (abs(xVel) < 60 && abs(yVel) < 60) {
-			
-				if (xVel > xVelFinal || yVel > yVelFinal) {
-					
-					xVelFinal = xVel;
-					yVelFinal = yVel;
-					finalangle = d;
+		
+		 xVelFinal = sqrt(VxSq) * (dX < 0 ? -1 : 1);
+		 FModule = (xVelFinal / cos(FA));
+		 yVelFinal = FModule * sin(FA);
 
-				}
-			
-			}
 
-		}
-
-		if (xVelFinal == 0)
+		if (abs(FModule) > 35)
 			return;
 
-		std::cout << "Shooting with xVel: " << xVelFinal << " and yVel: " << yVelFinal << "\n";
+		//std::cout << "Shooting with xVel: " << xVelFinal << " and yVel: " << yVelFinal << " and Module: " << FModule << "\n";
 
 		objects::ObjectID targets[] = { objects::KIRBY };
 		Projectile* p = new Projectile(getCollider().center(),
