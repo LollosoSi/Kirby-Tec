@@ -27,7 +27,6 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 find_package(Qt6 REQUIRED COMPONENTS Multimedia)
 
-
 # Richiesto dalla documentazione
 qt_standard_project_setup()
 
@@ -129,10 +128,44 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/sounds/" DESTINATION bin/sounds)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/sprites/" DESTINATION bin/sprites)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/design/" DESTINATION bin/design)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/levels/" DESTINATION bin/levels)
+#install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/deployablefiles/" DESTINATION bin)
+
+find_file(QtCore Qt6Core.dll HINTS ENV)
+find_file(QtOpenGlWidget Qt6OpenGLWidgets.dll HINTS ENV)
+find_file(QtMultim Qt6Multimedia.dll HINTS ENV)
+find_file(QtGUI Qt6Gui.dll HINTS ENV)
+find_file(QtWidget Qt6Widgets.dll HINTS ENV)
+find_file(QtNetwork Qt6Network.dll HINTS ENV)
+find_file(QtOpenGL Qt6OpenGL.dll HINTS ENV)
+
+message("${QtCore}")
+message("${QtOpenGlWidget}")
+message("${QtMultim}")
+message("${QtGUI}")
+message("${QtWidget}")
+message("${QtNetwork}")
+message("${QtOpenGL}")
+
+#install(FILES ${PROJECT}
+#  ${QtCore} DESTINATION bin
+# )
+
+#install(TARGETS ${PROJECT}
+#    BUNDLE  DESTINATION .
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#)
+
+#qt_generate_deploy_app_script(
+#    TARGET ${PROJECT}
+#    FILENAME_VARIABLE deploy_script
+#    NO_UNSUPPORTED_PLATFORM_ERROR
+#)
+#install(SCRIPT ${deploy_script})
+
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_VERSION_MAJOR "1.0")
-set(CPACK_PACKAGE_VERSION_MINOR "2")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_SOURCE_GENERATOR "TGZ")
 include(CPack)
