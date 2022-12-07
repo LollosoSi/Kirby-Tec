@@ -55,8 +55,12 @@ int main(int argc, char* argv[]) {
 	//	GameLoop::getInstance().loadGame(std::string("levels/lobby"), false, false);
 	//}
 
-	Door d(QPoint(0, 0), std::string("levels/lobby"));
-	d.launchAction();	
+	//Door d(QPoint(0, 0), std::string("levels/lobby"));
+	//d.launchAction();
+
+	if (!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)) {
+		GameLoop::getInstance().loadGame(std::string("levels/intro"), false, false);
+	}
 
 	GameLoop::getInstance().recalculateTicks(60);
 	GameLoop::getInstance().recalculateFps(75);

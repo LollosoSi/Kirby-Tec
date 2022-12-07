@@ -53,7 +53,7 @@ protected:
 		QPixmap getTexture() { return animator->getCurrentPixmap(mirror); }
 
 		void tick(double delta) override {
-		
+
 			if(!started)
 				if (Camera::isVisible(getCollider()))
 					started = 1;
