@@ -103,7 +103,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
             static std::string r[] = { "Giovanni Muciaccia"};
             static int i = 0;
             //GameObject* t = ObjectsHolder::getInstance().getObject(objects::POPPYBROSJR);
-            GameObject* t = new VectorField(vert1, QPointF(0, 0), abs(vert1.x() - vert2.x()), abs(vert1.y() - vert2.y()), KA::Vec2Df{0,-0.2}, 1, 1);
+            GameObject* t = new VectorField(vert1, QPointF(0, 0), abs(vert1.x() - vert2.x()), abs(vert1.y() - vert2.y()), KA::Vec2Df{0,-11}, 0, 1);
            // (dynamic_cast<Kirby*>(t))->setName(r[0]);
             //t->setX(snapped.x());
             //t->setY(snapped.y());

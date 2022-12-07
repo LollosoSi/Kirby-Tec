@@ -318,7 +318,7 @@ void Kirby::processAnimation() {
 	if (!animator->isPlayingOneShot()) {
 		if (isGrounded()) {
 
-			if (abs(velocity.x) < 2) {
+			if (abs(velocity.x) < 0.5) {
 
 				double degang = toDegrees(angle);
 				//std::cout << "Angle is " << degang << " Mirror: " << mirror << "\n";
@@ -334,7 +334,7 @@ void Kirby::processAnimation() {
 			else
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_WALKING : KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
 
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 1) && !storedObject) {
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 4) && !storedObject) {
 				if (!(rand() % 2)) {
 					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 600, 0.3);
 					GameLoop::getInstance().addElement(p);
