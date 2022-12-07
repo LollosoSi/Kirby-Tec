@@ -63,7 +63,7 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 }
 
 
-static void applyVectorField(RigidBody* r, VectorField* v) {
+void applyVectorField(RigidBody* r, VectorField* v) {
 
 	((KA::Vec2Df)(v->setsVelocity() ? r->velocity : r->accel)) = (v->adds() ? ((KA::Vec2Df)(v->setsVelocity() ? r->velocity : r->accel)) : KA::Vec2Df{ 0,0 }) + v->getField();
 
@@ -72,13 +72,12 @@ static void applyVectorField(RigidBody* r, VectorField* v) {
 bool* VectorField::getObjectCharacteristics() {
 
 	bool* characteristics = new bool[6] {
-		0,
+			0,
 			instanceof<RenderableObject, GameObject>(this),
 			instanceof<RigidBody, GameObject>(this),
 			instanceof<Serializable, GameObject>(this),
 			instanceof<Kirby, GameObject>(this),
 			instanceof<Particle, GameObject>(this)
-
 	};
 
 	return characteristics;
@@ -88,16 +87,45 @@ void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
 
-	auto tempvel = getVelocity();
-
-	velocity.x += accel.x * deltatime;
-	velocity.y += accel.y * deltatime;
-
-	double overridex = 0, overridey = 0;
-
-	bool hasHitSlope = false;
-	hit = 0;
+	
 	std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
+
+	for (auto* item : inside) {
+		RigidBody* rb = item;
+		if (rb->getObjectId() == objects::VECTORFIELD) {
+			std::cout << "Intersected vectorfield\n";
+			VectorField* v = dynamic_cast<VectorField*>(rb);
+			if (v->setsVelocity()) {
+				if (v->adds()) {
+					velocity += v->getField();
+				}
+				else {
+					velocity = v->getField();
+				}
+
+			}
+			else {
+				if (v->adds()) {
+					accel += v->getField();
+				}
+				else {
+					accel = v->getField();
+				}
+			}
+		}
+	}
+
+
+		auto tempvel = getVelocity();
+
+		velocity.x += accel.x * deltatime;
+		velocity.y += accel.y * deltatime;
+
+		double overridex = 0, overridey = 0;
+
+		bool hasHitSlope = false;
+		hit = 0;
+
 	for(auto* item : inside){
 		
 		RigidBody* rb = item;
@@ -114,8 +142,8 @@ void RigidBody::tick(double deltatime){
 				angle = 0;
 			}
 
-			if (rb->getObjectId() == objects::VECTORFIELD) 
-				applyVectorField(this, dynamic_cast<VectorField*>(rb));
+			
+			
 			
 
 			if (rb->getObjectId() == objects::SLOPED_TERRAIN) {

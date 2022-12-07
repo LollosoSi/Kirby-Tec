@@ -37,7 +37,6 @@ struct Collision{
 
 
 class VectorField;
-//static void applyVectorField(RigidBody* r, VectorField* v);
 
 // In Degrees
 //static const double renderAngles[5]{ 0, -45, -28, 45, 28};
@@ -184,11 +183,13 @@ protected:
 	KA::Vec2Df field;
 
 public:
-	VectorField(const QPointF& coords = QPointF(0.0, 0.0), const QPointF offset = QPointF(0.0, 0.0), const double sizeX = 16, const double sizeY = 16, KA::Vec2Df field = { 0,0 }, bool setVelocity = 0, bool doSum = 0) : RigidBody(coords, offset, sizeX, sizeY) {
+	VectorField(const QPointF& coords = QPointF(0.0, 0.0), const QPointF offset = QPointF(0.0, 0.0), const double sizeX = 16, const double sizeY = 16, KA::Vec2Df field = KA::Vec2Df{ 0,0 }, bool setVelocity = 0, bool doSum = 0) : RigidBody(coords, offset, sizeX, sizeY) {
 
 		this->setObjectId(objects::VECTORFIELD);
 
-		this->field = field;
+		this->field.x = field.x;
+		this->field.y = field.y;
+
 		this->setVelocity = setVelocity;
 		this->sum = doSum;
 
