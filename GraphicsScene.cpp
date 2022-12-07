@@ -85,8 +85,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
         
         if (me->button() == Qt::RightButton) {
             vert2 = QPointF(snapped.x(), snapped.y());
-            Terrain* t = new Terrain(vert2);
-            GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
+            //Terrain* t = new Terrain(vert2);
+            //GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(t));
         }
         else if (me->button() == Qt::MiddleButton) {
             //Terrain* t = new Terrain(snapped, objects::STEPUP, TRANSPARENT, QPoint(0, 0), 1, 0.3);
@@ -102,10 +102,11 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* me) {
             //t->setVerts(vert1, vert2);
             static std::string r[] = { "Giovanni Muciaccia"};
             static int i = 0;
-            GameObject* t = ObjectsHolder::getInstance().getObject(objects::POPPYBROSJR);
+            //GameObject* t = ObjectsHolder::getInstance().getObject(objects::POPPYBROSJR);
+            GameObject* t = new VectorField(vert1, QPointF(0, 0), abs(vert1.x() - vert2.x()), abs(vert1.y() - vert2.y()), KA::Vec2Df{0,-5}, 1, 1);
            // (dynamic_cast<Kirby*>(t))->setName(r[0]);
-            t->setX(snapped.x());
-            t->setY(snapped.y());
+            //t->setX(snapped.x());
+            //t->setY(snapped.y());
 
             GameLoop::getInstance().addElement(t);
         }

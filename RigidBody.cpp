@@ -62,6 +62,28 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 
 }
 
+
+static void applyVectorField(RigidBody* r, VectorField* v) {
+
+	((KA::Vec2Df)(v->setsVelocity() ? r->velocity : r->accel)) = (v->adds() ? ((KA::Vec2Df)(v->setsVelocity() ? r->velocity : r->accel)) : KA::Vec2Df{ 0,0 }) + v->getField();
+
+}
+
+bool* VectorField::getObjectCharacteristics() {
+
+	bool* characteristics = new bool[6] {
+		0,
+			instanceof<RenderableObject, GameObject>(this),
+			instanceof<RigidBody, GameObject>(this),
+			instanceof<Serializable, GameObject>(this),
+			instanceof<Kirby, GameObject>(this),
+			instanceof<Particle, GameObject>(this)
+
+	};
+
+	return characteristics;
+}
+
 void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
@@ -91,6 +113,10 @@ void RigidBody::tick(double deltatime){
 				velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;
 				angle = 0;
 			}
+
+			if (rb->getObjectId() == objects::VECTORFIELD) 
+				applyVectorField(this, dynamic_cast<VectorField*>(rb));
+			
 
 			if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
 

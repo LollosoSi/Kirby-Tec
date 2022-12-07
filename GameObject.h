@@ -27,9 +27,10 @@ namespace objects {
 		SPARKY = 18,
 		HOTHEAD = 19,
 		BRONTOBURT = 20,
-		WATER = 21
+		WATER = 21,
+		VECTORFIELD = 22
 	};
-	const uint totalObjects = 22;
+	const uint totalObjects = 23;
 }
 
 class Cloneable {

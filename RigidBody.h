@@ -5,6 +5,7 @@
 #include "RenderableObject.h"
 #include "Camera.h"
 #include "Serializable.h"
+#include "Sprites.h"
 
 #include "Vec2D.h"
 
@@ -33,6 +34,10 @@ struct Collision{
 	double y = 0;
 	uint8_t direction = NO_COLLISION;
 };
+
+
+class VectorField;
+//static void applyVectorField(RigidBody* r, VectorField* v);
 
 // In Degrees
 //static const double renderAngles[5]{ 0, -45, -28, 45, 28};
@@ -166,3 +171,69 @@ public:
 	
 
 };
+
+
+
+
+class VectorField : public RigidBody {
+
+	
+
+protected:
+	bool setVelocity, sum;
+	KA::Vec2Df field;
+
+public:
+	VectorField(const QPointF& coords = QPointF(0.0, 0.0), const QPointF offset = QPointF(0.0, 0.0), const double sizeX = 16, const double sizeY = 16, KA::Vec2Df field = { 0,0 }, bool setVelocity = 0, bool doSum = 0) : RigidBody(coords, offset, sizeX, sizeY) {
+
+		this->setObjectId(objects::VECTORFIELD);
+
+		this->field = field;
+		this->setVelocity = setVelocity;
+		this->sum = doSum;
+
+		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexID::TRANSPARENT));
+
+	}
+
+	bool setsVelocity() {
+		return setVelocity;
+	}
+	bool adds() {
+		return sum;
+	}
+	KA::Vec2Df getField() { return field; }
+
+	std::string serialize(const char& divider) const override {
+		std::stringstream out("", std::ios_base::app | std::ios_base::out);
+		out << RigidBody::serialize(divider) << divider << this->field.x << divider << this->field.y << divider << this->setVelocity << divider << this->sum;
+
+		return out.str();
+	}
+
+	Serializable* deserialize(std::vector<std::string>::iterator& start) override {
+		RigidBody::deserialize(start);
+		
+		double x = std::atof((*(start++)).c_str());
+		double y = std::atof((*(start++)).c_str());
+
+		this->field = KA::Vec2Df{x,y};
+		this->setVelocity = std::atoi((*(start++)).c_str());
+		this->sum = std::atoi((*(start++)).c_str());
+
+		this->setObjectId(objects::VECTORFIELD);
+
+
+		return this;
+	}
+
+	QPixmap getTexture() { return animator->getCurrentPixmap(); }
+
+	Cloneable* clone() const override { return new VectorField(); }
+
+	// NOTICE: Pointer must be handled and deleted later
+	bool* getObjectCharacteristics() override;
+
+};
+
+

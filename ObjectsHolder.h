@@ -42,6 +42,7 @@ private:
 		holder[objects::WADDLEDOO] = new WaddleDoo();
 		holder[objects::HOTHEAD] = new HotHead();
 		holder[objects::WATER] = new Water();
+		holder[objects::VECTORFIELD] = new VectorField();
 	}
 
 };
