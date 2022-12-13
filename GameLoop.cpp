@@ -407,6 +407,12 @@ void GameLoop::addParticle(GameObject* p) {
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
+	if (e->key() == Qt::Key_Y && isPressed) {
+	
+		detachKirby();
+
+	}
+
 	if (e->key() == Qt::Key_H && isPressed) {
 		
 		hitboxenabled = !hitboxenabled;
@@ -443,11 +449,11 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 	}
 	// Save
-	if (e->key() == Qt::Key_L)
+	if (e->key() == Qt::Key_L && isPressed)
 		GameLoop::getInstance().saveGame(currentlevel + ".edited");
 
 
-	if (e->key() == Qt::Key_R)
+	if (e->key() == Qt::Key_R && isPressed)
 	{
 		KirbyInstance->setX(4); KirbyInstance->setY(-4);
 	}
@@ -458,16 +464,16 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	if (KirbyInstance)
 		KirbyInstance->keyPressEvent(e, isPressed);
-	else {
+	else if(isPressed) {
 		// Controls
 		if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
-			Camera::getInstance().setY(Camera::getInstance().getY() + 10);
+			Camera::getInstance().setY(Camera::getInstance().getY() + 5);
 		if (e->key() == Qt::Key_D || e->key() == Qt::RightArrow)
-			Camera::getInstance().setX(Camera::getInstance().getX() + 10);
+			Camera::getInstance().setX(Camera::getInstance().getX() + 5);
 		if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
-			Camera::getInstance().setX(Camera::getInstance().getX() - 10);
+			Camera::getInstance().setX(Camera::getInstance().getX() - 5);
 		if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
-			Camera::getInstance().setY(Camera::getInstance().getY() - 10);
+			Camera::getInstance().setY(Camera::getInstance().getY() - 5);
 	}
 
 

@@ -59,6 +59,14 @@ private:
 	BaseGUI* state;
 	BaseGUI* Lives;
 
+	bool levelblocks[1][32][23] = {
+		{
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			
+		}
+	};
+
 public:
 	std::thread loopthread;
 
@@ -80,6 +88,8 @@ public:
 	int health = 6;
 	long score = 0;
 	TexID ability = HUD_POWER;
+
+	void detachKirby() { KirbyInstance = 0; Camera::getInstance().cancelGoTo(); }
 
 	void updateView();
 

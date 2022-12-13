@@ -3,19 +3,15 @@
 #include "GameLoop.h"
 
 void Projectile::tick(double delta) {
-
-	if (ignoredObject) {
-		setPos(ignoredObject->getCollider().center());
-	} else {
-		accel.y = 9.8;
-		accel.y += movement.y;
-		accel.x += movement.x;
-		RigidBody::tick(delta);
-		if (hit && circa(velocity.y, 0, 0.1))
-			velocity.y = -2;
-	}
-
 	
+	accel.y = 9.8;
+	accel.y += movement.y;
+	accel.x += movement.x;
+	RigidBody::tick(delta);
+	if (hit && circa(velocity.y, 0, 0.1))
+		velocity.y = -2;
+	if (ignoredObject) 
+		ignoredObject->setPos(QPointF(this->getX() - (ignoredObject->getCollider().width()/2.0), this->getY() - (ignoredObject->getCollider().height() / 2.0)));
 
 	lifetime -= delta * 1000;
 	float timeindipendent = (startlifetime - lifetime) / startlifetime;
