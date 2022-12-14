@@ -155,7 +155,7 @@ TextureManager::TextureManager() {
 
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
-		new QPixmap[21]{
+		new QPixmap[20]{
 			introvegval1.copy(introvv1),
 			introvegval1.copy(moveBy(introvv1, 1, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
 			introvegval1.copy(moveBy(introvv1, 2, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
@@ -176,13 +176,13 @@ TextureManager::TextureManager() {
 			introvegval1.copy(moveBy(introvv1, 17, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
 			introvegval1.copy(moveBy(introvv1, 18, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
 			introvegval1.copy(moveBy(introvv1, 19, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval1.copy(moveBy(introvv1, 20, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0))
 			
 	},
-		new float[21] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
-		new KA::Vec2Df[21]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
-		21
+		new float[20] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
+		new KA::Vec2Df[20]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		20
 };
+
 
 
 	textures[TITLESCREEN_INTRO] = new Animatable{
