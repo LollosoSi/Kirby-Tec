@@ -169,10 +169,11 @@ namespace TexManager {
 			HOTHEAD = 119,
 
 			SPARKY_JUMP = 120,
-			TITLESCREEN_INTRO = 121
+			TITLESCREEN_INTRO = 121,
+			VEGETABLE_VALLEY_INTRO1 = 122
 
 	};
-	const int TEXTURE_COUNT = 122;
+	const int TEXTURE_COUNT = 123;
 
 };
 
@@ -211,6 +212,7 @@ private:
 	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	const std::string file_HUDtitlescreenintro = "sprites/IntroNomi.png";
+	const std::string file_introvegetablevalley1 = "sprites/intro1.png";
 
 	
 	

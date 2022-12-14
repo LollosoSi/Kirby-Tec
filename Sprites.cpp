@@ -110,6 +110,7 @@ TextureManager::TextureManager() {
 	QRect brontoburt = getStandardQRect(95,897);
 
 	QRect intronomi = QRect(0,0, 1023, 896);
+	QRect introvv1 = QRect(0, 0, 1024, 960);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -127,6 +128,7 @@ TextureManager::TextureManager() {
 	QPixmap hudtex = loadTexture(file_HUDcomponents, nocolor);
 	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
 	QPixmap hudintronomi = loadTexture(file_HUDtitlescreenintro, nocolor);
+	QPixmap introvegval1 = loadTexture(file_introvegetablevalley1, nocolor);
 
 
 	
@@ -150,6 +152,38 @@ TextureManager::TextureManager() {
 		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
+
+
+	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
+		new QPixmap[21]{
+			introvegval1.copy(introvv1),
+			introvegval1.copy(moveBy(introvv1, 1, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 2, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 3, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 4, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 5, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 6, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 7, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 8, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 9, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 10, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 11, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 12, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 13, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 14, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 15, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 16, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 17, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 18, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 19, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval1.copy(moveBy(introvv1, 20, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0))
+			
+	},
+		new float[21] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
+		new KA::Vec2Df[21]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		21
+};
+
 
 	textures[TITLESCREEN_INTRO] = new Animatable{
 		new QPixmap[31]{
