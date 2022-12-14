@@ -129,6 +129,7 @@ TextureManager::TextureManager() {
 	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
 	QPixmap hudintronomi = loadTexture(file_HUDtitlescreenintro, nocolor);
 	QPixmap introvegval1 = loadTexture(file_introvegetablevalley1, nocolor);
+	QPixmap introvegval2 = loadTexture(file_introvegetablevalley2, nocolor);
 
 
 	
@@ -182,6 +183,36 @@ TextureManager::TextureManager() {
 		new KA::Vec2Df[20]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
 		20
 };
+
+	textures[VEGETABLE_VALLEY_INTRO2] = new Animatable{
+		new QPixmap[21]{
+			introvegval2.copy(introvv1),
+			introvegval2.copy(moveBy(introvv1, 1, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 2, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 3, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 4, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 5, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 6, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 7, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 8, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 9, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 10, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 11, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 12, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 13, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 14, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 15, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 16, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 17, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 18, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 19, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+			introvegval2.copy(moveBy(introvv1, 19, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
+
+	},
+		new float[21] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
+		new KA::Vec2Df[21]{KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		21
+	};
 
 
 
