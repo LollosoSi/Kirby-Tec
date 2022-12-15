@@ -112,7 +112,7 @@ TextureManager::TextureManager() {
 
 	QRect intronomi = QRect(0,0, 1024, 896);
 	QRect introvv1 = QRect(0, 0, 1024, 960);
-	QRect drawintro = QRect(0, 0, 990, 990);
+	QRect drawintro = QRect(0, 0,1024, 960);
 	QRect commands = QRect(0, 0, 1024, 896);
 
 	QRect transparent = QRect(153, 25, 2, 2);
@@ -159,41 +159,23 @@ TextureManager::TextureManager() {
 		1
 	};
 
-	/*
 	textures[DRAW_INTRO] = new Animatable{
-		new QPixmap[22]{
-			introdraw.copy(drawintro),
-			introdraw.copy(moveBy(drawintro, 1, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 2, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 3, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 4, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 5, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 6, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 7, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 8, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 9, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 10, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 11, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 12, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 13, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 14, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 15, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 16, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 17, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 18, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 19, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 20, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-			introdraw.copy(moveBy(drawintro, 21, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
-		},
-
-		new float[22] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
-
-	new KA::Vec2Df[22]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),
-	KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
-		 22
+		new QPixmap[183],
+		new float [183] {0.05f},
+		new KA::Vec2Df[183] { KA::Vec2Df(0,0)},
+		183
+			
 	};
-	*/
 	
+	for (int i = 0; i < 183; i++)
+	{
+		textures[DRAW_INTRO]->duration[i] = 0.05f;
+	}
+
+	for (int i = 0; i < 183; i++)
+	{
+		textures[DRAW_INTRO]->pixmaps[i] = introdraw.copy(moveBy(drawintro, i, 0, drawintro.width(), drawintro.height(), 0, 0));
+	}
 
 	textures[COMMANDS_HUD] = new Animatable{
 		new QPixmap[1]{
@@ -206,7 +188,7 @@ TextureManager::TextureManager() {
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
 		new QPixmap[240],
-		new float[240],
+		new float[240] {0.019f},
 		new KA::Vec2Df[240] { KA::Vec2Df(0,0)},
 		240
 	};
