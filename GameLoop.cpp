@@ -16,7 +16,7 @@ GameLoop::GameLoop() {
 	
 
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
-	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 5);
+	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 6);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
@@ -72,6 +72,7 @@ GameLoop::GameLoop() {
 	GUIItems.push_back(pauseGUI);
 	GUIItems.push_back(pauseSuggestion);
 	GUIItems.push_back(startGUI);
+	GUIItems.push_back(commandsGUI);
 }
 
 
@@ -374,7 +375,7 @@ void GameLoop::start() {
 	//paused = false;
 
 	pause(false);
-	commands(false);
+	//commands(false);
 
 	if(!loopthread.joinable()) loopthread = std::thread(&GameLoop::loop, this);
 }
@@ -392,14 +393,9 @@ void GameLoop::pause(bool pause) {
 }
 
 void GameLoop::commands(bool pause) {
-	paused = pause;
-
-	if (pause)
-		pauseSuggestion->setTexture((TexManager::TexID)((int)TexManager::COMMANDS_HUD));
-
+	this->pause(pause);
 	commandsGUI->setShow(pause);
-	pauseSuggestion->setShow(pause);
-	startGUI->setShow(false);
+
 }
 
 void GameLoop::stop() {

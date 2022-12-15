@@ -103,7 +103,6 @@ public:
 	void setScore(int s) {
 		score = s;
 		updateView();
-
 	}
 	void setHealth(int h) {
 		health = h;
