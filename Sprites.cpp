@@ -112,6 +112,7 @@ TextureManager::TextureManager() {
 	QRect intronomi = QRect(0,0, 1023, 896);
 	QRect introvv1 = QRect(0, 0, 1024, 960);
 	QRect drawintro = QRect(0, 0, 990, 990);
+	QRect commands = QRect(0, 0, 1024, 896);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -130,6 +131,7 @@ TextureManager::TextureManager() {
 	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
 	QPixmap hudintronomi = loadTexture(file_HUDtitlescreenintro, nocolor);
 	QPixmap introvegval1 = loadTexture(file_introvegetablevalley1, nocolor);
+	QPixmap commandstex = loadTexture(file_commands, nocolor);
 	QPixmap introdraw = loadTexture(file_introdraw, nocolor);
 		
 
@@ -155,7 +157,7 @@ TextureManager::TextureManager() {
 		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
-
+	/*
 	textures[DRAW_INTRO] = new Animatable{
 		new QPixmap[22]{
 			introdraw.copy(drawintro),
@@ -188,7 +190,27 @@ TextureManager::TextureManager() {
 	KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
 		 22
 	};
+	*/
 
+	textures[COMMANDS_HUD] = new Animatable{
+		new QPixmap[8]{
+			commandstex.copy(commands),
+			commandstex.copy(moveBy(commands, 1, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+			commandstex.copy(moveBy(commands, 2, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+			commandstex.copy(moveBy(commands, 3, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+			commandstex.copy(moveBy(commands, 4, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+			commandstex.copy(moveBy(commands, 5, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+			commandstex.copy(moveBy(commands, 6, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+			commandstex.copy(moveBy(commands, 7, 0,commands.width() + 1, commands.height() + 1, 0, 0)),
+		},
+
+		new float[8] {0.5f,0.5f,0.5f,0.5f,0.5f,0.5f,0.5f,0.5f},
+
+		new KA::Vec2Df[8]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
+		8
+	};
+
+		/*
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
 		new QPixmap[240]{
 			introvegval1.copy(introvv1),
@@ -460,9 +482,10 @@ KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,
 		240
 };
 
+*/
 
 	textures[TITLESCREEN_INTRO] = new Animatable{
-		new QPixmap[31]{
+		new QPixmap[50]{
 			hudintronomi.copy(intronomi),
 			hudintronomi.copy(moveBy(intronomi, 1, 0, intronomi.width()+1, intronomi.height()+1, 0, 0)),
 			hudintronomi.copy(moveBy(intronomi, 2, 0, intronomi.width()+1, intronomi.height()+1, 0, 0)),
@@ -493,11 +516,30 @@ KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,
 			hudintronomi.copy(moveBy(intronomi, 27, 0, intronomi.width()+1, intronomi.height()+1, 0, 0)),
 			hudintronomi.copy(moveBy(intronomi, 28, 0, intronomi.width()+1, intronomi.height()+1, 0, 0)),
 			hudintronomi.copy(moveBy(intronomi, 29, 0, intronomi.width()+1, intronomi.height()+1, 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 30, 0, intronomi.width()+1, intronomi.height()+1, 0, 0))
+			hudintronomi.copy(moveBy(intronomi, 30, 0, intronomi.width()+1, intronomi.height()+1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 31, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 32, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 33, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 34, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 35, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 36, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 37, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 38, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 39, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 40, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 41, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 42, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 43, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 44, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 45, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 46, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 47, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 48, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0)),
+			hudintronomi.copy(moveBy(intronomi, 49, 0, intronomi.width() + 1, intronomi.height() + 1, 0, 0))
 	},
-		new float[31] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,1.5f},
-		new KA::Vec2Df[31]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
-		31
+		new float[49] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,1.5f},
+		new KA::Vec2Df[49]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		49
 	};
 
 

@@ -19,7 +19,7 @@ GameLoop::GameLoop() {
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
-	startGUI->playOneShot(TexManager::DRAW_INTRO);
+	startGUI->playOneShot(TexManager::TITLESCREEN_INTRO);
 		
 	
 	
@@ -370,6 +370,7 @@ void GameLoop::start() {
 	//paused = false;
 
 	pause(false);
+	commands(false);
 
 	if(!loopthread.joinable()) loopthread = std::thread(&GameLoop::loop, this);
 }
@@ -380,6 +381,17 @@ void GameLoop::pause(bool pause) {
 
 	if (pause)
 		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+
+	pauseGUI->setShow(pause);
+	pauseSuggestion->setShow(pause);
+	startGUI->setShow(false);
+}
+
+void GameLoop::commands(bool pause) {
+	paused = pause;
+
+	if (pause)
+		pauseSuggestion->setTexture((TexManager::TexID)((int)TexManager::COMMANDS_HUD));
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
@@ -455,6 +467,14 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		pause(!paused); 
 		
 	}
+
+	// Commands
+	if (e->key() == Qt::Key_C && isPressed) {
+
+		pause(!paused);
+
+	}
+	
 	// Save
 	if (e->key() == Qt::Key_L && isPressed)
 		GameLoop::getInstance().saveGame(currentlevel + ".edited");
