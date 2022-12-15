@@ -19,7 +19,7 @@ GameLoop::GameLoop() {
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
-	startGUI->playOneShot(TexManager::TITLESCREEN_INTRO);
+	startGUI->playOneShot(TexManager::VEGETABLE_VALLEY_INTRO1);
 		
 	
 	

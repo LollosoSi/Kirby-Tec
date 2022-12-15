@@ -9,6 +9,7 @@ static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 // Constructor. Load all textures in the Animatable array
 TextureManager::TextureManager() {
 	done = false;
+	
 
 	QColor kirby_file_mask = QColor(84, 110, 140);
 	QColor terrain_file_mask = QColor(60, 188, 252);
