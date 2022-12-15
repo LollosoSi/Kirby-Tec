@@ -50,7 +50,7 @@ TextureManager::TextureManager() {
 	QRect particle_1 = getStandardQRect(6, 140);
 
 	// title screen
-	QRect title_screen = QRect(0, 0, 1023, 895);
+	QRect title_screen = QRect(0, 0, 1024, 896);
 
 	//background
 	QRect background = QRect(0, 0, 1008, 168);
@@ -161,7 +161,7 @@ TextureManager::TextureManager() {
 
 	textures[DRAW_INTRO] = new Animatable{
 		new QPixmap[183],
-		new float [183] {0.05f},
+		new float [183] {0.04f},
 		new KA::Vec2Df[183] { KA::Vec2Df(0,0)},
 		183
 			
@@ -169,7 +169,7 @@ TextureManager::TextureManager() {
 	
 	for (int i = 0; i < 183; i++)
 	{
-		textures[DRAW_INTRO]->duration[i] = 0.05f;
+		textures[DRAW_INTRO]->duration[i] = 0.04f;
 	}
 
 	for (int i = 0; i < 183; i++)
@@ -448,11 +448,15 @@ TextureManager::TextureManager() {
 
 	// title screen
 	textures[TITLESCREEN] = new Animatable{
-		new QPixmap[1]{titlescreentex.copy(title_screen)},
-		new float[1] {0},
-				new KA::Vec2Df[4]{KA::Vec2Df(0,0) },
+		new QPixmap[3]{
+			titlescreentex.copy(title_screen),
+			titlescreentex.copy(moveBy(title_screen, 1, 0, title_screen.width(), title_screen.height(), 0, 0)),
+			titlescreentex.copy(moveBy(title_screen, 2, 0, title_screen.width(), title_screen.height(), 0, 0)),
+	},
+		new float[3] {3,0.2f,0.2f},
+				new KA::Vec2Df[3]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0) },
 
-		1
+		3
 	};
 
 	//background
