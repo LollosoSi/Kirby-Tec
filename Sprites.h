@@ -171,14 +171,10 @@ namespace TexManager {
 			SPARKY_JUMP = 120,
 			TITLESCREEN_INTRO = 121,
 			VEGETABLE_VALLEY_INTRO1 = 122,
-			VEGETABLE_VALLEY_INTRO2 = 123,
-			VEGETABLE_VALLEY_INTRO3 = 124,
-			VEGETABLE_VALLEY_INTRO4 = 125,
-			VEGETABLE_VALLEY_INTRO5 = 126,
-			VEGETABLE_VALLEY_INTRO6 = 127
+			DRAW_INTRO = 123
 
 	};
-	const int TEXTURE_COUNT = 128;
+	const int TEXTURE_COUNT = 124;
 
 };
 
@@ -218,11 +214,7 @@ private:
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	const std::string file_HUDtitlescreenintro = "sprites/IntroNomi.png";
 	const std::string file_introvegetablevalley1 = "sprites/IntroVV.png";
-	const std::string file_introvegetablevalley2 = "sprites/intro2.png";
-	const std::string file_introvegetablevalley3 = "sprites/intro3.png";
-	const std::string file_introvegetablevalley4 = "sprites/intro4.png";
-	const std::string file_introvegetablevalley5 = "sprites/intro5.png";
-	const std::string file_introvegetablevalley6 = "sprites/intro6.png";
+	const std::string file_introdraw = "sprites/IntroDraw.png";
 	
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);

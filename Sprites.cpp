@@ -111,6 +111,7 @@ TextureManager::TextureManager() {
 
 	QRect intronomi = QRect(0,0, 1023, 896);
 	QRect introvv1 = QRect(0, 0, 1024, 960);
+	QRect drawintro = QRect(0, 0, 990, 990);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -129,8 +130,8 @@ TextureManager::TextureManager() {
 	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
 	QPixmap hudintronomi = loadTexture(file_HUDtitlescreenintro, nocolor);
 	QPixmap introvegval1 = loadTexture(file_introvegetablevalley1, nocolor);
-	QPixmap introvegval2 = loadTexture(file_introvegetablevalley2, nocolor);
-	QPixmap introvegval3 = loadTexture(file_introvegetablevalley3, nocolor);
+	QPixmap introdraw = loadTexture(file_introdraw, nocolor);
+		
 
 
 	
@@ -155,6 +156,38 @@ TextureManager::TextureManager() {
 		1
 	};
 
+	textures[DRAW_INTRO] = new Animatable{
+		new QPixmap[22]{
+			introdraw.copy(drawintro),
+			introdraw.copy(moveBy(drawintro, 1, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 2, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 3, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 4, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 5, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 6, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 7, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 8, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 9, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 10, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 11, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 12, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 13, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 14, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 15, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 16, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 17, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 18, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 19, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 20, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+			introdraw.copy(moveBy(drawintro, 21, 0, drawintro.width() + 1, drawintro.height() + 1, 0, 0)),
+		},
+
+		new float[22] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
+
+	new KA::Vec2Df[22]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),
+	KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
+		 22
+	};
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
 		new QPixmap[240]{
@@ -426,88 +459,6 @@ KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,
 KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 		240
 };
-
-	textures[VEGETABLE_VALLEY_INTRO2] = new Animatable{
-		new QPixmap[21]{
-			introvegval2.copy(introvv1),
-			introvegval2.copy(moveBy(introvv1, 1, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 2, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 3, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 4, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 5, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 6, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 7, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 8, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 9, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 10, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 11, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 12, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 13, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 14, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 15, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 16, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 17, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 18, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 19, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval2.copy(moveBy(introvv1, 20, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-
-	},
-		new float[21] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
-		new KA::Vec2Df[21]{KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
-		21
-	};
-
-	textures[VEGETABLE_VALLEY_INTRO3] = new Animatable{
-		new QPixmap[42]{
-			introvegval3.copy(introvv1),
-			introvegval3.copy(moveBy(introvv1, 1, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 2, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 3, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 4, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 5, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 6, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 7, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 8, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 9, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 10, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 11, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 12, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 13, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 14, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 15, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 16, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 17, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 18, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 19, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 20, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 21, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 22, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 23, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 24, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 25, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 26, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 27, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 28, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 29, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 30, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 31, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 32, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 33, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 34, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 35, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 36, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 37, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 38, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 39, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 40, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-			introvegval3.copy(moveBy(introvv1, 41, 0, introvv1.width() + 1, introvv1.height() + 1, 0, 0)),
-
-	},
-		new float[42] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
-		new KA::Vec2Df[42]{KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
-		42
-	};
-
 
 
 	textures[TITLESCREEN_INTRO] = new Animatable{
