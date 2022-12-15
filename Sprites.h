@@ -217,7 +217,7 @@ private:
 	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	const std::string file_HUDtitlescreenintro = "sprites/IntroNomi.png";
-	const std::string file_introvegetablevalley1 = "sprites/intro1.png";
+	const std::string file_introvegetablevalley1 = "sprites/IntroVV.png";
 	const std::string file_introvegetablevalley2 = "sprites/intro2.png";
 	const std::string file_introvegetablevalley3 = "sprites/intro3.png";
 	const std::string file_introvegetablevalley4 = "sprites/intro4.png";
