@@ -109,7 +109,7 @@ TextureManager::TextureManager() {
 	QRect poppybrosjr = getStandardQRect(95,758);
 	QRect brontoburt = getStandardQRect(95,897);
 
-	QRect intronomi = QRect(0,0, 1024, 896);
+	QRect intronomi = QRect(-5,-5, 1024, 896);
 	QRect introvv1 = QRect(0, 0, 1024, 960);
 	QRect drawintro = QRect(0, 0, 990, 990);
 	QRect commands = QRect(0, 0, 1024, 896);
@@ -485,63 +485,16 @@ KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,
 */
 
 	textures[TITLESCREEN_INTRO] = new Animatable{
-		new QPixmap[50]{
-			hudintronomi.copy(intronomi),
-			hudintronomi.copy(moveBy(intronomi, 1, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 2, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 3, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 4, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 5, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 6, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 7, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 8, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 9, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 10, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 11, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 12, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 13, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 14, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 15, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 16, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 17, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 18, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 19, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 20, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 21, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 22, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 23, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 24, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 25, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 26, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 27, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 28, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 29, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 30, 0, intronomi.width(), intronomi.height(), 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 31, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 32, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 33, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 34, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 35, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 36, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 37, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 38, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 39, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 40, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 41, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 42, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 43, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 44, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 45, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 46, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 47, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 48, 0, intronomi.width() , intronomi.height() , 0, 0)),
-			hudintronomi.copy(moveBy(intronomi, 49, 0, intronomi.width() , intronomi.height() , 0, 0))
-	},
-		new float[49] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,1.5f},
-		new KA::Vec2Df[49]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
-		49
+		new QPixmap[50],
+		new float[50] {0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f,0.1f},
+		new KA::Vec2Df[50] { KA::Vec2Df(0,0)},
+		50
 	};
 
+	for (int i = 0; i < 50; i++)
+{
+	textures[TITLESCREEN_INTRO]->pixmaps[i] = hudintronomi.copy(moveBy(intronomi, i, 0, intronomi.width(), intronomi.height(), 0, 0));
+}
 
 	textures[KIRBY_STAND] = new Animatable{
 		new QPixmap[2]{
