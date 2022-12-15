@@ -29,7 +29,7 @@ private:
 public:
     MainWindow(QGraphicsView* parent = 0);
 
-   // const std::string file_icon = "sprites/kirbyicon.png";
+
 
     void resizeEvent(QResizeEvent* event);
     void closeEvent(QCloseEvent* event);

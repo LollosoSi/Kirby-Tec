@@ -44,7 +44,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
     
     setWindowTitle(tr("Kirby's Adventure"));
-   // setWindowIcon(QIcon(file_icon));
+   setWindowIcon(QIcon("sprites/kirbyicon.png"));
 }
         
 
