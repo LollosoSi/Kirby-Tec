@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "GameLoop.h"
+#include "Sprites.h"
 #include <QOpenGLWidget>
 
 
@@ -43,6 +44,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
     
     setWindowTitle(tr("Kirby's Adventure"));
+    setWindowIcon(QIcon(file_icon));
 }
         
 

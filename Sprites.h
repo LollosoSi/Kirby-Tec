@@ -218,6 +218,7 @@ private:
 	const std::string file_introvegetablevalley1 = "sprites/IntroVV.png";
 	const std::string file_introdraw = "sprites/IntroDraw.png";
 	const std::string file_commands = "sprites/CommandTest.png";
+	const std::string file_icon = "sprites/kirbyicon.png";
 	
 	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
