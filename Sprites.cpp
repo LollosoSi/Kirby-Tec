@@ -196,21 +196,12 @@ TextureManager::TextureManager() {
 	
 
 	textures[COMMANDS_HUD] = new Animatable{
-		new QPixmap[8]{
-			commandstex.copy(commands),
-			commandstex.copy(moveBy(commands, 1, 0,commands.width() , commands.height() , 0, 0)),
-			commandstex.copy(moveBy(commands, 2, 0,commands.width() , commands.height() , 0, 0)),
-			commandstex.copy(moveBy(commands, 3, 0,commands.width() , commands.height() , 0, 0)),
-			commandstex.copy(moveBy(commands, 4, 0,commands.width() , commands.height() , 0, 0)),
-			commandstex.copy(moveBy(commands, 5, 0,commands.width() , commands.height() , 0, 0)),
-			commandstex.copy(moveBy(commands, 6, 0,commands.width() , commands.height() , 0, 0)),
-			commandstex.copy(moveBy(commands, 7, 0,commands.width() , commands.height() , 0, 0)),
-		},
-
-		new float[8] {0.5f,0.5f,0.5f,0.5f,0.5f,0.5f,0.5f,0.5f},
-
-		new KA::Vec2Df[8]{KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
-		8
+		new QPixmap[1]{
+			commandstex.copy(commands)
+	},
+		new float[1] {0.06f},
+		new KA::Vec2Df[1] { KA::Vec2Df(0,0)},
+		1
 	};
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
