@@ -157,6 +157,7 @@ TextureManager::TextureManager() {
 		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
+
 	/*
 	textures[DRAW_INTRO] = new Animatable{
 		new QPixmap[22]{
@@ -191,6 +192,7 @@ TextureManager::TextureManager() {
 		 22
 	};
 	*/
+	
 
 	textures[COMMANDS_HUD] = new Animatable{
 		new QPixmap[8]{
@@ -212,7 +214,7 @@ TextureManager::TextureManager() {
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
 		new QPixmap[240],
-		new float [240],
+		new float[240],
 		new KA::Vec2Df[240] { KA::Vec2Df(0,0)},
 		240
 	};
@@ -234,7 +236,7 @@ TextureManager::TextureManager() {
 		50
 	};
 
-	for (int i = 0; i < 240; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		textures[TITLESCREEN_INTRO]->duration[i] = 0.1f;
 	}
