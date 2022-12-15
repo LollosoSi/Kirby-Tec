@@ -16,11 +16,12 @@ GameLoop::GameLoop() {
 	
 
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
-	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD);
+	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 5);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
-	startGUI->playOneShot(TexManager::VEGETABLE_VALLEY_INTRO1);
+	commandsGUI->setDrawScale(0.23);
+	startGUI->playOneShot(TexManager::TITLESCREEN_INTRO);
 		
 	
 	
@@ -114,7 +115,8 @@ GameLoop::~GameLoop() {
 	delete pauseGUI;
 	delete pauseSuggestion;
 	delete startGUI;
-	
+	delete commandsGUI;
+
 	delete[] scoredigits;
 
 	
@@ -131,6 +133,7 @@ void GameLoop::showStart() {
 	pauseSuggestion->setShow(false);
 	pauseGUI->setShow(false);
 	startGUI->setShow(true);
+	commandsGUI->setShow(false);
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
