@@ -109,7 +109,7 @@ TextureManager::TextureManager() {
 	QRect poppybrosjr = getStandardQRect(95,758);
 	QRect brontoburt = getStandardQRect(95,897);
 
-	QRect intronomi = QRect(-5,-5, 1024, 896);
+	QRect intronomi = QRect(0,0, 1024, 896);
 	QRect introvv1 = QRect(0, 0, 1024, 960);
 	QRect drawintro = QRect(0, 0, 990, 990);
 	QRect commands = QRect(0, 0, 1024, 896);
