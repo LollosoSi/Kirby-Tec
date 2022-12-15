@@ -471,7 +471,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Commands
 	if (e->key() == Qt::Key_C && isPressed) {
 
-		pause(!paused);
+		commands(!paused);
 
 	}
 	
