@@ -16,6 +16,7 @@ GameLoop::GameLoop() {
 	
 
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
+	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
@@ -393,7 +394,7 @@ void GameLoop::commands(bool pause) {
 	if (pause)
 		pauseSuggestion->setTexture((TexManager::TexID)((int)TexManager::COMMANDS_HUD));
 
-	pauseGUI->setShow(pause);
+	commandsGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
 	startGUI->setShow(false);
 }

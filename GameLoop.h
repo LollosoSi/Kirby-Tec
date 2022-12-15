@@ -48,6 +48,7 @@ private:
 	std::string currentlevel = "";
 	
 	BaseGUI* pauseGUI;
+	BaseGUI* commandsGUI;
 	BaseGUI* pauseSuggestion;
 	BaseGUI* startGUI;
 
