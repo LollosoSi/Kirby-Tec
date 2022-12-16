@@ -111,7 +111,7 @@ TextureManager::TextureManager() {
 	QRect brontoburt = getStandardQRect(95,897);
 
 	QRect intronomi = QRect(0,0, 1024, 896);
-	QRect introvv1 = QRect(0, 0, 1024, 960);
+	QRect introvv = QRect(0, 0, 1024, 960);
 	QRect drawintro = QRect(0, 0,1024, 960);
 	QRect commands = QRect(0, 0, 1024, 896);
 
@@ -187,20 +187,20 @@ TextureManager::TextureManager() {
 	};
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
-		new QPixmap[240],
-		new float[240] {0.019f},
-		new KA::Vec2Df[240] { KA::Vec2Df(0,0)},
-		240
+		new QPixmap[222],
+		new float[222] {0.025f},
+		new KA::Vec2Df[222] { KA::Vec2Df(0,0)},
+		222
 	};
 
-	for (int i = 0; i < 240; i++)
+	for (int i = 0; i < 222; i++)
 	{
-		textures[VEGETABLE_VALLEY_INTRO1]->duration[i] = 0.019f;
+		textures[VEGETABLE_VALLEY_INTRO1]->duration[i] = 0.025f;
 	}
 
-	for (int i = 0; i < 240; i++)
+	for (int i = 0; i < 222; i++)
 	{
-		textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1.copy(moveBy(introvv1, i, 0, introvv1.width(), introvv1.height(), 0, 0));
+		textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1.copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
 	}
 
 	textures[TITLESCREEN_INTRO] = new Animatable{
