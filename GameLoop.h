@@ -49,6 +49,7 @@ private:
 	
 	BaseGUI* pauseGUI;
 	BaseGUI* commandsGUI;
+	BaseGUI* aboutusGUI;
 	BaseGUI* pauseSuggestion;
 	BaseGUI* startGUI;
 
@@ -142,6 +143,7 @@ public:
 	void start();
 	void pause(bool pause = true);
 	void commands(bool pause = true);
+	void aboutus(bool pause = true);
 	void clear();
 	static void stop();
 	void saveGame(std::string fileName);

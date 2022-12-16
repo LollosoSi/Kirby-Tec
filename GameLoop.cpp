@@ -17,10 +17,12 @@ GameLoop::GameLoop() {
 
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
 	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 6);
+	aboutusGUI = new BaseGUI(QPointF(0, 0), TexManager::ABOUTUS_HUD, 7);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
 	startGUI->setDrawScale(0.23);
 	commandsGUI->setDrawScale(0.23);
+	aboutusGUI->setDrawScale(0.23);
 	startGUI->playOneShot(TexManager::VEGETABLE_VALLEY_INTRO1);
 
 		
@@ -74,6 +76,7 @@ GameLoop::GameLoop() {
 	GUIItems.push_back(pauseSuggestion);
 	GUIItems.push_back(startGUI);
 	GUIItems.push_back(commandsGUI);
+	GUIItems.push_back(aboutusGUI);
 }
 
 
@@ -118,6 +121,7 @@ GameLoop::~GameLoop() {
 	delete pauseSuggestion;
 	delete startGUI;
 	delete commandsGUI;
+	delete aboutusGUI;
 
 	delete[] scoredigits;
 
@@ -136,6 +140,7 @@ void GameLoop::showStart() {
 	pauseGUI->setShow(false);
 	startGUI->setShow(true);
 	commandsGUI->setShow(false);
+	aboutusGUI->setShow(false);
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -399,6 +404,12 @@ void GameLoop::commands(bool pause) {
 
 }
 
+void GameLoop::aboutus(bool pause) {
+	this->pause(pause);
+	aboutusGUI->setShow(pause);
+
+}
+
 void GameLoop::stop() {
 	running = false;
 	paused = false;
@@ -473,6 +484,12 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_C && isPressed) {
 
 		commands(!paused);
+
+	}
+
+	if (e->key() == Qt::Key_U && isPressed) {
+
+		aboutus(!paused);
 
 	}
 	

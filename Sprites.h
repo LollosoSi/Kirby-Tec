@@ -172,11 +172,12 @@ namespace TexManager {
 			TITLESCREEN_INTRO = 121,
 			VEGETABLE_VALLEY_INTRO1 = 122,
 			DRAW_INTRO = 123,
-			COMMANDS_HUD = 124
+			COMMANDS_HUD = 124,
+			ABOUTUS_HUD = 125
 
 
 	};
-	const int TEXTURE_COUNT = 125;
+	const int TEXTURE_COUNT = 126;
 
 };
 
@@ -221,6 +222,7 @@ private:
 	const std::string file_introvegetablevalley1 = "sprites/IntroVV.png";
 	const std::string file_introdraw = "sprites/IntroDraw.png";
 	const std::string file_commands = "sprites/CommandTest.png";
+	const std::string file_aboutus = "sprites/AboutUs.png";
 	
 	
 	

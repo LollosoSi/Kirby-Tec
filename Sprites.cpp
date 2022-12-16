@@ -114,6 +114,7 @@ TextureManager::TextureManager() {
 	QRect introvv = QRect(0, 0, 1024, 960);
 	QRect drawintro = QRect(0, 0,1024, 960);
 	QRect commands = QRect(0, 0, 1024, 896);
+	QRect aboutus = QRect(0, 0, 1024, 896);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -134,7 +135,7 @@ TextureManager::TextureManager() {
 	QPixmap introvegval1 = loadTexture(file_introvegetablevalley1, nocolor);
 	QPixmap commandstex = loadTexture(file_commands, nocolor);
 	QPixmap introdraw = loadTexture(file_introdraw, nocolor);
-		
+	QPixmap aboutustex = loadTexture(file_aboutus, nocolor);
 
 
 	
@@ -180,6 +181,15 @@ TextureManager::TextureManager() {
 	textures[COMMANDS_HUD] = new Animatable{
 		new QPixmap[1]{
 			commandstex.copy(commands)
+	},
+		new float[1] {0.06f},
+		new KA::Vec2Df[1] { KA::Vec2Df(0,0)},
+		1
+	};
+
+	textures[ABOUTUS_HUD] = new Animatable{
+		new QPixmap[1]{
+			aboutustex.copy(aboutus)
 	},
 		new float[1] {0.06f},
 		new KA::Vec2Df[1] { KA::Vec2Df(0,0)},
