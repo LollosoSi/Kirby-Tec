@@ -9,6 +9,7 @@
 
 GameLoop::GameLoop() {
 
+	
 	QImageReader p;
 	p.setAllocationLimit(0);
 
@@ -23,7 +24,11 @@ GameLoop::GameLoop() {
 	startGUI->setDrawScale(0.23);
 	commandsGUI->setDrawScale(0.23);
 	aboutusGUI->setDrawScale(0.23);
-	startGUI->playOneShot(TexManager::VEGETABLE_VALLEY_INTRO1);
+
+	
+
+
+
 
 		
 	
