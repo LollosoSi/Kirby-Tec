@@ -115,6 +115,7 @@ TextureManager::TextureManager() {
 	QRect drawintro = QRect(0, 0,1024, 960);
 	QRect commands = QRect(0, 0, 1024, 896);
 	QRect aboutus = QRect(0, 0, 1024, 896);
+	QRect intro = QRect(0, 0, 1024, 896);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -136,7 +137,7 @@ TextureManager::TextureManager() {
 	QPixmap commandstex = loadTexture(file_commands, nocolor);
 	QPixmap introdraw = loadTexture(file_introdraw, nocolor);
 	QPixmap aboutustex = loadTexture(file_aboutus, nocolor);
-
+	QPixmap introtex = loadTexture(file_intro, nocolor);
 
 	
 	
@@ -177,6 +178,38 @@ TextureManager::TextureManager() {
 	{
 		textures[DRAW_INTRO]->pixmaps[i] = introdraw.copy(moveBy(drawintro, i, 0, drawintro.width(), drawintro.height(), 0, 0));
 	}
+
+
+	textures[INTRO] = new Animatable{
+		new QPixmap[233],
+		new float [233] {0.05f},
+		new KA::Vec2Df[233] { KA::Vec2Df(0,0)},
+		233
+
+	};
+
+	for (int i = 0; i < 233; i++)
+	{
+		if (i == 183)
+		{
+			textures[INTRO]->duration[i] = 3;
+			continue;
+		}
+
+		if (i > 183)
+		{
+			textures[INTRO]->duration[i] = 0.065f;
+			continue;
+		}
+
+		textures[INTRO]->duration[i] = 0.04f;
+	}
+
+	for (int i = 0; i < 233; i++)
+	{
+		textures[INTRO]->pixmaps[i] = introtex.copy(moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
+	}
+
 
 	textures[COMMANDS_HUD] = new Animatable{
 		new QPixmap[1]{

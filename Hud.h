@@ -67,6 +67,7 @@ public:
 	void playOneShot(TexManager::TexID id) { anim.playOneShot(TextureManager::getInstance().getAnimatable(id)); }
 
 
+
 	void render(QGraphicsScene& scene, bool shouldClear) override {
 
 		
