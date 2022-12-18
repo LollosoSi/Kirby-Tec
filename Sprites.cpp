@@ -161,23 +161,6 @@ TextureManager::TextureManager() {
 		1
 	};
 
-	textures[DRAW_INTRO] = new Animatable{
-		new QPixmap[183],
-		new float [183] {0.04f},
-		new KA::Vec2Df[183] { KA::Vec2Df(0,0)},
-		183
-			
-	};
-	
-	for (int i = 0; i < 183; i++)
-	{
-		textures[DRAW_INTRO]->duration[i] = 0.04f;
-	}
-
-	for (int i = 0; i < 183; i++)
-	{
-		textures[DRAW_INTRO]->pixmaps[i] = introdraw.copy(moveBy(drawintro, i, 0, drawintro.width(), drawintro.height(), 0, 0));
-	}
 
 
 	textures[INTRO] = new Animatable{
@@ -246,22 +229,6 @@ TextureManager::TextureManager() {
 		textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1.copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
 	}
 
-	textures[TITLESCREEN_INTRO] = new Animatable{
-		new QPixmap[50],
-		new float[50],
-		new KA::Vec2Df[50] { KA::Vec2Df(0,0)},
-		50
-	};
-
-	for (int i = 0; i < 50; i++)
-	{
-		textures[TITLESCREEN_INTRO]->duration[i] = 0.1f;
-	}
-
-	for (int i = 0; i < 50; i++)
-{
-	textures[TITLESCREEN_INTRO]->pixmaps[i] = hudintronomi.copy(moveBy(intronomi, i, 0, intronomi.width(), intronomi.height(), 0, 0));
-}
 
 	textures[KIRBY_STAND] = new Animatable{
 		new QPixmap[2]{

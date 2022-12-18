@@ -25,6 +25,7 @@ GameLoop::GameLoop() {
 	commandsGUI->setDrawScale(0.23);
 	aboutusGUI->setDrawScale(0.23);
 	startGUI->playOneShot(TexManager::INTRO);
+
 	
 
 
