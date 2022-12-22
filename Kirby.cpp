@@ -377,6 +377,10 @@ void Kirby::processAnimation() {
 		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 		}
+
+		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
+		}
 	}
 }
 
@@ -432,7 +436,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			
 			jumpCooldown = 0;
 	}
-	if (e->key() == Qt::Key_Q) {
+	if (e->key() == Qt::Key_W) {
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
 	}
 	if ((e->key() == Qt::Key_E) && isPressed) {
