@@ -682,8 +682,6 @@ TextureManager::TextureManager() {
 		2
 
 	};
-
-
 	textures[POPPYBROSJR] = new Animatable{
 		new QPixmap[1] {
 		enemytex.copy(poppybrosjr),

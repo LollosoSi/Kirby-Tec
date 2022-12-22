@@ -395,18 +395,7 @@ void Kirby::render(QGraphicsScene& scene, bool shouldClear) {
 void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
 
-	/* D right
-	   S left
-	   W enter doors
 
-	   Q inhale / Q exhale
-	   E inhale enemies --> E (again) Kirby takes enemy power (If enemy has no power kirby spits it out as bullet)
-	   Q (state)+space fly
-
-	   X use special Power
-	   Z drop special power
-
-	*/
 	// Controls
 	if (e->key() == Qt::Key_S || e->key() == Qt::DownArrow)
 		buttons[Kirby::DOWN] = isPressed;
