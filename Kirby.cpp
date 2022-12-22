@@ -292,7 +292,27 @@ void Kirby::tick(double deltatime) {
 						storedObject = item;
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item), false);
 
-						GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (rand() % 26)));
+				
+							//	waddle dee has none
+							// bronto burt has none
+							// waddle doo / beam
+							if (storedObject->getObjectId() == 16) {
+								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (3)));
+							}
+							// hot head / fire
+							if (storedObject->getObjectId() == 19) {
+								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (6)));
+							}
+							// Poppy Bros Jr / cutter
+							if (storedObject->getObjectId() == 17) {
+								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (5)));
+							}
+							// Sparky / Spark
+							if (storedObject->getObjectId() == 18) {
+								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (18)));
+							}
+					
+
 
 						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
 						animator->interruptOneShot();
