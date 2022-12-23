@@ -435,6 +435,7 @@ void GameLoop::addParticle(GameObject* p) {
 
 void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	
+	// Y H J K M N P C U L R
 	if (e->key() == Qt::Key_Y && isPressed) {
 	
 		detachKirby();
