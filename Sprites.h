@@ -174,11 +174,17 @@ namespace TexManager {
 			DRAW_INTRO = 123,
 			COMMANDS_HUD = 124,
 			ABOUTUS_HUD = 125,
-			INTRO = 126
+			INTRO = 126,
+
+			// Kirby Ability
+			KIRBY_BEAM = 127,
+			KIRBY_FIRE = 128,
+			KIRBY_CUTTER = 129,
+			KIRBY_SPARK = 130
 
 
 	};
-	const int TEXTURE_COUNT = 127;
+	const int TEXTURE_COUNT = 131;
 
 };
 
