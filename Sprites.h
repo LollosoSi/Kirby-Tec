@@ -177,14 +177,15 @@ namespace TexManager {
 			INTRO = 126,
 
 			// Kirby Ability
-			KIRBY_BEAM = 127,
-			KIRBY_FIRE = 128,
-			KIRBY_CUTTER = 129,
-			KIRBY_SPARK = 130
+			KIRBY_ASSORB = 127,
+			KIRBY_BEAM = 128,
+			KIRBY_FIRE = 129,
+			KIRBY_CUTTER = 130,
+			KIRBY_SPARK = 131
 
 
 	};
-	const int TEXTURE_COUNT = 131;
+	const int TEXTURE_COUNT = 132;
 
 };
 

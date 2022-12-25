@@ -41,6 +41,18 @@ TextureManager::TextureManager() {
 	QRect kirby_big_stand = QRect(63,107,24,24);
 	QRect kirby_big_walking = QRect(96,107,24,24); // 3 images
 
+	//Kirby assorb Power
+	QRect kirby_assorb = getStandardQRect(34,207);
+
+	// Kirby Ability Mancano sotto
+	QRect kirby_fire = getStandardQRect(6,586);
+	QRect fire = getStandardQRect(46, 586);
+
+	QRect kirby_beam = QRect(6,509,24,16);
+	QRect beam = QRect(62, 517, 8, 8);
+
+	// We need to add others
+
 	// Kirby Position
 	QRect kirby_sloped_25 = QRect(151, 232, 16, 16);
 	QRect kirby_sloped_45 = QRect(171, 232, 16, 23);
@@ -254,12 +266,30 @@ TextureManager::TextureManager() {
 	};
 
 	textures[KIRBY_DOORS] = new Animatable{
-		new QPixmap[2]{kirbytex.copy(kirby_doors),kirbytex.copy(moveBy(kirby_doors, 1))},
+		new QPixmap[2]{
+			kirbytex.copy(kirby_doors),
+			kirbytex.copy(moveBy(kirby_doors, 1))
+	},
 		new float[2] {0.06f, 0.06f},
 				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 
 		2
 	};
+
+	// Kirby Assorb
+	textures[KIRBY_ASSORB] = new Animatable{
+		new QPixmap[5] {
+			kirbytex.copy(),
+			kirbytex.copy(moveBy(kirby_assorb , 1)),
+			kirbytex.copy(moveBy(kirby_assorb , 2)),
+			kirbytex.copy(moveBy(kirby_assorb , 3)),
+			kirbytex.copy(moveBy(kirby_assorb , 4))
+},
+new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
+				new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) , KA::Vec2Df(0,0) , , KA::Vec2Df(0,0), , KA::Vec2Df(0,0) },
+
+		2
+	}
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
 		new QPixmap[1]{terrainpart2tex.copy(terrain_sloped_25)},
