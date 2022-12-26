@@ -286,10 +286,10 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(kirby_assorb , 4))
 },
 new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
-				new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) , KA::Vec2Df(0,0) , , KA::Vec2Df(0,0), , KA::Vec2Df(0,0) },
+				new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) , KA::Vec2Df(0,0) , KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 
-		2
-	}
+		5
+	};
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
 		new QPixmap[1]{terrainpart2tex.copy(terrain_sloped_25)},

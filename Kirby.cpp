@@ -10,6 +10,7 @@
 #include "Door.h"
 #include "CollisionDetection.h"
 
+using namespace KA;
 
 bool Kirby::isThisTheKirbyInstance() { return dynamic_cast<Kirby*>(GameLoop::getInstance().KirbyInstance) == this; }
 
@@ -159,7 +160,7 @@ void Kirby::processAcceleration() {
 		jumpCooldown = jumpCooldownDefault;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 30;
-		KA::Sounds::getInstance().play("jump2");
+		Sounds::instance()->playSound("jump2");
 		if (!storedObject) {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
@@ -346,7 +347,7 @@ void Kirby::processAnimation() {
 
 	if (!animator->isPlayingOneShot()) {
 		if (isGrounded()) {
-
+			
 			if (abs(velocity.x) < 0.5) {
 
 				double degang = toDegrees(angle);
@@ -385,6 +386,7 @@ void Kirby::processAnimation() {
 	
 		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
+			Sounds::instance()->playSound("inhale");
 		}
 
 		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
@@ -441,6 +443,11 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	if (e->key() == Qt::Key_Space) {
 		buttons[Kirby::SPACE] = isPressed;
+
+		if (isGrounded()) {
+			Sounds::instance()->playSound("jump");
+		}
+
 		if (!isPressed)
 			
 			jumpCooldown = 0;
@@ -451,10 +458,12 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if ((e->key() == Qt::Key_E) && isPressed) {
 		buttons[Kirby::INHALE_ENEMIES] = true;
 		
+		
 	}
 	//assorb
 	if (e->key() == Qt::Key_X) {
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
+		Sounds::instance()->playSound("kirby_spit_enemy");
 	} 
 	//drop power
 	if (e->key() == Qt::Key_Z) {
@@ -467,6 +476,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	//enter doors
 	if (e->key() == Qt::Key_G && isPressed) {
 		buttons[Kirby::ENTERDOOR] = isPressed;
+		Sounds::instance()->playSound("Enter_door");
 		std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
 		if (!inside.empty()) {
 			RigidBody* rb = inside.front();

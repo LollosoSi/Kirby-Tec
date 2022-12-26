@@ -6,7 +6,7 @@
 #include "Sprites.h"
 #include "Definitions.h"
 #include "qimagereader.h"
-
+using namespace KA;
 GameLoop::GameLoop() {
 
 	
@@ -375,6 +375,7 @@ void GameLoop::loadNetworkData(){
 
 void GameLoop::start() {
 	running = true;
+	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	//paused = false;
 
 	pause(false);
@@ -386,9 +387,11 @@ void GameLoop::start() {
 
 void GameLoop::pause(bool pause) {
 	paused = pause;
-
+	
 	if (pause)
 		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+
+	
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
@@ -476,12 +479,14 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 		pause(!paused); 
 		
+		
 	}
 
 	// Commands
 	if (e->key() == Qt::Key_C && isPressed) {
 
 		commands(!paused);
+		
 
 	}
 
@@ -524,14 +529,14 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		Door d(QPointF(0,0), "levels/level1");
 		d.launchAction();
 		//GameLoop::getInstance().loadGame("levels/level1");
-		KA::Sounds::getInstance().play("wii", 0);
+		Sounds::instance()->playSound("wii");
 	}
 
 	if (e->key() == Qt::Key_4 && !isPressed) {
 		Door d(QPointF(0, 0), "levels/level3");
 		d.launchAction();
 		//GameLoop::getInstance().loadGame("levels/level1");
-		KA::Sounds::getInstance().play("wii", 0);
+		KA::Sounds::instance()->playSound("wii");
 	}
 
 	if (e->key() == Qt::Key_2 && !isPressed) {

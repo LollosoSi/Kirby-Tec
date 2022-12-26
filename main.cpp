@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 	
 	
 	TextureManager::getInstance();
-	KA::Sounds::getInstance().start();
+
 
 	while (!TextureManager::getInstance().done) {}
 
