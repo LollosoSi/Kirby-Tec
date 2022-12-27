@@ -375,7 +375,7 @@ void GameLoop::loadNetworkData(){
 
 void GameLoop::start() {
 	running = true;
-	Sounds::instance()->playSound("Kirby_Adventure_theme");
+	//Sounds::instance()->playSound("Kirby_Adventure_theme");
 	//paused = false;
 
 	pause(false);
