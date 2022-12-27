@@ -289,21 +289,22 @@ void Kirby::tick(double deltatime) {
 						std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
 				}
 		}*/
-		if (animator->isPlayingOneShot() && !storedObject) {
+		if (!storedObject) {
 			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
+			
 			for (auto* item : objs) {
 				if (instanceof<Enemy, RigidBody>(item) && !storedObject) {
+					
 					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						//std::cout << "should delete << \n";
 						storedObject = item;
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item), false);
 
-				
 							//	waddle dee has none
 							// bronto burt has none
 							// waddle doo / beam
+
 							if (storedObject->getObjectId() == 16 && buttons[Kirby::USE_SPECIALPWR]) {
-								
 								
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (3)));
 								buttons[Kirby::USE_SPECIALPWR] = false;
@@ -460,16 +461,16 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 	if (e->key() == Qt::Key_W) {
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
-	}
-	if ((e->key() == Qt::Key_E) && isPressed) {
-		buttons[Kirby::INHALE_ENEMIES] = true;
 		
+	}
+	if (e->key() == Qt::Key_E) {
+		buttons[Kirby::INHALE_ENEMIES] = isPressed;
 		
 	}
 	//assorb
 	if (e->key() == Qt::Key_X) {
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
-		Sounds::instance()->playSound("kirby_spit_enemy");
+
 	} 
 	//drop power
 	if (e->key() == Qt::Key_Z) {
@@ -478,6 +479,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// throw enemy
 	if (e->key() == Qt::Key_Q) {
 		buttons[Kirby::THROW_ENEMY] = isPressed;
+		Sounds::instance()->playSound("kirby_spit_enemy");
 	} 
 	//enter doors
 	if (e->key() == Qt::Key_G && isPressed) {
