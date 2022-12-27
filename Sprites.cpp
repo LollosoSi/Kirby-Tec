@@ -351,11 +351,11 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 			kirbytex.copy(kirby_inhale),
 			kirbytex.copy(moveBy(kirby_inhale, 1)),
 			kirbytex.copy(kirby_inhale2),
-			kirbytex.copy(moveBy(kirby_inhale3,1)),
+			kirbytex.copy(kirby_inhale3),
 		},
-		new float[4] {0.2f , 0.4f , 1.0f , 0.1f},
-		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.35),KA::Vec2Df(0,0) },
-		3
+		new float[4] {0.2f , 0.4f , 0.4f , 1.0f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.35),KA::Vec2Df(0,-0.35) },
+		4
 	};
 
 	textures[KIRBY_EXHALE] = new Animatable{

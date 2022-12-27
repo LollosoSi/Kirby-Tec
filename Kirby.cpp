@@ -54,47 +54,53 @@ double Kirby::groundDistance() {
 
 void Kirby::processAcceleration() {
 
-	if (buttons[Kirby::USE_SPECIALPWR]) {
-		buttons[Kirby::USE_SPECIALPWR] = false;
+	if (storedObject) {
 
-		RigidBody* o;
-		//if (!storedObject) {
 
-		// NOTE: PoppyBrosJr is removed from targets
-		objects::ObjectID targets[] = {objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR};
+		if (buttons[Kirby::THROW_ENEMY]) {
+			buttons[Kirby::THROW_ENEMY] = false;
 
-		
+			RigidBody* o;
+
+			// NOTE: PoppyBrosJr is removed from targets
+			objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
+
+
 			Projectile* p = new Projectile(getCollider().center(),
 				KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL), targets, 5 + (storedObject ? 1 : 0), 1500, 0.38);
-		
-		//}
-		//else {
-			
-		//}
+
+			//}
+			//else {
+
+			//}
 
 			o = dynamic_cast<RigidBody*>(p);
 
-			o->velocity.x = (5.0 * (storedObject ? 2 : 1 ) * (mirror ? -1 : 1)) + getVelocity().x;
+			o->velocity.x = (5.0 * (storedObject ? 2 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
 			o->velocity.y = -3.0 + getVelocity().y;
-		
 
-			if (storedObject) {
-				RigidBody* oo = dynamic_cast<RigidBody*>(storedObject);
-				oo->setPos(QPointF(getX(), getY()));
-				oo->accel = { o->velocity.x,-9.8 };
-				damageCooldown = 350;
-				storedObject = 0;
-				oo->velocity.x = o->getVelocity().x; //(5.0 * (storedObject ? 5 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
-				oo->velocity.y = o->getVelocity().y-2; //-3.0 + getVelocity().y;
 
-				oo->hit = false;
 
-				p->setProtectedObject(oo);
+			RigidBody* oo = dynamic_cast<RigidBody*>(storedObject);
+			oo->setPos(QPointF(getX(), getY()));
+			oo->accel = { o->velocity.x,-9.8 };
+			damageCooldown = 350;
+			storedObject = 0;
+			oo->velocity.x = o->getVelocity().x; //(5.0 * (storedObject ? 5 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
+			oo->velocity.y = o->getVelocity().y - 2; //-3.0 + getVelocity().y;
 
-				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(oo));
-			}
+			oo->hit = false;
 
-		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(o));
+			p->setProtectedObject(oo);
+
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(oo));
+
+
+
+
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(o));
+
+		}
 
 	}
 
