@@ -192,6 +192,10 @@ namespace TexManager {
 
 using namespace TexManager;
 
+static int QPixmapMaxSize = 32767;
+//static int QPixmapMaxSize = 16000;
+
+
 class TextureManager {
 
 public:
@@ -235,13 +239,14 @@ private:
 	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	const std::string file_HUDtitlescreenintro = "sprites/IntroNomi.png";
+
 	const std::string file_introvegetablevalley1 = "sprites/IntroVV.png";
+
 	const std::string file_introdraw = "sprites/IntroDraw.png";
 	const std::string file_commands = "sprites/CommandTest.png";
 	const std::string file_aboutus = "sprites/AboutUs.png";
+
 	const std::string file_intro = "sprites/Intro.png";
-	
-	
 	
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
 	static QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask

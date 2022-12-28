@@ -8,9 +8,42 @@ using namespace std;
 static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 
 
+void compose(Animatable* anim, std::string nameout) {
+
+	unsigned int pixwidth = anim->pixmaps[0].width();
+	unsigned int pixheight = anim->pixmaps[0].height();
+
+	unsigned int rowlength = QPixmapMaxSize / pixwidth;
+	unsigned int maxheight = anim->size / rowlength;
+
+	cout << "Dimensions for: " << nameout << " Width: " << rowlength << " Height: " << maxheight << "\n";
+
+	QSize resultSize = QSize(rowlength * pixwidth, pixheight * maxheight);
+	QImage resultImage = QImage(resultSize, QImage::Format_ARGB32_Premultiplied);
+
+	QPainter painter(&resultImage);
+	painter.setCompositionMode(QPainter::CompositionMode_Source);
+	//painter.fillRect(resultImage.rect(), Qt::transparent);
+	painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+	for (unsigned int i = 0; i < anim->size; i++)
+		painter.drawImage(pixwidth * (i % rowlength), pixheight * (i / rowlength), anim->pixmaps[i].toImage());
+	painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+	//painter.fillRect(resultImage.rect(), Qt::white);
+	painter.end();
+
+	resultImage.save(nameout.c_str(), 0, 0);
+
+
+}
+
 // Constructor. Load all textures in the Animatable array
 TextureManager::TextureManager() {
 	done = false;
+
+	// NOTE: Precalculated intro rows & cols
+	unsigned int introrows = 31, introcols = 7;
+	// NOTE: Precalculated introVV rows & cols
+	unsigned int introVVrows = 31, introVVcols = 7;
 
 	std::thread t0, t1, t2, t3;
 
@@ -795,25 +828,8 @@ TextureManager::TextureManager() {
 
 	};
 
-	for (int i = 0; i < 233; i++)
-	{
-		if (i == 183)
-		{
-			textures[INTRO]->duration[i] = 3;
-			continue;
-		}
-
-		if (i > 183)
-		{
-			textures[INTRO]->duration[i] = 0.065f;
-			continue;
-		}
-
-		textures[INTRO]->duration[i] = 0.04f;
-	}
-
-	for (int i = 0; i < 233; i++)
-	{
+	for (int i = 0; i < 233; i++) {
+		textures[INTRO]->duration[i] = (i == 183) ? 3: (i > 183) ? 0.065f : 0.04f;
 		textures[INTRO]->pixmaps[i] = introtex->copy(TextureManager::moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
 	}
 
@@ -825,12 +841,10 @@ TextureManager::TextureManager() {
 	};
 
 	for (int i = 0; i < 222; i++) {
-		textures[VEGETABLE_VALLEY_INTRO1]->duration[i] = 0.025f;
-	}
-
-	for (int i = 0; i < 222; i++) {
 		textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1->copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
 	}
+
+	//compose(textures[INTRO], "lightintro.png");
 
 	delete hudintronomi;
 	delete introvegval1;
