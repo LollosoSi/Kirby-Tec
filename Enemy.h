@@ -8,8 +8,7 @@
 
 #include "Particle.h"
 
-class Enemy : public RigidBody
-{
+class Enemy : public RigidBody {
 	bool mirror = false;
 	virtual void processAnimation() {
 
@@ -41,6 +40,7 @@ class Enemy : public RigidBody
 protected:
 	double maxwalkspeed = 2;
 	bool started = 0;
+	TexManager::TexID ability = TexManager::HUD_POWER;
 
 	public:
 		Enemy(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), objects::ObjectID eid = objects::WADDLEDEE, double sizeX = 1, double sizeY = 1) : RigidBody(coords, offset, sizeX, sizeY) {
@@ -49,6 +49,9 @@ protected:
 		}
 	
 		void jump(double intensity = -5) { velocity.y = intensity; }
+
+		void setStoredPower(TexManager::TexID id) { this->ability = id; }
+		TexManager::TexID getStoredPower() const { return this->ability; }
 
 		QPixmap getTexture() { return animator->getCurrentPixmap(mirror); }
 

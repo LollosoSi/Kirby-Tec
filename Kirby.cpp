@@ -41,13 +41,14 @@ double Kirby::groundDistance() {
 	double ct = 0, min_t = 1;
 	//hit = 0;
 	// solve the collisions in correct order 
-	for (auto obj : raycasted) {
-		if ((obj.first->getObjectId()) != objects::BACKGROUND)
-			if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
-				if (ct >= 0 && ct < 1 && dynamic_cast<Terrain*>(obj.first))
-					return ct*ray.y();
+	for (std::pair<RigidBody*, double>& obj : raycasted) {
+		if(obj.first)
+			if (((obj.first)->getObjectId()) != objects::BACKGROUND)
+				if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
+					if (ct >= 0 && ct < 1 && dynamic_cast<Terrain*>(obj.first))
+						return ct*ray.y();
 					//std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
-			}
+				}
 	}
 	return 9999;
 }
@@ -119,7 +120,13 @@ void Kirby::processAcceleration() {
 		return;*/
 	} 
 
-	KA::Vec2Df temp{ 0.0, 9.8 };
+	KA::Vec2Df temp{ 0.0, 0.0 };
+
+	if (status == KIRBY_FLY) {
+		temp.y = 2.2;
+	} else {
+		temp.y = 9.8;
+	}
 
 	if (!buttons[Kirby::INHALE_ENEMIES] && (buttons[RIGHT] ^ buttons[LEFT])) {
 		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
@@ -158,7 +165,7 @@ void Kirby::processAcceleration() {
 	*/
 
 
-	if (buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
+	if (status != KIRBY_FLY && buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
 		//buttons[SPACE] = false;
 		jumpsLeft--;
 		if (storedObject)
@@ -171,6 +178,9 @@ void Kirby::processAcceleration() {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 		}
+	}
+	if (status == KIRBY_FLY && buttons[SPACE]) {
+		temp.y -= 3.3;
 	}
 
 
@@ -304,7 +314,7 @@ void Kirby::tick(double deltatime) {
 							// bronto burt has none
 							// waddle doo / beam
 
-							if (storedObject->getObjectId() == 16 ) {
+						/*	if (storedObject->getObjectId() == 16) {
 								
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (3)));
 								buttons[Kirby::USE_SPECIALPWR] = false;
@@ -327,12 +337,13 @@ void Kirby::tick(double deltatime) {
 								buttons[Kirby::USE_SPECIALPWR] = false;
 							//	storedObject = false;
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (18)));
-							}
+							}*/
 					
 
 
 						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
 						animator->interruptOneShot();
+						Sounds::instance()->stopSound("inhale");
 
 					}
 					else {
@@ -341,10 +352,12 @@ void Kirby::tick(double deltatime) {
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			buttons[KirbyKeys::INHALE_ENEMIES] = false;
 		}
+
+		if (!animator->isPlayingOneShot())
+			buttons[Kirby::INHALE_ENEMIES] = false;
 
 	}
 
@@ -353,7 +366,7 @@ void Kirby::tick(double deltatime) {
 void Kirby::processAnimation() {
 
 	if (!animator->isPlayingOneShot()) {
-		if (isGrounded()) {
+		if (isGrounded() && status != KIRBY_FLY) {
 			
 			if (abs(velocity.x) < 0.5) {
 
@@ -383,9 +396,14 @@ void Kirby::processAnimation() {
 
 		}
 		else {
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_FLYING : KIRBY_JUMP));
-			if (circa(groundDistance(), 2, 0.1) && velocity.y>0 && !circa(velocity.x,0,5) && !storedObject) {
-				this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL),0,1.6f);
+			if (status != KIRBY_FLY) {
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_FLYING : KIRBY_JUMP));
+				if (circa(groundDistance(), 2, 0.1) && velocity.y > 0 && !circa(velocity.x, 0, 5) && !storedObject) {
+					this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0, 1.6f);
+				}
+			}
+			else {
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			}
 
 		}
@@ -396,14 +414,15 @@ void Kirby::processAnimation() {
 			Sounds::instance()->playSound("inhale");
 		}
 
-		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
+		if (buttons[Kirby::INHALE_EXHALE] && !storedObject && status != KIRBY_FLY) {
 			status = TexID(KIRBY_FLY);
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING),1);
-
-			//set gravity flappy bird
 			
-
+			//set gravity flappy bird
+			// NOTE: Done in processAcceleration
+		}else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
+			status = TexID(KIRBY_STAND);
 		}
 
 		if (buttons[Kirby::INHALE_ENEMIES] && storedObject) {
@@ -480,8 +499,25 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
 		
 	}
-	if (e->key() == Qt::Key_E) {
-		buttons[Kirby::INHALE_ENEMIES] = isPressed;
+	if (e->key() == Qt::Key_E && isPressed) {
+		//enter doors OR inhale
+		
+			std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
+			if (!inside.empty()) {
+				RigidBody* rb = inside.front();
+				if (rb->getObjectId() == objects::DOOR) {
+					//buttons[Kirby::ENTERDOOR] = isPressed;
+					Sounds::instance()->playSound("Enter_door");
+					(dynamic_cast<Door*>(rb))->launchAction();
+				}
+			}
+			else if (storedObject) {
+				buttons[Kirby::THROW_ENEMY] = isPressed;
+				Sounds::instance()->playSound("kirby_spit_enemy");
+			}else {
+				buttons[Kirby::INHALE_ENEMIES] = isPressed;
+			}
+	
 		
 	}
 	//assorb
@@ -500,21 +536,6 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		
 	}
-	// throw enemy
-	if (e->key() == Qt::Key_Q) {
-		buttons[Kirby::THROW_ENEMY] = isPressed;
-		Sounds::instance()->playSound("kirby_spit_enemy");
-	} 
-	//enter doors
-	if (e->key() == Qt::Key_G && isPressed) {
-		buttons[Kirby::ENTERDOOR] = isPressed;
-		Sounds::instance()->playSound("Enter_door");
-		std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
-		if (!inside.empty()) {
-			RigidBody* rb = inside.front();
-			if (rb->getObjectId() == objects::DOOR)
-				(dynamic_cast<Door*>(rb))->launchAction();
-		}
-	}
+	
 
 }
