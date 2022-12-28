@@ -132,12 +132,14 @@ GameLoop::~GameLoop() {
 }
 
 void GameLoop::showStart() {
+	startGUI->setShow(false);
 	pause(true);
 	pauseSuggestion->setShow(false);
 	pauseGUI->setShow(false);
-	startGUI->setShow(true);
 	commandsGUI->setShow(false);
 	aboutusGUI->setShow(false);
+
+	startGUI->setShow(true);
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -377,7 +379,7 @@ void GameLoop::start() {
 	running = true;
 	//Sounds::instance()->playSound("Kirby_Adventure_theme");
 	//paused = false;
-
+	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
 
@@ -396,7 +398,12 @@ void GameLoop::pause(bool pause) {
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
-	startGUI->setShow(false);
+	if (startGUI->getShow()) {
+		startGUI->setShow(false);
+		//startGUI->setTexture(KIRBY_DOORS);
+		TextureManager::getInstance().deleteLargeClips();
+	}
+	
 }
 
 void GameLoop::commands(bool pause) {

@@ -40,13 +40,13 @@ int main(int argc, char* argv[]) {
 	
 	
 	TextureManager::getInstance();
-
+	KA::Sounds::instance();
 
 	while (!TextureManager::getInstance().done) {}
 
 	GameLoop::getInstance();
 
-	GameLoop::getInstance().start();
+	//GameLoop::getInstance().start();
 	
 
 	//if(!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)){

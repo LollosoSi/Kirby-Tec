@@ -206,8 +206,15 @@ public:
 		return textures[position];}
 	//QPixmap getLevelBackground(const std::string& level);
 
+	static QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
+
+	QPixmap* hudintronomi = 0;
+	QPixmap* introvegval1 = 0;
+	QPixmap* introdraw = 0;
+	QPixmap* introtex = 0;
 	
-	
+	void deleteLargeClips();
+
 
 private:
 	TextureManager();
@@ -236,12 +243,11 @@ private:
 	
 	
 	
-	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
-	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
-	
+	static QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 
 	Animatable* textures[TEXTURE_COUNT]{0};
+
 	
 
 

@@ -41,7 +41,7 @@ double Kirby::groundDistance() {
 	double ct = 0, min_t = 1;
 	//hit = 0;
 	// solve the collisions in correct order 
-	for (auto& obj : raycasted) {
+	for (auto obj : raycasted) {
 		if ((obj.first->getObjectId()) != objects::BACKGROUND)
 			if (DynamicRectVsRect(testcollider, testvelocity, obj.first->getColliderRectF(), cp, cn, ct) && ct < min_t) {
 				if (ct >= 0 && ct < 1 && dynamic_cast<Terrain*>(obj.first))

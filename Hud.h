@@ -34,6 +34,8 @@ public:
 		//std::cout << "Setting show " << value << "\n";
 	}
 
+	bool getShow() const { return show; }
+
 	BaseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
 		setTexture(id);
 		setObjectId(objects::HUD);
@@ -52,7 +54,8 @@ public:
 	}
 
 	void tick(double delta) {
-		anim.tick(delta);
+		if(getShow())
+			anim.tick(delta);
 	}
 
 	void addChild(BaseGUI* element) {
