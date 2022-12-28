@@ -6,7 +6,6 @@
 #include "TickableObject.h"
 #include "Sprites.h"
 #include "RigidBody.h"
-#include "GameLoop.h"
 #include <QGraphicsPixmapItem>
 #include "Camera.h"
 
