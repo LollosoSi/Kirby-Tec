@@ -159,12 +159,14 @@ TextureManager::TextureManager() {
 
 	
 	
+	/*
 	t0 = std::thread([](TextureManager* tx, std::string file_HUDtitlescreenintro, QColor nocolor) {
 		QPixmap *qp = new QPixmap;
 		*qp = TextureManager::loadTexture(file_HUDtitlescreenintro, nocolor);
 		tx->hudintronomi = qp;
 	},
 	this, file_HUDtitlescreenintro, nocolor);
+	*/
 
 	t1 = std::thread([](TextureManager* tx, std::string file_introvegetablevalley1, QColor nocolor) {
 		QPixmap* qp = new QPixmap;
@@ -173,12 +175,14 @@ TextureManager::TextureManager() {
 	},
 	this, file_introvegetablevalley1, nocolor);
 
+	/*
 	t2 = std::thread([](TextureManager* tx, std::string file_introdraw, QColor nocolor) {
 		QPixmap* qp = new QPixmap;
 		*qp = TextureManager::loadTexture(file_introdraw, nocolor);
 		tx->introdraw = qp;
 	},
 	this, file_introdraw, nocolor);
+	*/
 
 	t3 = std::thread([](TextureManager* tx, std::string file_intro, QColor nocolor) {
 		QPixmap* qp = new QPixmap;
