@@ -6,7 +6,7 @@
 #include "TickableObject.h"
 #include "Sprites.h"
 #include "RigidBody.h"
-
+#include "GameLoop.h"
 #include <QGraphicsPixmapItem>
 #include "Camera.h"
 
@@ -44,6 +44,8 @@ public:
 	Kirby* setName(std::string nm) { sname = nm; return this; }
 
 	const double kirbyscale = 0.8;
+
+	unsigned int status = 0;
 
 	double groundDistance();
 
@@ -95,5 +97,35 @@ public:
 
 	static int getScoreFromObject(GameObject* item);
 
+	void setAbility(int id) {
+
+		if (id == 16)
+		{
+			status = 128;
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BEAM), 1);
+
+		}
+
+		if (id == 17)
+		{
+			status = 130;
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_CUTTER), 1);
+		}
+
+		if (id == 18)
+		{
+			status = 131;
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_SPARK), 1);
+		}
+
+		if (id == 19)
+		{
+			status = 129;
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_FIRE), 1);
+		}
+
+
+		
+	}
 
 };

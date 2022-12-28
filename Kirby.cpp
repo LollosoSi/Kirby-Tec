@@ -304,26 +304,26 @@ void Kirby::tick(double deltatime) {
 							// bronto burt has none
 							// waddle doo / beam
 
-							if (storedObject->getObjectId() == 16 && buttons[Kirby::USE_SPECIALPWR]) {
+							if (storedObject->getObjectId() == 16 ) {
 								
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (3)));
 								buttons[Kirby::USE_SPECIALPWR] = false;
 							}
 							// hot head / fire
-							if (storedObject->getObjectId() == 19 && buttons[Kirby::USE_SPECIALPWR]) {
+							if (storedObject->getObjectId() == 19 ) {
 								buttons[Kirby::USE_SPECIALPWR] = false;
 							//	storedObject = false;
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (6)));
 							}
 							// Poppy Bros Jr / cutter
-							if (storedObject->getObjectId() == 17 && buttons[Kirby::USE_SPECIALPWR]) {
+							if (storedObject->getObjectId() == 17 ) {
 								
 								buttons[Kirby::USE_SPECIALPWR] = false;
 							//	storedObject = false;
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (5)));
 							}
 							// Sparky / Spark
-							if (storedObject->getObjectId() == 18 && buttons[Kirby::USE_SPECIALPWR]) {
+							if (storedObject->getObjectId() == 18 ) {
 								buttons[Kirby::USE_SPECIALPWR] = false;
 							//	storedObject = false;
 								GameLoop::getInstance().setAbility((TexID)(HUD_POWER + (18)));
@@ -389,7 +389,7 @@ void Kirby::processAnimation() {
 			}
 
 		}
-	
+
 	
 		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
@@ -397,8 +397,25 @@ void Kirby::processAnimation() {
 		}
 
 		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
+			status = TexID(KIRBY_FLY);
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING),1);
+
+			//set gravity flappy bird
+			
+
 		}
+
+		if (buttons[Kirby::INHALE_ENEMIES] && storedObject) {
+			
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ASSORB));
+			setAbility(storedObject->getObjectId());
+			storedObject = 0;
+
+		}
+
+
+
 	}
 }
 
@@ -469,12 +486,19 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 	//assorb
 	if (e->key() == Qt::Key_X) {
+		storedObject = 0;
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
+		this->animator->playOneShot(TextureManager::getInstance().getAnimatable(status));
 
 	} 
 	//drop power
 	if (e->key() == Qt::Key_Z) {
 		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
+		status = 0;
+		GameLoop::getInstance().setAbility((TexID)(HUD_POWER));
+		this->animator->playOneShot(TextureManager::getInstance().getAnimatable(0));
+
+		
 	}
 	// throw enemy
 	if (e->key() == Qt::Key_Q) {

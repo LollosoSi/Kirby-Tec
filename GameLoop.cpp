@@ -6,10 +6,10 @@
 #include "Sprites.h"
 #include "Definitions.h"
 #include "qimagereader.h"
+#include "Kirby.h"
 using namespace KA;
 GameLoop::GameLoop() {
 
-	
 	QImageReader p;
 	p.setAllocationLimit(0);
 
@@ -389,9 +389,10 @@ void GameLoop::pause(bool pause) {
 	paused = pause;
 	
 	if (pause)
-		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+		//pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
 
-	
+		pauseSuggestion->setTexture(TexManager::TexID());
+
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);

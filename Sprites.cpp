@@ -51,6 +51,11 @@ TextureManager::TextureManager() {
 	QRect kirby_beam = QRect(6,509,24,16);
 	QRect beam = QRect(62, 517, 8, 8);
 
+	QRect kirby_cutter = QRect(6, 774, 16, 32);
+
+
+	QRect kirby_spark = QRect(103, 548, 16, 16);
+
 	// We need to add others
 
 	// Kirby Position
@@ -289,6 +294,50 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 				new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) , KA::Vec2Df(0,0) , KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 
 		5
+	};
+
+	textures[KIRBY_BEAM] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(),
+			kirbytex.copy(moveBy(kirby_beam, 1)),
+	},
+	new float[2] {0.2f,0.2f},
+			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		2
+	};
+
+	textures[KIRBY_FIRE] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(),
+			kirbytex.copy(moveBy(kirby_fire, 1)),
+	},
+	new float[2] {0.2f,0.2f},
+			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		2
+	};
+
+	textures[KIRBY_CUTTER] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(),
+			kirbytex.copy(moveBy(kirby_cutter, 1)),
+	},
+	new float[2] {0.2f,0.2f},
+			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,-0.75)},
+		2
+	};
+
+	textures[KIRBY_SPARK] = new Animatable{
+		new QPixmap[6] {
+			kirbytex.copy(),
+			kirbytex.copy(moveBy(kirby_spark, 1)),
+			kirbytex.copy(moveBy(kirby_spark, 2)),
+			kirbytex.copy(moveBy(kirby_spark, 3)),
+			kirbytex.copy(moveBy(kirby_spark, 4)),
+			kirbytex.copy(moveBy(kirby_spark, 5)),
+	},
+	new float[6] {0.2f,0.2f,0.2f,0.2f,0.2f,0.2f},
+			new KA::Vec2Df[6]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		6
 	};
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
