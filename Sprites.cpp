@@ -46,7 +46,7 @@ void compose(Animatable* anim, std::string name, std::string extension) {
 }
 
 void TextureManager::threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows) {
-	const unsigned int maxworkers = 6;
+	const unsigned int maxworkers = 12;
 	thread workers[maxworkers];
 	unsigned int progress = 0;
 	
