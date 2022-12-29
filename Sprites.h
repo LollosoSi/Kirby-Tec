@@ -194,7 +194,7 @@ namespace TexManager {
 using namespace TexManager;
 
 //static int QPixmapMaxSize = 32767;
-static int QPixmapMaxSize = 2500;
+static int QPixmapMaxSize = 1500;
 
 
 class TextureManager {

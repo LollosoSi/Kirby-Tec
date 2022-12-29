@@ -3,10 +3,10 @@
 #include "Sprites.h"
 #include <QOpenGLWidget>
 
-
 using namespace std;
 
 MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
+
     sceneRect = QRect(0,0,aspectratio*480,480);
     setGeometry(sceneRect.x(), sceneRect.y(), sceneRect.width(), sceneRect.height());
 
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
     view->setViewport(qgl);
 
-    std::cout << "Swap interval " << format.swapInterval();
+    //std::cout << "Swap interval " << format.swapInterval();
 
     this->setMouseTracking(true);
 
@@ -44,7 +44,7 @@ MainWindow::MainWindow(QGraphicsView* parent) : QMainWindow(parent) {
 
     
     setWindowTitle(tr("Kirby's Adventure"));
-   setWindowIcon(QIcon("sprites/kirbyicon.png"));
+    setWindowIcon(QIcon("sprites/kirbyicon.png"));
 }
         
 

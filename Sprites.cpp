@@ -32,16 +32,18 @@ void compose(Animatable* anim, std::string name, std::string extension) {
 		painter.setCompositionMode(QPainter::CompositionMode_Source);
 		//painter.fillRect(resultImage.rect(), Qt::transparent);
 		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-		processed += items_per_cycle;
-		unsigned int target = processed < anim->size ? items_per_cycle : anim->size - processed - items_per_cycle;
+		
+		unsigned int target = items_per_cycle;
 
 		unsigned int start = items_per_cycle * part;
-		for (unsigned int i = 0; i < target; i++)
+		for (unsigned int i = 0; i < target && processed < anim->size ; i++, processed++)
 			painter.drawImage(pixwidth * (i%rowlength), pixheight * (i / rowlength), anim->pixmaps[start+i].toImage());
 		painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
 		//painter.fillRect(resultImage.rect(), Qt::white);
 		painter.end();
 		resultImage.save(nameout.c_str(), 0, 0);
+
+		
 	}
 
 
@@ -94,7 +96,7 @@ TextureManager::TextureManager() {
 	done = false;
 
 	// NOTE: Precalculated intro rows & cols
-	unsigned int introrows = 31, introcols = 7, introparts = 10;
+	unsigned int introrows = 31, introcols = 7, introparts = 233;
 	// NOTE: Precalculated introVV rows & cols
 	unsigned int introVVrows = 31, introVVcols = 7;
 
@@ -261,8 +263,8 @@ TextureManager::TextureManager() {
 		*qp = TextureManager::loadTexture(file_introvegetablevalley1, nocolor);
 		tx->introvegval1 = qp;
 	},
-	this, file_introvegetablevalley1, nocolor);
-	*/
+	this, file_introvegetablevalley1, nocolor);*/
+	
 	
 
 	/*
@@ -280,8 +282,8 @@ TextureManager::TextureManager() {
 		*qp = TextureManager::loadTexture(file_intro, nocolor);
 		tx->introtex = qp;
 	},
-	this, file_intro, nocolor);
-	*/
+	this, file_intro, nocolor);*/
+	
 	
 	textures[INTRO] = new Animatable{
 		new QPixmap[233],
@@ -291,8 +293,8 @@ TextureManager::TextureManager() {
 
 	};
 
-	t0 = threadLoad(textures, INTRO, "sprites/intro/intro", ".png", intro, 58, 2, 2);
-
+	t0 = threadLoad(textures, INTRO, "sprites/intro/intro", ".png", intro, 233, 1, 1);
+	t0.detach();
 	for (int i = 0; i < 233; i++) {
 		textures[INTRO]->duration[i] = (i == 183) ? 3 : (i > 183) ? 0.065f : 0.04f;
 		//textures[INTRO]->pixmaps[i] = introtex->copy(TextureManager::moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
@@ -304,10 +306,11 @@ TextureManager::TextureManager() {
 			new KA::Vec2Df[222] { KA::Vec2Df(0,0)},
 			222
 	};
-	t1 = threadLoad(textures, VEGETABLE_VALLEY_INTRO1, "vegvalley/vegvalleyintro", ".png", introvv, 55, 2, 2);
-
+	t1 = threadLoad(textures, VEGETABLE_VALLEY_INTRO1, "vegvalley/vegvalleyintro", ".png", introvv, 222, 1, 1);
+	t1.detach();
+	
 	//for (int i = 0; i < 222; i++) {
-		//textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1->copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
+	//	textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1->copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
 	//}
 
 
@@ -880,37 +883,38 @@ TextureManager::TextureManager() {
 		2
 	};
 
+	// NOTE: Unused due to detached threads
 	// Wait for animations to finish loading
+	/*
 	if (t0.joinable()) {
 		std::cout << "Waiting for t0\n";
-		t0.join();
+		t0.detach();
 
 	}
 
 	if (t1.joinable()) {
 		std::cout << "Waiting for t1\n";
-		t1.join();
+		t1.detach();
 
 	}
 
 	if (t2.joinable()) {
 		std::cout << "Waiting for t2\n";
-		t2.join();
+		t2.detach();
 
 	}
 
 	if (t3.joinable()) {
 		std::cout << "Waiting for t3\n";
-		t3.join();
+		t3.detach();
 
-	}
+	}*/
 
 	// Following is after having loaded animations
 
 	
 
 	//compose(textures[INTRO], "sprites/intro/intro", ".png");
-
 	//compose(textures[VEGETABLE_VALLEY_INTRO1], "sprites/vegvalley/vegvalleyintro", ".png");
 
 	
