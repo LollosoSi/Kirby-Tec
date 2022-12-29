@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <QPainter>
+#include <thread>
 
 #include "Animator.h"
 
@@ -193,7 +194,7 @@ namespace TexManager {
 using namespace TexManager;
 
 //static int QPixmapMaxSize = 32767;
-static int QPixmapMaxSize = 4500;
+static int QPixmapMaxSize = 2500;
 
 
 class TextureManager {
@@ -252,7 +253,7 @@ private:
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
 
 	Animatable* textures[TEXTURE_COUNT]{0};
-	void threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows);
+	std::thread threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows);
 
 
 	
