@@ -192,8 +192,8 @@ namespace TexManager {
 
 using namespace TexManager;
 
-static int QPixmapMaxSize = 32767;
-//static int QPixmapMaxSize = 16000;
+//static int QPixmapMaxSize = 32767;
+static int QPixmapMaxSize = 4500;
 
 
 class TextureManager {
@@ -218,6 +218,7 @@ public:
 	QPixmap* introtex = 0;
 	
 	void deleteLargeClips();
+	static QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 
 
 private:
@@ -249,9 +250,10 @@ private:
 	const std::string file_intro = "sprites/Intro.png";
 	
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
-	static QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
 
 	Animatable* textures[TEXTURE_COUNT]{0};
+	void threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows);
+
 
 	
 

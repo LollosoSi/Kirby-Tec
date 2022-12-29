@@ -8,7 +8,7 @@ using namespace std;
 static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 
 
-void compose(Animatable* anim, std::string nameout) {
+void compose(Animatable* anim, std::string name, std::string extension) {
 
 	unsigned int pixwidth = anim->pixmaps[0].width();
 	unsigned int pixheight = anim->pixmaps[0].height();
@@ -16,23 +16,69 @@ void compose(Animatable* anim, std::string nameout) {
 	unsigned int rowlength = QPixmapMaxSize / pixwidth;
 	unsigned int maxheight = anim->size / rowlength;
 
-	cout << "Dimensions for: " << nameout << " Width: " << rowlength << " Height: " << maxheight << "\n";
+	unsigned int parts = maxheight / rowlength;
+	unsigned int items_per_cycle = anim->size/parts;
+	std::cout << "Parts: " << parts << "\n";
+	std::cout << "Items per cycle: " << items_per_cycle << " mod " << anim->size % parts << "\n";
 
-	QSize resultSize = QSize(rowlength * pixwidth, pixheight * maxheight);
-	QImage resultImage = QImage(resultSize, QImage::Format_ARGB32_Premultiplied);
+	QSize resultSize = QSize(rowlength * pixwidth, pixheight * (items_per_cycle/rowlength) );
+	int pindex = 0;
+	for (unsigned int part = 0; part < parts; part++) {
+		std::string nameout = name + std::to_string(part) + extension;
+		cout << "Dimensions for: " << nameout << " Width: " << rowlength << " Height: " << parts << "\n";
+		QImage resultImage = QImage(resultSize, QImage::Format_ARGB32_Premultiplied);
+		QPainter painter(&resultImage);
+		painter.setCompositionMode(QPainter::CompositionMode_Source);
+		//painter.fillRect(resultImage.rect(), Qt::transparent);
+		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+		unsigned int size = items_per_cycle * (part + 1);
+		if (size > anim->size)
+			size = anim->size;
+		for (unsigned int i = items_per_cycle *part; i < size; i++)
+			painter.drawImage(pixwidth * (pindex++ % rowlength), pixheight * ((i / rowlength) - ((part*items_per_cycle)/rowlength)), anim->pixmaps[i].toImage());
+		painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+		//painter.fillRect(resultImage.rect(), Qt::white);
+		painter.end();
+		resultImage.save(nameout.c_str(), 0, 0);
+	}
 
-	QPainter painter(&resultImage);
-	painter.setCompositionMode(QPainter::CompositionMode_Source);
-	//painter.fillRect(resultImage.rect(), Qt::transparent);
-	painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-	for (unsigned int i = 0; i < anim->size; i++)
-		painter.drawImage(pixwidth * (i % rowlength), pixheight * (i / rowlength), anim->pixmaps[i].toImage());
-	painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
-	//painter.fillRect(resultImage.rect(), Qt::white);
-	painter.end();
 
-	resultImage.save(nameout.c_str(), 0, 0);
+}
 
+void TextureManager::threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows) {
+	const unsigned int maxworkers = 6;
+	thread workers[maxworkers];
+	unsigned int progress = 0;
+	
+	for (; progress < parts; progress++) {
+		if (workers[progress % maxworkers].joinable())
+			workers[progress % maxworkers].join();
+
+		workers[progress%maxworkers] = std::thread([](Animatable** textures, TexID tex, std::string filename, QRect size, unsigned int startindex, unsigned int rowlength, unsigned int rows) {
+
+			QPixmap* qp = new QPixmap;
+		*qp = TextureManager::loadTexture(filename, Qt::transparent);
+
+		for (unsigned int i = 0; i < rows * rowlength && (startindex + i < textures[tex]->size); i++) {
+
+			textures[tex]->pixmaps[startindex + i] = qp->copy(TextureManager::moveBy(size, i % rowlength, i / rowlength, size.width(), size.height(), 0, 0));
+
+
+		}
+		delete qp;
+			},
+			textures, tex, name + std::to_string(progress) + extension, size, rowlength * rows * progress, rowlength, rows
+		);
+
+	}
+	
+
+	for(unsigned int i = 0; i < maxworkers; i++){
+	
+		if (workers[i].joinable())
+			workers[i].join();
+	
+	}
 
 }
 
@@ -41,7 +87,7 @@ TextureManager::TextureManager() {
 	done = false;
 
 	// NOTE: Precalculated intro rows & cols
-	unsigned int introrows = 31, introcols = 7;
+	unsigned int introrows = 31, introcols = 7, introparts = 10;
 	// NOTE: Precalculated introVV rows & cols
 	unsigned int introVVrows = 31, introVVcols = 7;
 
@@ -200,13 +246,13 @@ TextureManager::TextureManager() {
 	},
 	this, file_HUDtitlescreenintro, nocolor);
 	*/
-
+	/*
 	t1 = std::thread([](TextureManager* tx, std::string file_introvegetablevalley1, QColor nocolor) {
 		QPixmap* qp = new QPixmap;
 		*qp = TextureManager::loadTexture(file_introvegetablevalley1, nocolor);
 		tx->introvegval1 = qp;
 	},
-	this, file_introvegetablevalley1, nocolor);
+	this, file_introvegetablevalley1, nocolor);*/
 
 	/*
 	t2 = std::thread([](TextureManager* tx, std::string file_introdraw, QColor nocolor) {
@@ -217,12 +263,13 @@ TextureManager::TextureManager() {
 	this, file_introdraw, nocolor);
 	*/
 
-	t3 = std::thread([](TextureManager* tx, std::string file_intro, QColor nocolor) {
+	/*t3 = std::thread([](TextureManager* tx, std::string file_intro, QColor nocolor) {
 		QPixmap* qp = new QPixmap;
 		*qp = TextureManager::loadTexture(file_intro, nocolor);
 		tx->introtex = qp;
 	},
 	this, file_intro, nocolor);
+	*/
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
@@ -828,9 +875,12 @@ TextureManager::TextureManager() {
 
 	};
 
+	threadLoad(textures, INTRO, "tests/lightintro", ".png", intro, 9, 5, 5);
+
+	
 	for (int i = 0; i < 233; i++) {
 		textures[INTRO]->duration[i] = (i == 183) ? 3: (i > 183) ? 0.065f : 0.04f;
-		textures[INTRO]->pixmaps[i] = introtex->copy(TextureManager::moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
+		//textures[INTRO]->pixmaps[i] = introtex->copy(TextureManager::moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
 	}
 
 	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
@@ -839,17 +889,19 @@ TextureManager::TextureManager() {
 			new KA::Vec2Df[222] { KA::Vec2Df(0,0)},
 			222
 	};
+	//threadLoad(textures, VEGETABLE_VALLEY_INTRO1, "vegvalley/vegvalleyintro", ".png", introvv, 6, 6, 6);
 
 	for (int i = 0; i < 222; i++) {
-		textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1->copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
+	//	textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1->copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
 	}
 
-	//compose(textures[INTRO], "lightintro.png");
+	//compose(textures[VEGETABLE_VALLEY_INTRO1], "vegvalley/vegvalleyintro", ".png");
 
-	delete hudintronomi;
+	/*delete hudintronomi;
 	delete introvegval1;
 	delete introdraw;
 	delete introtex;
+	*/
 
 	done = true;
 }
