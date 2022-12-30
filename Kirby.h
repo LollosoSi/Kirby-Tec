@@ -44,7 +44,7 @@ public:
 
 	const double kirbyscale = 0.8;
 
-	unsigned int status = 0;
+	TexID status = HUD_POWER;
 
 	double groundDistance();
 
@@ -89,42 +89,33 @@ public:
 	void render(QGraphicsScene& scene, bool shouldClear = false) override;
 	
 	QPixmap getTexture() override {
-		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x,0.05) ? mirror : ( angle < 0 )));
+		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x, 0.05) ? mirror : ( angle < 0 )));
 	}
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
 
 	static int getScoreFromObject(GameObject* item);
 
-	void setAbility(int id) {
+	void setAbility(TexID id);
 
-		if (id == 16)
-		{
-			status = 128;
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BEAM), 1);
+	TexID statusToAnimatable(TexID id) {
+		switch (id) {
+			default:
+				return KIRBY_STAND;
 
+			case HUD_CUTTER:
+				return KIRBY_CUTTER;
+
+			case HUD_SPARK:
+				return KIRBY_SPARK;
+
+			case HUD_FIRE:
+				return KIRBY_FIRE;
+
+			case HUD_BEAM:
+				return KIRBY_BEAM;
 		}
-
-		if (id == 17)
-		{
-			status = 130;
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_CUTTER), 1);
-		}
-
-		if (id == 18)
-		{
-			status = 131;
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_SPARK), 1);
-		}
-
-		if (id == 19)
-		{
-			status = 129;
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_FIRE), 1);
-		}
-
-
-		
+	
 	}
 
 };

@@ -77,6 +77,7 @@ class WaddleDee : public Enemy {
 public:
 	WaddleDee(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::WADDLEDEE, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::WADDLEDEE));
+		setStoredPower(HUD_POWER);
 		velocity.x = -maxwalkspeed;
 	}
 	Cloneable* clone() const override { return new WaddleDee(*this); }
@@ -87,6 +88,7 @@ class WaddleDoo : public Enemy {
 public:
 	WaddleDoo(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::WADDLEDOO, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::WADDLEDOO));
+		setStoredPower(HUD_BEAM);
 		accel.x = -maxwalkspeed;
 	}
 	Cloneable* clone() const override { return new WaddleDoo(*this); }
@@ -106,6 +108,7 @@ class PoppyBrosJr : public Enemy {
 public:
 	PoppyBrosJr(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::POPPYBROSJR, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::POPPYBROSJR));
+		setStoredPower(HUD_CUTTER);
 	}
 	Cloneable* clone() const override { return new PoppyBrosJr(*this); }
 	void tick(double delta) override;
@@ -116,6 +119,7 @@ class Sparky : public Enemy {
 public:
 	Sparky(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::SPARKY, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::SPARKY));
+		setStoredPower(HUD_SPARK);
 	}
 	Cloneable* clone() const override { return new Sparky(*this); }
 	void tick(double delta);
@@ -127,6 +131,7 @@ class HotHead : public Enemy {
 public:
 	HotHead(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::HOTHEAD, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::HOTHEAD));
+		setStoredPower(HUD_FIRE);
 		accel.x = -maxwalkspeed;
 	}
 	Cloneable* clone() const override { return new HotHead(*this); }
@@ -140,6 +145,7 @@ protected:
 public:
 	BrontoBurt(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0,0), double sizeX = 1, double sizeY = 1) : Enemy(coords, offset, objects::BRONTOBURT, sizeX, sizeY) {
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(TexManager::BRONTOBURT));
+		setStoredPower(HUD_POWER);
 	}
 	Cloneable* clone() const override { return new BrontoBurt(*this); }
 	void tick(double delta) override;

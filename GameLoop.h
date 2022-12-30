@@ -118,6 +118,7 @@ public:
 	}
 	void setAbility(TexID ab) {
 		ability = ab;
+		updateView();
 	}
 
 	long getScore() { return score; }

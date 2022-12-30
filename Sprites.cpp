@@ -387,7 +387,7 @@ TextureManager::TextureManager() {
 	// Kirby Assorb
 	textures[KIRBY_ASSORB] = new Animatable{
 		new QPixmap[5] {
-			kirbytex.copy(),
+			kirbytex.copy(kirby_assorb),
 			kirbytex.copy(moveBy(kirby_assorb , 1)),
 			kirbytex.copy(moveBy(kirby_assorb , 2)),
 			kirbytex.copy(moveBy(kirby_assorb , 3)),
@@ -400,7 +400,7 @@ TextureManager::TextureManager() {
 
 	textures[KIRBY_BEAM] = new Animatable{
 		new QPixmap[2] {
-			kirbytex.copy(),
+			kirbytex.copy(kirby_beam),
 			kirbytex.copy(moveBy(kirby_beam, 1)),
 	},
 	new float[2] {0.2f,0.2f},
@@ -410,7 +410,7 @@ TextureManager::TextureManager() {
 
 	textures[KIRBY_FIRE] = new Animatable{
 		new QPixmap[2] {
-			kirbytex.copy(),
+			kirbytex.copy(kirby_fire),
 			kirbytex.copy(moveBy(kirby_fire, 1)),
 	},
 	new float[2] {0.2f,0.2f},
@@ -420,7 +420,7 @@ TextureManager::TextureManager() {
 
 	textures[KIRBY_CUTTER] = new Animatable{
 		new QPixmap[2] {
-			kirbytex.copy(),
+			kirbytex.copy(kirby_cutter),
 			kirbytex.copy(moveBy(kirby_cutter, 1)),
 	},
 	new float[2] {0.2f,0.2f},
@@ -430,7 +430,7 @@ TextureManager::TextureManager() {
 
 	textures[KIRBY_SPARK] = new Animatable{
 		new QPixmap[6] {
-			kirbytex.copy(),
+			kirbytex.copy(kirby_spark),
 			kirbytex.copy(moveBy(kirby_spark, 1)),
 			kirbytex.copy(moveBy(kirby_spark, 2)),
 			kirbytex.copy(moveBy(kirby_spark, 3)),
@@ -883,41 +883,8 @@ TextureManager::TextureManager() {
 		2
 	};
 
-	// NOTE: Unused due to detached threads
-	// Wait for animations to finish loading
-	/*
-	if (t0.joinable()) {
-		std::cout << "Waiting for t0\n";
-		t0.detach();
-
-	}
-
-	if (t1.joinable()) {
-		std::cout << "Waiting for t1\n";
-		t1.detach();
-
-	}
-
-	if (t2.joinable()) {
-		std::cout << "Waiting for t2\n";
-		t2.detach();
-
-	}
-
-	if (t3.joinable()) {
-		std::cout << "Waiting for t3\n";
-		t3.detach();
-
-	}*/
-
-	// Following is after having loaded animations
-
-	
-
 	//compose(textures[INTRO], "sprites/intro/intro", ".png");
 	//compose(textures[VEGETABLE_VALLEY_INTRO1], "sprites/vegvalley/vegvalleyintro", ".png");
-
-	
 
 	done = true;
 }
