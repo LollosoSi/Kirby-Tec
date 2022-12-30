@@ -101,8 +101,10 @@ void GameLoop::updateView() {
 		LivesCounter[i]->setTexture((TexManager::TexID)(TexManager::HUD_NUM_0 + abs(dig)));
 	}
 
-	for (int i = 0; i < 6; i++) 
+	for (int i = 0; i < 6; i++) {
 		KHealth[i]->setShow(health > i);
+		KHealth[i]->restartAnimation();
+	}
 	
 	this->state->setTexture(ability);
 

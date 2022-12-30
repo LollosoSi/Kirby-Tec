@@ -43,6 +43,8 @@ public:
 	bool isPlayingOneShot() { return next_anim != 0; }
 	void interruptOneShot();
 
+	void restartAnimation() { cur = 0; time = 0; }
+
 	KA::Vec2Df getCurrentOffset() { return !current_anim ? KA::Vec2Df(0,0) : current_anim->offset[cur]; }
 
 	Animator() {}
