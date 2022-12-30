@@ -21,8 +21,7 @@ Sounds::Sounds()
 	
 
 	std::thread t = std::thread([](Sounds* instance, QStringList sound_files) {
-		
-		
+
 	for (auto& f : sound_files) {
 		std::string name = QFileInfo(f).baseName().toStdString();
 		instance->_sounds[name]->setSource(QUrl::fromLocalFile(QString("sounds/") + f));
@@ -30,6 +29,7 @@ Sounds::Sounds()
 
 		}, this, sound_files);
 	t.detach();
+
 	
 }
 
