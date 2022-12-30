@@ -81,7 +81,7 @@ public:
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ KA::Vec2Df{0,-180}, 0 };
+	Impulse jumpImpulse{ KA::Vec2Df{0,-150}, 0 };
 
 	void tick(double deltatime);
 

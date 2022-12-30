@@ -237,8 +237,9 @@ void Kirby::tick(double deltatime) {
 			damage = 0;
 			if(isThisTheKirbyInstance())
 				setHealth(health-1);
-			velocity.y += -6;
-			velocity.x *= -1;
+			velocity.y += 0;
+			velocity.x *= -2;
+			Sounds::instance()->playSound("kirby_hit");
 			if (health == 0) {
 				// die
 				health = 6;
@@ -389,7 +390,7 @@ void Kirby::processAnimation() {
 			status = KIRBY_FLY;
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			
+			Sounds::instance()->playSound("inhale");
 			//set gravity flappy bird
 			// NOTE: Done in processAcceleration
 		} else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
@@ -517,6 +518,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	}
 	if (e->key() == Qt::Key_W) {
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
+		
 		
 	}
 	if (e->key() == Qt::Key_E && isPressed) {
