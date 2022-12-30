@@ -236,14 +236,14 @@ void Kirby::tick(double deltatime) {
 			damageCooldown = damageCooldownDefault;
 			damage = 0;
 			if(isThisTheKirbyInstance())
-				GameLoop::getInstance().setHealth(--health);
+				setHealth(health-1);
 			velocity.y += -6;
 			velocity.x *= -1;
 			if (health == 0) {
 				// die
 				health = 6;
 				if (isThisTheKirbyInstance()) {
-					GameLoop::getInstance().setHealth(health);
+					setHealth(health);
 					GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
 				}
 
@@ -432,6 +432,13 @@ void Kirby::processAnimation() {
 	}
 }
 
+void Kirby::setHealth(unsigned int v) {
+	if(health != v)
+		health = v;
+	GameLoop::getInstance().setHealth(health);
+}
+
+
 void Kirby::setAbility(TexID id) {
 	GameLoop::getInstance().setAbility(id);
 	status = id;
@@ -507,9 +514,9 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 				RigidBody* rb = inside.front();
 				if (rb->getObjectId() == objects::DOOR) {
 					buttons[Kirby::ENTERDOOR] = false;
-					setAbility(HUD_POWER);
+					//setAbility(HUD_POWER);
 					Sounds::instance()->playSound("Enter_door");
-					(dynamic_cast<Door*>(rb))->launchAction();
+					(dynamic_cast<Door*>(rb))->launchAction(this);
 				}
 			} else if (storedObject) {
 				buttons[Kirby::THROW_ENEMY] = isPressed;

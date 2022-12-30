@@ -2,6 +2,8 @@
 #include "RigidBody.h"
 #include "Sprites.h"
 
+class Kirby;
+
 class Door : public RigidBody {
 
 	std::string level = "";
@@ -17,7 +19,8 @@ public:
 
 	Door() : Door(QPointF(0.0, 0.0)) {}
 	Cloneable* clone() const override { return new Door(*this); }
-	void launchAction();
+
+	void launchAction(Kirby* instanceForConsistency = 0);
 
 	std::string serialize(const char& divider) const override {
 		std::stringstream out("", std::ios_base::app | std::ios_base::out);

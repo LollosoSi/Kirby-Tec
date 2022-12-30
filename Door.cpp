@@ -2,8 +2,10 @@
 #include "GameLoop.h"
 
 #include "Sounds.h"
+#include "Kirby.h"
+
 using namespace KA;
-void Door::launchAction() {
+void Door::launchAction(Kirby* instanceForConsistency) {
 
 	/*
 	KA::Sounds::getInstance().stop("Vegetable Valley_Theme", 0);
@@ -37,4 +39,13 @@ void Door::launchAction() {
 	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {
 		GameLoop::getInstance().loadGame(level, false, false);
 	}
+
+	if (instanceForConsistency) {
+		Kirby* k = ((Kirby*)GameLoop::getInstance().KirbyInstance);
+		k->setAbility(instanceForConsistency->status);
+		k->setHealth(instanceForConsistency->getHealth());
+	}
+	
+
+
 }

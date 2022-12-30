@@ -48,7 +48,7 @@ public:
 
 	double groundDistance();
 
-	Kirby(QPointF pos = QPointF(0.0, 0.0)) : RigidBody(pos, QPointF(0,0), 1 * kirbyscale, 1 * kirbyscale) {
+	Kirby(QPointF pos = QPointF(0.0, 0.0)) : RigidBody(pos, QPointF(0, 0), 1 * kirbyscale, 1 * kirbyscale) {
 		setObjectId(objects::KIRBY);
 		rigiddrawscale = kirbyscale;
 		animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
@@ -66,30 +66,30 @@ public:
 		RigidBody::setY(y);
 	}
 
-	Kirby(const Kirby& go) : Kirby(QPointF(go.getX(), go.getY())){
+	Kirby(const Kirby& go) : Kirby(QPointF(go.getX(), go.getY())) {
 		setObjectId(objects::KIRBY);
 	}
-	
+
 	const static uint8_t buttonsize = 11;
 	enum KirbyKeys {
 		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, INHALE_EXHALE = 5, INHALE_ENEMIES = 6, USE_SPECIALPWR = 7, DROP_SPECIALPWR = 8, ENTERDOOR = 9, THROW_ENEMY = 10
 	};
-	bool buttons[buttonsize]{false};
+	bool buttons[buttonsize]{ false };
 
 	bool mirror = false;
 
 	void processAcceleration();
 	void processAnimation();
 
-	Impulse jumpImpulse{ KA::Vec2Df{0,-180}, 0};
+	Impulse jumpImpulse{ KA::Vec2Df{0,-180}, 0 };
 
 	void tick(double deltatime);
 
 	int l = 0;
 	void render(QGraphicsScene& scene, bool shouldClear = false) override;
-	
+
 	QPixmap getTexture() override {
-		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x, 0.05) ? mirror : ( angle < 0 )));
+		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x, 0.05) ? mirror : (angle < 0)));
 	}
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
@@ -97,6 +97,10 @@ public:
 	static int getScoreFromObject(GameObject* item);
 
 	void setAbility(TexID id);
+
+	void setHealth(unsigned int v);
+
+	int getHealth()const {return health;}
 
 	TexID statusToAnimatable(TexID id) {
 		switch (id) {
