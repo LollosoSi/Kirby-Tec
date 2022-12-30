@@ -1,15 +1,106 @@
 #include "Sprites.h"
 
 #include "CollisionDetection.h"
+#include <thread>
 
 using namespace std;
 
 static QRect getStandardQRect(int x, int y) { return QRect(x, y, 16, 16); }
 
+
+void compose(Animatable* anim, std::string name, std::string extension) {
+
+	unsigned int pixwidth = anim->pixmaps[0].width();
+	unsigned int pixheight = anim->pixmaps[0].height();
+
+	unsigned int rowlength = QPixmapMaxSize / pixwidth;
+	unsigned int maxheight = anim->size / rowlength;
+
+	unsigned int parts = maxheight / rowlength;
+	unsigned int items_per_cycle = anim->size/parts;
+	std::cout << "Parts: " << parts << "\n";
+	std::cout << "Items per cycle: " << items_per_cycle << " mod " << anim->size % parts << "\n";
+
+	QSize resultSize = QSize(rowlength * pixwidth, pixheight * (items_per_cycle/rowlength) );
+	unsigned int processed = 0;
+	for (unsigned int part = 0; part < parts; part++) {
+		
+		std::string nameout = name + std::to_string(part) + extension;
+		cout << "Dimensions for: " << nameout << " Width: " << rowlength << " Height: " << parts << "\n";
+		QImage resultImage = QImage(resultSize, QImage::Format_ARGB32_Premultiplied);
+		QPainter painter(&resultImage);
+		painter.setCompositionMode(QPainter::CompositionMode_Source);
+		//painter.fillRect(resultImage.rect(), Qt::transparent);
+		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+		
+		unsigned int target = items_per_cycle;
+
+		unsigned int start = items_per_cycle * part;
+		for (unsigned int i = 0; i < target && processed < anim->size ; i++, processed++)
+			painter.drawImage(pixwidth * (i%rowlength), pixheight * (i / rowlength), anim->pixmaps[start+i].toImage());
+		painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+		//painter.fillRect(resultImage.rect(), Qt::white);
+		painter.end();
+		resultImage.save(nameout.c_str(), 0, 0);
+
+		
+	}
+
+
+}
+
+std::thread TextureManager::threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows) {
+	return std::thread([](Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows) {
+		
+		const unsigned int maxworkers = 12;
+	thread workers[maxworkers];
+	unsigned int progress = 0;
+
+	for (; progress < parts; progress++) {
+		if (workers[progress % maxworkers].joinable())
+			workers[progress % maxworkers].join();
+
+		workers[progress % maxworkers] = std::thread([](Animatable** textures, TexID tex, std::string filename, QRect size, unsigned int startindex, unsigned int rowlength, unsigned int rows) {
+
+			QPixmap* qp = new QPixmap;
+		*qp = TextureManager::loadTexture(filename, Qt::transparent);
+
+		for (unsigned int i = 0; i < rows * rowlength && (startindex + i < textures[tex]->size); i++) {
+
+			textures[tex]->pixmaps[startindex + i] = qp->copy(TextureManager::moveBy(size, i % rowlength, i / rowlength, size.width(), size.height(), 0, 0));
+
+
+		}
+		delete qp;
+			},
+			textures, tex, name + std::to_string(progress) + extension, size, rowlength * rows * progress, rowlength, rows
+				);
+
+	}
+
+
+	for (unsigned int i = 0; i < maxworkers; i++) {
+
+		if (workers[i].joinable())
+			workers[i].join();
+
+	}
+		
+		}, textures, tex, name, extension, size, parts, rowlength, rows);
+	
+
+}
+
 // Constructor. Load all textures in the Animatable array
 TextureManager::TextureManager() {
 	done = false;
-	
+
+	// NOTE: Precalculated intro rows & cols
+	unsigned int introrows = 31, introcols = 7, introparts = 233;
+	// NOTE: Precalculated introVV rows & cols
+	unsigned int introVVrows = 31, introVVcols = 7;
+
+	std::thread t0, t1, t2, t3;
 
 	QColor kirby_file_mask = QColor(84, 110, 140);
 	QColor terrain_file_mask = QColor(60, 188, 252);
@@ -25,31 +116,36 @@ TextureManager::TextureManager() {
 	QRect kirby_strafe = QRect(173, 24, 24, 16);
 
 	// Kirby enters doors
-	QRect kirby_doors = getStandardQRect(103,314);
+	QRect kirby_doors = getStandardQRect(103, 314);
 
 	// Kirby Actions
 	QRect kirby_inhale = getStandardQRect(6, 83); // 2 images (4 totale)
-	QRect kirby_inhale2 = QRect(46, 75, 16 , 24 ); // bigger
+	QRect kirby_inhale2 = QRect(46, 75, 16, 24); // bigger
 	QRect kirby_inhale3 = QRect(66, 75, 24, 24); // bigger 2
-	QRect kirby_exhale = QRect(160,75,24,24); //1
-	QRect kirby_exhale2 = QRect(188, 75, 16, 24); 
+	QRect kirby_exhale = QRect(160, 75, 24, 24); //1
+	QRect kirby_exhale2 = QRect(188, 75, 16, 24);
 	QRect kirby_exhale3 = getStandardQRect(208, 83); //2
 
-	QRect kirby_spit_cloud = getStandardQRect(248,83);
+	QRect kirby_spit_cloud = getStandardQRect(248, 83);
 
-	QRect kirby_big_flying = QRect(99,75,24,24) ; // 2 images
-	QRect kirby_big_stand = QRect(63,107,24,24);
-	QRect kirby_big_walking = QRect(96,107,24,24); // 3 images
+	QRect kirby_big_flying = QRect(99, 75, 24, 24); // 2 images
+	QRect kirby_big_stand = QRect(63, 107, 24, 24);
+	QRect kirby_big_walking = QRect(96, 107, 24, 24); // 3 images
 
 	//Kirby assorb Power
-	QRect kirby_assorb = getStandardQRect(34,207);
+	QRect kirby_assorb = getStandardQRect(34, 207);
 
 	// Kirby Ability Mancano sotto
-	QRect kirby_fire = getStandardQRect(6,586);
+	QRect kirby_fire = getStandardQRect(6, 586);
 	QRect fire = getStandardQRect(46, 586);
 
-	QRect kirby_beam = QRect(6,509,24,16);
+	QRect kirby_beam = QRect(6, 509, 24, 16);
 	QRect beam = QRect(62, 517, 8, 8);
+
+	QRect kirby_cutter = QRect(6, 774, 16, 32);
+
+
+	QRect kirby_spark = QRect(103, 548, 16, 16);
 
 	// We need to add others
 
@@ -71,38 +167,38 @@ TextureManager::TextureManager() {
 
 	QRect background2 = QRect(0, 0, 1016, 168);
 
-	QRect lobby = QRect(0,0,511,367);
+	QRect lobby = QRect(0, 0, 511, 367);
 	//upcollider
 	QRect upcollider = QRect(0, 0, 3040, 232);
 
 	//stage 1
-	QRect terrain_1 = getStandardQRect(1,1);
-	QRect terrain_2 = getStandardQRect(18,1);
-	QRect terrain_3 = getStandardQRect(35,1);
-	QRect terrain_4 = getStandardQRect(18,18);
-	QRect terrain_5 = getStandardQRect(35,18);
-	
-//stage 2
-	QRect terrain2S_1 = getStandardQRect(120,1);
-	QRect terrain2S_2 = getStandardQRect(52,1);
-	
-//stage 3
-	QRect terrain3S_1 = getStandardQRect(69,1);
-	QRect terrain3S_2 = getStandardQRect(86,1);
-	QRect terrain3S_3 = getStandardQRect(103,1);
+	QRect terrain_1 = getStandardQRect(1, 1);
+	QRect terrain_2 = getStandardQRect(18, 1);
+	QRect terrain_3 = getStandardQRect(35, 1);
+	QRect terrain_4 = getStandardQRect(18, 18);
+	QRect terrain_5 = getStandardQRect(35, 18);
+
+	//stage 2
+	QRect terrain2S_1 = getStandardQRect(120, 1);
+	QRect terrain2S_2 = getStandardQRect(52, 1);
+
+	//stage 3
+	QRect terrain3S_1 = getStandardQRect(69, 1);
+	QRect terrain3S_2 = getStandardQRect(86, 1);
+	QRect terrain3S_3 = getStandardQRect(103, 1);
 
 	QRect barrier = getStandardQRect(0, 0);
-	
+
 
 	// Slopped Section
 	QRect terrain_sloped_25 = QRect(272, 33, 62, 32);
 
 	//HUD
-	QRect hud_view = QRect(5,245,248,64);
-	
-	QRect hud_health = QRect(25,211,8,14);
-	QRect hud_lives = QRect(92,212,13,12);
-	QRect hud_numbers = QRect(234,214,8,8);
+	QRect hud_view = QRect(5, 245, 248, 64);
+
+	QRect hud_health = QRect(25, 211, 8, 14);
+	QRect hud_lives = QRect(92, 212, 13, 12);
+	QRect hud_numbers = QRect(234, 214, 8, 8);
 
 	QRect hud_power_normal = QRect(5, 19, 32, 40);
 
@@ -112,19 +208,19 @@ TextureManager::TextureManager() {
 	QRect hud_pause_screen = QRect(256, 3, 248, 224);
 
 	//Enemies
-	QRect waddledee = getStandardQRect(95,659);
-	QRect waddledoo = getStandardQRect(95,59);
+	QRect waddledee = getStandardQRect(95, 659);
+	QRect waddledoo = getStandardQRect(95, 59);
 
-	QRect sparky = getStandardQRect(95,79);
-	QRect sparky_jump = getStandardQRect(115,79);
+	QRect sparky = getStandardQRect(95, 79);
+	QRect sparky_jump = getStandardQRect(115, 79);
 
 	QRect hothead = getStandardQRect(95, 119);
-	QRect poppybrosjr = getStandardQRect(95,758);
-	QRect brontoburt = getStandardQRect(95,897);
+	QRect poppybrosjr = getStandardQRect(95, 758);
+	QRect brontoburt = getStandardQRect(95, 897);
 
-	QRect intronomi = QRect(0,0, 1024, 896);
+	QRect intronomi = QRect(0, 0, 1024, 896);
 	QRect introvv = QRect(0, 0, 1024, 960);
-	QRect drawintro = QRect(0, 0,1024, 960);
+	QRect drawintro = QRect(0, 0, 1024, 960);
 	QRect commands = QRect(0, 0, 1024, 896);
 	QRect aboutus = QRect(0, 0, 1024, 896);
 	QRect intro = QRect(0, 0, 1024, 896);
@@ -144,20 +240,84 @@ TextureManager::TextureManager() {
 	QPixmap barrierstex = loadTexture(file_barriers, nocolor);
 	QPixmap hudtex = loadTexture(file_HUDcomponents, nocolor);
 	QPixmap hudpausetex = loadTexture(file_HUDpause, nocolor);
-	QPixmap hudintronomi = loadTexture(file_HUDtitlescreenintro, nocolor);
-	QPixmap introvegval1 = loadTexture(file_introvegetablevalley1, nocolor);
+	
 	QPixmap commandstex = loadTexture(file_commands, nocolor);
-	QPixmap introdraw = loadTexture(file_introdraw, nocolor);
+	
 	QPixmap aboutustex = loadTexture(file_aboutus, nocolor);
-	QPixmap introtex = loadTexture(file_intro, nocolor);
 
 	
 	
+	/*
+	t0 = std::thread([](TextureManager* tx, std::string file_HUDtitlescreenintro, QColor nocolor) {
+		QPixmap *qp = new QPixmap;
+		*qp = TextureManager::loadTexture(file_HUDtitlescreenintro, nocolor);
+		tx->hudintronomi = qp;
+	},
+	this, file_HUDtitlescreenintro, nocolor);
+	*/
+	
+	
+	/*
+	t1 = std::thread([](TextureManager* tx, std::string file_introvegetablevalley1, QColor nocolor) {
+		QPixmap* qp = new QPixmap;
+		*qp = TextureManager::loadTexture(file_introvegetablevalley1, nocolor);
+		tx->introvegval1 = qp;
+	},
+	this, file_introvegetablevalley1, nocolor);*/
+	
+	
+
+	/*
+	t2 = std::thread([](TextureManager* tx, std::string file_introdraw, QColor nocolor) {
+		QPixmap* qp = new QPixmap;
+		*qp = TextureManager::loadTexture(file_introdraw, nocolor);
+		tx->introdraw = qp;
+	},
+	this, file_introdraw, nocolor);
+	*/
+
+	/*
+	t3 = std::thread([](TextureManager* tx, std::string file_intro, QColor nocolor) {
+		QPixmap* qp = new QPixmap;
+		*qp = TextureManager::loadTexture(file_intro, nocolor);
+		tx->introtex = qp;
+	},
+	this, file_intro, nocolor);*/
+	
+	
+	textures[INTRO] = new Animatable{
+		new QPixmap[233],
+		new float [233] {0.05f},
+		new KA::Vec2Df[233] { KA::Vec2Df(0,0)},
+		233
+
+	};
+
+	t0 = threadLoad(textures, INTRO, "sprites/intro/intro", ".png", intro, 233, 1, 1);
+	t0.detach();
+	for (int i = 0; i < 233; i++) {
+		textures[INTRO]->duration[i] = (i == 183) ? 3 : (i > 183) ? 0.065f : 0.04f;
+		//textures[INTRO]->pixmaps[i] = introtex->copy(TextureManager::moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
+	}
+
+	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
+			new QPixmap[222],
+			new float[222] {0.025f},
+			new KA::Vec2Df[222] { KA::Vec2Df(0,0)},
+			222
+	};
+	t1 = threadLoad(textures, VEGETABLE_VALLEY_INTRO1, "vegvalley/vegvalleyintro", ".png", introvv, 222, 1, 1);
+	t1.detach();
+	
+	//for (int i = 0; i < 222; i++) {
+	//	textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1->copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
+	//}
+
 
 	// FORMAT: QPixmap array, float array, size
 	textures[KIRBY_WALK] = new Animatable{
 		new QPixmap[4]{
-			kirbytex.copy(kirby_walk), 
+			kirbytex.copy(kirby_walk),
 			kirbytex.copy(moveBy(kirby_walk, 1)),
 			kirbytex.copy(moveBy(kirby_walk, 2)),
 			kirbytex.copy(moveBy(kirby_walk, 3)) },
@@ -172,39 +332,6 @@ TextureManager::TextureManager() {
 		new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
 		1
 	};
-
-
-
-	textures[INTRO] = new Animatable{
-		new QPixmap[233],
-		new float [233] {0.05f},
-		new KA::Vec2Df[233] { KA::Vec2Df(0,0)},
-		233
-
-	};
-
-	for (int i = 0; i < 233; i++)
-	{
-		if (i == 183)
-		{
-			textures[INTRO]->duration[i] = 3;
-			continue;
-		}
-
-		if (i > 183)
-		{
-			textures[INTRO]->duration[i] = 0.065f;
-			continue;
-		}
-
-		textures[INTRO]->duration[i] = 0.04f;
-	}
-
-	for (int i = 0; i < 233; i++)
-	{
-		textures[INTRO]->pixmaps[i] = introtex.copy(moveBy(intro, i, 0, intro.width(), intro.height(), 0, 0));
-	}
-
 
 	textures[COMMANDS_HUD] = new Animatable{
 		new QPixmap[1]{
@@ -224,27 +351,9 @@ TextureManager::TextureManager() {
 		1
 	};
 
-	textures[VEGETABLE_VALLEY_INTRO1] = new Animatable{
-		new QPixmap[222],
-		new float[222] {0.025f},
-		new KA::Vec2Df[222] { KA::Vec2Df(0,0)},
-		222
-	};
-
-	for (int i = 0; i < 222; i++)
-	{
-		textures[VEGETABLE_VALLEY_INTRO1]->duration[i] = 0.025f;
-	}
-
-	for (int i = 0; i < 222; i++)
-	{
-		textures[VEGETABLE_VALLEY_INTRO1]->pixmaps[i] = introvegval1.copy(moveBy(introvv, i, 0, introvv.width(), introvv.height(), 0, 0));
-	}
-
-
 	textures[KIRBY_STAND] = new Animatable{
 		new QPixmap[2]{
-			kirbytex.copy(kirby_stand), 
+			kirbytex.copy(kirby_stand),
 			kirbytex.copy(moveBy(kirby_stand, 1)) },
 		new float[2] {2.0f, 0.2f},
 		new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
@@ -271,24 +380,66 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(kirby_doors, 1))
 	},
 		new float[2] {0.06f, 0.06f},
-				new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
-
+		new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 		2
 	};
 
 	// Kirby Assorb
 	textures[KIRBY_ASSORB] = new Animatable{
 		new QPixmap[5] {
-			kirbytex.copy(),
+			kirbytex.copy(kirby_assorb),
 			kirbytex.copy(moveBy(kirby_assorb , 1)),
 			kirbytex.copy(moveBy(kirby_assorb , 2)),
 			kirbytex.copy(moveBy(kirby_assorb , 3)),
 			kirbytex.copy(moveBy(kirby_assorb , 4))
-},
-new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
-				new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) , KA::Vec2Df(0,0) , KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
-
+	},
+		new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
+		new KA::Vec2Df[5]{KA::Vec2Df(0,0), KA::Vec2Df(0,0) , KA::Vec2Df(0,0) , KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 		5
+	};
+
+	textures[KIRBY_BEAM] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(kirby_beam),
+			kirbytex.copy(moveBy(kirby_beam, 1)),
+	},
+	new float[2] {0.2f,0.2f},
+			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		2
+	};
+
+	textures[KIRBY_FIRE] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(kirby_fire),
+			kirbytex.copy(moveBy(kirby_fire, 1)),
+	},
+	new float[2] {0.2f,0.2f},
+			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		2
+	};
+
+	textures[KIRBY_CUTTER] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(kirby_cutter),
+			kirbytex.copy(moveBy(kirby_cutter, 1)),
+	},
+	new float[2] {0.2f,0.2f},
+			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,-0.75)},
+		2
+	};
+
+	textures[KIRBY_SPARK] = new Animatable{
+		new QPixmap[6] {
+			kirbytex.copy(kirby_spark),
+			kirbytex.copy(moveBy(kirby_spark, 1)),
+			kirbytex.copy(moveBy(kirby_spark, 2)),
+			kirbytex.copy(moveBy(kirby_spark, 3)),
+			kirbytex.copy(moveBy(kirby_spark, 4)),
+			kirbytex.copy(moveBy(kirby_spark, 5)),
+	},
+	new float[6] {0.2f,0.2f,0.2f,0.2f,0.2f,0.2f},
+			new KA::Vec2Df[6]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		6
 	};
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
@@ -345,17 +496,17 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 
 		1
 	};
-//kirby actions
+	//kirby actions
 	textures[KIRBY_INHALE] = new Animatable{
 		new QPixmap[4]{
 			kirbytex.copy(kirby_inhale),
 			kirbytex.copy(moveBy(kirby_inhale, 1)),
 			kirbytex.copy(kirby_inhale2),
-			kirbytex.copy(moveBy(kirby_inhale3,1)),
+			kirbytex.copy(kirby_inhale3),
 		},
-		new float[4] {0.2f , 0.4f , 1.0f , 0.1f},
-		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.35),KA::Vec2Df(0,0) },
-		3
+		new float[4] {0.2f , 0.4f , 0.4f , 1.0f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,-0.35),KA::Vec2Df(0,-0.35) },
+		4
 	};
 
 	textures[KIRBY_EXHALE] = new Animatable{
@@ -409,9 +560,10 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 		new KA::Vec2Df[4]{KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35), KA::Vec2Df(0,-0.35)},
 
 		4
-	}; 
+	};
 
-// stage 1
+
+	// stage 1
 	textures[TERRAIN] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain_1)},
 		new float[1] {0},
@@ -448,7 +600,7 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 	1
 	};
 
-// stage 2
+	// stage 2
 	textures[TERRAIN2] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain2S_1)},
 		new float[1] {0},
@@ -463,7 +615,7 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 
 		1
 	};
-// stage 3
+	// stage 3
 	textures[PLATFORMLEFT] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain3S_1)},
 		new float[1] {0},
@@ -480,7 +632,7 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 	};
 	textures[PLATFORMRIGHT] = new Animatable{
 		new QPixmap[1]{terraintex.copy(terrain3S_2)},
-		new float[1] {0},		
+		new float[1] {0},
 		new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
 
 		1
@@ -510,7 +662,7 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 				new KA::Vec2Df[3]{KA::Vec2Df(0,0), KA::Vec2Df(0,0), KA::Vec2Df(0,0) },
 
 		3
-		};
+	};
 
 	//background
 	textures[BACKGROUND1] = new Animatable{
@@ -591,14 +743,14 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 	};
 
 	// Load power textures
-	for(int i = 0; i < (HUD_BYEBYE - HUD_POWER) + 1; i++)
-		textures[HUD_POWER+i] = new Animatable{
-			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i%9, floor(i/9), hud_power_normal.width()+1, hud_power_normal.height()+1, (40-37), (62-59)))},
+	for (int i = 0; i < (HUD_BYEBYE - HUD_POWER) + 1; i++)
+		textures[HUD_POWER + i] = new Animatable{
+			new QPixmap[1] {hudtex.copy(moveBy(hud_power_normal, i % 9, floor(i / 9), hud_power_normal.width() + 1, hud_power_normal.height() + 1, (40 - 37), (62 - 59)))},
 			new float[1] {0.2f},
 					new KA::Vec2Df[1]{KA::Vec2Df(0,0) },
 
 			1
-		};
+	};
 
 	textures[HUD_PAUSE_POWER] = new Animatable{
 		new QPixmap[1] {hudpausetex.copy(hud_pause_power)},
@@ -625,7 +777,7 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 
 		1
 	};
-	
+
 	textures[HUD_HEALTH] = new Animatable{
 		new QPixmap[2] {
 			hudtex.copy(hud_health),
@@ -731,7 +883,30 @@ new float[5] {0.1f, 0.1f, 0.1f, 0.1f, 0.1f},
 		2
 	};
 
+	//compose(textures[INTRO], "sprites/intro/intro", ".png");
+	//compose(textures[VEGETABLE_VALLEY_INTRO1], "sprites/vegvalley/vegvalleyintro", ".png");
+
 	done = true;
+}
+
+void TextureManager::deleteLargeClips() {
+	int clips[] = {VEGETABLE_VALLEY_INTRO1, INTRO};
+	std::cout << "Note: Textures ";
+
+	for (int i = 0; i < sizeof(clips) / sizeof(int); i++) {
+		if (!textures[clips[i]]) {
+			std::cout << "Element " << clips[i] << " is not assigned or loaded\n";
+			continue;
+		}
+		delete[] textures[clips[i]]->pixmaps;
+		delete[] textures[clips[i]]->duration;
+		delete textures[clips[i]];
+		textures[clips[i]] = 0;
+
+		std::cout << clips[i] << " ";
+	}
+	std::cout << "\nWill always be reported as unloaded. Not a bug\n";
+
 }
 
 // Destructor
@@ -741,8 +916,8 @@ TextureManager::~TextureManager() {
 			std::cout << "Element " << i << " is not assigned or loaded\n";
 			continue;
 		}
-		delete [] textures[i]->pixmaps;
-		delete [] textures[i]->duration;
+		delete[] textures[i]->pixmaps;
+		delete[] textures[i]->duration;
 		delete textures[i];
 	}
 	//delete [] textures;
@@ -768,7 +943,7 @@ QPixmap TextureManager::loadTexture(std::string file, QColor mask_color)
 QPixmap TextureManager::replaceColor(QPixmap pix, QColor old_color, QColor new_color)
 {
 	QBitmap mask = pix.createMaskFromColor(old_color, Qt::MaskOutColor);
-	
+
 	QPainter p(&pix);
 	p.setCompositionMode(QPainter::CompositionMode_SourceOver);
 	p.setPen(new_color);

@@ -6,7 +6,6 @@
 #include "TickableObject.h"
 #include "Sprites.h"
 #include "RigidBody.h"
-
 #include <QGraphicsPixmapItem>
 #include "Camera.h"
 
@@ -44,6 +43,8 @@ public:
 	Kirby* setName(std::string nm) { sname = nm; return this; }
 
 	const double kirbyscale = 0.8;
+
+	TexID status = HUD_POWER;
 
 	double groundDistance();
 
@@ -88,12 +89,33 @@ public:
 	void render(QGraphicsScene& scene, bool shouldClear = false) override;
 	
 	QPixmap getTexture() override {
-		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x,0.05) ? mirror : ( angle < 0 )));
+		return animator->getCurrentPixmap((angle == 0 || !circa(velocity.x, 0.05) ? mirror : ( angle < 0 )));
 	}
 
 	void keyPressEvent(QKeyEvent* e, bool isPressed) override;
 
 	static int getScoreFromObject(GameObject* item);
 
+	void setAbility(TexID id);
+
+	TexID statusToAnimatable(TexID id) {
+		switch (id) {
+			default:
+				return KIRBY_STAND;
+
+			case HUD_CUTTER:
+				return KIRBY_CUTTER;
+
+			case HUD_SPARK:
+				return KIRBY_SPARK;
+
+			case HUD_FIRE:
+				return KIRBY_FIRE;
+
+			case HUD_BEAM:
+				return KIRBY_BEAM;
+		}
+	
+	}
 
 };

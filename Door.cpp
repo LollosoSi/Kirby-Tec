@@ -11,14 +11,14 @@ void Door::launchAction() {
 	KA::Sounds::getInstance().stop("wii", 0);
 	KA::Sounds::getInstance().stop("elevator", 0);
 	KA::Sounds::getInstance().stop("Kirby_Adventure_theme", 0);
-	KA::Sounds::getInstance().stop("pigstep", 0);*/
+	KA::Sounds::getInstance().stop("pigstep", 0);
 
-/*	KA::Sounds::getInstance().setVolume("Vegetable Valley_Theme", 0, volumecoefficient);
+	KA::Sounds::getInstance().setVolume("Vegetable Valley_Theme", 0, volumecoefficient);
 	KA::Sounds::getInstance().setVolume("craft", 0, volumecoefficient);
 	KA::Sounds::getInstance().setVolume("wii", 0, volumecoefficient);
 	KA::Sounds::getInstance().setVolume("elevator", 0, volumecoefficient);
 	KA::Sounds::getInstance().setVolume("Kirby_Adventure_theme", 0, volumecoefficient);
-	KA::Sounds::getInstance().setVolume("pigstep", 0, volumecoefficient); */
+	KA::Sounds::getInstance().setVolume("pigstep", 0, volumecoefficient); 
 
 	if (level == std::string("levels/lobby")) {
 		Sounds::instance()->playSound("wii.wav");
@@ -32,6 +32,7 @@ void Door::launchAction() {
 	if (level == std::string("levels/elevator")) {
 		Sounds::instance()->playSound("elevator.wav");
 	}
+*/
 
 	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {
 		GameLoop::getInstance().loadGame(level, false, false);

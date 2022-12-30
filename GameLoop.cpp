@@ -6,10 +6,10 @@
 #include "Sprites.h"
 #include "Definitions.h"
 #include "qimagereader.h"
+#include "Kirby.h"
 using namespace KA;
 GameLoop::GameLoop() {
 
-	
 	QImageReader p;
 	p.setAllocationLimit(0);
 
@@ -101,8 +101,10 @@ void GameLoop::updateView() {
 		LivesCounter[i]->setTexture((TexManager::TexID)(TexManager::HUD_NUM_0 + abs(dig)));
 	}
 
-	for (int i = 0; i < 6; i++) 
+	for (int i = 0; i < 6; i++) {
 		KHealth[i]->setShow(health > i);
+		KHealth[i]->restartAnimation();
+	}
 	
 	this->state->setTexture(ability);
 
@@ -132,12 +134,14 @@ GameLoop::~GameLoop() {
 }
 
 void GameLoop::showStart() {
+	startGUI->setShow(false);
 	pause(true);
 	pauseSuggestion->setShow(false);
 	pauseGUI->setShow(false);
-	startGUI->setShow(true);
 	commandsGUI->setShow(false);
 	aboutusGUI->setShow(false);
+
+	startGUI->setShow(true);
 }
 
 void GameLoop::recalculateTicks(int target_ticks) {
@@ -377,7 +381,7 @@ void GameLoop::start() {
 	running = true;
 	//Sounds::instance()->playSound("Kirby_Adventure_theme");
 	//paused = false;
-
+	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
 
@@ -389,13 +393,19 @@ void GameLoop::pause(bool pause) {
 	paused = pause;
 	
 	if (pause)
-		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+		//pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
 
-	
+		pauseSuggestion->setTexture(TexManager::TexID());
+
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
-	startGUI->setShow(false);
+	if (startGUI->getShow()) {
+		startGUI->setShow(false);
+		//startGUI->setTexture(KIRBY_DOORS);
+		TextureManager::getInstance().deleteLargeClips();
+	}
+	
 }
 
 void GameLoop::commands(bool pause) {

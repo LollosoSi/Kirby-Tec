@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <QPainter>
+#include <thread>
 
 #include "Animator.h"
 
@@ -181,15 +182,20 @@ namespace TexManager {
 			KIRBY_BEAM = 128,
 			KIRBY_FIRE = 129,
 			KIRBY_CUTTER = 130,
-			KIRBY_SPARK = 131
+			KIRBY_SPARK = 131,
+			KIRBY_FLY = 132
 
 
 	};
-	const int TEXTURE_COUNT = 132;
+	const int TEXTURE_COUNT = 133;
 
 };
 
 using namespace TexManager;
+
+//static int QPixmapMaxSize = 32767;
+static int QPixmapMaxSize = 1500;
+
 
 class TextureManager {
 
@@ -205,8 +211,16 @@ public:
 		return textures[position];}
 	//QPixmap getLevelBackground(const std::string& level);
 
+	static QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
+
+	QPixmap* hudintronomi = 0;
+	QPixmap* introvegval1 = 0;
+	QPixmap* introdraw = 0;
+	QPixmap* introtex = 0;
 	
-	
+	void deleteLargeClips();
+	static QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
+
 
 private:
 	TextureManager();
@@ -227,20 +241,21 @@ private:
 	const std::string file_HUDcomponents = "sprites/HUD_OLD.png";
 	const std::string file_HUDpause = "sprites/PauseUnicas.png";
 	const std::string file_HUDtitlescreenintro = "sprites/IntroNomi.png";
+
 	const std::string file_introvegetablevalley1 = "sprites/IntroVV.png";
+
 	const std::string file_introdraw = "sprites/IntroDraw.png";
 	const std::string file_commands = "sprites/CommandTest.png";
 	const std::string file_aboutus = "sprites/AboutUs.png";
+
 	const std::string file_intro = "sprites/Intro.png";
 	
-	
-	
-	QRect moveBy(QRect rect, int x, int y = 0, int dx = 16, int dy = 16, int border_x = 4, int border_y = 9);
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
-	QPixmap loadTexture(std::string file, QColor mask_color = Qt::magenta); // load texture with transparency using the given color as mask
-	
 
 	Animatable* textures[TEXTURE_COUNT]{0};
+	std::thread threadLoad(Animatable** textures, TexID tex, std::string name, std::string extension, QRect size, unsigned int parts, unsigned int rowlength, unsigned int rows);
+
+
 	
 
 

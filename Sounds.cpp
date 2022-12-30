@@ -2,6 +2,8 @@
 #include <QDir>
 #include "Sounds.h"
 
+#include <thread>
+
 using namespace KA;
 
 Sounds* Sounds::instance()
@@ -12,13 +14,19 @@ Sounds* Sounds::instance()
 
 Sounds::Sounds()
 {
-	QStringList sound_files = QDir("sounds/").entryList(QStringList() << "*.wav", QDir::Files);
+	std::thread t = std::thread([](Sounds* instance) {
+		
+		QStringList sound_files = QDir("sounds/").entryList(QStringList() << "*.wav", QDir::Files);
 	for (auto& f : sound_files)
 	{
 		std::string name = QFileInfo(f).baseName().toStdString();
-		_sounds[name] = new QSoundEffect();
-		_sounds[name]->setSource(QUrl::fromLocalFile(QString("sounds/") + f));
+		instance->_sounds[name] = new QSoundEffect();
+		instance->_sounds[name]->setSource(QUrl::fromLocalFile(QString("sounds/") + f));
 	}
+
+		}, this);
+	t.detach();
+	
 }
 
 void Sounds::playSound(const std::string& id)
