@@ -349,8 +349,7 @@ void Kirby::processAnimation() {
 				));
 
 
-			}
-			else
+			} else
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_WALKING : KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
 
 			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 4) && !storedObject) {
@@ -363,15 +362,13 @@ void Kirby::processAnimation() {
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
 			}
 
-		}
-		else {
+		} else {
 			if (status != KIRBY_FLY) {
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_FLYING : KIRBY_JUMP));
 				if (circa(groundDistance(), 2, 0.1) && velocity.y > 0 && !circa(velocity.x, 0, 5) && !storedObject) {
 					this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0, 1.6f);
 				}
-			}
-			else {
+			} else {
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			}
 
@@ -390,7 +387,7 @@ void Kirby::processAnimation() {
 			
 			//set gravity flappy bird
 			// NOTE: Done in processAcceleration
-		}else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
+		} else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
 			status = KIRBY_STAND;
 		}
 
@@ -406,7 +403,7 @@ void Kirby::processAnimation() {
 
 		} else if (buttons[Kirby::USE_SPECIALPWR] && (status != KIRBY_FLY && status != HUD_POWER)) {
 		
-			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(statusToAnimatable(status)));
+			
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
 
@@ -426,6 +423,8 @@ void Kirby::processAnimation() {
 			
 			}
 
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(statusToAnimatable(status)), 0);
+
 		}
 
 
@@ -435,7 +434,8 @@ void Kirby::processAnimation() {
 
 void Kirby::setAbility(TexID id) {
 	GameLoop::getInstance().setAbility(id);
-	this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(statusToAnimatable(status = id)));
+	status = id;
+	//this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(statusToAnimatable(status = id)));
 }
 
 void Kirby::render(QGraphicsScene& scene, bool shouldClear) {
