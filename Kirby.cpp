@@ -513,7 +513,9 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			if (!inside.empty()) {
 				RigidBody* rb = inside.front();
 				if (rb->getObjectId() == objects::DOOR) {
+					Sounds::instance()->playSound("Exit_level");
 					buttons[Kirby::ENTERDOOR] = false;
+					
 					//setAbility(HUD_POWER);
 					Sounds::instance()->playSound("Enter_door");
 					(dynamic_cast<Door*>(rb))->launchAction(this);
