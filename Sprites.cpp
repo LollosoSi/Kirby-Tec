@@ -421,10 +421,10 @@ TextureManager::TextureManager() {
 	textures[KIRBY_CUTTER] = new Animatable{
 		new QPixmap[2] {
 			kirbytex.copy(kirby_cutter),
-			kirbytex.copy(moveBy(kirby_cutter, 1)),
-	},
-	new float[2] {0.2f,0.2f},
-			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,-0.75)},
+			kirbytex.copy(moveBy(kirby_cutter, 1))
+		},
+		new float[2] {0.15f,0.3f},
+		new KA::Vec2Df[2]{KA::Vec2Df(0,-0.75), KA::Vec2Df(0,-0.75)},
 		2
 	};
 

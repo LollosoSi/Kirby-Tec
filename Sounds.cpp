@@ -14,17 +14,21 @@ Sounds* Sounds::instance()
 
 Sounds::Sounds()
 {
-	std::thread t = std::thread([](Sounds* instance) {
-		
-		QStringList sound_files = QDir("sounds/").entryList(QStringList() << "*.wav", QDir::Files);
+	QStringList sound_files = QDir("sounds/").entryList(QStringList() << "*.wav", QDir::Files);
+
 	for (auto& f : sound_files)
-	{
+		_sounds[QFileInfo(f).baseName().toStdString()] = new QSoundEffect();
+	
+
+	std::thread t = std::thread([](Sounds* instance, QStringList sound_files) {
+		
+		
+	for (auto& f : sound_files) {
 		std::string name = QFileInfo(f).baseName().toStdString();
-		instance->_sounds[name] = new QSoundEffect();
 		instance->_sounds[name]->setSource(QUrl::fromLocalFile(QString("sounds/") + f));
 	}
 
-		}, this);
+		}, this, sound_files);
 	t.detach();
 	
 }
