@@ -37,9 +37,10 @@ public:
 		this->repeat = repeat;
 		current_anim = anim;
 		cur = 0;
+		restartAnimation();
 	}
 	QPixmap getCurrentPixmap(bool mirror = 0) { return /*!current_anim ? QPixmap() :*/ mirror ? current_anim->pixmaps[cur].transformed(QTransform().scale(-1, 1)) : current_anim->pixmaps[cur]; }
-	void playOneShot(Animatable* anim, int repeat = 0, float timescale = 1) { if (!next_anim) { next_anim = current_anim;  savedtimescale = timescale; } setAnimatable(anim, repeat, timescale); }
+	void playOneShot(Animatable* anim, int repeat = 0, float timescale = 1) { if (!next_anim) {  next_anim = current_anim;  savedtimescale = timescale; } setAnimatable(anim, repeat, timescale); }
 	bool isPlayingOneShot() { return next_anim != 0; }
 	void interruptOneShot();
 
