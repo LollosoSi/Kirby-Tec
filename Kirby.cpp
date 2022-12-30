@@ -360,6 +360,11 @@ void Kirby::processAnimation() {
 					p->movement.x = -velocity.x/20;
 				}
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
+				Sounds::instance()->playSound("kirby_strafe");
+			} else {
+			
+				Sounds::instance()->stopSound("kirby_strafe");
+			
 			}
 
 		} else {
@@ -391,8 +396,9 @@ void Kirby::processAnimation() {
 			status = KIRBY_STAND;
 		}
 
+		
 		if (buttons[Kirby::USE_SPECIALPWR] && storedObject) {
-			
+
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ASSORB));
 			setAbility(dynamic_cast<Enemy*>(storedObject)->getStoredPower());
 
@@ -401,32 +407,39 @@ void Kirby::processAnimation() {
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
 
-		} else if (buttons[Kirby::USE_SPECIALPWR] && (status != KIRBY_FLY && status != HUD_POWER)) {
-		
-			
+		}
+		else if (buttons[Kirby::USE_SPECIALPWR] && (status != KIRBY_FLY && status != HUD_POWER)) {
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
 
 			switch (status) {
+
 			default:
-					break;
+				break;
+
+			case HUD_CUTTER:
+				Sounds::instance()->playSound("kirby_sword_Attack");
+				break;
+
+			case HUD_BEAM:
+				velocity.x = 10 * (mirror ? -1 : 1);
+				break;
+
 			case HUD_FIRE:
 				objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
 
-
-				Projectile* p = new Projectile(getCollider().center(),
+				Projectile* pr = new Projectile(getCollider().center(),
 					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::PARTICLE_1), targets, 5, 1500, 0.38);
-				p->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), -4.0 };
+				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), -4.0 };
 
-				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 				break;
-			
+
 			}
 
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(statusToAnimatable(status)), 0);
 
 		}
-
 
 
 	}

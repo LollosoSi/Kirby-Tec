@@ -139,7 +139,7 @@ TextureManager::TextureManager() {
 	QRect kirby_fire = getStandardQRect(6, 586);
 	QRect fire = getStandardQRect(46, 586);
 
-	QRect kirby_beam = QRect(6, 509, 24, 16);
+	QRect kirby_beam = QRect(6, 509, 20, 16);
 	QRect beam = QRect(62, 517, 8, 8);
 
 	QRect kirby_cutter = QRect(6, 774, 16, 32);
@@ -401,7 +401,7 @@ TextureManager::TextureManager() {
 	textures[KIRBY_BEAM] = new Animatable{
 		new QPixmap[2] {
 			kirbytex.copy(kirby_beam),
-			kirbytex.copy(moveBy(kirby_beam, 1)),
+			kirbytex.copy(moveBy(kirby_beam, 1,0,kirby_beam.width(),0,9,0)),
 	},
 	new float[2] {0.2f,0.2f},
 			new KA::Vec2Df[2]{KA::Vec2Df(0,0), KA::Vec2Df(0,0)},

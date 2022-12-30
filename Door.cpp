@@ -8,6 +8,7 @@ using namespace KA;
 void Door::launchAction(Kirby* instanceForConsistency) {
 
 	Sounds::instance()->stopSound("Kirby_Adventure_theme");
+	Sounds::instance()->stopSound("Lobby");
 
 	/*
 	KA::Sounds::getInstance().setVolume("Vegetable Valley_Theme", 0, volumecoefficient);
@@ -18,7 +19,7 @@ void Door::launchAction(Kirby* instanceForConsistency) {
 	KA::Sounds::getInstance().setVolume("pigstep", 0, volumecoefficient); */
 
 	if (level == std::string("levels/lobby")) {
-		Sounds::instance()->playSound("wii.wav");
+		Sounds::instance()->playSound("Lobby");
 	}
 	if (level == std::string("levels/level1")) {
 		Sounds::instance()->playSound("Kirby_Adventure_theme");
