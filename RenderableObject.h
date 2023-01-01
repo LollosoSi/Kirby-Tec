@@ -6,7 +6,19 @@
 class RenderableObject {
 
 protected:
-	uint8_t ZValue = 0;
+	/* ZValue level index
+	* 1 Background
+	* 2 Blocks
+	* 3 Enemies
+	* 4 Kirby
+	* 5 Particles
+	* 6 Game GUI
+	* 7 Pause, Titlescreen
+	* 8 Over Pause GUI
+	* 9
+	* 10
+	*/
+	uint8_t ZValue = 1;
 
 public:
 	RenderableObject* setZValue(uint8_t value) { this->ZValue = value; return this; }

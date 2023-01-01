@@ -4,61 +4,48 @@
 #include "Definitions.h"
 #include "CollisionDetection.h"
 
-
-
 void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 
 	bool visible = Camera::isVisible(getCollider());
-	if (!pm && !visible)
-		return;
-
-
-	KA::RectF rf = getColliderRectF();
 	
-	 QPen qp;
-	 qp.setColor(Qt::blue);
-	 
-
-	 if (!visible || shouldClear || (!hitboxenabled && hitbox)) {
-		 scene.removeItem(pm);
-		 delete pm;
-		 pm = 0;
-
-		 if (hitbox) {
-			 scene.removeItem(hitbox);
-			 delete hitbox;
-			 hitbox = 0;
-		 }
-
-		 //std::cout << "Cleared " << getObjectId() << "\n";
-		 return;
-	 }else if (!pm) {
-		pm = scene.addPixmap(getTexture());
-		pm->setZValue(getZValue());
-		//if (hitboxenabled)
-		//	hitbox = scene.addRect(getCollider(), qp);
-	} 
+	if (visible && !shouldClear) {
 	
-	
-	
-	 if (pm && !shouldClear) {
-		 pm->setPixmap(getTexture());
-		 pm->setPos(Camera::worldToScreen(QPointF(getX() + animator->getCurrentOffset().x, getY() + animator->getCurrentOffset().y)));
-		 //pm->setRotation(renderAngles[currentDegree]);
-		 pm->setScale(scale * rigiddrawscale);
+		QPen qp;
+		qp.setColor(Qt::blue);
+		KA::RectF rf = getColliderRectF();
 
-		 if (hitboxenabled) {
-			 QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
-			 if (hitbox) {
-				 scene.removeItem(hitbox);
-				 delete hitbox;
-			 }
-			 hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
-		 }
+		if (!pm) {
+			pm = scene.addPixmap(getTexture());
+			pm->setZValue(getZValue());
+		}
+
+		pm->setPixmap(getTexture());
+		pm->setPos(Camera::worldToScreen(QPointF(getX() + animator->getCurrentOffset().x, getY() + animator->getCurrentOffset().y)));
+		pm->setScale(scale * rigiddrawscale);
+
+		if (hitboxenabled) {
+			QPointF p = Camera::worldToScreen(QPointF(rf.pos.x, rf.pos.y));
+			if (hitbox) {
+				scene.removeItem(hitbox);
+				delete hitbox;
+			}
+			hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+		}
+		
+
+	} else if (pm) {
+
+		scene.removeItem(pm);
+		delete pm;
+		pm = 0;
+
+		if (hitbox) {
+			scene.removeItem(hitbox);
+			delete hitbox;
+			hitbox = 0;
+		}
 
 	}
-	
-	
 
 }
 

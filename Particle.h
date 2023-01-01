@@ -21,6 +21,7 @@ public:
 	Particle(QPointF start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : RigidBody(start, QPointF(0,0), pixscale, pixscale) {
 		this->pixscale = pixscale; this->lifetime = lifetime; startlifetime = lifetime;
 		animator->setAnimatable(textureset);
+		setZValue(5);
 	}
 
 	~Particle() {
@@ -56,6 +57,7 @@ public:
 		if (!pm) {
 			pm = scene.addPixmap(animator->getCurrentPixmap());
 			pm->setScale(pixscale * scale);
+			pm->setZValue(getZValue());
 		}
 
 			pm->setPixmap(animator->getCurrentPixmap());
@@ -111,9 +113,7 @@ class Projectile : public Particle {
 
 public:
 	Projectile(QPointF pos, KA::Vec2Df vel, Animatable* textureset, objects::ObjectID ids[], uint8_t targetsize = 0, double lifetime = 100, double pixscale = 0.5) : Particle(pos, textureset, lifetime, pixscale) {
-	
 		movement = vel;
-
 		setTargets(ids, targetsize);
 	}
 

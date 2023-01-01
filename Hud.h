@@ -23,7 +23,6 @@ class BaseGUI : public RigidBody, public ClickableObject {
 protected:
 	bool show = true;
 	Animator anim;
-	uint ZValue = 1;
 	std::vector<BaseGUI*> children;
 	TexManager::TexID id;
 
@@ -43,7 +42,7 @@ public:
 	BaseGUI(QPointF pos, TexManager::TexID id, uint ZValue = 2) : RigidBody(pos, QPointF(0,0), 1, 1 ) {
 		setTexture(id);
 		setObjectId(objects::HUD);
-		this->ZValue = ZValue;
+		setZValue(ZValue);
 		rigiddrawscale = 0.936;
 	}
 
@@ -77,55 +76,43 @@ public:
 
 	void render(QGraphicsScene& scene, bool shouldClear) override {
 
-		
+		if (show && !shouldClear) {
 
-		if (!pm && !show)
-			return;
+			QPen qp;
+			qp.setColor(Qt::blue);
+			KA::RectF rf = getColliderRectF();
 
-
-		KA::RectF rf = getColliderRectF();
-
-		QPen qp;
-		qp.setColor(Qt::blue);
-
-
-		if ((!show || shouldClear) && pm) {
-			scene.removeItem(pm);
-			pm = 0;
-
-			if (hitboxenabled) {
-				scene.removeItem(hitbox);
-				hitbox = 0;
+			if (!pm) {
+				pm = scene.addPixmap(getTexture());
+				pm->setZValue(getZValue());
 			}
-
-		}
-
-		if (!pm && show && !shouldClear) {
-			pm = scene.addPixmap(getTexture());
-			pm->setZValue(ZValue);
-			if (hitboxenabled)
-				hitbox = scene.addRect(getCollider(), qp);
-		}
-
-
-
-		if (pm && !shouldClear && show) {
-
-			//std::cout << "Rendering gui"<< id <<"\n";
-
 
 			pm->setPixmap(getTexture());
 			pm->setPos(Camera::fromPercentageToScreen(QPointF(getX(), getY())));
-			//pm->setPos(QPointF(getX(), getY()));
-
-			//pm->setRotation(renderAngles[currentDegree]);
-			pm->setScale(scale*rigiddrawscale * gui_scalemultiplier / scalemultiplier);
+			pm->setScale(scale * rigiddrawscale * gui_scalemultiplier / scalemultiplier);
 
 			if (hitboxenabled) {
 				QPointF p = Camera::fromPercentageToScreen(QPointF(rf.pos.x, rf.pos.y));
+				if (hitbox) {
+					scene.removeItem(hitbox);
+					delete hitbox;
+				}
 
-				scene.removeItem(hitbox);
 				hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+			}
+
+
+		}
+		else if (pm) {
+
+			scene.removeItem(pm);
+			delete pm;
+			pm = 0;
+
+			if (hitbox) {
+				scene.removeItem(hitbox);
+				delete hitbox;
+				hitbox = 0;
 			}
 
 		}

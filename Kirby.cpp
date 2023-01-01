@@ -482,7 +482,7 @@ void Kirby::render(QGraphicsScene& scene, bool shouldClear) {
 				QFont qf("Times", 10, QFont::Bold);
 				
 				name = scene.addText(QString(sname.c_str()), qf);
-				name->setZValue(3);
+				name->setZValue(getZValue());
 			}
 			if (name) {
 				name->setPos(Camera::worldToScreen(QPointF(getX(), getY()-0.6)));

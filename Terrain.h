@@ -83,6 +83,7 @@ public:
 		setSizeX(anim.getCurrentPixmap().width() / (double)standardsize);
 		setSizeY(anim.getCurrentPixmap().height() / (double)standardsize);
 
+		setZValue(1);
 
 	}
 	Background(QPointF pos, objects::ObjectID id = objects::BACKGROUND, TexID tid = BACKGROUND, QPointF offset = QPointF(0, 0), double sizeX = 1, double sizeY = 1) : Background(pos, offset, sizeX, sizeY, id, tid) {}
@@ -197,6 +198,8 @@ public:
 
 		RigidBody::render(scene, shouldClear);
 		
+		return;
+
 		//collider = QRectF(vert1.x(), vert1.y(), vert2.x() - vert1.x(), vert2.y() - vert1.y());
 
 		bool visible = Camera::isVisible(getCollider());

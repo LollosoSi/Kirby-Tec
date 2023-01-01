@@ -51,7 +51,7 @@ class VectorField;
 class RigidBody : public GameObject, public TickableObject, public RenderableObject {
 
 protected:
-	Animator* animator;
+	Animator* animator = 0;
 	
 
 	bool damage = 0;
@@ -61,6 +61,7 @@ public:
 	QPointF offset;
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
+
 
 	double rigiddrawscale = 1;
 
@@ -78,6 +79,8 @@ public:
 		setSizeY(sizeY);
 		setX(x);
 		setY(y);
+
+		setZValue(2);
 	}
 
 	virtual void tick(double deltatime);

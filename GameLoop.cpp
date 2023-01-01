@@ -16,43 +16,43 @@ GameLoop::GameLoop() {
 	GUIItems = std::vector<BaseGUI*>();
 	
 
-	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 3);
-	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 6);
+	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 7);
+	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 7);
 	aboutusGUI = new BaseGUI(QPointF(0, 0), TexManager::ABOUTUS_HUD, 7);
-	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 4);
-	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 5);
+	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 8);
+	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 7);
 	startGUI->setDrawScale(0.23);
 	commandsGUI->setDrawScale(0.23);
 	aboutusGUI->setDrawScale(0.23);
 	startGUI->playOneShot(TexManager::INTRO);
 
-	view = new BaseGUI(QPointF(0, 0.757f), TexManager::HUD_VIEW);
-	state = new BaseGUI(QPointF(0.578642, 0.793756), TexManager::HUD_POWER);
+	view = new BaseGUI(QPointF(0, 0.757f), TexManager::HUD_VIEW, 6);
+	state = new BaseGUI(QPointF(0.578642, 0.793756), TexManager::HUD_POWER, 6);
 
 
 	scoredigits = new BaseGUI*[7]{
-		new BaseGUI(QPointF(0.29,0.90422),		TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.322848,0.90447),	TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.354305,0.90447),	TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.386589,0.90447),	TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.418046,0.90447),	TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.450331,0.90447),	TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.481788,0.90447),	TexManager::HUD_NUM_0)
+		new BaseGUI(QPointF(0.29,0.90422),		TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.322848,0.90447),	TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.354305,0.90447),	TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.386589,0.90447),	TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.418046,0.90447),	TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.450331,0.90447),	TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.481788,0.90447),	TexManager::HUD_NUM_0, 6)
 	};
 
 	KHealth = new BaseGUI*[6] {
-		new BaseGUI(QPointF(0.29,0.817408),		TexManager::HUD_HEALTH),
-		new BaseGUI(QPointF(0.322848,0.817408), TexManager::HUD_HEALTH),
-		new BaseGUI(QPointF(0.354305,0.817408), TexManager::HUD_HEALTH),
-		new BaseGUI(QPointF(0.386589,0.817408), TexManager::HUD_HEALTH),
-		new BaseGUI(QPointF(0.418046,0.817408), TexManager::HUD_HEALTH),
-		new BaseGUI(QPointF(0.450331,0.816462), TexManager::HUD_HEALTH)
+		new BaseGUI(QPointF(0.29,0.817408),		TexManager::HUD_HEALTH, 6),
+		new BaseGUI(QPointF(0.322848,0.817408), TexManager::HUD_HEALTH, 6),
+		new BaseGUI(QPointF(0.354305,0.817408), TexManager::HUD_HEALTH, 6),
+		new BaseGUI(QPointF(0.386589,0.817408), TexManager::HUD_HEALTH, 6),
+		new BaseGUI(QPointF(0.418046,0.817408), TexManager::HUD_HEALTH, 6),
+		new BaseGUI(QPointF(0.450331,0.816462), TexManager::HUD_HEALTH, 6)
 	};
 
-	Lives = new BaseGUI(QPointF(0.751656, 0.849574), TexManager::HUD_LIVES);
+	Lives = new BaseGUI(QPointF(0.751656, 0.849574), TexManager::HUD_LIVES, 6);
 	LivesCounter = new BaseGUI*[2]{
-		new BaseGUI(QPointF(0.836093, 0.868496), TexManager::HUD_NUM_0),
-		new BaseGUI(QPointF(0.870033,0.868496), TexManager::HUD_NUM_0)
+		new BaseGUI(QPointF(0.836093, 0.868496), TexManager::HUD_NUM_0, 6),
+		new BaseGUI(QPointF(0.870033,0.868496), TexManager::HUD_NUM_0, 6)
 	};
 
 	GUIItems.push_back(view);
@@ -237,6 +237,7 @@ void GameLoop::saveGame(std::string fileName) {
 }
 
 void GameLoop::reload() {
+	std::cout << "Reloading " << currentlevel << "\n";
 	loadGame(currentlevel, false, false);
 }
 

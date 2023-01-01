@@ -45,7 +45,7 @@ protected:
 	public:
 		Enemy(QPointF coords = QPointF(0, 0), QPointF offset = QPointF(0, 0), objects::ObjectID eid = objects::WADDLEDEE, double sizeX = 1, double sizeY = 1) : RigidBody(coords, offset, sizeX, sizeY) {
 			this->setObjectId(eid);
-			setZValue(1);
+			setZValue(3);
 		}
 	
 		void jump(double intensity = -5) { velocity.y = intensity; }
