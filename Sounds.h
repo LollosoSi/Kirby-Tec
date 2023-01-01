@@ -27,4 +27,4 @@ public:
 	void playSound(const std::string& id);
 	void playLoopedSound(const std::string& id, bool loop = true);
 	void stopSound(const std::string& id);
-};
+}; 

@@ -173,7 +173,7 @@ void Kirby::processAcceleration() {
 		jumpCooldown = jumpCooldownDefault;
 		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
 		jumpImpulse.remainingtime += 30;
-		Sounds::instance()->playSound("jump2");
+		
 		if (!storedObject) {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
@@ -235,17 +235,20 @@ void Kirby::tick(double deltatime) {
 			
 			damageCooldown = damageCooldownDefault;
 			damage = 0;
-			if(isThisTheKirbyInstance())
-				setHealth(health-1);
+			if (isThisTheKirbyInstance()) {
+				setHealth(health - 1);
+				Sounds::instance()->playSound("kirby_hit");
+			}
 			velocity.y += 0;
 			velocity.x *= -2;
-			Sounds::instance()->playSound("kirby_hit");
+			
 			if (health == 0) {
 				// die
 				health = 6;
 				if (isThisTheKirbyInstance()) {
 					setHealth(health);
 					GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
+					
 				}
 
 				if (GameLoop::getInstance().getLives() >= 0 && isThisTheKirbyInstance()) {
@@ -261,7 +264,7 @@ void Kirby::tick(double deltatime) {
 
 				} else if(isThisTheKirbyInstance()) {
 
-					GameLoop::getInstance().setLives(3);
+					GameLoop::getInstance().setLives(4);
 					setAbility(HUD_POWER);
 
 					std::thread t([]() {
@@ -390,7 +393,7 @@ void Kirby::processAnimation() {
 			status = KIRBY_FLY;
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			Sounds::instance()->playSound("inhale");
+			
 			//set gravity flappy bird
 			// NOTE: Done in processAcceleration
 		} else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
@@ -541,6 +544,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 				Sounds::instance()->playSound("kirby_spit_enemy");
 			} else {
 				buttons[Kirby::INHALE_ENEMIES] = isPressed;
+				Sounds::instance()->playSound("inhale");
 			}
 	
 		

@@ -388,7 +388,7 @@ void GameLoop::loadNetworkData(){
 void GameLoop::start() {
 	running = true;
 	//paused = false;
-	Sounds::instance()->playSound("Kirby_Adventure_theme");
+	Sounds::instance()->playSound("Lobby");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
@@ -547,14 +547,14 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		Door d(QPointF(0,0), "levels/level1");
 		d.launchAction();
 		//GameLoop::getInstance().loadGame("levels/level1");
-		Sounds::instance()->playSound("wii");
+		
 	}
 
 	if (e->key() == Qt::Key_4 && !isPressed) {
 		Door d(QPointF(0, 0), "levels/level3");
 		d.launchAction();
 		//GameLoop::getInstance().loadGame("levels/level1");
-		KA::Sounds::instance()->playSound("wii");
+		
 	}
 
 	if (e->key() == Qt::Key_2 && !isPressed) {

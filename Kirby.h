@@ -29,7 +29,7 @@ protected:
 
 	bool isThisTheKirbyInstance();
 
-	int health = 5;
+	int health = 6;
 	const int damageCooldownDefault = 300;
 	int damageCooldown = 0;
 
