@@ -86,7 +86,7 @@ public:
 
 	void reload();
 	
-	int lives = 1;
+	int lives = 4;
 	int health = 6;
 	long score = 0;
 	TexID ability = HUD_POWER;

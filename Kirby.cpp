@@ -123,7 +123,7 @@ void Kirby::processAcceleration() {
 	KA::Vec2Df temp{ 0.0, 0.0 };
 
 	if (status == KIRBY_FLY) {
-		temp.y = 2.2;
+		temp.y = 5.0;
 	} else {
 		temp.y = 9.8;
 	}
@@ -180,7 +180,7 @@ void Kirby::processAcceleration() {
 		}
 	}
 	if (status == KIRBY_FLY && buttons[SPACE]) {
-		temp.y -= 3.3;
+		temp.y -= 10.0;
 	}
 
 
@@ -534,6 +534,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 					//setAbility(HUD_POWER);
 					Sounds::instance()->playSound("Enter_door");
 					(dynamic_cast<Door*>(rb))->launchAction(this);
+					
 				}
 			} else if (storedObject) {
 				buttons[Kirby::THROW_ENEMY] = isPressed;
@@ -545,8 +546,12 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		
 	}
 	//assorb
-	if (e->key() == Qt::Key_X) 
+	if (e->key() == Qt::Key_X) {
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
+		
+		if(storedObject)
+		Sounds::instance()->playSound("kirby_takes_enemy");
+	}
 	
 	//drop power
 	if (e->key() == Qt::Key_Z && isPressed) {
