@@ -169,6 +169,8 @@ void GameLoop::loop() {
 
 	thread_working = true;
 
+	KA::Sounds::instance();
+
 	QTime current = QTime::currentTime();
 
 	int fps = 0, ticks = 0;
@@ -238,7 +240,12 @@ void GameLoop::saveGame(std::string fileName) {
 
 void GameLoop::reload() {
 	std::cout << "Reloading " << currentlevel << "\n";
-	loadGame(currentlevel, false, false);
+	//loadGame(currentlevel, false, false);
+
+		Door d(QPointF(0,0), currentlevel);
+		d.savecurrent = false;
+		d.launchAction();
+
 }
 
 

@@ -29,7 +29,6 @@ int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
 
 	TextureManager::getInstance();
-	KA::Sounds::instance();
 
 	//while (!TextureManager::getInstance().done) {}
 
