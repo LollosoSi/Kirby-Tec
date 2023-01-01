@@ -51,6 +51,10 @@ void Sounds::playLoopedSound(const std::string& id, bool loop)
 
 void Sounds::stopSound(const std::string& id)
 {
-	if (_sounds.find(id) != _sounds.end())
-		_sounds[id]->stop();
+	if (_sounds.find(id) != _sounds.end()) {
+		do {
+			
+			_sounds[id]->stop();
+		} while (_sounds[id]->isPlaying());
+	}
 }
