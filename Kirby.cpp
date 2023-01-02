@@ -238,6 +238,7 @@ void Kirby::tick(double deltatime) {
 			if (isThisTheKirbyInstance()) {
 				setHealth(health - 1);
 				Sounds::instance()->playSound("kirby_hit");
+				
 			}
 			velocity.y += 0;
 			velocity.x *= -2;
@@ -545,6 +546,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			} else {
 				buttons[Kirby::INHALE_ENEMIES] = isPressed;
 				Sounds::instance()->playSound("inhale");
+				if(storedObject)
+					Sounds::instance()->stopSound("inhale");
 			}
 	
 		
