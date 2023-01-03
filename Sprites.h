@@ -183,11 +183,16 @@ namespace TexManager {
 			KIRBY_FIRE = 129,
 			KIRBY_CUTTER = 130,
 			KIRBY_SPARK = 131,
-			KIRBY_FLY = 132
+			KIRBY_FLY = 132,
+
+			BEAM = 133,
+			FIRE = 134,
+			SWORD = 135,
+			
 
 
 	};
-	const int TEXTURE_COUNT = 133;
+	const int TEXTURE_COUNT = 136;
 
 };
 

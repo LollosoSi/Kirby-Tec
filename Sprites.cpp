@@ -135,7 +135,7 @@ TextureManager::TextureManager() {
 	//Kirby assorb Power
 	QRect kirby_assorb = getStandardQRect(34, 207);
 
-	// Kirby Ability Mancano sotto
+	// Kirby Ability
 	QRect kirby_fire = getStandardQRect(6, 586);
 	QRect fire = getStandardQRect(46, 586);
 
@@ -143,7 +143,7 @@ TextureManager::TextureManager() {
 	QRect beam = QRect(62, 517, 8, 8);
 
 	QRect kirby_cutter = QRect(6, 774, 16, 32);
-
+	QRect sword = getStandardQRect(46,770);
 
 	QRect kirby_spark = QRect(103, 548, 16, 16);
 
@@ -408,6 +408,17 @@ TextureManager::TextureManager() {
 		2
 	};
 
+	textures[BEAM] = new Animatable{
+		new QPixmap[2] {
+			kirbytex.copy(beam),
+			
+	},
+	new float[1] {0.2f},
+			new KA::Vec2Df[1]{KA::Vec2Df(0,0)},
+		1
+	};
+
+
 	textures[KIRBY_FIRE] = new Animatable{
 		new QPixmap[2] {
 			kirbytex.copy(kirby_fire),
@@ -418,6 +429,18 @@ TextureManager::TextureManager() {
 		2
 	};
 
+	textures[FIRE] = new Animatable{
+		new QPixmap[4] {
+			kirbytex.copy(fire),
+			kirbytex.copy(moveBy(fire, 1)),
+			kirbytex.copy(moveBy(fire, 2)),
+			kirbytex.copy(moveBy(fire, 3)),
+	},
+	new float[4] {0.2f,0.2f,0.2f,0.2f},
+			new KA::Vec2Df[4]{KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5),KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5)},
+		4
+	};
+
 	textures[KIRBY_CUTTER] = new Animatable{
 		new QPixmap[2] {
 			kirbytex.copy(kirby_cutter),
@@ -426,6 +449,18 @@ TextureManager::TextureManager() {
 		new float[2] {0.15f,0.3f},
 		new KA::Vec2Df[2]{KA::Vec2Df(0,-0.75), KA::Vec2Df(0,-0.75)},
 		2
+	};
+
+	textures[SWORD] = new Animatable{
+		new QPixmap[4] {
+			kirbytex.copy(sword),
+			kirbytex.copy(moveBy(sword, 1)),
+			kirbytex.copy(moveBy(sword,0,1,16,16,0,4)),
+			kirbytex.copy(moveBy(sword,1,1,16,16,0,4))
+		},
+		new float[4] {0.01f,0.01f,0.01f,0.01f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5),KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5)},
+		4
 	};
 
 	textures[KIRBY_SPARK] = new Animatable{
