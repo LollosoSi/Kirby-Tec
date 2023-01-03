@@ -73,14 +73,21 @@ Sounds* Sounds::instance()
 Sounds::Sounds()
 {
 	QStringList sound_files = QDir("sounds/").entryList(QStringList() << "*.wav", QDir::Files);
-	for (auto& f : sound_files)
-	{
+	for (auto& f : sound_files) {
 		std::string name = QFileInfo(f).baseName().toStdString();
 		_sounds[name] = new QSoundEffect();
 		_sounds[name]->setSource(QUrl::fromLocalFile(QString("sounds/") + f));
 	}
 
 }
+
+
+
+void Sounds::stopSounds(const std::string toStop[], unsigned int size) {
+	for (int i = 0; i < size; i++)
+		stopSound(toStop[i]);
+}
+
 
 void Sounds::playSound(const std::string& id)
 {
