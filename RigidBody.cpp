@@ -30,6 +30,7 @@ void RigidBody::render(QGraphicsScene& scene, bool shouldClear) {
 				delete hitbox;
 			}
 			hitbox = scene.addRect(QRect(p.x(), p.y(), rf.size.x * scalefactor, rf.size.y * scalefactor), qp);
+			hitbox->setZValue(getZValue()+1);
 		}
 		
 
@@ -128,10 +129,6 @@ void RigidBody::tick(double deltatime){
 				velocity.y += -9.8 * pow(5, (abs(rb->getY() - getY()))) * deltatime;
 				angle = 0;
 			}
-
-			
-			
-			
 
 			if (rb->getObjectId() == objects::SLOPED_TERRAIN) {
 

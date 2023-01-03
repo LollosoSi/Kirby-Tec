@@ -20,8 +20,9 @@ protected:
 	KA::Vec2Df customGravity{ 0,9.8 };
 
 public:
-	Particle(QPointF start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : RigidBody(start, QPointF(0,0), pixscale, pixscale) {
-		this->pixscale = pixscale; this->lifetime = lifetime; startlifetime = lifetime;
+	Particle(QPointF start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : RigidBody(start, QPointF(0,0), textureset->pixmaps[0].width()*pixscale/scalefactor, textureset->pixmaps[0].height()*pixscale / scalefactor) {
+		this->pixscale = pixscale;
+		this->lifetime = lifetime; startlifetime = lifetime;
 		animator->setAnimatable(textureset);
 		setZValue(5);
 	}
@@ -49,6 +50,9 @@ public:
 
 	virtual void render(QGraphicsScene& scene, bool shouldClear = false) {
 
+		//RigidBody::render(scene, shouldClear);
+		//return;
+		
 		if (shouldDelete(true) || shouldClear) {
 		
 			if (pm) {
