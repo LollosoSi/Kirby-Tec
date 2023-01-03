@@ -389,15 +389,17 @@ void Kirby::animationRelated() {
 
 			case HUD_CUTTER:
 			{
+				if (animator->isPlayingOneShot())
+					break;
 				Sounds::instance()->playSound("kirby_sword_Attack");
 
 				pos = getCollider().center();
-				pos.setY(pos.y() - 0.2);
+				pos.setY(pos.y() - 0.4);
 				pr = new Projectile(pos,
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SWORD), targets, 5, 1000, 0.8);
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SWORD), targets, 5, 800, 0.7);
 
 				pr->setCustomGravity(KA::Vec2Df{ 0,0 });
-				pr->velocity = KA::Vec2Df{ 7.0* (mirror ? -1 : 1), 0 };
+				pr->velocity = KA::Vec2Df{ 12.5* (mirror ? -1 : 1), 0 };
 
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 
@@ -409,9 +411,9 @@ void Kirby::animationRelated() {
 				pos = getCollider().center();
 				pos.setY(pos.y() - 0.2);
 				pr = new Projectile(pos,
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::BEAM), targets, 5, 800, 0.5);
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::BEAM), targets, 5, 800, 0.7);
 				pr->setCustomGravity(KA::Vec2Df{0,0});
-				pr->velocity = KA::Vec2Df{ 9.0 * (mirror ? -1 : 1), 0 };
+				pr->velocity = KA::Vec2Df{ 15.0 * (mirror ? -1 : 1), 0 };
 
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 				break;
@@ -421,7 +423,7 @@ void Kirby::animationRelated() {
 				pos = getCollider().center();
 				pos.setY(pos.y() - 0.2);
 				pr = new Projectile(pos,
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 400, 0.5);
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 800, 0.7);
 						
 				
 				pr->setCustomGravity(KA::Vec2Df{ 0,0 });

@@ -454,12 +454,12 @@ TextureManager::TextureManager() {
 	textures[SWORD] = new Animatable{
 		new QPixmap[4] {
 			kirbytex.copy(sword),
-			kirbytex.copy(moveBy(sword, 1)),
-			kirbytex.copy(moveBy(sword,0,1,16,16,0,4)),
-			kirbytex.copy(moveBy(sword,1,1,16,16,0,4))
+			kirbytex.copy(moveBy(sword,1,0,16,16,4,4)),
+			kirbytex.copy(moveBy(sword,0,1,16,16,4,4)),
+			kirbytex.copy(moveBy(sword,1,1,16,16,4,4))
 		},
 		new float[4] {0.01f,0.01f,0.01f,0.01f},
-		new KA::Vec2Df[4]{KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5),KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5)},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
 		4
 	};
 

@@ -17,6 +17,8 @@ protected:
 
 	QGraphicsPixmapItem* pm = 0;
 
+	KA::Vec2Df customGravity{ 0,9.8 };
+
 public:
 	Particle(QPointF start, Animatable* textureset, double lifetime = 100, double pixscale = 0.5) : RigidBody(start, QPointF(0,0), pixscale, pixscale) {
 		this->pixscale = pixscale; this->lifetime = lifetime; startlifetime = lifetime;
@@ -38,6 +40,10 @@ public:
 		//this->statepicker = statepicker;
 	}
 	Cloneable* clone() const { return new Particle(*this); }
+
+	void setCustomGravity(KA::Vec2Df vec) {
+		customGravity = vec;
+	}
 
 	KA::Vec2Df movement{0, 0};
 
@@ -70,7 +76,7 @@ public:
 
 	virtual void tick(double delta) {
 
-		accel.y = 9.8;
+		accel = customGravity;
 		accel.y += movement.y;
 		accel.x += movement.x;
 
@@ -85,7 +91,7 @@ public:
 
 	}
 
-	virtual QPixmap getTexture() { return animator->getCurrentPixmap(); }
+	virtual QPixmap getTexture() { return animator->getCurrentPixmap(getVelocity().x<0); }
 
 
 	bool* getObjectCharacteristics() override {
@@ -111,7 +117,7 @@ class Projectile : public Particle {
 	uint8_t size = 0;
 	RigidBody* ignoredObject = 0;
 
-	KA::Vec2Df customGravity{0,9.8};
+	
 
 public:
 	Projectile(QPointF pos, KA::Vec2Df vel, Animatable* textureset, objects::ObjectID ids[], uint8_t targetsize = 0, double lifetime = 100, double pixscale = 0.5) : Particle(pos, textureset, lifetime, pixscale) {
@@ -123,9 +129,7 @@ public:
 		delete[] targets;
 	}
 
-	void setCustomGravity(KA::Vec2Df vec) {
-		customGravity = vec;
-	}
+	
 
 	void setProtectedObject(RigidBody* g) {
 		ignoredObject = g;
