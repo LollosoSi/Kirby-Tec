@@ -379,7 +379,9 @@ void Kirby::animationRelated() {
 		else if (buttons[Kirby::USE_SPECIALPWR] && (status != HUD_POWER)) {
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
-
+			objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
+			Projectile* pr = 0;
+			QPointF pos;
 			switch (status) {
 
 			default:
@@ -388,30 +390,42 @@ void Kirby::animationRelated() {
 			case HUD_CUTTER:
 			{
 				Sounds::instance()->playSound("kirby_sword_Attack");
-				objects::ObjectID targets1[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
-				Projectile* pr1 = new Projectile(getCollider().center(),
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SWORD), targets1, 5, 1000, 1);
 
-				pr1->velocity = KA::Vec2Df{ 7.0* (mirror ? -1 : 1), -7.0 };
+				pos = getCollider().center();
+				pos.setY(pos.y() - 0.2);
+				pr = new Projectile(pos,
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SWORD), targets, 5, 1000, 0.8);
 
-				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr1));
+				pr->setCustomGravity(KA::Vec2Df{ 0,0 });
+				pr->velocity = KA::Vec2Df{ 7.0* (mirror ? -1 : 1), 0 };
+
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 
 			}
 				break;
 
 			case HUD_BEAM:
-				velocity.x = 10 * (mirror ? -1 : 1);
+
+				pos = getCollider().center();
+				pos.setY(pos.y() - 0.2);
+				pr = new Projectile(pos,
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::BEAM), targets, 5, 800, 0.5);
+				pr->setCustomGravity(KA::Vec2Df{0,0});
+				pr->velocity = KA::Vec2Df{ 9.0 * (mirror ? -1 : 1), 0 };
+
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 				break;
 
 			case HUD_FIRE:
-				objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
-
-				Projectile* pr = new Projectile(getCollider().center(),
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 400, 1);
+				
+				pos = getCollider().center();
+				pos.setY(pos.y() - 0.2);
+				pr = new Projectile(pos,
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 400, 0.5);
 						
 				
-
-				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), -4.0 };
+				pr->setCustomGravity(KA::Vec2Df{ 0,0 });
+				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), 0};
 
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 				break;

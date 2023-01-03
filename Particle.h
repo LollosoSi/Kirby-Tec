@@ -111,6 +111,8 @@ class Projectile : public Particle {
 	uint8_t size = 0;
 	RigidBody* ignoredObject = 0;
 
+	KA::Vec2Df customGravity{0,9.8};
+
 public:
 	Projectile(QPointF pos, KA::Vec2Df vel, Animatable* textureset, objects::ObjectID ids[], uint8_t targetsize = 0, double lifetime = 100, double pixscale = 0.5) : Particle(pos, textureset, lifetime, pixscale) {
 		movement = vel;
@@ -119,6 +121,10 @@ public:
 
 	~Projectile() {
 		delete[] targets;
+	}
+
+	void setCustomGravity(KA::Vec2Df vec) {
+		customGravity = vec;
 	}
 
 	void setProtectedObject(RigidBody* g) {

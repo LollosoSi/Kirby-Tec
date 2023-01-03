@@ -4,7 +4,9 @@
 
 void Projectile::tick(double delta) {
 	
-	accel.y = 9.8;
+	accel = customGravity;
+
+	//accel.y = 9.8;
 	accel.y += movement.y;
 	accel.x += movement.x;
 	RigidBody::tick(delta);
