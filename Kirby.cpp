@@ -239,17 +239,18 @@ void Kirby::processAcceleration() {
 						setAbility(HUD_POWER);
 
 						std::thread t([]() {
-							GameLoop::getInstance().loadGame("levels/lobby");
+							Door d(QPointF(0,0),"levels/lobby");
+							d.savecurrent = false;
+							d.launchAction();
 							}
 						);
 						t.detach();
 						return;
 					}
 				}
-			}
-			else {
+			} else 
 				damage = 0;
-			}
+			
 	}
 
 	this->accel = temp;
@@ -259,36 +260,20 @@ void Kirby::processAcceleration() {
 void Kirby::tick(double deltatime) {
 
 
-	processAcceleration();
-
-	if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
-		int time = deltatime * 1000.0;
-		jumpImpulse.remainingtime -= time;
-		if (jumpImpulse.remainingtime < 0)
-			jumpImpulse.remainingtime = 0;
-
-		if (jumpCooldown != 0) {
-			if (jumpCooldown < time)
-				jumpCooldown = 0;
-			else
-				jumpCooldown -= time;
-		}
-
-	}
-
-	if (damageCooldown > 0) {
-		damageCooldown -= deltatime * 1000.0;
-		if (damageCooldown < 0)
-			damageCooldown = 0;
-	}
-
-	processAnimation();
-	animator->tick(deltatime);
-	RigidBody::tick(deltatime);
+	
 
 	
 
+	processAcceleration();
+	processAnimation();
+
 	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
+
+		if (!animator->isPlayingOneShot()) {
+			buttons[Kirby::INHALE_ENEMIES] = false;
+			Sounds::instance()->stopSound("inhale");
+		}
+
 		/* WORKING RAYCAST
 		QPointF start = getCollider().center();
 		QPointF ray(0, 1);
@@ -311,10 +296,10 @@ void Kirby::tick(double deltatime) {
 		}*/
 		if (!storedObject) {
 			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
-			
+
 			for (auto* item : objs) {
 				if (instanceof<Enemy, RigidBody>(item) && !storedObject) {
-					
+
 					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
 						//std::cout << "should delete << \n";
 						storedObject = item;
@@ -325,6 +310,8 @@ void Kirby::tick(double deltatime) {
 						animator->interruptOneShot();
 						Sounds::instance()->stopSound("inhale");
 
+						buttons[Kirby::INHALE_ENEMIES] = false;
+
 					}
 					else {
 						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
@@ -332,14 +319,38 @@ void Kirby::tick(double deltatime) {
 					}
 				}
 			}
-		} else {
-			buttons[KirbyKeys::INHALE_ENEMIES] = false;
 		}
 
-		if (!animator->isPlayingOneShot())
-			buttons[Kirby::INHALE_ENEMIES] = false;
+	}
+
+	
+
+	
+
+	if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
+		int time = deltatime * 1000.0;
+		jumpImpulse.remainingtime -= time;
+		if (jumpImpulse.remainingtime < 0)
+			jumpImpulse.remainingtime = 0;
+
+		if (jumpCooldown != 0) {
+			if (jumpCooldown < time)
+				jumpCooldown = 0;
+			else
+				jumpCooldown -= time;
+		}
 
 	}
+
+	if (damageCooldown > 0) {
+		damageCooldown -= deltatime * 1000.0;
+		if (damageCooldown < 0)
+			damageCooldown = 0;
+	}
+
+	
+	animator->tick(deltatime);
+	RigidBody::tick(deltatime);
 
 }
 
@@ -552,12 +563,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			} else if (storedObject) {
 				buttons[Kirby::THROW_ENEMY] = isPressed;
 				Sounds::instance()->playSound("kirby_spit_enemy");
-			} else {
-				buttons[Kirby::INHALE_ENEMIES] = isPressed;
-				Sounds::instance()->playSound("inhale");
-
-				if(storedObject)
-					Sounds::instance()->stopSound("inhale");
+			} else if(!animator->isPlayingOneShot()) {
+				buttons[Kirby::INHALE_ENEMIES] = 1;
 			}
 	
 		
