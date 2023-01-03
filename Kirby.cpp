@@ -386,7 +386,17 @@ void Kirby::animationRelated() {
 				break;
 
 			case HUD_CUTTER:
+			{
 				Sounds::instance()->playSound("kirby_sword_Attack");
+				objects::ObjectID targets1[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
+				Projectile* pr1 = new Projectile(getCollider().center(),
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SWORD), targets1, 5, 1500, 0.38);
+
+				pr1->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), -4.0 };
+
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr1));
+
+			}
 				break;
 
 			case HUD_BEAM:
@@ -397,7 +407,10 @@ void Kirby::animationRelated() {
 				objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
 
 				Projectile* pr = new Projectile(getCollider().center(),
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::PARTICLE_1), targets, 5, 1500, 0.38);
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 1500, 0.38);
+						
+				
+
 				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), -4.0 };
 
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
