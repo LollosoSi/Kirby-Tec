@@ -55,8 +55,10 @@ double Kirby::groundDistance() {
 
 void Kirby::processAcceleration() {
 
-	if (storedObject) {
+	KA::Vec2Df temp{ 0.0, 0.0 };
 
+
+	if (storedObject) {
 
 		if (buttons[Kirby::THROW_ENEMY]) {
 			buttons[Kirby::THROW_ENEMY] = false;
@@ -117,7 +119,7 @@ void Kirby::processAcceleration() {
 		return;*/
 	} 
 
-	KA::Vec2Df temp{ 0.0, 0.0 };
+	
 
 	if (status == KIRBY_FLY) {
 		temp.y = 5.0;
@@ -125,13 +127,13 @@ void Kirby::processAcceleration() {
 		temp.y = 9.8;
 	}
 
-	if (!buttons[Kirby::INHALE_ENEMIES] && (buttons[RIGHT] ^ buttons[LEFT])) {
-		if (buttons[RIGHT] && (velocity.x < maxwalkspeed) ) {
+	if (!buttons[Kirby::INHALE_ENEMIES] && (buttons[RIGHT] ^ buttons[LEFT]) && damage==0 && (velocity.mag() < maxwalkspeed) && ((velocity.x >= 0 && buttons[RIGHT]) || (velocity.x <= 0 && buttons[LEFT]))) {
+		if (buttons[RIGHT] && (velocity.x < maxwalkspeed)) {
 			mirror = false;
 			temp.x += (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x < 0 ? 2 : 1);
 		}
 
-		if (buttons[LEFT] && (velocity.x > -maxwalkspeed) ) {
+		if (buttons[LEFT] && (velocity.x > -maxwalkspeed)) {
 			mirror = true;
 			temp.x -= (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x > 0 ? 2 : 1);
 		}
@@ -190,6 +192,66 @@ void Kirby::processAcceleration() {
 		//currentDegree = NO_SLOPE;
 	}
 
+
+	if (damage) {
+		if (invincible)
+			damage = 0;
+		else
+			if (!damageCooldown && !(buttons[Kirby::INHALE_ENEMIES] && animator->isPlayingOneShot())) {
+
+				damageCooldown = damageCooldownDefault;
+				damage = 0;
+				if (isThisTheKirbyInstance()) {
+					setHealth(health - 1);
+					Sounds::instance()->playSound("kirby_hit");
+
+					velocity.y += -6;
+					velocity.x *= -maxwalkspeed / 3;
+					temp.x = 0;
+					temp.y = 0;
+				}
+				
+
+				if (health == 0) {
+					// die
+					health = 6;
+					if (isThisTheKirbyInstance()) {
+						setHealth(health);
+						GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
+
+					}
+
+					if (GameLoop::getInstance().getLives() >= 0 && isThisTheKirbyInstance()) {
+						setAbility(HUD_POWER);
+						std::thread tt(
+							[]() {
+								GameLoop::getInstance().reload();
+							}
+						);
+						tt.detach();
+
+						return;
+
+					}
+					else if (isThisTheKirbyInstance()) {
+
+						GameLoop::getInstance().setLives(4);
+						setAbility(HUD_POWER);
+
+						std::thread t([]() {
+							GameLoop::getInstance().loadGame("levels/lobby");
+							}
+						);
+						t.detach();
+						return;
+					}
+				}
+			}
+			else {
+				damage = 0;
+			}
+	}
+
 	this->accel = temp;
 	
 }
@@ -224,60 +286,7 @@ void Kirby::tick(double deltatime) {
 	animator->tick(deltatime);
 	RigidBody::tick(deltatime);
 
-	if (damage) {
-		if (invincible)
-			damage = 0;
-		else
-		if (!damageCooldown && !(buttons[Kirby::INHALE_ENEMIES] && animator->isPlayingOneShot())) {
-			
-			damageCooldown = damageCooldownDefault;
-			damage = 0;
-			if (isThisTheKirbyInstance()) {
-				setHealth(health - 1);
-				Sounds::instance()->playSound("kirby_hit");
-				
-			}
-			velocity.y += 0;
-			velocity.x *= -2;
-			
-			if (health == 0) {
-				// die
-				health = 6;
-				if (isThisTheKirbyInstance()) {
-					setHealth(health);
-					GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
-					
-				}
-
-				if (GameLoop::getInstance().getLives() >= 0 && isThisTheKirbyInstance()) {
-					setAbility(HUD_POWER);
-					std::thread tt(
-						[]() {
-							GameLoop::getInstance().reload();
-						}
-					);
-					tt.detach();
-
-					return;
-
-				} else if(isThisTheKirbyInstance()) {
-
-					GameLoop::getInstance().setLives(4);
-					setAbility(HUD_POWER);
-
-					std::thread t([]() {
-						GameLoop::getInstance().loadGame("levels/lobby");
-						}
-					);
-					t.detach();
-					return;
-				}
-			}
-		}
-		else {
-			damage = 0;
-		}
-	}
+	
 
 	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
 		/* WORKING RAYCAST
