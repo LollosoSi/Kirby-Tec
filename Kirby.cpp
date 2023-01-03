@@ -96,9 +96,6 @@ void Kirby::processAcceleration() {
 
 			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(oo));
 
-
-
-
 			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(o));
 
 		}
@@ -394,11 +391,13 @@ void Kirby::processAnimation() {
 			status = KIRBY_FLY;
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			
+			buttons[Kirby::INHALE_EXHALE] = false;
+
 			//set gravity flappy bird
 			// NOTE: Done in processAcceleration
 		} else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
 			status = KIRBY_STAND;
+			buttons[Kirby::INHALE_EXHALE] = false;
 		}
 
 		
