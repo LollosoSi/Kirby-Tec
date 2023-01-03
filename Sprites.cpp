@@ -437,7 +437,7 @@ TextureManager::TextureManager() {
 			kirbytex.copy(moveBy(fire, 3)),
 	},
 	new float[4] {0.2f,0.2f,0.2f,0.2f},
-			new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+			new KA::Vec2Df[4]{KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5),KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5)},
 		4
 	};
 
@@ -455,11 +455,11 @@ TextureManager::TextureManager() {
 		new QPixmap[4] {
 			kirbytex.copy(sword),
 			kirbytex.copy(moveBy(sword, 1)),
-			kirbytex.copy(moveBy(sword,0,1)),
-			kirbytex.copy(moveBy(sword,1,1))
+			kirbytex.copy(moveBy(sword,0,1,16,16,0,4)),
+			kirbytex.copy(moveBy(sword,1,1,16,16,0,4))
 		},
-		new float[4] {0.15f,0.3f,0.3f,0.3f},
-		new KA::Vec2Df[4]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
+		new float[4] {0.01f,0.01f,0.01f,0.01f},
+		new KA::Vec2Df[4]{KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5),KA::Vec2Df(0,-0.5), KA::Vec2Df(0,-0.5)},
 		4
 	};
 
