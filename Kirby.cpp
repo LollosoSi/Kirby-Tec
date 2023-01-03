@@ -53,227 +53,41 @@ double Kirby::groundDistance() {
 	return 9999;
 }
 
-void Kirby::processAcceleration() {
+void Kirby::timeRelated(double deltatime) {
 
-	KA::Vec2Df temp{ 0.0, 0.0 };
+	// Jump impulse & cooldown count
+	if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
+		int time = deltatime * 1000.0;
+		jumpImpulse.remainingtime -= time;
+		if (jumpImpulse.remainingtime < 0)
+			jumpImpulse.remainingtime = 0;
 
-
-	if (storedObject) {
-
-		if (buttons[Kirby::THROW_ENEMY]) {
-			buttons[Kirby::THROW_ENEMY] = false;
-
-			RigidBody* o;
-
-			// NOTE: PoppyBrosJr is removed from targets
-			objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
-
-
-			Projectile* p = new Projectile(getCollider().center(),
-				KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL), targets, 5 + (storedObject ? 1 : 0), 1500, 0.38);
-
-			//}
-			//else {
-
-			//}
-
-			o = dynamic_cast<RigidBody*>(p);
-
-			o->velocity.x = (5.0 * (storedObject ? 2 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
-			o->velocity.y = -3.0 + getVelocity().y;
-
-
-
-			RigidBody* oo = dynamic_cast<RigidBody*>(storedObject);
-			oo->setPos(QPointF(getX(), getY()));
-			oo->accel = { o->velocity.x,-9.8 };
-			damageCooldown = 350;
-			storedObject = 0;
-			oo->velocity.x = o->getVelocity().x; //(5.0 * (storedObject ? 5 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
-			oo->velocity.y = o->getVelocity().y - 2; //-3.0 + getVelocity().y;
-
-			oo->hit = false;
-
-			p->setProtectedObject(oo);
-
-			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(oo));
-
-			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(o));
-
+		if (jumpCooldown != 0) {
+			if (jumpCooldown < time)
+				jumpCooldown = 0;
+			else
+				jumpCooldown -= time;
 		}
 
 	}
 
-	
-
-	if (getY() > 15 /* && isThisTheKirbyInstance() */) {
-	health = 1;
-	damage = 1;
-	damageCooldown = 0;
-		/*std::thread t(
-			[]() {
-				GameLoop::getInstance().reload(); 
-			}
-		);
-		t.detach();
-		return;*/
-	} 
-
-	
-
-	if (status == KIRBY_FLY) {
-		temp.y = 5.0;
-	} else {
-		temp.y = 9.8;
+	// Damage cooldown count
+	if (damageCooldown > 0) {
+		damageCooldown -= deltatime * 1000.0;
+		if (damageCooldown < 0)
+			damageCooldown = 0;
 	}
 
-	if (!buttons[Kirby::INHALE_ENEMIES] && (buttons[RIGHT] ^ buttons[LEFT]) && damage==0 && (velocity.mag() < maxwalkspeed) && ((velocity.x >= 0 && buttons[RIGHT]) || (velocity.x <= 0 && buttons[LEFT]))) {
-		if (buttons[RIGHT] && (velocity.x < maxwalkspeed)) {
-			mirror = false;
-			temp.x += (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x < 0 ? 2 : 1);
-		}
-
-		if (buttons[LEFT] && (velocity.x > -maxwalkspeed)) {
-			mirror = true;
-			temp.x -= (maxwalkspeed*2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x > 0 ? 2 : 1);
-		}
-	} else if (isGrounded()) {
-		if(abs(velocity.x) > 0.3)
-			temp.x = ((velocity.x > 0 ? -1 : 1) * 9.8 * 3);
-		else if(abs(velocity.x) > 0)
-			velocity.x = 0;
-		
-		
-	}
-
-	if (buttons[DOWN]) {
-
-	}
-
-	if (isGrounded())
-		jumpsLeft = 2;
-
-	/*
-	if ((currentDegree != NO_SLOPE) && false) {
-		PB::Vec2Df rot = temp;
-		double rad = toRadians(renderAngles[currentDegree]);
-		rot.x = (temp.x * cos(rad)) - (temp.y * sin(rad));
-		rot.y = (temp.x * sin(rad)) + (temp.y * cos(rad));
-		temp = rot;
-	}
-	*/
-
-
-	if (status != KIRBY_FLY && buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
-		//buttons[SPACE] = false;
-		jumpsLeft--;
-		if (storedObject)
-			jumpsLeft = 0;
-		jumpCooldown = jumpCooldownDefault;
-		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
-		jumpImpulse.remainingtime += 30;
-		
-		if (!storedObject) {
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
-			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
-		}
-	}
-	if (status == KIRBY_FLY && buttons[SPACE]) {
-		temp.y -= 10.0;
-	}
-
-
-	if (jumpImpulse.remainingtime > 0) {
-		//temp += jumpImpulse.value;
-		velocity += jumpImpulse.value * (jumpImpulse.remainingtime/1000.0);
-		jumpImpulse.remainingtime = 0;
-
-		angle = 0;
-		//currentDegree = NO_SLOPE;
-	}
-
-
-	if (damage) {
-		if (invincible)
-			damage = 0;
-		else
-			if (!damageCooldown && !(buttons[Kirby::INHALE_ENEMIES] && animator->isPlayingOneShot())) {
-
-				damageCooldown = damageCooldownDefault;
-				damage = 0;
-				if (isThisTheKirbyInstance()) {
-					setHealth(health - 1);
-					Sounds::instance()->playSound("kirby_hit");
-
-					velocity.y += -6;
-					velocity.x *= -maxwalkspeed / 3;
-					temp.x = 0;
-					temp.y = 0;
-				}
-				
-
-				if (health == 0) {
-					// die
-					health = 6;
-					if (isThisTheKirbyInstance()) {
-						setHealth(health);
-						GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
-
-					}
-
-					if (GameLoop::getInstance().getLives() >= 0 && isThisTheKirbyInstance()) {
-						setAbility(HUD_POWER);
-						std::thread tt(
-							[]() {
-								GameLoop::getInstance().reload();
-							}
-						);
-						tt.detach();
-
-						return;
-
-					}
-					else if (isThisTheKirbyInstance()) {
-
-						GameLoop::getInstance().setLives(4);
-						setAbility(HUD_POWER);
-
-						std::thread t([]() {
-							Door d(QPointF(0,0),"levels/lobby");
-							d.savecurrent = false;
-							d.launchAction();
-							}
-						);
-						t.detach();
-						return;
-					}
-				}
-			} else 
-				damage = 0;
-			
-	}
-
-	this->accel = temp;
-	
 }
 
-void Kirby::tick(double deltatime) {
 
+void Kirby::collisionRelated() {
 
+	// Action button related
+	// Moved to keypress
 	
-
-	
-
-	processAcceleration();
-	processAnimation();
-
-	if (buttons[KirbyKeys::INHALE_ENEMIES]) {
-
-		if (!animator->isPlayingOneShot()) {
-			buttons[Kirby::INHALE_ENEMIES] = false;
-			Sounds::instance()->stopSound("inhale");
-		}
-
+	// Inhaling related
+	if (buttons[KirbyKeys::INHALE_ENEMIES] || animator->isPlaying(TextureManager::getInstance().getAnimatable(KIRBY_INHALE))) {
 		/* WORKING RAYCAST
 		QPointF start = getCollider().center();
 		QPointF ray(0, 1);
@@ -294,136 +108,265 @@ void Kirby::tick(double deltatime) {
 						std::cout << "HIT ID: " << obj.first->getObjectId() << " AT: " << obj.first->getX() << " : " << obj.first->getY() << " Ray started AT: " << start.x() << " : " << start.y() << "\n";
 				}
 		}*/
+		// If no object is caught, try catching
 		if (!storedObject) {
+			damageCooldown = 100;
+			// Find objects in close range
 			std::vector<RigidBody*> objs = GameLoop::getInstance().getInside(this, QRectF(getX() - (mirror ? 1.5 : 0), getY(), 1.5, 3));
 
+			// For each close object
 			for (auto* item : objs) {
+
+				// Test if object can be inhaled
 				if (instanceof<Enemy, RigidBody>(item) && !storedObject) {
 
+					// Test if object is close enough to be eaten
 					if (0.3 > abs(pitagoricDistance(QPointF(getX(), getY()), QPointF(item->getX(), item->getY())))) {
-						//std::cout << "should delete << \n";
+						// Eat object.
+						// Can be deleted later -> removeElement(..., FALSE)
+
+						// Stop Inhaling: Key, sound and animation
+						buttons[Kirby::INHALE_ENEMIES] = false;
+						Sounds::instance()->stopSound("inhale");
+						animator->interruptOneShot();
+						
+						// Store object and remove it from the gameloop. Can be deleted later or readded
 						storedObject = item;
 						GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(item), false);
 
+						this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_STAND));
+
+						// Add score based on the object type
 						GameLoop::getInstance().addScore(Kirby::getScoreFromObject(item));
-
-						animator->interruptOneShot();
-						Sounds::instance()->stopSound("inhale");
-
-						buttons[Kirby::INHALE_ENEMIES] = false;
-
-					}
-					else {
+						
+					} else {
+						// Object in range but not close enough, alter velocity
 						item->velocity.x += 1 * (getX() > item->getX() ? 1 : -1);
 						item->velocity.y += 1 * (getY() > item->getY() ? 1 : -1);
 					}
 				}
 			}
 		}
-
 	}
 
-	
+	// If an object is in store
+	if (storedObject) {
 
-	
+		// Throw Enemy is pressed (Action key while something is stored)
+		if (buttons[Kirby::THROW_ENEMY]) {
+			buttons[Kirby::THROW_ENEMY] = false;
 
-	if (jumpImpulse.remainingtime != 0 || jumpCooldown > 0) {
-		int time = deltatime * 1000.0;
-		jumpImpulse.remainingtime -= time;
-		if (jumpImpulse.remainingtime < 0)
-			jumpImpulse.remainingtime = 0;
+			// NOTE: PoppyBrosJr is removed from targets
+			objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
 
-		if (jumpCooldown != 0) {
-			if (jumpCooldown < time)
-				jumpCooldown = 0;
-			else
-				jumpCooldown -= time;
+			// Attach object to temporary Projectile for damage
+			Projectile* p = new Projectile(getCollider().center(), KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::KIRBY_ROLL), targets, 5 + (storedObject ? 1 : 0), 1500, 0.38);
+
+			// Set properties
+			p->velocity.x = (5.0 * (storedObject ? 2 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
+			p->velocity.y = -3.0 + getVelocity().y;
+
+
+			// Set properties of the object to be attached to projectile
+			RigidBody* oo = dynamic_cast<RigidBody*>(storedObject);
+			oo->setPos(QPointF(getX(), getY()));
+			oo->accel = { p->velocity.x,-9.8 };
+			oo->velocity.x = p->getVelocity().x; //(5.0 * (storedObject ? 5 : 1) * (mirror ? -1 : 1)) + getVelocity().x;
+			oo->velocity.y = p->getVelocity().y - 2; //-3.0 + getVelocity().y;
+			oo->hit = false;
+
+			// Store object
+			p->setProtectedObject(oo);
+
+			// Short Kirby immunity from damage when launching
+			damageCooldown = 350;
+			// Unstore object
+			storedObject = 0;
+
+			// Launch both objects into the loop
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(oo));
+			GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));
+
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STAND));
+
 		}
 
 	}
 
-	if (damageCooldown > 0) {
-		damageCooldown -= deltatime * 1000.0;
-		if (damageCooldown < 0)
-			damageCooldown = 0;
+	// Drop related
+	if (buttons[DROP_SPECIALPWR]) {
+		buttons[DROP_SPECIALPWR] = false;
+
+		// Set ability
+		setAbility(HUD_POWER);
+
+		// TODO: Throw ability star
 	}
 
-	
-	animator->tick(deltatime);
-	RigidBody::tick(deltatime);
+	// Check if kirby fell under the current level and trigger death
+	if (getY() > 15 /* && isThisTheKirbyInstance() */) {
+		health = 1;
+		damage = 1;
+		damageCooldown = 0;
+	}
 
 }
 
-void Kirby::processAnimation() {
+void Kirby::movementRelated() {
+	// Final acceleration
+	KA::Vec2Df temp{ 0.0, status == KIRBY_FLY ? 5.0 : 9.8};
 
-	if (!animator->isPlayingOneShot()) {
-		if (isGrounded() && status != KIRBY_FLY) {
-			
-			if (abs(velocity.x) < 0.5) {
+	// Jump reset
+	if (isGrounded())
+		jumpsLeft = 2;
 
-				double degang = toDegrees(angle);
-				//std::cout << "Angle is " << degang << " Mirror: " << mirror << "\n";
-				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(
-					!angle || storedObject ? storedObject ? KIRBY_BIG_STAND : KIRBY_STAND :
-					circa(abs(degang), 28, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT)) :
-					circa(abs(degang), 57, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT)) :
-					storedObject ? KIRBY_BIG_STAND : KIRBY_STAND
-				));
+	// Apply jump
+	if (status != KIRBY_FLY && buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
+		//buttons[SPACE] = false;
+		Sounds::instance()->playSound("jump");
 
+		jumpsLeft--;
+		if (storedObject)
+			jumpsLeft = 0;
+		jumpCooldown = jumpCooldownDefault;
+		/* This acceleration must be great velocity in the deltatime frame, usually around 0.001 s */
+		jumpImpulse.remainingtime += 30;
 
-			} else
-				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_WALKING : KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
-
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 4) && !storedObject) {
-				if (!(rand() % 2)) {
-					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 600, 0.3);
-					GameLoop::getInstance().addElement(p);
-					p->velocity.y = -(abs(velocity.mag())/1.2);
-					p->movement.x = -velocity.x/20;
-				}
-				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
-				Sounds::instance()->playSound("kirby_strafe");
-			} else {
-			
-				Sounds::instance()->stopSound("kirby_strafe");
-			
-			}
-
-		} else {
-			if (status != KIRBY_FLY) {
-				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_FLYING : KIRBY_JUMP));
-				if (circa(groundDistance(), 2, 0.1) && velocity.y > 0 && !circa(velocity.x, 0, 5) && !storedObject) {
-					this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0, 1.6f);
-				}
-			} else {
-				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
-			}
-
+		if (!storedObject) {
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL), 0);
 		}
+	}else if (status == KIRBY_FLY && buttons[SPACE]) {
+		// Different treatment if flying
+		temp.y -= 10.0;
+	}
+
+	// Apply jump impulse
+	if (jumpImpulse.remainingtime > 0) {
+		//temp += jumpImpulse.value;
+		velocity += jumpImpulse.value * (jumpImpulse.remainingtime / 1000.0);
+		jumpImpulse.remainingtime = 0;
+
+		angle = 0;
+		//currentDegree = NO_SLOPE;
+	}
+
+	// Apply movement
+	if (!buttons[Kirby::INHALE_ENEMIES] && (buttons[RIGHT] ^ buttons[LEFT]) && damage == 0 && (velocity.mag() < maxwalkspeed) ) {
+		if (buttons[RIGHT] && (velocity.x < maxwalkspeed)) {
+			mirror = false;
+			temp.x += (maxwalkspeed * 2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x < 0 ? 2 : 1);
+		}
+
+		if (buttons[LEFT] && (velocity.x > -maxwalkspeed)) {
+			mirror = true;
+			temp.x -= (maxwalkspeed * 2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x > 0 ? 2 : 1);
+		}
+	}
+	else if (isGrounded()) {
+		// Grind
+		if (abs(velocity.x) > 0.3)
+			temp.x = ((velocity.x > 0 ? -1 : 1) * 9.8 * 3);
+		else if (abs(velocity.x) > 0)
+			velocity.x = 0;
+	}
+
+	// Check for damage and apply or deny, reload levels
+	// NOTE: Should be applied last due to its acceleration resetting nature
+	if (damage) {
+		damage = 0;
+		// Deny if invincible or in cooldown
+		if (!invincible && !damageCooldown) {
+			damageCooldown = damageCooldownDefault;
+
+			// Apply damage & movement
+			health -= 1;
+			Sounds::instance()->playSound("kirby_hit");
+			velocity.y += -6;
+			velocity.x *= -maxwalkspeed / 3;
+			//temp.x = 0;
+			//temp.y = 0;
+
+			// Check for health
+			if (health == 0) {
+				// Kirby should die
+				// Set and show new health
+				health = 6;
+				// Remove one life
+				GameLoop::getInstance().setLives(GameLoop::getInstance().getLives() - 1);
+
+				// Reset ability
+				setAbility(HUD_POWER);
+
+				std::thread resetThread;
+				// Decide if redirect to lobby or reload level
+				if (GameLoop::getInstance().getLives() < 0) {
+					// Reset lives
+					GameLoop::getInstance().setLives(4);
+
+					resetThread = std::thread(
+						[]() {
+							Door d(QPointF(0, 0), "levels/lobby");
+							d.savecurrent = false;
+							d.launchAction();
+						}
+					);
+				} else {
+					// Reset level
+					resetThread= std::thread(
+						[]() {
+							GameLoop::getInstance().reload();
+						}
+					);
+				}
+				resetThread.detach();
+			}
+
+			setHealth(health);
+		}
+	}
+
+	this->accel = temp;
+}
+
+void Kirby::animationRelated() {
 
 	
-		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject) {
-			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			Sounds::instance()->playSound("inhale");
-			
-		}
 
-		if (buttons[Kirby::INHALE_EXHALE] && !storedObject && status != KIRBY_FLY) {
-			status = KIRBY_FLY;
-			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
-			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			buttons[Kirby::INHALE_EXHALE] = false;
+	switch (status) {
+	
+	case KIRBY_FLY:
+		if(!animator->isPlayingOneShot())
+		this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 
-			//set gravity flappy bird
-			// NOTE: Done in processAcceleration
-		} else if(buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY){
+		if (buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY) {
 			status = KIRBY_STAND;
 			buttons[Kirby::INHALE_EXHALE] = false;
 		}
 
-		
+		break;
+
+	default:
+		// Various actions
+		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject && !animator->isPlaying(TextureManager::getInstance().getAnimatable(KIRBY_INHALE))) {
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
+			Sounds::instance()->playSound("inhale");
+			buttons[Kirby::INHALE_ENEMIES] = false;
+			return;
+		}
+
+		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
+			status = KIRBY_FLY;
+			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
+			buttons[Kirby::INHALE_EXHALE] = false;
+			return;
+		}
+
+
 		if (buttons[Kirby::USE_SPECIALPWR] && storedObject) {
 
+			Sounds::instance()->playSound("kirby_takes_enemy");
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ASSORB));
 			setAbility(dynamic_cast<Enemy*>(storedObject)->getStoredPower());
 
@@ -431,9 +374,9 @@ void Kirby::processAnimation() {
 			storedObject = 0;
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
-
+			return;
 		}
-		else if (buttons[Kirby::USE_SPECIALPWR] && (status != KIRBY_FLY && status != HUD_POWER)) {
+		else if (buttons[Kirby::USE_SPECIALPWR] && (status != HUD_POWER)) {
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
 
@@ -463,11 +406,91 @@ void Kirby::processAnimation() {
 			}
 
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(statusToAnimatable(status)), 0);
-
+			return;
 		}
 
+		if (isGrounded()) {
 
+			
+
+			// Let play
+			if (animator->isPlayingOneShot())
+				return;
+
+			// Is kirby almost stopped? Then idle
+			if (abs(velocity.x) < 0.5) {
+
+				double degang = toDegrees(angle);
+				//std::cout << "Angle is " << degang << " Mirror: " << mirror << "\n";
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(
+					!angle || storedObject ? storedObject ? KIRBY_BIG_STAND : KIRBY_STAND :
+					circa(abs(degang), 28, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_25 : KIRBY_SLOPED_25_LEFT)) :
+					circa(abs(degang), 57, 10) ? (((angle > 0 ? !mirror : mirror) ? KIRBY_SLOPED_45 : KIRBY_SLOPED_45_LEFT)) :
+					storedObject ? KIRBY_BIG_STAND : KIRBY_STAND
+				));
+			}
+			else
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_WALKING : KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
+
+			// Should kirby strafe?
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 4) && !storedObject) {
+				if (!(rand() % 2)) {
+					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 600, 0.3);
+					GameLoop::getInstance().addElement(p);
+					p->velocity.y = -(abs(velocity.mag()) / 1.2);
+					p->movement.x = -velocity.x / 20;
+				}
+				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
+				Sounds::instance()->playSound("kirby_strafe");
+			}
+			else
+				Sounds::instance()->stopSound("kirby_strafe");
+
+		}
+		else if(!storedObject && circa(groundDistance(), 1.5, 0.04) && abs(velocity.x)>2 && !animator->isPlayingOneShot()) {
+			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
+		}
+
+		
+
+		break;
+	
 	}
+
+
+}
+
+
+/** Kirby tick execution flow
+* tick
+* | > Process time based events
+* | -> Process Collision (enemies, doors)
+* | --> Process Acceleration
+* | ---> Process Animation
+* | ----> Animator tick
+* | -----> Rigidbody tick
+*/
+void Kirby::tick(double deltatime) {
+
+	// Do not execute ticking if this is not our player instance.
+	// Must be synced via the network instead
+	if (!isThisTheKirbyInstance())
+		return;
+
+	timeRelated(deltatime);
+	collisionRelated();
+	movementRelated();
+	animationRelated();
+
+	// Look back to stop inhaling if necessary
+	if (!animator->isPlaying(TextureManager::getInstance().getAnimatable(KIRBY_INHALE)) && buttons[Kirby::INHALE_ENEMIES]) {
+		buttons[Kirby::INHALE_ENEMIES] = false;
+		Sounds::instance()->stopSound("inhale");
+	}
+
+	animator->tick(deltatime);
+	RigidBody::tick(deltatime);
+
 }
 
 void Kirby::setHealth(unsigned int v) {
@@ -526,61 +549,62 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		buttons[Kirby::RIGHT] = isPressed;
 	if (e->key() == Qt::Key_A || e->key() == Qt::LeftArrow)
 		buttons[Kirby::LEFT] = isPressed;
-	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow)
-		buttons[Kirby::UP] = isPressed;
 
+	// Puff up
+	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow) {
+		buttons[Kirby::UP] = isPressed;
+		buttons[Kirby::INHALE_EXHALE] = isPressed;
+	}
+
+	// Jump
 	if (e->key() == Qt::Key_Space) {
 		buttons[Kirby::SPACE] = isPressed;
 
-		if (isGrounded()) {
-			Sounds::instance()->playSound("jump");
-		}
-
 		if (!isPressed)
-			
 			jumpCooldown = 0;
 	}
-	if (e->key() == Qt::Key_W) {
-		buttons[Kirby::INHALE_EXHALE] = isPressed;
-		
-		
-	}
+
+	// Action button: enter doors OR inhale OR throw
 	if (e->key() == Qt::Key_E && isPressed) {
-		//enter doors OR inhale
 		
+		buttons[E] = isPressed;
+
+		if (buttons[E]) {
+			buttons[E] = false;
+
 			std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
 			if (!inside.empty()) {
 				RigidBody* rb = inside.front();
 				if (rb->getObjectId() == objects::DOOR) {
 					Sounds::instance()->playSound("Exit_level");
-					buttons[Kirby::ENTERDOOR] = false;
-					
+					buttons[Kirby::ENTERDOOR] = 1;
+
 					//setAbility(HUD_POWER);
+
 					Sounds::instance()->playSound("Enter_door");
 					(dynamic_cast<Door*>(rb))->launchAction(this);
-					
+
+					return;
 				}
-			} else if (storedObject) {
-				buttons[Kirby::THROW_ENEMY] = isPressed;
+			}
+			else if (storedObject) {
+				buttons[Kirby::THROW_ENEMY] = 1;
 				Sounds::instance()->playSound("kirby_spit_enemy");
-			} else if(!animator->isPlayingOneShot()) {
+			}
+			else if (!animator->isPlayingOneShot()) {
 				buttons[Kirby::INHALE_ENEMIES] = 1;
 			}
-	
-		
+		}
 	}
-	//assorb
+
+	// Take ability from enemy
 	if (e->key() == Qt::Key_X) {
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
-		
-		if(storedObject)
-		Sounds::instance()->playSound("kirby_takes_enemy");
 	}
 	
-	//drop power
+	// Drop current ability
 	if (e->key() == Qt::Key_Z && isPressed) {
-		//buttons[Kirby::DROP_SPECIALPWR] = isPressed;
-		setAbility(HUD_POWER);
+		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
 	}
 	
 

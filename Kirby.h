@@ -33,6 +33,12 @@ protected:
 	const int damageCooldownDefault = 300;
 	int damageCooldown = 0;
 
+	/* Tick Related */
+	void timeRelated(double deltatime);
+	void collisionRelated();
+	void movementRelated();
+	void animationRelated();
+
 
 public:
 
@@ -70,16 +76,13 @@ public:
 		setObjectId(objects::KIRBY);
 	}
 
-	const static uint8_t buttonsize = 11;
+	const static uint8_t buttonsize = 12;
 	enum KirbyKeys {
-		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, INHALE_EXHALE = 5, INHALE_ENEMIES = 6, USE_SPECIALPWR = 7, DROP_SPECIALPWR = 8, ENTERDOOR = 9, THROW_ENEMY = 10
+		UP = 0, RIGHT = 1, LEFT = 2, DOWN = 3, SPACE = 4, INHALE_EXHALE = 5, INHALE_ENEMIES = 6, USE_SPECIALPWR = 7, DROP_SPECIALPWR = 8, ENTERDOOR = 9, THROW_ENEMY = 10, E = 11
 	};
 	bool buttons[buttonsize]{ false };
 
 	bool mirror = false;
-
-	void processAcceleration();
-	void processAnimation();
 
 	Impulse jumpImpulse{ KA::Vec2Df{0,-150}, 0 };
 
