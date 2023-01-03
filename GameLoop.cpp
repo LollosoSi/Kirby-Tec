@@ -388,7 +388,7 @@ void GameLoop::loadNetworkData(){
 void GameLoop::start() {
 	running = true;
 	//paused = false;
-	Sounds::instance()->playSound("Kirby_Adventure_theme");
+//	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
@@ -495,6 +495,11 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed) {
 		
+		if (startGUI->getShow()) {
+			Door d(QPointF(0,0), "levels/lobby");
+			d.launchAction();
+
+		}
 		pause(!paused); 
 		
 		
