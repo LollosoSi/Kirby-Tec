@@ -394,6 +394,7 @@ void Kirby::processAnimation() {
 		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 			Sounds::instance()->playSound("inhale");
+			
 		}
 
 		if (buttons[Kirby::INHALE_EXHALE] && !storedObject && status != KIRBY_FLY) {
@@ -554,6 +555,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			} else {
 				buttons[Kirby::INHALE_ENEMIES] = isPressed;
 				Sounds::instance()->playSound("inhale");
+
 				if(storedObject)
 					Sounds::instance()->stopSound("inhale");
 			}
