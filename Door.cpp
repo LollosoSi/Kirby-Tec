@@ -6,9 +6,9 @@
 
 using namespace KA;
 void Door::launchAction(Kirby* instanceForConsistency) {
-	static const std::string allSounds[] = { "Lobby" };
+//	static const std::string allSounds[] = { "Lobby" };
 
-	Sounds::instance()->stopSounds(allSounds, sizeof(allSounds)/sizeof(std::string));
+//	Sounds::instance()->stopSounds(allSounds, sizeof(allSounds)/sizeof(std::string));
 
 	if (level == std::string("levels/lobby")) {
 		Sounds::instance()->playSound("Lobby");
@@ -25,7 +25,7 @@ void Door::launchAction(Kirby* instanceForConsistency) {
 
 	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {
 		GameLoop::getInstance().loadGame(level, false, false);
-	}
+	} 
 
 	if (instanceForConsistency) {
 		Kirby* k = ((Kirby*)GameLoop::getInstance().KirbyInstance);
