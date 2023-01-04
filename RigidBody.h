@@ -62,6 +62,7 @@ public:
 	QGraphicsPixmapItem* pm = 0;
 	QGraphicsRectItem* hitbox = 0;
 
+	virtual void onCollision(RigidBody* rb) {}
 
 	double rigiddrawscale = 1;
 
@@ -82,7 +83,7 @@ public:
 
 		setZValue(2);
 	}
-
+	
 	virtual void tick(double deltatime);
 	virtual void render(QGraphicsScene& scene, bool shouldClear = false);
 	GameObject* getCollidingObject(objects::ObjectID filter);

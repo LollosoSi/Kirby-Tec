@@ -125,4 +125,6 @@ public:
 	
 	}
 
+	void onCollision(RigidBody* rb) override;
+
 };

@@ -212,6 +212,26 @@ void Kirby::collisionRelated() {
 
 }
 
+void Kirby::onCollision(RigidBody* rb) {
+	//objects::ObjectID targets[] = { objects::SPARKY, objects::WADDLEDEE, objects::WADDLEDOO, objects::HOTHEAD, objects::BRONTOBURT, objects::POPPYBROSJR };
+	
+	Enemy* t = dynamic_cast<Enemy*>(rb);
+	if(t && !invincible && !damageCooldown){
+
+		damage = 1;
+		
+		if (t->getObjectId() == objects::POPPYBROSJR)
+			return;
+
+		GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(rb));
+
+		
+	}
+
+
+}
+
+
 void Kirby::movementRelated() {
 	// Final acceleration
 	KA::Vec2Df temp{ 0.0, status == KIRBY_FLY ? 5.0 : 9.8};
@@ -352,7 +372,7 @@ void Kirby::animationRelated() {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 			Sounds::instance()->playSound("inhale");
 			buttons[Kirby::INHALE_ENEMIES] = false;
-			return;
+			
 		}
 
 		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
@@ -360,7 +380,7 @@ void Kirby::animationRelated() {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 			buttons[Kirby::INHALE_EXHALE] = false;
-			return;
+			
 		}
 
 
@@ -374,7 +394,7 @@ void Kirby::animationRelated() {
 			storedObject = 0;
 
 			buttons[Kirby::USE_SPECIALPWR] = false;
-			return;
+			//return;
 		}
 		else if (buttons[Kirby::USE_SPECIALPWR] && (status != HUD_POWER)) {
 
