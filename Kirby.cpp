@@ -390,7 +390,7 @@ void Kirby::animationRelated() {
 			case HUD_CUTTER:
 			{
 				if (animator->isPlayingOneShot())
-					break;
+					return;
 				Sounds::instance()->playSound("kirby_sword_Attack");
 
 				pos = getCollider().center();
@@ -434,16 +434,24 @@ void Kirby::animationRelated() {
 
 			case HUD_SPARK:
 
-				pos = getCollider().center();
-				pos.setY(pos.y() - 0.2);
-				pr = new Projectile(pos,
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SPARK), targets, 5, 200, 0.7);
+				if (!isGrounded() || animator->isPlayingOneShot())
+					return;
 
+				double offset = M_PI/8;
+				int steps = 4;
+				for (int i = 0; i < steps; i++) {
+					pr = new Projectile(getCollider().center(),
+						KA::Vec2Df{ 0,0 },
+						TextureManager::getInstance().getAnimatable(TexManager::SPARK), targets, 5, 200, 0.7);
 
-				pr->setCustomGravity(KA::Vec2Df{ 0,0 });
-				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), 0 };
+					pr->setCustomGravity(KA::Vec2Df{ 0, 9.8 });
+					//pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), 0 };
 
-				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
+					pr->velocity = { 7*sin(offset + M_PI * (i - (steps / 2.0)) / steps), -15 * cos(offset + M_PI * (i - (steps / 2.0)) / steps) };
+					GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
+
+				}
+
 				break;
 
 				
