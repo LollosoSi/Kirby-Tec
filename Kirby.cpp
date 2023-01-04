@@ -411,7 +411,7 @@ void Kirby::animationRelated() {
 				pos = getCollider().center();
 				pos.setY(pos.y() - 0.2);
 				pr = new Projectile(pos,
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::BEAM), targets, 5, 800, 0.7);
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::BEAM), targets, 5, 200, 0.7);
 				pr->setCustomGravity(KA::Vec2Df{0,0});
 				pr->velocity = KA::Vec2Df{ 15.0 * (mirror ? -1 : 1), 0 };
 
@@ -423,7 +423,7 @@ void Kirby::animationRelated() {
 				pos = getCollider().center();
 				pos.setY(pos.y() - 0.2);
 				pr = new Projectile(pos,
-					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 800, 0.7);
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::FIRE), targets, 5, 400, 0.7);
 						
 				
 				pr->setCustomGravity(KA::Vec2Df{ 0,0 });
