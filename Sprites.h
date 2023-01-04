@@ -188,11 +188,12 @@ namespace TexManager {
 			BEAM = 133,
 			FIRE = 134,
 			SWORD = 135,
+			SPARK = 136
 			
 
 
 	};
-	const int TEXTURE_COUNT = 136;
+	const int TEXTURE_COUNT = 137;
 
 };
 

@@ -432,10 +432,30 @@ void Kirby::animationRelated() {
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 				break;
 
+			case HUD_SPARK:
+
+				pos = getCollider().center();
+				pos.setY(pos.y() - 0.2);
+				pr = new Projectile(pos,
+					KA::Vec2Df{ 0,0 }, TextureManager::getInstance().getAnimatable(TexManager::SPARK), targets, 5, 200, 0.7);
+
+
+				pr->setCustomGravity(KA::Vec2Df{ 0,0 });
+				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), 0 };
+
+				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
+				break;
+
+				
+
 			}
+
+	
+
 
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(statusToAnimatable(status)), 0);
 			return;
+
 		}
 
 		if (isGrounded()) {

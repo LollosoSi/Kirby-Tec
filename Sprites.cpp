@@ -146,6 +146,7 @@ TextureManager::TextureManager() {
 	QRect sword = getStandardQRect(46,770);
 
 	QRect kirby_spark = QRect(103, 548, 16, 16);
+	QRect spark = getStandardQRect(163,548);
 
 	// We need to add others
 
@@ -464,17 +465,27 @@ TextureManager::TextureManager() {
 	};
 
 	textures[KIRBY_SPARK] = new Animatable{
-		new QPixmap[6] {
+		new QPixmap[3] {
 			kirbytex.copy(kirby_spark),
 			kirbytex.copy(moveBy(kirby_spark, 1)),
 			kirbytex.copy(moveBy(kirby_spark, 2)),
-			kirbytex.copy(moveBy(kirby_spark, 3)),
-			kirbytex.copy(moveBy(kirby_spark, 4)),
-			kirbytex.copy(moveBy(kirby_spark, 5)),
+	
 	},
-	new float[6] {0.2f,0.2f,0.2f,0.2f,0.2f,0.2f},
-			new KA::Vec2Df[6]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0), KA::Vec2Df(0,0)},
-		6
+	new float[3] {0.2f,0.2f,0.2f},
+			new KA::Vec2Df[6]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
+		3
+	};
+
+	textures[SPARK] = new Animatable{
+		new QPixmap[3] {
+			kirbytex.copy(spark),
+			kirbytex.copy(moveBy(spark, 1)),
+			kirbytex.copy(moveBy(spark, 2)),
+
+	},
+	new float[3] {0.2f,0.2f,0.2f},
+			new KA::Vec2Df[6]{KA::Vec2Df(0,0), KA::Vec2Df(0,0),KA::Vec2Df(0,0)},
+		3
 	};
 
 	textures[TERRAIN_SLOPED_25] = new Animatable{
