@@ -83,10 +83,10 @@ Sounds::Sounds()
 
 
 
-void Sounds::stopSounds(const std::string toStop[], unsigned int size) {
-	for (int i = 0; i < size; i++)
-		stopSound(toStop[i]);
-} 
+//void Sounds::stopSounds(const std::string toStop[], unsigned int size) {
+//	for (unsigned int i = 0; i < size; i++)
+//		stopSound(toStop[i]);
+//} 
 
 
 void Sounds::playSound(const std::string& id)
