@@ -11,16 +11,16 @@ void Door::launchAction(Kirby* instanceForConsistency) {
 //	Sounds::instance()->stopSounds(allSounds, sizeof(allSounds)/sizeof(std::string));
 
 	if (level == std::string("levels/lobby")) {
-		Sounds::instance()->playSound("Lobby");
+	//	Sounds::instance()->playSound("Lobby");
 	}
 	if (level == std::string("levels/level1")) {
-		Sounds::instance()->playSound("Kirby_Adventure_theme");
+	//	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	}
 	if (level == std::string("levels/level2")) {
-		Sounds::instance()->playSound("Kirby_Adventure_theme");
+	//	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	}
 	if (level == std::string("levels/elevator")) {
-		Sounds::instance()->playSound("Kirby_Adventure_theme");
+	//	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	}
 
 	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {

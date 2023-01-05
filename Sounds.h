@@ -16,7 +16,8 @@ private:
 	// sounds indexed by filename
 	std::map< std::string, QSoundEffect*> _sounds;
 	std::map< std::string, QSoundEffect*> _musics;
-
+	
+	
 	Sounds();
 
 public:

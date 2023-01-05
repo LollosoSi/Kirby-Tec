@@ -243,7 +243,7 @@ void Kirby::movementRelated() {
 	// Apply jump
 	if (status != KIRBY_FLY && buttons[SPACE] && (lastHitNormals.y < 0) && (jumpImpulse.remainingtime == 0) && jumpsLeft > 0 && jumpCooldown == 0) {
 		//buttons[SPACE] = false;
-		Sounds::instance()->playSound("jump");
+		
 
 		jumpsLeft--;
 		if (storedObject)
@@ -370,7 +370,7 @@ void Kirby::animationRelated() {
 		// Various actions
 		if (buttons[Kirby::INHALE_ENEMIES] && !storedObject && !animator->isPlaying(TextureManager::getInstance().getAnimatable(KIRBY_INHALE))) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
-			Sounds::instance()->playSound("inhale");
+			
 			buttons[Kirby::INHALE_ENEMIES] = false;
 			
 		}
@@ -380,6 +380,7 @@ void Kirby::animationRelated() {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 			buttons[Kirby::INHALE_EXHALE] = false;
+			Sounds::instance()->stopSound("inhale");
 			
 		}
 
@@ -411,7 +412,7 @@ void Kirby::animationRelated() {
 			{
 				if (animator->isPlayingOneShot())
 					return;
-				Sounds::instance()->playSound("kirby_sword_Attack");
+				
 
 				pos = getCollider().center();
 				pos.setY(pos.y() - 0.4);
@@ -520,8 +521,9 @@ void Kirby::animationRelated() {
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_STRAFE), 1);
 				Sounds::instance()->playSound("kirby_strafe");
 			}
-			else
-				Sounds::instance()->stopSound("kirby_strafe");
+			else {
+			}
+				
 
 		}
 		else if(!storedObject && circa(groundDistance(), 1.5, 0.04) && abs(velocity.x)>2 && !animator->isPlayingOneShot()) {
@@ -562,7 +564,7 @@ void Kirby::tick(double deltatime) {
 	// Look back to stop inhaling if necessary
 	if (!animator->isPlaying(TextureManager::getInstance().getAnimatable(KIRBY_INHALE)) && buttons[Kirby::INHALE_ENEMIES]) {
 		buttons[Kirby::INHALE_ENEMIES] = false;
-		Sounds::instance()->stopSound("inhale");
+		
 	}
 
 	animator->tick(deltatime);
@@ -631,6 +633,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow) {
 		buttons[Kirby::UP] = isPressed;
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
+		Sounds::instance()->playSound("inhale");
 	}
 
 	// Jump
@@ -639,6 +642,10 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		if (!isPressed)
 			jumpCooldown = 0;
+
+		if (isGrounded()) {
+			Sounds::instance()->playSound("jump");
+		}
 	}
 
 	// Action button: enter doors OR inhale OR throw
@@ -653,12 +660,16 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			if (!inside.empty()) {
 				RigidBody* rb = inside.front();
 				if (rb->getObjectId() == objects::DOOR) {
+				
 					Sounds::instance()->playSound("Exit_level");
+
+				
 					buttons[Kirby::ENTERDOOR] = 1;
 
 					//setAbility(HUD_POWER);
 
 					Sounds::instance()->playSound("Enter_door");
+					
 					(dynamic_cast<Door*>(rb))->launchAction(this);
 
 					return;
@@ -669,6 +680,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 				Sounds::instance()->playSound("kirby_spit_enemy");
 			}
 			else if (!animator->isPlayingOneShot()) {
+				Sounds::instance()->playSound("inhale");
 				buttons[Kirby::INHALE_ENEMIES] = 1;
 			}
 		}
@@ -677,11 +689,42 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Take ability from enemy
 	if (e->key() == Qt::Key_X) {
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
+
+		
+		switch (status) {
+
+		default:
+			break;
+
+		case HUD_CUTTER:
+		{
+			Sounds::instance()->playSound("kirby_sword");
+			break;
+		}
+		case HUD_FIRE:
+		{
+			Sounds::instance()->playSound("kirby_fire");
+			break;
+		}
+		case HUD_BEAM:
+		{
+			Sounds::instance()->playSound("kirby_beam");
+			break;
+		}
+		case HUD_SPARK:
+		{
+			Sounds::instance()->playSound("kirby_spark");
+			break;
+		}
+
+		}
 	}
 	
 	// Drop current ability
 	if (e->key() == Qt::Key_Z && isPressed) {
 		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
+
+
 	}
 	
 

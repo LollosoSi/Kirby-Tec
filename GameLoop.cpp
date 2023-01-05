@@ -169,7 +169,7 @@ void GameLoop::loop() {
 
 	thread_working = true;
 
-	KA::Sounds::instance();
+	//KA::Sounds::instance();
 
 	QTime current = QTime::currentTime();
 
@@ -389,7 +389,7 @@ void GameLoop::start() {
 	running = true;
 	//paused = false;
 
-	//Sounds::instance()->playSound("Kirby_Adventure_theme");
+	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
