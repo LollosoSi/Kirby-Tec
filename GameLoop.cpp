@@ -25,6 +25,7 @@ GameLoop::GameLoop() {
 	commandsGUI->setDrawScale(0.23);
 	aboutusGUI->setDrawScale(0.23);
 	startGUI->playOneShot(TexManager::INTRO);
+	
 
 	view = new BaseGUI(QPointF(0, 0.757f), TexManager::HUD_VIEW, 6);
 	state = new BaseGUI(QPointF(0.578642, 0.793756), TexManager::HUD_POWER, 6);
@@ -389,7 +390,7 @@ void GameLoop::start() {
 	running = true;
 	//paused = false;
 
-	Sounds::instance()->playSound("Kirby_Adventure_theme");
+	//Sounds::instance()->playSound("Kirby_Adventure_theme");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
