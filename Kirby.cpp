@@ -380,7 +380,7 @@ void Kirby::animationRelated() {
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 			buttons[Kirby::INHALE_EXHALE] = false;
-			Sounds::instance()->stopSound("inhale");
+			
 			
 		}
 
@@ -633,7 +633,12 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow) {
 		buttons[Kirby::UP] = isPressed;
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
-		Sounds::instance()->playSound("inhale");
+
+		if (!storedObject) {
+			Sounds::instance()->playSound("inhale");
+		}
+		
+
 	}
 
 	// Jump
@@ -698,7 +703,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 		case HUD_CUTTER:
 		{
-			Sounds::instance()->playSound("kirby_sword");
+			Sounds::instance()->playSound("kirby_sword_Attack");
 			break;
 		}
 		case HUD_FIRE:
@@ -724,6 +729,9 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_Z && isPressed) {
 		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
 
+		if (status) {
+			Sounds::instance()->playSound("drop_specialpower");
+		}
 
 	}
 	
