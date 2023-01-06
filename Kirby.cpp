@@ -656,10 +656,10 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Action button: enter doors OR inhale OR throw
 	if (e->key() == Qt::Key_E && isPressed) {
 		
-		buttons[E] = isPressed;
+		buttons[Kirby::E] = isPressed;
 
-		if (buttons[E]) {
-			buttons[E] = false;
+		if (buttons[Kirby::E]) {
+			buttons[Kirby::E] = false;
 
 			std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
 			if (!inside.empty()) {
