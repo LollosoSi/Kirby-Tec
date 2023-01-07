@@ -630,12 +630,16 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		buttons[Kirby::LEFT] = isPressed;
 
 	// Puff up
-	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow) {
+	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow ) {
 		buttons[Kirby::UP] = isPressed;
 		buttons[Kirby::INHALE_EXHALE] = isPressed;
 
+		
+
 		if (!storedObject) {
+			
 			Sounds::instance()->playSound("inhale");
+
 		}
 		
 
@@ -687,6 +691,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			else if (!animator->isPlayingOneShot()) {
 				Sounds::instance()->playSound("inhale");
 				buttons[Kirby::INHALE_ENEMIES] = 1;
+
+				
 			}
 		}
 	}

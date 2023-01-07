@@ -93,7 +93,6 @@ target_sources(${project}
 		ObjectsHolder.h
 		Sounds.cpp
 		Sounds.h
-		Hud.cpp
 		Hud.h
 		Enemy.cpp
 		Enemy.h
