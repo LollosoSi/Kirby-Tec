@@ -52,6 +52,8 @@ public:
 
 	TexID status = HUD_POWER;
 
+	int c=0;
+
 	double groundDistance();
 
 	Kirby(QPointF pos = QPointF(0.0, 0.0)) : RigidBody(pos, QPointF(0, 0), 1 * kirbyscale, 1 * kirbyscale) {

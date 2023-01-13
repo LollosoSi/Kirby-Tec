@@ -6,7 +6,7 @@
 #include <QString>
 #include <QFont>
 #include <QGraphicsTextItem>
-
+#include <iostream>
 #include "Door.h"
 #include "CollisionDetection.h"
 
@@ -358,7 +358,7 @@ void Kirby::animationRelated() {
 	case KIRBY_FLY:
 		if(!animator->isPlayingOneShot())
 		this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
-
+		c = 1;
 		if (buttons[Kirby::INHALE_EXHALE] && status == KIRBY_FLY) {
 			status = KIRBY_STAND;
 			buttons[Kirby::INHALE_EXHALE] = false;
@@ -377,6 +377,7 @@ void Kirby::animationRelated() {
 
 		if (buttons[Kirby::INHALE_EXHALE] && !storedObject) {
 			status = KIRBY_FLY;
+			
 			this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(KIRBY_BIG_FLYING));
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_INHALE));
 			buttons[Kirby::INHALE_EXHALE] = false;
@@ -631,18 +632,27 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 
 	// Puff up
 	if (e->key() == Qt::Key_W || e->key() == Qt::UpArrow ) {
-		buttons[Kirby::UP] = isPressed;
-		buttons[Kirby::INHALE_EXHALE] = isPressed;
-
+		
 		
 
 		if (!storedObject) {
 			
-			Sounds::instance()->playSound("inhale");
+			if (c==0) {
 
+				Sounds::instance()->playSound("inhale");
+				
+			}
+			
 		}
-		
 
+		if (c== 1) {
+			Sounds::instance()->playSound("0D");
+		}
+
+		c = 0;
+
+		buttons[Kirby::UP] = isPressed;
+		buttons[Kirby::INHALE_EXHALE] = isPressed;
 	}
 
 	// Jump
