@@ -38,7 +38,7 @@ void PoppyBrosJr::tick(double delta)
 	accel.y = 9.8;
 
 	
-	accel.x = 3*maxwalkspeed * (GameLoop::getInstance().getKirbyPos().x() > getX() ? 1 : -1);
+	accel.x = 1.2*maxwalkspeed * (GameLoop::getInstance().getKirbyPos().x() > getX() ? 1 : -1);
 	if (abs(GameLoop::getInstance().getKirbyPos().x() - getX()) < 4 && (GameLoop::getInstance().getKirbyPos().y() < getY()) && isGrounded())
 		jump(-8);
 
@@ -90,7 +90,7 @@ void PoppyBrosJr::tick(double delta)
 		objects::ObjectID targets[] = { objects::KIRBY };
 		Projectile* p = new Projectile(getCollider().center(),
 			KA::Vec2Df{ 0,0 },
-			TextureManager::getInstance().getAnimatable(TexManager::POPPYBROSJR), targets, 1,
+			TextureManager::getInstance().getAnimatable(TexManager::SWORD), targets, 1,
 			1500, 0.35);
 		p->velocity = {xVelFinal, yVelFinal};
 		GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(p));

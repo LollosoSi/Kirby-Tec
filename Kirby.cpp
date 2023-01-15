@@ -220,8 +220,7 @@ void Kirby::onCollision(RigidBody* rb) {
 
 		damage = 1;
 		
-		if (t->getObjectId() == objects::POPPYBROSJR)
-			return;
+	
 
 		GameLoop::getInstance().removeElement(dynamic_cast<GameObject*>(rb));
 
@@ -640,12 +639,13 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			if (c==0) {
 
 				Sounds::instance()->playSound("inhale");
-				
+				setAbility(HUD_POWER);
 			}
 			
 		}
 
 		if (c== 1) {
+			
 			Sounds::instance()->playSound("0D");
 		}
 
