@@ -715,6 +715,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 		switch (status) {
 
 		default:
+			Sounds::instance()->playSound("kirby_assorb");
 			break;
 
 		case HUD_CUTTER:
