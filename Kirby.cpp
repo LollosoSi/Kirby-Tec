@@ -746,7 +746,7 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_Z && isPressed) {
 		buttons[Kirby::DROP_SPECIALPWR] = isPressed;
 
-		if (status) {
+		if (status != HUD_POWER) {
 			Sounds::instance()->playSound("drop_specialpower");
 		}
 
