@@ -377,7 +377,7 @@ void GameLoop::tick(double deltatime) {
 				removeElement(item, true);
 			}
 	}
-	//KA::Sounds::getInstance().tick(deltatime);
+	
 }
 
 // Optional setup: Multiplayer
@@ -402,11 +402,12 @@ void GameLoop::start() {
 void GameLoop::pause(bool pause) {
 	paused = pause;
 	
-	if (pause)
-		//pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+	if (pause) 
+		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
 
+	
 		pauseSuggestion->setTexture(TexManager::TexID());
-
+	
 
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
