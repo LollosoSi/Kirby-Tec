@@ -8,19 +8,6 @@ using namespace KA;
 void Door::launchAction(Kirby* instanceForConsistency) {
 
 
-	if (level == std::string("levels/lobby")) {
-	
-	}
-	if (level == std::string("levels/level1")) {
-
-	}
-	if (level == std::string("levels/level2")) {
-	
-	}
-	if (level == std::string("levels/elevator")) {
-	
-	}
-
 	if (!GameLoop::getInstance().loadGame(level, true, savecurrent)) {
 		GameLoop::getInstance().loadGame(level, false, false);
 	} 
