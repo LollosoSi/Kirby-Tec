@@ -390,7 +390,7 @@ void GameLoop::start() {
 	running = true;
 	//paused = false;
 
-	//Sounds::instance()->playSound("Kirby_Adventure_theme");
+	Sounds::instance()->playSound("Kirby_Adventure_theme");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
