@@ -390,7 +390,7 @@ void GameLoop::start() {
 	running = true;
 	//paused = false;
 
-	Sounds::instance()->playSound("Kirby_Adventure_theme");
+	Sounds::instance()->playLoopedSound("Kirby_Adventure_theme");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
@@ -403,7 +403,7 @@ void GameLoop::pause(bool pause) {
 	paused = pause;
 	
 	if (pause) 
-		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
+		//pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
 
 	
 		pauseSuggestion->setTexture(TexManager::TexID());
