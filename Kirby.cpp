@@ -690,7 +690,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 				if (rb->getObjectId() == objects::DOOR) {
 				
 					Sounds::instance()->playSound("Exit_level");
-
+					
+					
 				
 					buttons[Kirby::ENTERDOOR] = 1;
 

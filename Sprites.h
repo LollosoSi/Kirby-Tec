@@ -188,12 +188,14 @@ namespace TexManager {
 			BEAM = 133,
 			FIRE = 134,
 			SWORD = 135,
-			SPARK = 136
+			SPARK = 136,
+
+			FINALMESSAGE = 137
+			
 			
 
-
 	};
-	const int TEXTURE_COUNT = 137;
+	const int TEXTURE_COUNT = 138;
 
 };
 
@@ -255,6 +257,8 @@ private:
 	const std::string file_aboutus = "sprites/AboutUs.png";
 
 	const std::string file_intro = "sprites/Intro.png";
+
+	const std::string file_finalmessage = "sprites/FinalMessage.png";
 	
 	QPixmap replaceColor(QPixmap pix, QColor old_color, QColor new_color);
 
