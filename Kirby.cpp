@@ -535,6 +535,9 @@ void Kirby::animationRelated() {
 		else if(!storedObject && circa(groundDistance(), 1.5, 0.04) && abs(velocity.x)>2 && !animator->isPlayingOneShot()) {
 			this->animator->playOneShot(TextureManager::getInstance().getAnimatable(KIRBY_ROLL));
 		}
+		else {
+			this->animator->playSecondary(TextureManager::getInstance().getAnimatable(KIRBY_JUMP));
+		}
 
 		
 

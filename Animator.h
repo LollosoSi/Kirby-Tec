@@ -29,6 +29,15 @@ protected:
 
 public:
 	void tick(double delta);
+	void playSecondary(Animatable* anim, int repeat = 0, float timescale = 1) {
+		if(!isPlaying(anim))
+		if (isPlayingOneShot()) {
+			next_anim = anim;
+			savedtimescale = timescale;
+		} else {
+			setAnimatable(anim, repeat, timescale);
+		}
+	}
 	void setAnimatable(Animatable* anim, int repeat = 0, float timescale = 1) {
 		if (!anim) { std::cout << "Animator received nullptr\n"; }
 		this->timescale = timescale;
