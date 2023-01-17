@@ -225,7 +225,7 @@ TextureManager::TextureManager() {
 	QRect commands = QRect(0, 0, 1024, 896);
 	QRect aboutus = QRect(0, 0, 1024, 896);
 	QRect intro = QRect(0, 0, 1024, 896);
-	QRect finalmessage = QRect(0, 0, 1085, 1014);
+	QRect finalmessage = QRect(0, 0, 1024, 896);
 
 	QRect transparent = QRect(153, 25, 2, 2);
 
@@ -247,7 +247,7 @@ TextureManager::TextureManager() {
 	
 	QPixmap aboutustex = loadTexture(file_aboutus, nocolor);
 
-	
+	QPixmap finaltex = loadTexture(file_finalmessage, nocolor);
 	
 	/*
 	t0 = std::thread([](TextureManager* tx, std::string file_HUDtitlescreenintro, QColor nocolor) {
@@ -287,12 +287,13 @@ TextureManager::TextureManager() {
 	this, file_intro, nocolor);*/
 	
 	textures[FINALMESSAGE] = new Animatable{
-		new QPixmap[2],
-		new float[2] {0.05f},
-		new KA::Vec2Df[2] { KA::Vec2Df(0,0)},
-		2
-
+		new QPixmap[1]{
+			finaltex.copy(finalmessage),},
+		new float[1] {3.0f},
+		new KA::Vec2Df[1] { KA::Vec2Df(0,0)},
+		1
 	};
+
 	
 	textures[INTRO] = new Animatable{
 		new QPixmap[233],

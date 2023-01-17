@@ -701,6 +701,8 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 					
 					(dynamic_cast<Door*>(rb))->launchAction(this);
 
+
+
 					return;
 				}
 			}
