@@ -503,8 +503,9 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 			d.launchAction();
 
 		}
-		pause(!paused); 
-		
+		else {
+			pause(!paused);
+		}
 		
 	}
 
