@@ -16,6 +16,8 @@ void Door::launchAction(Kirby* instanceForConsistency) {
 		Kirby* k = ((Kirby*)GameLoop::getInstance().KirbyInstance);
 		if(instanceForConsistency->status != KIRBY_FLY)
 			k->setAbility(instanceForConsistency->status);
+		else
+			k->setAbility(HUD_POWER);
 		k->setHealth(instanceForConsistency->getHealth());
 	}
 	

@@ -20,7 +20,7 @@ GameLoop::GameLoop() {
 	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 7);
 	aboutusGUI = new BaseGUI(QPointF(0, 0), TexManager::ABOUTUS_HUD, 7);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 8);
-	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 7);
+	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 9);
 	startGUI->setDrawScale(0.23);
 	commandsGUI->setDrawScale(0.23);
 	aboutusGUI->setDrawScale(0.23);
@@ -316,8 +316,6 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	if (savecurrent && currentlevel.length() != 0)
 		saveGame(currentlevel+std::string(".save"));
 
-	currentlevel = fileName;
-
 	clear();
 
 	Camera::getInstance().setBounds(QRectF(0, 0, 0, 0));
@@ -328,6 +326,15 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	for (Serializable* item : tempserializableObjects) 
 		addElement(dynamic_cast<GameObject*>(item));
 	
+	// Trigger thank you for playing
+	if (currentlevel == "levels/level3" && fileName == "levels/lobby") {
+
+		aboutus(true);
+
+	}
+
+	currentlevel = fileName;
+
 	playBackgroundMusicLevelBased(currentlevel);
 
 	return tempserializableObjects.size() != 0;
@@ -400,6 +407,9 @@ void GameLoop::playBackgroundMusicLevelBased(const std::string level) {
 	
 	if (level == std::string("levels/level2"))
 		Sounds::instance()->playSound("Lobby");
+
+	if (level == std::string("levels/level3"))
+		Sounds::instance()->playSound("Lobby");
 	
 	if (level == std::string("levels/elevator"))
 		Sounds::instance()->playSound("Lobby");
@@ -430,10 +440,7 @@ void GameLoop::pause(bool pause) {
 	paused = pause;
 	
 	if (pause) 
-		//pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
-
-	
-		pauseSuggestion->setTexture(TexManager::TexID());
+		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
 	
 
 	pauseGUI->setShow(pause);

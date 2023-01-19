@@ -63,6 +63,7 @@ public:
 		setZValue(4);
 		setSizeX(kirbyscale);
 		setSizeY(kirbyscale);
+		setAbility(HUD_POWER);
 	}
 
 	Cloneable* clone() const override { return new Kirby(QPointF(getX(), getY())); }
