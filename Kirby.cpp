@@ -427,7 +427,7 @@ void Kirby::animationRelated() {
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
 
 			}
-			//Sounds::instance()->playSound("kirby_sword_Attack");
+			Sounds::instance()->playSound("kirby_sword_Attack");
 				break;
 
 			case HUD_BEAM:
@@ -440,7 +440,7 @@ void Kirby::animationRelated() {
 				pr->velocity = KA::Vec2Df{ 15.0 * (mirror ? -1 : 1), 0 };
 
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
-			//	Sounds::instance()->playSound("kirby_beam");
+				Sounds::instance()->playSound("kirby_beam");
 				break;
 
 			case HUD_FIRE:
@@ -455,7 +455,7 @@ void Kirby::animationRelated() {
 				pr->velocity = KA::Vec2Df{ 7.0 * (mirror ? -1 : 1), 0};
 
 				GameLoop::getInstance().addElement(dynamic_cast<GameObject*>(pr));
-			//	Sounds::instance()->playSound("kirby_fire");
+				Sounds::instance()->playSound("kirby_fire");
 				break;
 
 			case HUD_SPARK:
@@ -722,31 +722,6 @@ void Kirby::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Take ability from enemy
 	if (e->key() == Qt::Key_X) {
 		buttons[Kirby::USE_SPECIALPWR] = isPressed;
-
-		switch (status) {
-		case HUD_FIRE:
-		{
-			Sounds::instance()->playSound("kirby_fire");
-			break;
-		}
-		case HUD_BEAM:
-		{
-			Sounds::instance()->playSound("kirby_beam");
-			break;
-		}
-		case HUD_SPARK:
-		{
-			Sounds::instance()->playSound("kirby_spark");
-			break;
-		}
-		case HUD_CUTTER:
-		{
-			Sounds::instance()->playSound("kirby_sword_Attack");
-			break;
-		}
-		}
-
-
 	}
 	
 	// Drop current ability
