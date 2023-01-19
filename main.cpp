@@ -41,10 +41,8 @@ int main(int argc, char* argv[]) {
 	QObject::connect(&GameLoop::getInstance(), &GameLoop::pleaseRender, mw, &MainWindow::pleaseRender);
 	QObject::connect(mw, &MainWindow::renderingCompleted, &GameLoop::getInstance(), &GameLoop::renderingCompleted);
 
-	if (!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)) {
-		GameLoop::getInstance().loadGame(std::string("levels/intro"), false, false);
-	}
-
+	GameLoop::getInstance().start();
+	GameLoop::getInstance().playBackgroundMusicLevelBased("levels/intro");
 	GameLoop::getInstance().showStart();
 
     // eseguo applicazione Qt

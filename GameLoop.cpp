@@ -328,6 +328,8 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	for (Serializable* item : tempserializableObjects) 
 		addElement(dynamic_cast<GameObject*>(item));
 	
+	playBackgroundMusicLevelBased(currentlevel);
+
 	return tempserializableObjects.size() != 0;
 
 }
@@ -381,6 +383,30 @@ void GameLoop::tick(double deltatime) {
 	
 }
 
+void GameLoop::playBackgroundMusicLevelBased(const std::string level) {
+	Sounds::instance()->stopSound("Lobby");
+	Sounds::instance()->stopSound("Kirby_Adventure_theme");
+	//Sounds::instance()->stopSound("Lobby");
+
+	
+	if (level == std::string("levels/intro"))
+		Sounds::instance()->playSound("Kirby_Adventure_theme");
+
+	if (level == std::string("levels/lobby"))
+		Sounds::instance()->playSound("Lobby");
+	
+	if (level == std::string("levels/level1"))
+		Sounds::instance()->playSound("Kirby_Adventure_theme");
+	
+	if (level == std::string("levels/level2"))
+		Sounds::instance()->playSound("Lobby");
+	
+	if (level == std::string("levels/elevator"))
+		Sounds::instance()->playSound("Lobby");
+	
+
+}
+
 // Optional setup: Multiplayer
 void GameLoop::loadNetworkData(){
 
@@ -391,7 +417,7 @@ void GameLoop::start() {
 	running = true;
 	//paused = false;
 
-	Sounds::instance()->playSound("Kirby_Adventure_theme");
+	//Sounds::instance()->playSound("Kirby_Adventure_theme");
 	startGUI->setShow(false);
 	pause(false);
 	//commands(false);
@@ -499,14 +525,12 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	// Pause
 	if (e->key() == Qt::Key_P && isPressed) {
 		
-		if (startGUI->getShow()) {
-			Door d(QPointF(0,0), "levels/lobby");
-			d.launchAction();
+		if (startGUI->getShow())
+			if (!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false)) {
+				GameLoop::getInstance().loadGame(std::string("levels/intro"), false, false);
 
-		}
-		else {
-			pause(!paused);
-		}
+		pause(!paused);
+		
 		
 	}
 

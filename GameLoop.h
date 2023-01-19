@@ -150,6 +150,9 @@ public:
 	void saveGame(std::string fileName);
 	bool loadGame(std::string fileName, bool issave = false, bool savecurrent = false);
 
+	void playBackgroundMusicLevelBased(const std::string level);
+
+
 	QPointF getKirbyPos() { return KirbyInstance ? QPointF(KirbyInstance->getX(), KirbyInstance->getY()) : QPointF(0, 0); }
 
 	void addToTickable(TickableObject* tco);
