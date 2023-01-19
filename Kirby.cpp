@@ -282,7 +282,7 @@ void Kirby::movementRelated() {
 			temp.x -= (maxwalkspeed * 2) * (1 - abs(velocity.x / maxwalkspeed)) * (velocity.x > 0 ? 2 : 1);
 		}
 	}
-	else if (isGrounded()) {
+	else if (isGrounded() && !isInVectorField) {
 		// Grind
 		if (abs(velocity.x) > 0.3)
 			temp.x = ((velocity.x > 0 ? -1 : 1) * 9.8 * 3);
@@ -517,7 +517,7 @@ void Kirby::animationRelated() {
 				this->animator->setAnimatable(TextureManager::getInstance().getAnimatable(storedObject ? KIRBY_BIG_WALKING : KIRBY_WALK), 0, 1.3 - abs(velocity.x / maxwalkspeed));
 
 			// Should kirby strafe?
-			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 4) && !storedObject) {
+			if (!(buttons[RIGHT] ^ buttons[LEFT]) && !buttons[Kirby::INHALE_ENEMIES] && (velocity.mag() > 4) && !storedObject && !isInVectorField) {
 				if (!(rand() % 2)) {
 					Particle* p = new Particle(QPointF(getX() + ((getSizeX() / 5) * ((rand() % 5) + 1)), getY() + getSizeY()), TextureManager::getInstance().getAnimatable(PARTICLE_1), 600, 0.3);
 					GameLoop::getInstance().addElement(p);

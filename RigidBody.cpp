@@ -75,12 +75,14 @@ void RigidBody::tick(double deltatime){
 #define tx getX()
 #define ty getY()
 
+	isInVectorField = 0;
 	
 	std::vector <RigidBody*> inside = GameLoop::getInstance().getInside(this);
 
 	for (auto* item : inside) {
 		RigidBody* rb = item;
 		if (rb->getObjectId() == objects::VECTORFIELD) {
+			isInVectorField = 1;
 			std::cout << "Intersected vectorfield\n";
 			VectorField* v = dynamic_cast<VectorField*>(rb);
 			if (v->setsVelocity()) {

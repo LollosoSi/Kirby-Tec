@@ -52,7 +52,7 @@ class RigidBody : public GameObject, public TickableObject, public RenderableObj
 
 protected:
 	Animator* animator = 0;
-	
+	bool isInVectorField = 0;
 
 	bool damage = 0;
 
