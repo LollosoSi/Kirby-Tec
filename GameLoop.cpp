@@ -19,7 +19,7 @@ GameLoop::GameLoop() {
 	pauseGUI = new BaseGUI(QPointF(0, 0), TexManager::HUD_PAUSE_SCREEN, 7);
 	commandsGUI = new BaseGUI(QPointF(0, 0), TexManager::COMMANDS_HUD, 7);
 	aboutusGUI = new BaseGUI(QPointF(0, 0), TexManager::ABOUTUS_HUD, 7);
-	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::HUD_PAUSE_BACKDROP, 8);
+	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::TRANSPARENT, 8);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 9);
 	startGUI->setDrawScale(0.23);
 	commandsGUI->setDrawScale(0.23);
@@ -439,10 +439,6 @@ void GameLoop::start() {
 void GameLoop::pause(bool pause) {
 	paused = pause;
 	
-	if (pause) 
-		pauseSuggestion->setTexture((TexManager::TexID)(((int)TexManager::HUD_PAUSE_POWER) + (int)(rand()%(TexManager::HUD_PAUSE_WHEEL- TexManager::HUD_PAUSE_POWER))));
-	
-
 	pauseGUI->setShow(pause);
 	pauseSuggestion->setShow(pause);
 	if (startGUI->getShow()) {
@@ -462,7 +458,7 @@ void GameLoop::commands(bool pause) {
 void GameLoop::aboutus(bool pause) {
 	this->pause(pause);
 	aboutusGUI->setShow(pause);
-
+	
 }
 
 void GameLoop::stop() {
