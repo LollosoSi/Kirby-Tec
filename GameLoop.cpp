@@ -21,9 +21,11 @@ GameLoop::GameLoop() {
 	aboutusGUI = new BaseGUI(QPointF(0, 0), TexManager::ABOUTUS_HUD, 7);
 	pauseSuggestion = new BaseGUI(QPointF(0.0968543, 0.0368969), TexManager::TRANSPARENT, 8);
 	startGUI = new BaseGUI(QPointF(0, 0), TexManager::TITLESCREEN, 9);
+	endingviewGUI = new BaseGUI(QPointF(0, 0), TexManager::FINALMESSAGE, 10);
 	startGUI->setDrawScale(0.23);
 	commandsGUI->setDrawScale(0.23);
 	aboutusGUI->setDrawScale(0.23);
+	endingviewGUI->setDrawScale(0.23);
 	startGUI->playOneShot(TexManager::INTRO);
 	
 	
@@ -76,6 +78,8 @@ GameLoop::GameLoop() {
 	GUIItems.push_back(startGUI);
 	GUIItems.push_back(commandsGUI);
 	GUIItems.push_back(aboutusGUI);
+	GUIItems.push_back(endingviewGUI);
+
 }
 
 
@@ -123,6 +127,7 @@ GameLoop::~GameLoop() {
 	delete startGUI;
 	delete commandsGUI;
 	delete aboutusGUI;
+	delete endingviewGUI;
 
 	delete[] scoredigits;
 
@@ -142,6 +147,8 @@ void GameLoop::showStart() {
 	pauseGUI->setShow(false);
 	commandsGUI->setShow(false);
 	aboutusGUI->setShow(false);
+	endingviewGUI->setShow(false);
+
 
 	startGUI->setShow(true);
 }
@@ -329,8 +336,10 @@ bool GameLoop::loadGame(std::string fileName, bool issave, bool savecurrent) {
 	// Trigger thank you for playing
 	if (currentlevel == "levels/level3" && fileName == "levels/lobby") {
 
-		aboutus(true);
-
+		endingview(true);
+		
+		
+		
 	}
 
 	currentlevel = fileName;
@@ -458,6 +467,11 @@ void GameLoop::commands(bool pause) {
 void GameLoop::aboutus(bool pause) {
 	this->pause(pause);
 	aboutusGUI->setShow(pause);
+
+}
+void GameLoop::endingview(bool pause) {
+	this->pause(pause);
+	endingviewGUI->setShow(pause);
 	
 }
 

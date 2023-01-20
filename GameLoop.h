@@ -52,6 +52,7 @@ private:
 	BaseGUI* aboutusGUI;
 	BaseGUI* pauseSuggestion;
 	BaseGUI* startGUI;
+	BaseGUI* endingviewGUI;
 
 	BaseGUI** scoredigits;
 	BaseGUI** KHealth;
@@ -135,6 +136,7 @@ public:
 	BaseGUI& getPauseGUI() { return *pauseGUI; }
 	BaseGUI& getPauseSuggestion() { return *pauseSuggestion; }
 	BaseGUI& getStartGUI() { return *startGUI; }
+	BaseGUI& getEndingView() { return *endingviewGUI; }
 
 	GameObject* KirbyInstance = 0;
 
@@ -145,6 +147,7 @@ public:
 	void pause(bool pause = true);
 	void commands(bool pause = true);
 	void aboutus(bool pause = true);
+	void endingview(bool pause = true);
 	void clear();
 	static void stop();
 	void saveGame(std::string fileName);
