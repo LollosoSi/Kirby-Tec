@@ -1,0 +1,20 @@
+<map id="Kirby::render" name="Kirby::render">
+<area shape="rect" id="node1" title=" " alt="" coords="5,253,101,278"/>
+<area shape="rect" id="node2" href="$class_camera.html#a4d353b6074aa46de4015bce5574bce20" title=" " alt="" coords="639,77,781,102"/>
+<area shape="rect" id="node3" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="646,126,774,151"/>
+<area shape="rect" id="node4" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="645,202,775,227"/>
+<area shape="rect" id="node5" href="$class_renderable_object.html#a2f07e20b738b6e319c80e577d826bafe" title=" " alt="" coords="394,529,585,554"/>
+<area shape="rect" id="node6" href="$class_camera.html#ad840f660d47ecc09a80a195ec4ed8dd2" title=" " alt="" coords="195,461,298,486"/>
+<area shape="rect" id="node8" href="$class_kirby.html#afd40e193f6caa2df3289c0a235da0b82" title=" " alt="" coords="149,583,344,609"/>
+<area shape="rect" id="node10" href="$class_rigid_body.html#a8c920b99eb8d0fb7f42944adf13c9759" title=" " alt="" coords="184,303,309,329"/>
+<area shape="rect" id="node18" href="$class_camera.html#a95796665ba7bc469274caf97af74d00c" title=" " alt="" coords="409,77,569,102"/>
+<area shape="rect" id="node7" href="$class_camera.html#a108e7f22177fb4cab533c0590d5e8c3e" title=" " alt="" coords="413,578,565,603"/>
+<area shape="rect" id="node9" href="$class_game_loop.html#a1b03a21119df78c836b77e30e6a1f43e" title=" " alt="" coords="409,627,569,653"/>
+<area shape="rect" id="node11" href="$class_rigid_body.html#a49aa2c738a5870d44925f46b66bf78c3" title=" " alt="" coords="635,379,785,405"/>
+<area shape="rect" id="node12" href="$class_rigid_body.html#ae548195dd7d6b4e19ea942a5f8a40512" title=" " alt="" coords="397,479,582,505"/>
+<area shape="rect" id="node15" href="$class_animator.html#aac02761bf8807293a26f0e476272dec7" title=" " alt="" coords="401,430,577,455"/>
+<area shape="rect" id="node16" href="$class_renderable_object.html#a582fdcfd98e108a9894b839c84b7a614" title=" " alt="" coords="392,278,587,303"/>
+<area shape="rect" id="node17" href="$class_camera.html#a1986a8417a6848e76a4929cf1100a86f" title=" " alt="" coords="427,126,551,151"/>
+<area shape="rect" id="node13" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="640,503,780,529"/>
+<area shape="rect" id="node14" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="639,454,781,479"/>
+</map>

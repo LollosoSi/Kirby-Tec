@@ -1,0 +1,13 @@
+<map id="RigidBody::setSizeX" name="RigidBody::setSizeX">
+<area shape="rect" id="node1" title=" " alt="" coords="663,179,803,204"/>
+<area shape="rect" id="node2" href="$class_background.html#a3e9319e991c7c00792c7d8ef2049ecfa" title=" " alt="" coords="447,79,615,104"/>
+<area shape="rect" id="node3" href="$class_rigid_body.html#a729de31b2688ac9cbf17c5cdb698fa4a" title=" " alt="" coords="455,128,606,153"/>
+<area shape="rect" id="node7" href="$class_background.html#aa46d287b709ce762489780ba4064d059" title=" " alt="" coords="18,129,179,155"/>
+<area shape="rect" id="node10" href="$class_kirby.html#a6a2f67dba1439d00825a761210e6a42d" title=" " alt="" coords="485,229,576,255"/>
+<area shape="rect" id="node11" href="$class_rigid_body.html#a5d498155a7b61291b7268283e92d2723" title=" " alt="" coords="457,279,605,304"/>
+<area shape="rect" id="node4" href="$class_door.html#aea30c0d74ec361c39836172225ca286b" title=" " alt="" coords="260,79,379,104"/>
+<area shape="rect" id="node5" href="$class_vector_field.html#a8cbc43ce390b69c706bb4ecbab5eae09" title=" " alt="" coords="240,128,399,153"/>
+<area shape="rect" id="node6" href="$class_terrain.html#a3720b026bfdda106eabcd194ae0e7317" title=" " alt="" coords="254,29,385,55"/>
+<area shape="rect" id="node8" href="$class_terrain_sloped.html#a8ac29303765b3dc018b4882125b0c2cd" title=" " alt="" coords="13,55,184,80"/>
+<area shape="rect" id="node9" href="$class_movable_platform.html#a1ee9e6dff226b97414f599251ec109dc" title=" " alt="" coords="5,5,192,31"/>
+</map>

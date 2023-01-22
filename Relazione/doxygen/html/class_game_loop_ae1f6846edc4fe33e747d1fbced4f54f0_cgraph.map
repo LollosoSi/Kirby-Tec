@@ -1,0 +1,10 @@
+<map id="GameLoop::setAbility" name="GameLoop::setAbility">
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,152,80"/>
+<area shape="rect" id="node2" href="$class_game_loop.html#a44ae5db9b86b236b0f9c89877aafa32e" title=" " alt="" coords="200,55,360,80"/>
+<area shape="rect" id="node3" href="$class_base_g_u_i.html#afa5c89992c22a95bb29f51d466c24049" title=" " alt="" coords="605,5,783,31"/>
+<area shape="rect" id="node5" href="$class_base_g_u_i.html#a5d94ad2f6d5a17d6635d8b2978ee8e85" title=" " alt="" coords="413,55,545,80"/>
+<area shape="rect" id="node6" href="$class_base_g_u_i.html#a95a38105bcb21dd0c93dffefa783c23d" title=" " alt="" coords="408,104,551,129"/>
+<area shape="rect" id="node4" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="837,55,1015,80"/>
+<area shape="rect" id="node7" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="599,55,789,80"/>
+<area shape="rect" id="node8" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="611,104,777,129"/>
+</map>

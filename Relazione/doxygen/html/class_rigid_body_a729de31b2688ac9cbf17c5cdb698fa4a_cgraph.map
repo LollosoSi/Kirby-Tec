@@ -1,0 +1,13 @@
+<map id="RigidBody::deserialize" name="RigidBody::deserialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,129,156,155"/>
+<area shape="rect" id="node2" href="$class_game_object.html#a2e99d59ae702eea956c711712e00924b" title=" " alt="" coords="204,55,369,80"/>
+<area shape="rect" id="node5" href="$class_rigid_body.html#a548804aee144d09a986006899e9642b8" title=" " alt="" coords="216,104,357,129"/>
+<area shape="rect" id="node6" href="$class_rigid_body.html#adb47bf4d7b4e45c11d1475d80a38ac79" title=" " alt="" coords="217,153,357,179"/>
+<area shape="rect" id="node10" href="$class_rigid_body.html#af278cb8097ceea3f783b38cf27278d3a" title=" " alt="" coords="215,203,358,228"/>
+<area shape="rect" id="node3" href="$class_game_object.html#ae393fca959edface82c4abdccfa5b5d1" title=" " alt="" coords="425,5,553,31"/>
+<area shape="rect" id="node4" href="$class_game_object.html#a76073c1b330976174dd2664545a0812c" title=" " alt="" coords="423,55,554,80"/>
+<area shape="rect" id="node7" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="417,104,560,129"/>
+<area shape="rect" id="node8" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="425,153,553,179"/>
+<area shape="rect" id="node9" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="423,203,554,228"/>
+<area shape="rect" id="node11" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="419,252,559,277"/>
+</map>

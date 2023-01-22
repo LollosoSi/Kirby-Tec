@@ -1,0 +1,4 @@
+<map id="Door::Door" name="Door::Door">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,89,31"/>
+<area shape="rect" id="node2" href="$class_game_object.html#a44854f2290e375b0837b6bbb99098666" title=" " alt="" coords="137,5,307,31"/>
+</map>

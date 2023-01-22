@@ -1,0 +1,6 @@
+<map id="Terrain::serialize" name="Terrain::serialize">
+<area shape="rect" id="node1" title=" " alt="" coords="227,55,344,80"/>
+<area shape="rect" id="node2" href="$class_background.html#af59a1014f65b1f21129b68c77a177431" title=" " alt="" coords="19,5,165,31"/>
+<area shape="rect" id="node3" href="$class_terrain_sloped.html#af4318f8759bff8b786f824f146b83dce" title=" " alt="" coords="13,55,171,80"/>
+<area shape="rect" id="node4" href="$class_movable_platform.html#a4b66e6363170d6784ebb39c7c4c6dd38" title=" " alt="" coords="5,104,179,129"/>
+</map>

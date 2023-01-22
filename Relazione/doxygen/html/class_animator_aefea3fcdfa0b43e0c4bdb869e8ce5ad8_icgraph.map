@@ -1,0 +1,13 @@
+<map id="Animator::getCurrentPixmap" name="Animator::getCurrentPixmap">
+<area shape="rect" id="node1" title=" " alt="" coords="388,203,575,228"/>
+<area shape="rect" id="node2" href="$class_background.html#a3e9319e991c7c00792c7d8ef2049ecfa" title=" " alt="" coords="172,5,340,31"/>
+<area shape="rect" id="node3" href="$class_background.html#aa46d287b709ce762489780ba4064d059" title=" " alt="" coords="175,55,337,80"/>
+<area shape="rect" id="node4" href="$class_enemy.html#a214ef516bb9fc4b7c8ab6e2e2d7ff987" title=" " alt="" coords="190,104,322,129"/>
+<area shape="rect" id="node5" href="$class_base_g_u_i.html#abe6590787370a40b7c6d43e62f079d6f" title=" " alt="" coords="185,153,327,179"/>
+<area shape="rect" id="node7" href="$class_particle.html#a9516a73849bafa6f3b2be406517e4329" title=" " alt="" coords="189,203,323,228"/>
+<area shape="rect" id="node8" href="$class_vector_field.html#aa664bc642a113cb11e1436b67a205356" title=" " alt="" coords="177,252,335,277"/>
+<area shape="rect" id="node9" href="$class_kirby.html#a2717355aa0f1d0cc14e480acbbdd092c" title=" " alt="" coords="195,301,317,327"/>
+<area shape="rect" id="node10" href="$class_background.html#a06216d04aa7eb5bacbf2b8f26bd1177c" title=" " alt="" coords="176,351,336,376"/>
+<area shape="rect" id="node11" href="$class_particle.html#adea1815e2b3876db40cfa0acee7c35f9" title=" " alt="" coords="201,400,311,425"/>
+<area shape="rect" id="node6" href="$class_base_g_u_i.html#ac32c439bacc6a7b73f5446839cfed559" title=" " alt="" coords="5,153,124,179"/>
+</map>

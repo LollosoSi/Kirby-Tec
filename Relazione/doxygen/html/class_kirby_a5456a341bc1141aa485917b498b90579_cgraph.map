@@ -1,0 +1,12 @@
+<map id="Kirby::setHealth" name="Kirby::setHealth">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,120,56"/>
+<area shape="rect" id="node2" href="$class_game_loop.html#a1b03a21119df78c836b77e30e6a1f43e" title=" " alt="" coords="168,5,328,31"/>
+<area shape="rect" id="node3" href="$class_game_loop.html#ab154077cdf7e0b04f50fbafbcee6b704" title=" " alt="" coords="174,55,322,80"/>
+<area shape="rect" id="node4" href="$class_game_loop.html#a44ae5db9b86b236b0f9c89877aafa32e" title=" " alt="" coords="376,55,536,80"/>
+<area shape="rect" id="node5" href="$class_base_g_u_i.html#afa5c89992c22a95bb29f51d466c24049" title=" " alt="" coords="781,5,959,31"/>
+<area shape="rect" id="node7" href="$class_base_g_u_i.html#a5d94ad2f6d5a17d6635d8b2978ee8e85" title=" " alt="" coords="589,55,721,80"/>
+<area shape="rect" id="node8" href="$class_base_g_u_i.html#a95a38105bcb21dd0c93dffefa783c23d" title=" " alt="" coords="584,104,727,129"/>
+<area shape="rect" id="node6" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="1013,55,1191,80"/>
+<area shape="rect" id="node9" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="775,55,965,80"/>
+<area shape="rect" id="node10" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="787,104,953,129"/>
+</map>

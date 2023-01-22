@@ -1,0 +1,19 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,255,56,280"/>
+<area shape="rect" id="node2" href="$class_game_loop.html#a1b03a21119df78c836b77e30e6a1f43e" title=" " alt="" coords="361,32,521,57"/>
+<area shape="rect" id="node3" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="571,108,761,133"/>
+<area shape="rect" id="node4" href="$class_game_loop.html#a1fbbfc06f731d4c119bf9c8c568a954f" title=" " alt="" coords="115,305,301,345"/>
+<area shape="rect" id="node8" href="$class_main_window.html#a981f24319ffd3b72aaaf5fbfd5fdeef8" title=" " alt="" coords="117,57,299,83"/>
+<area shape="rect" id="node9" href="$class_game_loop.html#add2a2baff2ef2f69316c9b0a779ab5b3" title=" " alt="" coords="119,369,297,395"/>
+<area shape="rect" id="node10" href="$class_game_loop.html#a5e7b5edd4a24373e69a239dde54b475c" title=" " alt="" coords="115,419,301,444"/>
+<area shape="rect" id="node11" href="$class_game_loop.html#a4c94fd26591be8e90da45610ef6a5a4d" title=" " alt="" coords="104,468,312,493"/>
+<area shape="rect" id="node12" href="$class_game_loop.html#a38934284143ba6a6780447a365da7eaf" title=" " alt="" coords="133,205,283,231"/>
+<area shape="rect" id="node17" href="$class_game_loop.html#a4d167abf32f3850bd2e1676f38f3889d" title=" " alt="" coords="149,255,267,280"/>
+<area shape="rect" id="node5" href="$class_k_a_1_1_sounds.html#a034598518524d0ec341b15486a7d4b8a" title=" " alt="" coords="367,384,516,409"/>
+<area shape="rect" id="node6" href="$class_k_a_1_1_sounds.html#a4fce06e2114938fe779fce81be99ddba" title=" " alt="" coords="361,433,522,459"/>
+<area shape="rect" id="node7" href="$class_k_a_1_1_sounds.html#a4721aecbe7edef25587642721ab3f698" title=" " alt="" coords="360,335,523,360"/>
+<area shape="rect" id="node13" href="$class_game_loop.html#a6276c3fd15c35bdb5f3a37755ecdd056" title=" " alt="" coords="377,183,505,208"/>
+<area shape="rect" id="node16" href="$class_base_g_u_i.html#a5d94ad2f6d5a17d6635d8b2978ee8e85" title=" " alt="" coords="600,272,732,297"/>
+<area shape="rect" id="node14" href="$class_texture_manager.html#ab2cfadc9251709b6914603fd008a8bf6" title=" " alt="" coords="571,207,761,247"/>
+<area shape="rect" id="node15" href="$class_base_g_u_i.html#a91fe99263b7be3aef4af36cb5ac3572c" title=" " alt="" coords="600,157,732,183"/>
+</map>

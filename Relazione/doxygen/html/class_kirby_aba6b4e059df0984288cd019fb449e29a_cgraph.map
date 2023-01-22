@@ -1,0 +1,7 @@
+<map id="Kirby::onCollision" name="Kirby::onCollision">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,128,56"/>
+<area shape="rect" id="node2" href="$class_game_loop.html#a1b03a21119df78c836b77e30e6a1f43e" title=" " alt="" coords="187,5,347,31"/>
+<area shape="rect" id="node3" href="$class_game_loop.html#aa5eda1ea66a8f7801ac47cec32565ec2" title=" " alt="" coords="176,55,359,80"/>
+<area shape="rect" id="node4" href="$class_game_object.html#ac393552da671ee5c6f36f3e0fc5212b1" title=" " alt="" coords="407,55,653,80"/>
+<area shape="rect" id="node5" href="$class_game_object.html#a8bfe9a882afc0691728e16aba44f306f" title=" " alt="" coords="701,55,871,80"/>
+</map>

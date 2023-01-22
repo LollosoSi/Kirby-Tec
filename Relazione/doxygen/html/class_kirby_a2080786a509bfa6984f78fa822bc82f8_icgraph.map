@@ -1,0 +1,10 @@
+<map id="Kirby::getHealth" name="Kirby::getHealth">
+<area shape="rect" id="node1" title=" " alt="" coords="797,101,912,127"/>
+<area shape="rect" id="node2" href="$class_door.html#ae1f9000ffc7dfe23e133baebea086039" title=" " alt="" coords="617,101,749,127"/>
+<area shape="rect" id="node3" href="$class_game_loop.html#affb00e7554c8fd088c3cd031cbcebc24" title=" " alt="" coords="389,51,569,76"/>
+<area shape="rect" id="node6" href="$class_kirby.html#a059d930a7ebdf1dd66f00aba569d563e" title=" " alt="" coords="157,131,319,156"/>
+<area shape="rect" id="node8" href="$class_game_loop.html#aa1359f1b54ee663cbb89690d9dabe8e2" title=" " alt="" coords="415,152,543,177"/>
+<area shape="rect" id="node4" href="$class_graphics_scene.html#a3a2e911addbd662fbf6924fed02f6a34" title=" " alt="" coords="135,5,341,31"/>
+<area shape="rect" id="node5" href="$class_graphics_scene.html#aa062225b952805e170a3320b83f6a27f" title=" " alt="" coords="145,55,331,95"/>
+<area shape="rect" id="node7" href="$class_kirby.html#aac14c0d395524700534d8bdc7d2744a3" title=" " alt="" coords="5,131,87,156"/>
+</map>

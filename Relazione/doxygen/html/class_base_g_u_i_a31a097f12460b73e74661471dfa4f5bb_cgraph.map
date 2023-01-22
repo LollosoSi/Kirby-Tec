@@ -1,0 +1,9 @@
+<map id="BaseGUI::BaseGUI" name="BaseGUI::BaseGUI">
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,140,80"/>
+<area shape="rect" id="node2" href="$class_game_object.html#a44854f2290e375b0837b6bbb99098666" title=" " alt="" coords="199,5,368,31"/>
+<area shape="rect" id="node3" href="$class_base_g_u_i.html#a95a38105bcb21dd0c93dffefa783c23d" title=" " alt="" coords="212,55,355,80"/>
+<area shape="rect" id="node7" href="$class_renderable_object.html#a14bad85ff892ff8022a78e4470ea19af" title=" " alt="" coords="188,104,379,129"/>
+<area shape="rect" id="node4" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="427,31,617,56"/>
+<area shape="rect" id="node5" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="439,80,605,105"/>
+<area shape="rect" id="node6" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="665,80,843,105"/>
+</map>

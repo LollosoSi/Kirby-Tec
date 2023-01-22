@@ -1,0 +1,13 @@
+<map id="TextureManager::getAnimatable" name="TextureManager::getAnimatable">
+<area shape="rect" id="node1" title=" " alt="" coords="433,205,640,231"/>
+<area shape="rect" id="node2" href="$class_kirby.html#a5551213113aadaef8b5aa63c7430ff15" title=" " alt="" coords="212,5,372,31"/>
+<area shape="rect" id="node3" href="$class_kirby.html#aac14c0d395524700534d8bdc7d2744a3" title=" " alt="" coords="37,56,119,81"/>
+<area shape="rect" id="node4" href="$class_kirby.html#a2ab766884494a2cc1e99774ed9e26e6c" title=" " alt="" coords="217,107,367,132"/>
+<area shape="rect" id="node5" href="$class_door.html#a9fc2821b495ccdc77968f4d44d87444b" title=" " alt="" coords="233,156,351,181"/>
+<area shape="rect" id="node6" href="$class_terrain.html#a142af57bd9802106814b356bcb80766f" title=" " alt="" coords="227,205,357,231"/>
+<area shape="rect" id="node7" href="$class_terrain_sloped.html#a63f22105a15b55bcdc64900b26dbd215" title=" " alt="" coords="207,255,377,280"/>
+<area shape="rect" id="node9" href="$class_movable_platform.html#a62cf8c929168d1980495ce76d2d1c352" title=" " alt="" coords="199,304,385,329"/>
+<area shape="rect" id="node10" href="$class_sparky.html#af0070b9f773e999067a150e307bd204c" title=" " alt="" coords="246,353,338,379"/>
+<area shape="rect" id="node11" href="$class_poppy_bros_jr.html#a696505bffe0f5dc2a231079691c3e2e2" title=" " alt="" coords="229,403,355,428"/>
+<area shape="rect" id="node8" href="$class_terrain_sloped.html#ab881aee418d115ffbf428a9f8e75844e" title=" " alt="" coords="5,255,151,280"/>
+</map>

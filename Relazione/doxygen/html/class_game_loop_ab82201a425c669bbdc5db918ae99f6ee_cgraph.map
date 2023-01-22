@@ -1,0 +1,5 @@
+<map id="GameLoop::detachKirby" name="GameLoop::detachKirby">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,168,56"/>
+<area shape="rect" id="node2" href="$class_camera.html#a7c6142ea47573790347dbb06607eebc3" title=" " alt="" coords="216,5,360,31"/>
+<area shape="rect" id="node3" href="$class_camera.html#a4d353b6074aa46de4015bce5574bce20" title=" " alt="" coords="217,55,359,80"/>
+</map>

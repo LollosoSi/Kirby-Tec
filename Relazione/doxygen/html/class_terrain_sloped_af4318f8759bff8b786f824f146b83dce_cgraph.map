@@ -1,0 +1,12 @@
+<map id="TerrainSloped::serialize" name="TerrainSloped::serialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,163,105"/>
+<area shape="rect" id="node2" href="$class_terrain.html#aca85168dd575f7408173f0402a30fd5b" title=" " alt="" coords="211,80,328,105"/>
+<area shape="rect" id="node3" href="$class_rigid_body.html#a4e353753ffbece331b19f7f68f049a97" title=" " alt="" coords="376,80,513,105"/>
+<area shape="rect" id="node4" href="$class_rigid_body.html#a0a150ef679eb9d2353e98bfa2dcae2a8" title=" " alt="" coords="566,5,707,31"/>
+<area shape="rect" id="node5" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="567,55,707,80"/>
+<area shape="rect" id="node6" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="565,104,708,129"/>
+<area shape="rect" id="node7" href="$class_game_object.html#a69d8fbc007848b1c1c8746498db2472e" title=" " alt="" coords="561,153,712,179"/>
+<area shape="rect" id="node8" href="$class_game_object.html#a8bfe9a882afc0691728e16aba44f306f" title=" " alt="" coords="760,104,929,129"/>
+<area shape="rect" id="node9" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="781,153,909,179"/>
+<area shape="rect" id="node10" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="779,203,910,228"/>
+</map>

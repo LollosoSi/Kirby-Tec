@@ -1,0 +1,15 @@
+<map id="Enemy" name="Enemy">
+<area shape="rect" id="node1" title=" " alt="" coords="302,968,437,1163"/>
+<area shape="rect" id="node8" href="$class_bronto_burt.html" title=" " alt="" coords="5,1211,109,1332"/>
+<area shape="rect" id="node9" href="$class_hot_head.html" title=" " alt="" coords="134,1218,226,1325"/>
+<area shape="rect" id="node10" href="$class_poppy_bros_jr.html" title=" " alt="" coords="250,1218,366,1325"/>
+<area shape="rect" id="node11" href="$class_sparky.html" title=" " alt="" coords="391,1218,473,1325"/>
+<area shape="rect" id="node12" href="$class_waddle_dee.html" title=" " alt="" coords="497,1218,607,1325"/>
+<area shape="rect" id="node13" href="$class_waddle_doo.html" title=" " alt="" coords="631,1218,740,1325"/>
+<area shape="rect" id="node2" href="$class_rigid_body.html" title=" " alt="" coords="296,505,443,920"/>
+<area shape="rect" id="node3" href="$class_game_object.html" title=" " alt="" coords="91,145,277,457"/>
+<area shape="rect" id="node4" href="$class_serializable.html" title=" " alt="" coords="75,5,179,97"/>
+<area shape="rect" id="node5" href="$class_cloneable.html" title=" " alt="" coords="203,13,282,90"/>
+<area shape="rect" id="node6" href="$class_tickable_object.html" title=" " alt="" coords="301,255,437,347"/>
+<area shape="rect" id="node7" href="$class_renderable_object.html" title=" " alt="" coords="462,233,615,369"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="TerrainSloped::getTexture" name="TerrainSloped::getTexture">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,176,56"/>
+<area shape="rect" id="node2" href="$class_texture_manager.html#a7331987c5785140333153c0c88465d55" title=" " alt="" coords="224,5,431,31"/>
+<area shape="rect" id="node3" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="232,55,423,80"/>
+</map>

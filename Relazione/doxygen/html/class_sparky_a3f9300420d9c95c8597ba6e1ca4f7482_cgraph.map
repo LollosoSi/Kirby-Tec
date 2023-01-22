@@ -1,0 +1,7 @@
+<map id="Sparky::Sparky" name="Sparky::Sparky">
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,117,80"/>
+<area shape="rect" id="node2" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="165,5,356,31"/>
+<area shape="rect" id="node3" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="178,55,343,80"/>
+<area shape="rect" id="node5" href="$class_enemy.html#abb242ce04a0007693f980cfce8b3fafb" title=" " alt="" coords="179,104,342,129"/>
+<area shape="rect" id="node4" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="404,55,581,80"/>
+</map>

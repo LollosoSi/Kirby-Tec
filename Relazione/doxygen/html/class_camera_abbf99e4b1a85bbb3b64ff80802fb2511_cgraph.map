@@ -1,0 +1,9 @@
+<map id="Camera::tick" name="Camera::tick">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,101,105"/>
+<area shape="rect" id="node2" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="151,5,279,31"/>
+<area shape="rect" id="node3" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="149,55,280,80"/>
+<area shape="rect" id="node4" href="$class_camera.html#a1c04885e590cf092ebc8bbb2368482d9" title=" " alt="" coords="165,104,265,129"/>
+<area shape="rect" id="node6" href="$class_camera.html#a41a50103a38b10c6536a73ca187a9de9" title=" " alt="" coords="163,153,266,179"/>
+<area shape="rect" id="node5" href="$class_game_object.html#ae393fca959edface82c4abdccfa5b5d1" title=" " alt="" coords="329,104,457,129"/>
+<area shape="rect" id="node7" href="$class_game_object.html#a76073c1b330976174dd2664545a0812c" title=" " alt="" coords="328,153,459,179"/>
+</map>

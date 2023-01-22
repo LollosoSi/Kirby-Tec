@@ -1,0 +1,8 @@
+<map id="BaseGUI::tick" name="BaseGUI::tick">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,108,56"/>
+<area shape="rect" id="node2" href="$class_base_g_u_i.html#a91fe99263b7be3aef4af36cb5ac3572c" title=" " alt="" coords="156,5,288,31"/>
+<area shape="rect" id="node3" href="$class_animator.html#a496de9f4b4eb1d097b2acc317171fbde" title=" " alt="" coords="171,55,273,80"/>
+<area shape="rect" id="node4" href="$class_animator.html#acdac547ca250c00ce19bd3c1c80a3015" title=" " alt="" coords="336,55,516,80"/>
+<area shape="rect" id="node5" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="564,55,729,80"/>
+<area shape="rect" id="node6" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="777,55,955,80"/>
+</map>

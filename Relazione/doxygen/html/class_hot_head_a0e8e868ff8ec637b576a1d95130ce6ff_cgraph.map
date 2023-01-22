@@ -1,0 +1,32 @@
+<map id="HotHead::tick" name="HotHead::tick">
+<area shape="rect" id="node1" title=" " alt="" coords="5,275,107,301"/>
+<area shape="rect" id="node2" href="$class_enemy.html#a2f23cb396bdf881a7969b92a683ab964" title=" " alt="" coords="155,275,247,301"/>
+<area shape="rect" id="node3" href="$class_rigid_body.html#a49aa2c738a5870d44925f46b66bf78c3" title=" " alt="" coords="941,499,1092,525"/>
+<area shape="rect" id="node4" href="$class_camera.html#a1986a8417a6848e76a4929cf1100a86f" title=" " alt="" coords="295,126,419,151"/>
+<area shape="rect" id="node8" href="$class_animator.html#a496de9f4b4eb1d097b2acc317171fbde" title=" " alt="" coords="305,651,408,677"/>
+<area shape="rect" id="node12" href="$class_rigid_body.html#a08121f7a87e47832290da5c5cd28bb5d" title=" " alt="" coords="301,425,412,450"/>
+<area shape="rect" id="node5" href="$class_camera.html#a4d353b6074aa46de4015bce5574bce20" title=" " alt="" coords="485,51,628,77"/>
+<area shape="rect" id="node6" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="493,101,621,126"/>
+<area shape="rect" id="node7" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="491,150,622,175"/>
+<area shape="rect" id="node9" href="$class_animator.html#acdac547ca250c00ce19bd3c1c80a3015" title=" " alt="" coords="467,853,647,878"/>
+<area shape="rect" id="node10" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="705,853,870,878"/>
+<area shape="rect" id="node11" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="928,853,1105,878"/>
+<area shape="rect" id="node13" href="$class_vector_field.html#a280f3d58893c30960c249269fd22923e" title=" " alt="" coords="495,751,619,777"/>
+<area shape="rect" id="node14" href="$class_game_loop.html#ad1fc23824dbba32585781b7d06279827" title=" " alt="" coords="472,702,641,727"/>
+<area shape="rect" id="node17" href="$class_rigid_body.html#ae548195dd7d6b4e19ea942a5f8a40512" title=" " alt="" coords="695,601,880,626"/>
+<area shape="rect" id="node20" href="$class_rigid_body.html#a7ac46bd9a453d87621f057efe2cae939" title=" " alt="" coords="710,777,865,802"/>
+<area shape="rect" id="node21" href="$class_vector_field.html#ab29f452d8ad292919d004178c009a593" title=" " alt="" coords="485,251,628,277"/>
+<area shape="rect" id="node22" href="$class_game_loop.html#a51e85ad7f1981c18daa3e50aa75ab614" title=" " alt="" coords="484,449,629,474"/>
+<area shape="rect" id="node23" href="$class_game_object.html#a8bfe9a882afc0691728e16aba44f306f" title=" " alt="" coords="703,299,872,325"/>
+<area shape="rect" id="node24" href="$class_game_loop.html#a1b03a21119df78c836b77e30e6a1f43e" title=" " alt="" coords="477,301,637,326"/>
+<area shape="rect" id="node25" href="$class_rigid_body.html#a2ffd80b30bfb35ea2174ed6149f2700e" title=" " alt="" coords="481,350,633,375"/>
+<area shape="rect" id="node26" href="$class_vector_field.html#afc26e1b52075db449a5d43373f5fe093" title=" " alt="" coords="473,399,641,425"/>
+<area shape="rect" id="node27" href="$class_rigid_body.html#aab4f71b1d7e9d45011340797aee87295" title=" " alt="" coords="730,550,845,575"/>
+<area shape="rect" id="node29" href="$class_rigid_body.html#a80527f1a053bc7e506be1841b4ce83cd" title=" " alt="" coords="729,650,845,675"/>
+<area shape="rect" id="node15" href="$namespace_k_a.html#ad48b1db0654f8b1d6166045a9ce77c4c" title=" " alt="" coords="703,714,872,739"/>
+<area shape="rect" id="node16" href="$namespace_k_a.html#a0f048f7f49fe85ba60a525cd1e68d98f" title=" " alt="" coords="959,746,1074,771"/>
+<area shape="rect" id="node18" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="947,647,1087,673"/>
+<area shape="rect" id="node19" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="945,598,1088,623"/>
+<area shape="rect" id="node28" href="$class_game_object.html#ae393fca959edface82c4abdccfa5b5d1" title=" " alt="" coords="953,549,1081,574"/>
+<area shape="rect" id="node30" href="$class_game_object.html#a76073c1b330976174dd2664545a0812c" title=" " alt="" coords="951,697,1082,722"/>
+</map>

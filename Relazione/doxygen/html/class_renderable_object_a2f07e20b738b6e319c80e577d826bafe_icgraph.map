@@ -1,0 +1,11 @@
+<map id="RenderableObject::getZValue" name="RenderableObject::getZValue">
+<area shape="rect" id="node1" title=" " alt="" coords="540,104,731,129"/>
+<area shape="rect" id="node2" href="$class_base_g_u_i.html#ac32c439bacc6a7b73f5446839cfed559" title=" " alt="" coords="353,5,472,31"/>
+<area shape="rect" id="node3" href="$class_particle.html#adea1815e2b3876db40cfa0acee7c35f9" title=" " alt="" coords="357,55,468,80"/>
+<area shape="rect" id="node4" href="$class_rigid_body.html#a8c920b99eb8d0fb7f42944adf13c9759" title=" " alt="" coords="350,104,475,129"/>
+<area shape="rect" id="node6" href="$class_kirby.html#a9ed34eb2e5bae02f84670c210a547e64" title=" " alt="" coords="162,155,258,180"/>
+<area shape="rect" id="node7" href="$class_projectile.html#aa084e243d6a16515c6cbd7b8fa398030" title=" " alt="" coords="333,205,492,245"/>
+<area shape="rect" id="node5" href="$class_terrain_sloped.html#ab881aee418d115ffbf428a9f8e75844e" title=" " alt="" coords="137,104,283,129"/>
+<area shape="rect" id="node8" href="$class_kirby.html#a2ab766884494a2cc1e99774ed9e26e6c" title=" " alt="" coords="135,212,285,237"/>
+<area shape="rect" id="node9" href="$class_kirby.html#aac14c0d395524700534d8bdc7d2744a3" title=" " alt="" coords="5,212,87,237"/>
+</map>

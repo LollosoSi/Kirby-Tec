@@ -1,0 +1,6 @@
+<map id="Enemy::jump" name="Enemy::jump">
+<area shape="rect" id="node1" title=" " alt="" coords="179,55,277,80"/>
+<area shape="rect" id="node2" href="$class_waddle_dee.html#a19b47b28456f8bb21f18cafa7c01bb80" title=" " alt="" coords="9,5,127,31"/>
+<area shape="rect" id="node3" href="$class_sparky.html#af0070b9f773e999067a150e307bd204c" title=" " alt="" coords="22,55,114,80"/>
+<area shape="rect" id="node4" href="$class_poppy_bros_jr.html#a696505bffe0f5dc2a231079691c3e2e2" title=" " alt="" coords="5,104,131,129"/>
+</map>

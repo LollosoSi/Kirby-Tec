@@ -1,0 +1,14 @@
+<map id="BaseGUI::render" name="BaseGUI::render">
+<area shape="rect" id="node1" title=" " alt="" coords="5,179,124,204"/>
+<area shape="rect" id="node2" href="$class_camera.html#a726ca588bdb08b4d9c3f682dcd208fd2" title=" " alt="" coords="177,19,357,59"/>
+<area shape="rect" id="node4" href="$class_rigid_body.html#ae548195dd7d6b4e19ea942a5f8a40512" title=" " alt="" coords="175,104,360,129"/>
+<area shape="rect" id="node8" href="$class_base_g_u_i.html#abe6590787370a40b7c6d43e62f079d6f" title=" " alt="" coords="196,153,339,179"/>
+<area shape="rect" id="node10" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="203,203,331,228"/>
+<area shape="rect" id="node11" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="202,252,333,277"/>
+<area shape="rect" id="node12" href="$class_renderable_object.html#a2f07e20b738b6e319c80e577d826bafe" title=" " alt="" coords="172,301,363,327"/>
+<area shape="rect" id="node3" href="$class_camera.html#a4d353b6074aa46de4015bce5574bce20" title=" " alt="" coords="433,5,575,31"/>
+<area shape="rect" id="node5" href="$class_rigid_body.html#a49aa2c738a5870d44925f46b66bf78c3" title=" " alt="" coords="429,55,579,80"/>
+<area shape="rect" id="node6" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="434,104,574,129"/>
+<area shape="rect" id="node7" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="433,153,575,179"/>
+<area shape="rect" id="node9" href="$class_animator.html#aefea3fcdfa0b43e0c4bdb869e8ce5ad8" title=" " alt="" coords="411,203,597,228"/>
+</map>

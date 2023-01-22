@@ -1,0 +1,24 @@
+<map id="C:/Users/arocc/Desktop/Kirby&#45;Tec/Sprites.h" name="C:/Users/arocc/Desktop/Kirby&#45;Tec/Sprites.h">
+<area shape="rect" id="node1" title=" " alt="" coords="210,5,371,45"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,93,64,119"/>
+<area shape="rect" id="node3" title=" " alt="" coords="139,167,215,192"/>
+<area shape="rect" id="node4" title=" " alt="" coords="139,93,213,119"/>
+<area shape="rect" id="node5" title=" " alt="" coords="217,533,289,559"/>
+<area shape="rect" id="node6" title=" " alt="" coords="759,533,814,559"/>
+<area shape="rect" id="node7" title=" " alt="" coords="398,93,471,119"/>
+<area shape="rect" id="node8" title=" " alt="" coords="496,93,555,119"/>
+<area shape="rect" id="node9" href="$_animator_8h.html" title=" " alt="" coords="288,93,373,119"/>
+<area shape="rect" id="node10" href="$_game_object_8h.html" title=" " alt="" coords="585,167,692,192"/>
+<area shape="rect" id="node14" href="$_collision_detection_8h.html" title=" " alt="" coords="358,387,495,412"/>
+<area shape="rect" id="node22" href="$_tickable_object_8h.html" title=" " alt="" coords="291,167,410,192"/>
+<area shape="rect" id="node11" href="$_definitions_8h.html" title=" " alt="" coords="485,313,579,339"/>
+<area shape="rect" id="node17" href="$_serializable_8h.html" title=" " alt="" coords="589,240,689,265"/>
+<area shape="rect" id="node20" title=" " alt="" coords="824,313,893,339"/>
+<area shape="rect" id="node21" title=" " alt="" coords="713,240,799,265"/>
+<area shape="rect" id="node12" title=" " alt="" coords="615,387,684,412"/>
+<area shape="rect" id="node13" title=" " alt="" coords="519,387,590,412"/>
+<area shape="rect" id="node15" href="$_vec2_d_8h.html" title=" " alt="" coords="391,460,463,485"/>
+<area shape="rect" id="node16" title=" " alt="" coords="397,533,456,559"/>
+<area shape="rect" id="node18" title=" " alt="" coords="603,313,659,339"/>
+<area shape="rect" id="node19" title=" " alt="" coords="683,313,749,339"/>
+</map>

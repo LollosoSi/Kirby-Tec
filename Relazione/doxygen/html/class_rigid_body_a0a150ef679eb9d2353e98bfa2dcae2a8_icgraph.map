@@ -1,0 +1,10 @@
+<map id="RigidBody::getOffset" name="RigidBody::getOffset">
+<area shape="rect" id="node1" title=" " alt="" coords="604,55,745,80"/>
+<area shape="rect" id="node2" href="$class_rigid_body.html#a4e353753ffbece331b19f7f68f049a97" title=" " alt="" coords="419,55,556,80"/>
+<area shape="rect" id="node3" href="$class_door.html#a475357913dc6b57d245224c57b6ea98b" title=" " alt="" coords="246,5,351,31"/>
+<area shape="rect" id="node4" href="$class_vector_field.html#a00a2b82ecd0fdd5e6ed55d993bf7a277" title=" " alt="" coords="227,55,371,80"/>
+<area shape="rect" id="node5" href="$class_terrain.html#aca85168dd575f7408173f0402a30fd5b" title=" " alt="" coords="240,104,357,129"/>
+<area shape="rect" id="node6" href="$class_background.html#af59a1014f65b1f21129b68c77a177431" title=" " alt="" coords="19,55,165,80"/>
+<area shape="rect" id="node7" href="$class_terrain_sloped.html#af4318f8759bff8b786f824f146b83dce" title=" " alt="" coords="13,104,171,129"/>
+<area shape="rect" id="node8" href="$class_movable_platform.html#a4b66e6363170d6784ebb39c7c4c6dd38" title=" " alt="" coords="5,153,179,179"/>
+</map>

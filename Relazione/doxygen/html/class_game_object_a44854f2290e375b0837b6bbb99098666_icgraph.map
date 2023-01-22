@@ -1,0 +1,12 @@
+<map id="GameObject::setObjectId" name="GameObject::setObjectId">
+<area shape="rect" id="node1" title=" " alt="" coords="229,203,399,228"/>
+<area shape="rect" id="node2" href="$class_background.html#a3e9319e991c7c00792c7d8ef2049ecfa" title=" " alt="" coords="9,5,177,31"/>
+<area shape="rect" id="node3" href="$class_base_g_u_i.html#a31a097f12460b73e74661471dfa4f5bb" title=" " alt="" coords="26,55,161,80"/>
+<area shape="rect" id="node4" href="$class_vector_field.html#a8cbc43ce390b69c706bb4ecbab5eae09" title=" " alt="" coords="14,104,173,129"/>
+<area shape="rect" id="node5" href="$class_door.html#a778c2a2fb6d03bfd8cf9bb124ada91ac" title=" " alt="" coords="51,153,135,179"/>
+<area shape="rect" id="node6" href="$class_enemy.html#a065b0db58b8c1cd2b044adbf4fd213d8" title=" " alt="" coords="37,203,149,228"/>
+<area shape="rect" id="node7" href="$class_game_object.html#ae20e7a13f728ac367812d71b675d759e" title=" " alt="" coords="5,252,181,277"/>
+<area shape="rect" id="node8" href="$class_kirby.html#a6a2f67dba1439d00825a761210e6a42d" title=" " alt="" coords="48,301,139,327"/>
+<area shape="rect" id="node9" href="$class_particle.html#a77bd92466ba16815f8e839d00616dc52" title=" " alt="" coords="34,351,153,376"/>
+<area shape="rect" id="node10" href="$class_terrain.html#ac815cf995d3cbf8d59e3537af217c925" title=" " alt="" coords="39,400,147,425"/>
+</map>

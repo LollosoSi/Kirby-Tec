@@ -1,0 +1,8 @@
+<map id="Kirby::setY" name="Kirby::setY">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,92,105"/>
+<area shape="rect" id="node2" href="$class_rigid_body.html#a80527f1a053bc7e506be1841b4ce83cd" title=" " alt="" coords="140,80,256,105"/>
+<area shape="rect" id="node3" href="$class_rigid_body.html#a49aa2c738a5870d44925f46b66bf78c3" title=" " alt="" coords="304,5,455,31"/>
+<area shape="rect" id="node4" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="309,55,449,80"/>
+<area shape="rect" id="node5" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="308,104,451,129"/>
+<area shape="rect" id="node6" href="$class_game_object.html#a76073c1b330976174dd2664545a0812c" title=" " alt="" coords="314,153,445,179"/>
+</map>

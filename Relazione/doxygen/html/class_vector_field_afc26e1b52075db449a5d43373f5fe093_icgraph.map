@@ -1,0 +1,15 @@
+<map id="VectorField::setsVelocity" name="VectorField::setsVelocity">
+<area shape="rect" id="node1" title=" " alt="" coords="499,131,667,156"/>
+<area shape="rect" id="node2" href="$_rigid_body_8cpp.html#a061d0142eb459f22c2afbfbead487204" title=" " alt="" coords="332,105,451,131"/>
+<area shape="rect" id="node3" href="$class_rigid_body.html#a08121f7a87e47832290da5c5cd28bb5d" title=" " alt="" coords="336,155,447,180"/>
+<area shape="rect" id="node4" href="$class_particle.html#a37fdfb13e53d1a308863548b353f65c7" title=" " alt="" coords="184,80,279,105"/>
+<area shape="rect" id="node5" href="$class_enemy.html#a2f23cb396bdf881a7969b92a683ab964" title=" " alt="" coords="185,129,277,155"/>
+<area shape="rect" id="node12" href="$class_projectile.html#af74a39c230acc740624ed202913311be" title=" " alt="" coords="179,179,284,204"/>
+<area shape="rect" id="node13" href="$class_kirby.html#aac14c0d395524700534d8bdc7d2744a3" title=" " alt="" coords="191,228,272,253"/>
+<area shape="rect" id="node6" href="$class_waddle_dee.html#a19b47b28456f8bb21f18cafa7c01bb80" title=" " alt="" coords="9,5,127,31"/>
+<area shape="rect" id="node7" href="$class_sparky.html#af0070b9f773e999067a150e307bd204c" title=" " alt="" coords="22,55,114,80"/>
+<area shape="rect" id="node8" href="$class_hot_head.html#a0e8e868ff8ec637b576a1d95130ce6ff" title=" " alt="" coords="17,104,119,129"/>
+<area shape="rect" id="node9" href="$class_waddle_doo.html#a8b58af1ce77b04b55b2cae83e6583940" title=" " alt="" coords="9,153,127,179"/>
+<area shape="rect" id="node10" href="$class_poppy_bros_jr.html#a696505bffe0f5dc2a231079691c3e2e2" title=" " alt="" coords="5,203,131,228"/>
+<area shape="rect" id="node11" href="$class_bronto_burt.html#a8fdff3f528120cceb033b58a7f2b7fd4" title=" " alt="" coords="11,252,125,277"/>
+</map>

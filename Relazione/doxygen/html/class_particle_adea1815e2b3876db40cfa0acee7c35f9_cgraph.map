@@ -1,0 +1,10 @@
+<map id="Particle::render" name="Particle::render">
+<area shape="rect" id="node1" title=" " alt="" coords="5,132,116,157"/>
+<area shape="rect" id="node2" href="$class_animator.html#aefea3fcdfa0b43e0c4bdb869e8ce5ad8" title=" " alt="" coords="166,5,353,31"/>
+<area shape="rect" id="node3" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="410,57,538,83"/>
+<area shape="rect" id="node4" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="409,156,539,181"/>
+<area shape="rect" id="node5" href="$class_renderable_object.html#a2f07e20b738b6e319c80e577d826bafe" title=" " alt="" coords="164,208,355,233"/>
+<area shape="rect" id="node6" href="$class_particle.html#a992cd111f5a8c8b5b849884ec64b8244" title=" " alt="" coords="185,257,334,283"/>
+<area shape="rect" id="node7" href="$class_camera.html#a95796665ba7bc469274caf97af74d00c" title=" " alt="" coords="179,107,339,132"/>
+<area shape="rect" id="node8" href="$class_camera.html#a4d353b6074aa46de4015bce5574bce20" title=" " alt="" coords="403,107,545,132"/>
+</map>

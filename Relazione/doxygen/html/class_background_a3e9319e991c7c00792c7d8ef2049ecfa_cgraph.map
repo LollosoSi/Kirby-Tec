@@ -1,0 +1,17 @@
+<map id="Background::Background" name="Background::Background">
+<area shape="rect" id="node1" title=" " alt="" coords="5,255,173,280"/>
+<area shape="rect" id="node2" href="$class_animator.html#aefea3fcdfa0b43e0c4bdb869e8ce5ad8" title=" " alt="" coords="223,5,410,31"/>
+<area shape="rect" id="node3" href="$class_camera.html#a4d353b6074aa46de4015bce5574bce20" title=" " alt="" coords="245,55,388,80"/>
+<area shape="rect" id="node4" href="$class_texture_manager.html#ac57eae116021cea84da4baf94e41e394" title=" " alt="" coords="221,104,412,129"/>
+<area shape="rect" id="node5" href="$class_game_object.html#a61353d4e1c229970867a5fca0e0e9137" title=" " alt="" coords="485,156,613,181"/>
+<area shape="rect" id="node6" href="$class_game_object.html#a2c2cc36bd2165de12a234f0bcb29325e" title=" " alt="" coords="483,255,614,280"/>
+<area shape="rect" id="node7" href="$class_animator.html#a306a0a44181555161ad8659737bc5480" title=" " alt="" coords="234,356,399,381"/>
+<area shape="rect" id="node9" href="$class_camera.html#a8c24e35668d49485c7050af46c71112b" title=" " alt="" coords="248,405,385,431"/>
+<area shape="rect" id="node10" href="$class_game_object.html#a44854f2290e375b0837b6bbb99098666" title=" " alt="" coords="232,455,401,480"/>
+<area shape="rect" id="node11" href="$class_rigid_body.html#adb47bf4d7b4e45c11d1475d80a38ac79" title=" " alt="" coords="247,255,387,280"/>
+<area shape="rect" id="node13" href="$class_rigid_body.html#af278cb8097ceea3f783b38cf27278d3a" title=" " alt="" coords="245,205,388,231"/>
+<area shape="rect" id="node15" href="$class_renderable_object.html#a14bad85ff892ff8022a78e4470ea19af" title=" " alt="" coords="221,504,412,529"/>
+<area shape="rect" id="node8" href="$class_animator.html#a9c9bd87a8e6adda7b5a860cfcd692b5a" title=" " alt="" coords="460,356,637,381"/>
+<area shape="rect" id="node12" href="$class_rigid_body.html#aba7a8630684dc0695a27f2be4d727a43" title=" " alt="" coords="477,304,620,329"/>
+<area shape="rect" id="node14" href="$class_rigid_body.html#ae712b735ac57b21d5dd7076487001743" title=" " alt="" coords="479,205,619,231"/>
+</map>

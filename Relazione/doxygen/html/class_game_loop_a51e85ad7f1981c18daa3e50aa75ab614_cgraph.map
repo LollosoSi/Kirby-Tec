@@ -1,0 +1,5 @@
+<map id="GameLoop::getInside" name="GameLoop::getInside">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,151,56"/>
+<area shape="rect" id="node2" href="$class_rigid_body.html#a49aa2c738a5870d44925f46b66bf78c3" title=" " alt="" coords="208,5,359,31"/>
+<area shape="rect" id="node3" href="$class_game_object.html#a8bfe9a882afc0691728e16aba44f306f" title=" " alt="" coords="199,55,368,80"/>
+</map>

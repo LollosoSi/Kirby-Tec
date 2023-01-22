@@ -1,0 +1,37 @@
+<map id="GameObject::setY" name="GameObject::setY">
+<area shape="rect" id="node1" title=" " alt="" coords="955,480,1085,505"/>
+<area shape="rect" id="node2" href="$class_game_object.html#a2e99d59ae702eea956c711712e00924b" title=" " alt="" coords="736,131,901,156"/>
+<area shape="rect" id="node10" href="$class_game_object.html#ae20e7a13f728ac367812d71b675d759e" title=" " alt="" coords="731,504,907,529"/>
+<area shape="rect" id="node11" href="$class_game_loop.html#affb00e7554c8fd088c3cd031cbcebc24" title=" " alt="" coords="499,559,679,584"/>
+<area shape="rect" id="node14" href="$class_game_object.html#a973f0e289c8d03ab3e8eb5c7ddb862e8" title=" " alt="" coords="747,455,891,480"/>
+<area shape="rect" id="node18" href="$class_camera.html#a41a50103a38b10c6536a73ca187a9de9" title=" " alt="" coords="767,607,870,632"/>
+<area shape="rect" id="node21" href="$class_rigid_body.html#a80527f1a053bc7e506be1841b4ce83cd" title=" " alt="" coords="761,255,877,280"/>
+<area shape="rect" id="node3" href="$class_rigid_body.html#a729de31b2688ac9cbf17c5cdb698fa4a" title=" " alt="" coords="513,55,664,80"/>
+<area shape="rect" id="node4" href="$class_door.html#aea30c0d74ec361c39836172225ca286b" title=" " alt="" coords="284,55,403,80"/>
+<area shape="rect" id="node5" href="$class_vector_field.html#a8cbc43ce390b69c706bb4ecbab5eae09" title=" " alt="" coords="264,5,423,31"/>
+<area shape="rect" id="node6" href="$class_terrain.html#a3720b026bfdda106eabcd194ae0e7317" title=" " alt="" coords="278,104,409,129"/>
+<area shape="rect" id="node7" href="$class_background.html#aa46d287b709ce762489780ba4064d059" title=" " alt="" coords="18,104,179,129"/>
+<area shape="rect" id="node8" href="$class_terrain_sloped.html#a8ac29303765b3dc018b4882125b0c2cd" title=" " alt="" coords="13,153,184,179"/>
+<area shape="rect" id="node9" href="$class_movable_platform.html#a1ee9e6dff226b97414f599251ec109dc" title=" " alt="" coords="5,229,192,255"/>
+<area shape="rect" id="node12" href="$class_graphics_scene.html#a3a2e911addbd662fbf6924fed02f6a34" title=" " alt="" coords="240,619,447,644"/>
+<area shape="rect" id="node13" href="$class_graphics_scene.html#aa062225b952805e170a3320b83f6a27f" title=" " alt="" coords="250,554,437,594"/>
+<area shape="rect" id="node15" href="$class_kirby.html#a2ab766884494a2cc1e99774ed9e26e6c" title=" " alt="" coords="513,455,664,480"/>
+<area shape="rect" id="node17" href="$class_projectile.html#af74a39c230acc740624ed202913311be" title=" " alt="" coords="291,504,396,529"/>
+<area shape="rect" id="node16" href="$class_kirby.html#aac14c0d395524700534d8bdc7d2744a3" title=" " alt="" coords="303,455,384,480"/>
+<area shape="rect" id="node19" href="$class_graphics_scene.html#a85927a0baa140f37d2c918866c6879f1" title=" " alt="" coords="495,658,683,698"/>
+<area shape="rect" id="node20" href="$class_camera.html#abbf99e4b1a85bbb3b64ff80802fb2511" title=" " alt="" coords="541,608,637,633"/>
+<area shape="rect" id="node22" href="$class_particle.html#a77bd92466ba16815f8e839d00616dc52" title=" " alt="" coords="529,156,648,181"/>
+<area shape="rect" id="node23" href="$class_rigid_body.html#a5d498155a7b61291b7268283e92d2723" title=" " alt="" coords="515,205,663,231"/>
+<area shape="rect" id="node24" href="$class_terrain_sloped.html#a97dbfd852cb167af1c5a4f1791749747" title=" " alt="" coords="264,153,423,179"/>
+<area shape="rect" id="node25" href="$class_kirby.html#ab8310bbf30be5ba4431a540ca8415d71" title=" " alt="" coords="545,255,632,280"/>
+<area shape="rect" id="node26" href="$class_movable_platform.html#ac6d4a665bccfe59f187410556be38df7" title=" " alt="" coords="515,304,662,329"/>
+<area shape="rect" id="node27" href="$class_rigid_body.html#a08121f7a87e47832290da5c5cd28bb5d" title=" " alt="" coords="533,405,644,431"/>
+<area shape="rect" id="node28" href="$class_particle.html#a37fdfb13e53d1a308863548b353f65c7" title=" " alt="" coords="296,356,391,381"/>
+<area shape="rect" id="node29" href="$class_enemy.html#a2f23cb396bdf881a7969b92a683ab964" title=" " alt="" coords="297,405,389,431"/>
+<area shape="rect" id="node30" href="$class_waddle_dee.html#a19b47b28456f8bb21f18cafa7c01bb80" title=" " alt="" coords="39,293,158,319"/>
+<area shape="rect" id="node31" href="$class_sparky.html#af0070b9f773e999067a150e307bd204c" title=" " alt="" coords="53,343,145,368"/>
+<area shape="rect" id="node32" href="$class_hot_head.html#a0e8e868ff8ec637b576a1d95130ce6ff" title=" " alt="" coords="48,392,149,417"/>
+<area shape="rect" id="node33" href="$class_waddle_doo.html#a8b58af1ce77b04b55b2cae83e6583940" title=" " alt="" coords="39,441,158,467"/>
+<area shape="rect" id="node34" href="$class_poppy_bros_jr.html#a696505bffe0f5dc2a231079691c3e2e2" title=" " alt="" coords="36,491,161,516"/>
+<area shape="rect" id="node35" href="$class_bronto_burt.html#a8fdff3f528120cceb033b58a7f2b7fd4" title=" " alt="" coords="42,540,155,565"/>
+</map>

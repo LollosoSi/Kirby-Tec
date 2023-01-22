@@ -1,0 +1,7 @@
+<map id="Camera" name="Camera">
+<area shape="rect" id="node1" title=" " alt="" coords="113,505,301,817"/>
+<area shape="rect" id="node2" href="$class_game_object.html" title=" " alt="" coords="22,145,207,457"/>
+<area shape="rect" id="node3" href="$class_serializable.html" title=" " alt="" coords="5,5,109,97"/>
+<area shape="rect" id="node4" href="$class_cloneable.html" title=" " alt="" coords="134,13,213,90"/>
+<area shape="rect" id="node5" href="$class_tickable_object.html" title=" " alt="" coords="232,255,368,347"/>
+</map>
