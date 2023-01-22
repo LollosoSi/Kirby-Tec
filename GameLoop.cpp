@@ -547,6 +547,7 @@ void GameLoop::keyPressEvent(QKeyEvent* e, bool isPressed) {
 	if (e->key() == Qt::Key_P && isPressed) {
 		
 		if (startGUI->getShow()) {
+			pause(false);
 			if (!GameLoop::getInstance().loadGame(std::string("levels/lobby"), true, false))
 				GameLoop::getInstance().loadGame(std::string("levels/intro"), false, false);
 		} else
