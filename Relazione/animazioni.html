@@ -46,7 +46,11 @@ min-width:100px;
 <div class="mdc-card" >
 <h3>Composizione</h3>
 <span>Le animazioni per tutti i componenti del gioco sono create a partire da immagini separate, mostrate in sequenza.
-è stato utilizzato lo spritesheet fornito da un sito dedicato all'ottenimento delle sprite dei vecchi giochi. Tramite lo spritesheet abbiamo utilizzato la riproduzione di questi ultimi con dei QRect spostando mano a mano la selezione ai prossimi stati di animazioni. Per la intro iniziale abbiamo  utilizzato un approccio simile ma basato sulla riproduzione di una sequenza di immagini create da noi o prese da un emulatore NES per ottimizzare la qualità video.
+
+È stato utilizzato lo spritesheet fornito da un sito dedicato all'ottenimento delle sprite dei vecchi giochi.
+Tramite lo spritesheet abbiamo utilizzato la riproduzione di questi ultimi con dei QRect spostando progressivamente la selezione ai prossimi stati di animazioni.
+Per la intro iniziale abbiamo utilizzato un approccio simile ma basato sulla riproduzione di una sequenza di immagini create da noi o prese da un emulatore NES per ottimizzare la qualità video.
+
 La struttura contenente una singola animazione è <b>Animatable</b></span>
 </div>
 
@@ -54,7 +58,8 @@ La struttura contenente una singola animazione è <b>Animatable</b></span>
 <h3>Il componente Animator</h3>
 <span>Si occupa di gestire quale fotogramma mostrare e con quale tempistica in base ai dati contenuti nell'Animatable
 
-La struttura contenente una singola animazione è <b>Animatable</b></span>
+Supporta animazioni in loop oppure oneshot.
+Componente fondamentale per tutta la logica delle animazioni di Kirby considerando che sono possibili vari stati.</span>
 </div>
 
 </div>
