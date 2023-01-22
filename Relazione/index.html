@@ -199,7 +199,7 @@ main{height:100%;}
 </header>
 <main class="mdc-top-app-bar--fixed-adjust" style="display:block;">
 <div class="splitscreen" style="display:flex;  margin: auto;">
-<div class="left" style="flex:1" width="4vw">
+<div class="left" style="overflow-y:scroll;overflow-x:visible;flex:3;" width="4vw">
 <ul class="mdc-list mdc-list--two-line" >
   <li id="Intro" class="mdc-list-item" tabindex="0">
     <span class="mdc-list-item__ripple" ></span>
@@ -220,21 +220,6 @@ main{height:100%;}
     <span class="mdc-list-item__text">
       <span class="mdc-list-item__primary-text">Quirks</span>
       <span class="mdc-list-item__secondary-text">Ottimizzazioni varie</span>
-    </span>
-  </li>
-  <li role="separator" class="mdc-list-divider"></li>
-  <li id="hud" class="mdc-list-item">
-    <span class="mdc-list-item__ripple"></span>
-    <span class="mdc-list-item__text">
-      <span class="mdc-list-item__primary-text">Interfaccia Grafica</span>
-      <span class="mdc-list-item__secondary-text">Anche chiamata GUI</span>
-    </span>
-  </li>
-    <li id="suoni" class="mdc-list-item">
-    <span class="mdc-list-item__ripple"></span>
-    <span class="mdc-list-item__text">
-      <span class="mdc-list-item__primary-text">Suoni</span>
-      <span class="mdc-list-item__secondary-text">Perché non funzionano</span>
     </span>
   </li>
   <li role="separator" class="mdc-list-divider"></li>
@@ -259,7 +244,21 @@ main{height:100%;}
       <span class="mdc-list-item__secondary-text">Fotogrammi</span>
     </span>
   </li>
-  
+    <li role="separator" class="mdc-list-divider"></li>
+  <li id="hud" class="mdc-list-item">
+    <span class="mdc-list-item__ripple"></span>
+    <span class="mdc-list-item__text">
+      <span class="mdc-list-item__primary-text">Interfaccia Grafica</span>
+      <span class="mdc-list-item__secondary-text">Anche chiamata GUI</span>
+    </span>
+  </li>
+    <li id="suoni" class="mdc-list-item">
+    <span class="mdc-list-item__ripple"></span>
+    <span class="mdc-list-item__text">
+      <span class="mdc-list-item__primary-text">Suoni</span>
+      <span class="mdc-list-item__secondary-text">Perché non funzionano</span>
+    </span>
+  </li>
  <li role="separator" class="mdc-list-divider"></li>
       <li id="livello" class="mdc-list-item">
     <span class="mdc-list-item__ripple"></span>
@@ -366,14 +365,29 @@ case "collisioni":
 	return "collisioni.html";
 break;
 
-case "base":
-	document.title = "KA: Oggetti di base";
-	return "base.html";
+case "animazioni":
+	document.title = "KA: Frame by Frame";
+	return "animazioni.html";
 break;
 
-case "base":
-	document.title = "KA: Oggetti di base";
-	return "base.html";
+case "salvataggi":
+	document.title = "KA: Salvataggi";
+	return "salvataggi.html";
+break;
+
+case "rigidbodies":
+	document.title = "KA: Oggetti Animati";
+	return "oggettianimati.html";
+break;
+
+case "espansioni":
+	document.title = "KA: Idee";
+	return "espandibilita.html";
+break;
+
+case "livello":
+	document.title = "KA: Fabbrica dei sogni";
+	return "creazionelivelli.html";
 break;
 
 }

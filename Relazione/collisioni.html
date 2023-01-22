@@ -44,8 +44,68 @@ min-width:100px;
 <div class="ct">
 
 <div class="mdc-card" >
-<h3>Un approccio più basico</h3>
-<span>La gestione delle collisioni è quella mostrata nel corso. Nonostante ci sia stata ricerca per sviluppare un approccio "proprietario"</span>
+<h3>Un approccio intelligente</h3>
+<span>La corretta gestione delle collisioni è oggetto di studio da moltissimo tempo e vi sono stati dedicati diversi libri.
+Come gruppo abbiamo tentato di formulare il nostro approccio da zero e seppur fosse valido, avrebbe richiesto del testing addizionale troppo oneroso.
+Per questo motivo le collisioni vengono gestite facendo uso di due metodi separati:
+<ol><li>Metodo dimostrato nel corso</li><li>Intersezione istantanea</li></ol>
+</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Il piano inclinato</h3>
+<span>Un particolare tipo di Terreno costituito da una coppia di punti su cui considerare il piano, inclinato.
+<div class="mdc-card" >
+<h3 style="padding:0px;margin-top:0px;margin-bottom:0px;">Gestione del piano inclinato</h3>
+<span>Quando si rileva una intersezione con l'area (rettangolare) del piano ed una distanza perpendicolare sufficientemente corta dal piano (inclinato)
+<ol><li>Si ruota il sistema di riferimento</li><li>Si elimina la componente perpendicolare che intersecherebbe altrimenti il piano inclinato</li><li>Si applica il movimento laterale e perpendicolare dell'oggetto in relazione al piano inclinato</li><li>Si ruota di nuovo il sistema di riferimento per continuare a processare le altre collisioni ed il movimento finale lungo <b>qualsiasi piano</b></li></ol>
+</span>
+</div>
+
+</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Il Raycasting</h3>
+<span>Tecnica che consiste nel lanciare un raggio all'interno della scena e riportare gli oggetti che vi si intersecano.
+
+Utilizzato per calcolare la distanza di kirby dal terreno ed eseguire la capriola in aria prima dell'atterraggio.</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Il campo vettoriale</h3>
+<span>Elemento astratto e invisibile, posizionabile all'interno della scena.
+Ha effetto sui rigidbodies intersecati, applica le sue proprietà in due modalità:
+</span>
+<div style="display:flex; align-items: center;">
+<ul>
+<li>somma</li>
+<li>override</li>
+</ul>
+<span style="min-width:0px;margin-left:50px;">Su:</span>
+<ul>
+<li>velocità</li>
+<li>accelerazione</li>
+</ul>
+</div>
+<span>
+<b>Esempio d'uso</b>: simulazione dell'acqua, somma ogni tick una piccola accelerazione verso l'alto: maggiore la profondità, maggiore sarà la spinta.
+<b>Esempio 2</b>: può simulare i comandi di movimento di qualsiasi entità. <b>Utilizzato nel livello "intro".</b></span>
+</div>
+
+
+<div class="mdc-card" >
+<h3>Collisione dinamica</h3>
+<span>Avviene quando due oggetti in movimento collidono tra di loro.
+<br>In Kirby's Adventure, questo avviene quando un RigidBody entra in contatto con<div class="mdc-card" >
+<h3 style="padding:0px;margin-top:0px;margin-bottom:0px;">La piattaforma mobile</h3>
+<span>Terreno che può muoversi.
+Si può trovare nel primo livello oppure nel livello nascosto "ascensore".
+</span>
+</div>
+La correzione viene effettuata riportando il rigidbody al "contatto preciso".
+Valido solo per velocità ridotte.
+</span>
 </div>
 
 

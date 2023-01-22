@@ -2,7 +2,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Manuale d'urso</title>
+<title>Animazioni</title>
 
 <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
 <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -40,42 +40,22 @@ min-width:100px;
 </head>
 
 <body>
-<h2>Introduzione</h2>
+<h2>Animazioni</h2>
 <div class="ct">
 
 <div class="mdc-card" >
-<h3>Kirby's Adventure</h3><span>Gioco sviluppato da Nintendo per la console NES nel 1993<br>Lo sviluppo di questo progetto è relativo al primo livello.</span>
-</div>
-
-<div class="mdc-card" style="display:block">
-<h3>Installer</h3>
-<span>è disponibile un installer</span>
-<a href="https://github.com/LollosoSi/Kirby-Tec/releases">scaricabile qui</a>
+<h3>Composizione</h3>
+<span>Le animazioni per tutti i componenti del gioco sono create a partire da immagini separate, mostrate in sequenza.
+è stato utilizzato lo spritesheet fornito da un sito dedicato all'ottenimento delle sprite dei vecchi giochi. Tramite lo spritesheet abbiamo utilizzato la riproduzione di questi ultimi con dei QRect spostando mano a mano la selezione ai prossimi stati di animazioni. Per la intro iniziale abbiamo  utilizzato un approccio simile ma basato sulla riproduzione di una sequenza di immagini create da noi o prese da un emulatore NES per ottimizzare la qualità video.
+La struttura contenente una singola animazione è <b>Animatable</b></span>
 </div>
 
 <div class="mdc-card" >
-<h3>Github</h3><span>Per una maggiore efficienza e migliore coordinazione tra i componenti del gruppo si è utilizzato <b>github</b></span>
+<h3>Il componente Animator</h3>
+<span>Si occupa di gestire quale fotogramma mostrare e con quale tempistica in base ai dati contenuti nell'Animatable
+
+La struttura contenente una singola animazione è <b>Animatable</b></span>
 </div>
-
-<div class="mdc-card qr_div" style="display:inline-block;min-width:10%; min-height:30%; max-width:80%; max-height:30%; text-align:center; margin:auto; padding: 10px;">
-<img class="qr qrimg" src="./qr.png" ></img>
-<br class="qr">
-<a target="_blank" href="https://github.com/LollosoSi/Kirby-Tec">Codice Sorgente Github</a>
-</div>
-
-
-
-<div class="mdc-card" style="display:block">
-<h3 id="rule" >Hanno partecipato:</h3>
-<ul>
-<li>Roccaccino Andrea : 61336</li>
-<li>Pittiglio Roberto : 60992</li>
-<li>Evangelista Edoardo : 60902</li>
-<li>Canzoniero Jason : 61322</li>
-</ul>
-</div>
-
-
 
 </div>
 </body>

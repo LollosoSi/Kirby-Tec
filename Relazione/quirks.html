@@ -45,13 +45,14 @@ min-width:100px;
 
 <div class="mdc-card" >
 <h3>Multithreading</h3>
-<span>Non è una novità che ogni elemento fondamentale del gioco (suoni, video, input) ha un suo thread.
+<span>Non è una novità che ogni elemento fondamentale del gioco (suoni, video, input) abbia un suo thread.
 <br>La differenza sta nell'ottimizzare i tempi dei vari caricamenti e saper effettuare una corretta sincronizzazione</span>
 </div>
 
 <div class="mdc-card" style="display:block">
 <h3>Video grandi</h3>
 <span>Suoni e immagini vengono precaricati all'avvio del programma per non causare ritardi sulla CPU durante l'esecuzione realtime.
+<br><b>Siamo riusciti a ridurre i tempi di caricamento da circa un minuto a meno di 3 secondi grazie al multithreading</b>
 <br>Alcuni elementi risultano troppo pesanti sulla memoria e troppo onerosi da caricare utilizzando un singolo thread.
 <br>Per questo motivo, alcuni video come quello iniziale che sono composti di 233 frame individuali, vengono caricati in memoria utilizzando tutti i core disponibili nel sistema.
 <br><b>Successivamente all'utilizzo la memoria RAM viene liberata (+200mb)</b></span>
@@ -64,7 +65,8 @@ min-width:100px;
 
 <div class="mdc-card">
 <h3>Garbage Collector</h3>
-<span>In C++ non esiste un vero Garbage Collector. Quindi è presente un elemento del flow di esecuzione del GameLoop che si occupa di liberare <u>correttamente</u> la memoria degli oggetti che non sono più utilizzati.
+<span>In C++ non esiste un vero Garbage Collector.
+<br>Quindi è presente un elemento del flow di esecuzione del GameLoop che si occupa di liberare <u>correttamente</u> la memoria degli oggetti che non sono più utilizzati.
 <br>Esempio: nemico che viene mangiato, ha da liberare memoria video e della classe.</span>
 
 </div>
