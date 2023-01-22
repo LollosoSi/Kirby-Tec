@@ -455,6 +455,10 @@ void GameLoop::pause(bool pause) {
 		//startGUI->setTexture(KIRBY_DOORS);
 		TextureManager::getInstance().deleteLargeClips();
 	}
+
+	if (endingviewGUI->getShow()) {
+		endingviewGUI->setShow(false);
+	}
 	
 }
 

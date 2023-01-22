@@ -23,6 +23,7 @@
 // Hide console
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
+
 int main(int argc, char* argv[]) {
 
 	// istanzio applicazione Qt
