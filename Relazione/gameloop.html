@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>GameLoop</title>
+
+<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<style>
+.ct{
+display:flex;
+flex-flow:wrap;
+}
+
+.mdc-card{
+flex:2 1 auto;
+min-width:200px;
+margin: 1%;
+padding: 1%;
+padding-bottom:2%;
+display:inline-block;
+}
+
+h3{
+margin-left:20px;
+}
+span{
+
+margin-left:20px;
+display:inline-block;
+white-space: break-spaces;
+min-width:100px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+<h2>GameLoop</h2>
+<div class="ct">
+
+<div class="mdc-card" >
+<h3>Flow di esecuzione</h3>
+<span>Il loop di gioco è quell'elemento che si occupa di sincronizzare il gioco.
+<br>Diretto responsabile degli FPS e dei tick per secondo.
+</span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>Tick</h3>
+<span>Il tick è un ciclo di "ragionamento" del gioco.
+<br>In un singolo ciclo, tutti gli oggetti presenti all'interno della scena svolgono tutta la loro logica.
+<br>Il GameLoop si assicura che venga effettuato un certo numero di ticks al secondo e in ogni caso si occupa di sincronizzarli tramite il <b>deltatime</b>.
+<br>In sequenza, vengono processati:</span>
+<ol>
+<li>Collisioni (RigidBody)</li>
+<li>Keypress events</li>
+<li>Movimento</li>
+<li>Animazioni</li>
+<li>Suoni</li>
+</ol>
+</div>
+
+<div class="mdc-card" >
+<h3>Framerate</h3>
+<span>Numero di frame al secondo.
+<br>Può essere indipendente dai ticks (asincrono) e può non avere un limite.</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Deltatime</h3>
+<span>è il tempo che intercorre tra un tick e l'altro.
+<br>Espresso solitamenre in millisecondi</span>
+</div>
+
+</div>
+</body>
+
+</html>

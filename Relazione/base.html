@@ -1,0 +1,121 @@
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Manuale d'urso</title>
+
+<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<style>
+.ct{
+display:flex;
+flex-flow:wrap;
+}
+
+.mdc-card{
+flex:2 1 auto;
+min-width:200px;
+margin: 1%;
+padding: 1%;
+padding-bottom:2%;
+display:inline-block;
+}
+
+h3{
+margin-left:20px;
+}
+span{
+
+margin-left:20px;
+display:inline-block;
+white-space: break-spaces;
+min-width:100px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+<h2>Oggetti di base</h2>
+<div class="ct">
+
+<div class="mdc-card" >
+<h3>Quali sono</h3>
+<span>Gli oggetti di base sono dei concetti astratti che vengono successivamente estesi al fine di diventare oggetti tangibili e visibili all'interno del gioco.
+<br>Essi sono:</span>
+<ul>
+<h3>Relativi al motore grafico</h3>
+<li>GameObject</li>
+<li>RenderableObject</li>
+<li>TickableObject</li>
+<h3>Relativi alla finestra</h3>
+<li>MainWindow</li>
+<li>GraphicsScene</li>
+<h3>Relativi alle collisioni</h3>
+<li>RigidBody</li>
+<h3>Relativi ai salvataggi</h3>
+<li>Serializable</li>
+<li>Cloneable</li>
+</ul>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>GameObject</h3>
+<span>L'oggetto base che rappresenta un elemento generico nel sistema di riferimento utilizzato.
+<br>Contenuto in:</span>
+<ul>
+<li>RigidBody</li>
+<li>HUD</li>
+</ul>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>RenderableObject</h3>
+<span>Caratteristica di un GameObject (classe pura) che fornisce i metodi di visualizzazione dell'oggetto.</span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>TickableObject</h3>
+<span>Caratteristica di un GameObject (classe pura) che fornisce i metodi di ticking dell'oggetto.</span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>MainWindow</h3>
+<span>La finestra che contiene tutti gli elementi di Qt.</span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>GraphicsScene</h3>
+<span>L'oggetto all'interno di MainWindow che contiene tutti i metodi di disegno legati al gioco.</span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>RigidBody</h3>
+<span>Rappresenta un corpo rigido che supporta le collisioni statiche e parzialmente dinamiche.
+<br>Estende <b>GameObject, TickableObject, RenderableObject, Cloneable, Serializable</b>.</span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>Cloneable</h3>
+<span>Rappresenta un oggetto la cui istanza è clonabile (classe pura).
+<br>Fornisce la funzione clone().
+<br><h3>Perché usare clone?</h3>
+<br>In Kirby's Adventure gli oggetti clonati si utilizzano per <b>caricare i salvataggi</b>.
+<br>A partire da un array con istanze degli oggetti clonabili, si clonano tutte le nuove istanze necessarie alla corretta visualizzazione del livello.
+<br><b><h3>NOTA:</h3> Questa tecnica permette di semplificare di molto il codice</b></span>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>Serializable</h3>
+<span>Rappresenta un oggetto che supporta la serializzazione (classe pura).
+<br>Fornisce le funzioni per la serializzazione e deserializzazione.</span>
+</div>
+
+</div>
+</body>
+
+</html>

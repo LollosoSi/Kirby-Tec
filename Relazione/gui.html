@@ -1,0 +1,76 @@
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Manuale d'urso</title>
+
+<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<style>
+.ct{
+display:flex;
+flex-flow:wrap;
+}
+
+.mdc-card{
+flex:2 1 auto;
+min-width:200px;
+margin: 1%;
+padding: 1%;
+padding-bottom:2%;
+display:inline-block;
+}
+
+h3{
+margin-left:20px;
+}
+span{
+
+margin-left:20px;
+display:inline-block;
+white-space: break-spaces;
+min-width:100px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+<h2>Graphical User Interface</h2>
+<div class="ct">
+
+<div class="mdc-card" >
+<h3>Composizione in Layer</h3>
+<span>Si fa uso di una gerarchia di rendering</span>
+<img src="zvalues.png"></img>
+</div>
+
+<div class="mdc-card" style="display:block">
+<h3>Background</h3>
+<span>Contiene lo sfondo (animato) della mappa di gioco.
+<br>Fornisce i limiti entro cui si può spostare la Camera.</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Layer Entità</h3>
+<span>In questo layer si trovano tutte le entità presenti nella scena.</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Layer HUD</h3>
+<span>In questo layer si trovano gli elementi relativi allo stato di Kirby: punteggio, vite, salute e abilità.</span>
+</div>
+
+<div class="mdc-card" >
+<h3>Layer di pausa</h3>
+<span>Rappresenta il top layer e contiene gli elementi relativi alla schermata iniziale e di pausa nonché i crediti, comandi e titoli di coda.</span>
+</div>
+
+</div>
+</body>
+
+</html>
